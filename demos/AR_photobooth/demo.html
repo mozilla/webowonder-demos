@@ -1,0 +1,518 @@
+<html><head>
+<script src="JSARToolKit.min.js"></script>
+<script src="magi.js"></script>
+<script src="Fox.js"></script>
+<script src="upload_util.js"></script>
+
+<script>
+
+/**
+ * detectMarkerのコールバック関数
+ */
+FLARSquareMarkerDetectCB = ASKlass('FLARSquareMarkerDetectCB',
+{
+  //公開プロパティ
+  result_stack : new FLARDetectIdMarkerResultStack(NyARDetectMarker.AR_SQUARE_MAX)
+  ,square : new FLARSquare()
+  ,marker_data : null
+  ,threshold : 0
+  ,direction : 0
+  ,_ref_raster : null
+  ,_current_data : null
+  ,_data_temp : null
+  ,_prev_data : null
+  ,_coordline : null
+  ,_encoder : null
+  ,__tmp_vertex : NyARIntPoint2d.createArray(4)
+  ,FLARSquareMarkerDetectCB : function(i_param)
+  {
+    this._coordline=new NyARCoord2Linear(i_param.getScreenSize(),i_param.getDistortionFactor());
+    return;
+  }
+  /**
+   * Initialize call back handler.
+   */
+  ,init : function(i_raster)
+  {
+    this.result_stack.clear();
+    this._ref_raster=i_raster;
+  }
+  ,_previous_verts : {}
+  ,onSquareDetect : function(i_sender,i_coordx,i_coordy,i_coor_num,i_vertex_index)
+  {
+    var vertex=this.__tmp_vertex;
+    vertex[0].x=i_coordx[i_vertex_index[0]];
+    vertex[0].y=i_coordy[i_vertex_index[0]];
+    vertex[1].x=i_coordx[i_vertex_index[1]];
+    vertex[1].y=i_coordy[i_vertex_index[1]];
+    vertex[2].x=i_coordx[i_vertex_index[2]];
+    vertex[2].y=i_coordy[i_vertex_index[2]];
+    vertex[3].x=i_coordx[i_vertex_index[3]];
+    vertex[3].y=i_coordy[i_vertex_index[3]];
+    var cx=0,cy=0;
+    for (var i=0; i<4; i++) {
+      cx += vertex[i].x;
+      cy += vertex[i].y;
+    }
+    cx /= 4;
+    cy /= 4;
+    var result = this.result_stack.prePush();
+    var sq = result.square;
+    var i;
+    for(i=0;i<4;i++){
+      var idx=(i+4) % 4;
+      this._coordline.coord2Line(i_vertex_index[idx],i_vertex_index[(idx+1)%4],i_coordx,i_coordy,i_coor_num,sq.line[i]);
+    }
+    for (i= 0; i < 4; i++) {
+      if(!NyARLinear.crossPos(sq.line[i],sq.line[(i + 3) % 4],sq.sqvertex[i])){
+        throw new NyARException();
+      }
+    }
+  }
+})
+
+FLARSquareMarkerDetector = ASKlass('FLARSquareMarkerDetector',
+{
+  _is_continue : false
+  ,_square_detect : null
+  ,_offset : null
+  ,_current_threshold : 110
+  // [AR]検出結果の保存用
+  ,_bin_raster : null
+  ,_tobin_filter : null
+  ,_callback : null
+  ,_data_current : null
+  ,_threshold_detect : null
+  ,_transmat : null
+  ,FLARSquareMarkerDetector : function(i_param ,i_marker_width)
+  {
+    var scr_size = i_param.getScreenSize();
+    // 解析オブジェクトを作る
+    this._square_detect = new FLARSquareContourDetector(scr_size);
+    this._callback = new FLARSquareMarkerDetectCB(i_param);
+    this._transmat = new NyARTransMat(i_param);
+    // ２値画像バッファを作る
+    this._bin_raster = new FLARBinRaster(scr_size.w, scr_size.h);
+    //ワーク用のデータオブジェクトを２個作る
+    this._tobin_filter = new FLARRasterFilter_Threshold(110);
+    this._threshold_detect = new FLARRasterThresholdAnalyzer_SlidePTile(15, 4);
+    this._offset = new NyARRectOffset();
+    this._offset.setSquare(i_marker_width);
+    return;
+  }
+  ,detectMarkerLite : function(i_raster, i_threshold)
+  {
+    // サイズチェック
+    if (!this._bin_raster.getSize().isEqualSize_int(i_raster.getSize().w, i_raster.getSize().h)) {
+      throw new FLARException();
+    }
+    // ラスタを２値イメージに変換する.
+    this._tobin_filter.setThreshold(i_threshold);
+    this._tobin_filter.doFilter(i_raster, this._bin_raster);
+    // スクエアコードを探す(第二引数に指定したマーカ、もしくは新しいマーカを探す。)
+    this._callback.init(this._bin_raster);
+    this._square_detect.detectMarkerCB(this._bin_raster, this._callback);
+    //見付かった数を返す。
+    return this._callback.result_stack.getLength();
+  }
+  /**
+   * i_indexのマーカーに対する変換行列を計算し、結果値をo_resultへ格納します。 直前に実行したdetectMarkerLiteが成功していないと使えません。
+   *
+   * @param i_index
+   * マーカーのインデックス番号を指定します。 直前に実行したdetectMarkerLiteの戻り値未満かつ0以上である必要があります。
+   * @param o_result
+   * 結果値を受け取るオブジェクトを指定してください。
+   * @throws NyARException
+   */
+  ,getTransformMatrix : function(i_index, o_result)
+  {
+    var result = this._callback.result_stack.getItem(i_index);
+    // 一番一致したマーカーの位置とかその辺を計算
+    if (this._is_continue) {
+      this._transmat.transMatContinue(result.square, this._offset, o_result);
+    } else {
+      this._transmat.transMat(result.square, this._offset, o_result);
+    }
+    return;
+  }
+  /**
+   * 検出した FLARSquare 1 個返す。検出できなかったら null。
+   * @return Total return detected FLARSquare 1. Detection Dekinakattara null.
+   */
+  ,getSquare : function(i_index)
+  {
+    return this._callback.result_stack.getItem(i_index).square;
+  }
+  /**
+   * getTransmationMatrixの計算モードを設定します。
+   *
+   * @param i_is_continue
+   * TRUEなら、transMatContinueを使用します。 FALSEなら、transMatを使用します。
+   */
+  ,setContinueMode : function(i_is_continue)
+  {
+    this._is_continue = i_is_continue;
+  }
+  /**
+   * 2値化した画像を返却します。
+   *
+   * @return 画像情報を返却します
+   */
+  ,thresholdedBitmapData : function()
+  {
+    try {
+      return ((this._bin_raster).getBuffer());
+    } catch (e) {
+      return null;
+    }
+    return null;
+  }
+})
+</script>
+<script>
+  threshold = 103;
+  //DEBUG = true;
+  targetOrigin = '*';
+  var DemoState = {
+    running: false,
+    started: false
+  };
+  loaded = function() {
+    if (window.parent == window) {
+      DemoState.running = true;
+      startDemo();
+      DemoState.started = true;
+    } else {
+      window.parent.postMessage('loaded', targetOrigin);
+    }
+  }
+  window.addEventListener("message", function(e) {
+    if ("start_demo" == e.data) {
+      DemoState.running = true;
+      if (DemoState.started) {
+        window.paused = false;
+      } else {
+        startDemo();
+        DemoState.started = true;
+      }
+    } else if ("stop_demo" == e.data) {
+      DemoState.running = false;
+      window.paused = true;
+      window.parent.postMessage('finished_exit', targetOrigin);
+    }
+  }, false);
+
+  window.onload = loaded;
+
+  startDemo = function() {
+    var canvas = document.createElement('canvas');
+    canvas.width = 320;
+    canvas.height = 240;
+    canvas.style.display = 'block';
+    //byId('controls').appendChild(canvas);
+
+    canvas.id = 'debugCanvas';
+
+    var resultMat = new NyARTransMatResult();
+
+    image = new Image();
+
+    loadFiles = function(files) {
+      var reader = new FileReader();
+      reader.onload = function(){
+        image.src = reader.result;
+      };
+      reader.readAsDataURL(files[0]);
+    }
+
+    DnDUpload.setupTarget(document.documentElement, loadFiles);
+
+    var glCanvas = document.createElement('canvas');
+    glCanvas.width = 640;
+    glCanvas.height = 480;
+    byId('display').appendChild(glCanvas);
+    var display = new Magi.Scene(glCanvas);
+    display.camera.useProjectionMatrix = true;
+//     display.drawOnlyWhenChanged = true;
+    var imageTex = new Magi.FlipFilterQuad();
+    imageTex.material.textures.Texture0 = new Magi.Texture();
+    imageTex.material.textures.Texture0.image = image;
+    imageTex.material.textures.Texture0.generateMipmaps = false;
+    display.scene.appendChild(imageTex);
+    display.scene.bounceVector = [0,0];
+    display.scene.addFrameListener(function(){
+      if (display.changed) {
+        image.onload();
+      }
+    });
+    display.scene.afterTransform(function(m) {
+      mat4.set(m, Magi.DefaultMaterial.lightMatrix);
+    });
+
+    var times = [];
+    var pastResults = {};
+    var lastTime = 0;
+    var cubes = {};
+
+    window.updateImage = function() {
+      display.changed = true;
+    }
+
+    image.onload = function() {
+      var detectThreshold = false;
+      if (this.previousSource != this.src) {
+        for (var i in pastResults) delete pastResults[i];
+        this.previousSource = this.src;
+        detectThreshold = true;
+      }
+
+      imageTex.material.textures.Texture0.changed = true;
+
+      var wf = 320 / image.width;
+      var hf = 320 / image.height;
+      var f = Math.min(wf, hf);
+      canvas.width = toInt(image.width*f);
+      canvas.height = toInt(image.height*f);
+      var raster = new NyARRgbRaster_Canvas2D(canvas);
+      var param = new FLARParam(canvas.width, canvas.height);
+      var detector = new FLARSquareMarkerDetector(param, 80);
+      detector.setContinueMode(false);
+      glCanvas.width = toInt(image.width*f*2);
+      glCanvas.height = toInt(image.height*f*2);
+      param.copyCameraMatrix(display.camera.perspectiveMatrix, 100, 10000);
+      canvas.getContext('2d').drawImage(image, 0,0,canvas.width,canvas.height);
+      canvas.changed = true;
+
+      var t = new Date();
+      for (var ithreshold=139; ithreshold<=139; ithreshold+=4) {
+        if (!detectThreshold)
+          ithreshold = threshold;
+        var detected = detector.detectMarkerLite(raster, ithreshold);
+        for (var idx = 0; idx<detected; idx++) {
+          detector.getTransformMatrix(idx, resultMat);
+          // better use the internal tracking id (better implement an internal tracking id first)
+          var currId = [resultMat.m03, resultMat.m13].map(function(c){
+            return Math.floor(c / 50);
+          }).join(":");
+          if (!pastResults[currId]) {
+            pastResults[currId] = {};
+          }
+          pastResults[currId].age = 0;
+          pastResults[currId].transform = Object.asCopy(resultMat);
+        }
+        if (!detectThreshold)
+          break;
+      }
+      for (var i in pastResults) {
+        var r = pastResults[i];
+        if (r.age > 0) delete pastResults[i];
+        //r.age++;
+      }
+      for (var i in cubes) cubes[i].display = false;
+      for (var i in pastResults) {
+        if (!cubes[i]) {
+          var pivot = new Magi.Node();
+          pivot.transform = mat4.identity();
+          pivot.setScale(40);
+          var cube;
+          var n = new Magi.Node();
+          n.setScale(1,-1,1);
+          var model = BlenderExport.Fox;
+          n.model = new Magi.VBO(null,
+              {size:3, data: model.vertices},
+              {size:3, data: model.normals},
+              {size:2, data: model.texCoords},
+              {size:1, data: model.materials}
+          );
+          n.model.attributes = ['Vertex', 'Normal', 'TexCoord', 'MaterialIndex'];
+          n.material = Magi.MultiMaterial.get();
+          n.material.floats.LightPos = vec4.create([600, 1200, -2400, 1.0]);
+          model.materialDefinitions.forEach(function(d, i) {
+            n.material.floats['Material'+i+'.diffuse'] = d.diffuse;
+            n.material.floats['Material'+i+'.emit'] = d.diffuse.map(function(v){ return v*0.1; });
+            n.material.floats['Material'+i+'.specular'] = d.specular;
+            n.material.floats['Material'+i+'.ambient'] = d.specular.map(function(v){ return v * d.ambient; });
+            n.material.floats['Material'+i+'.ambient'][3] = 0.8;
+            n.material.floats['Material'+i+'.shininess'] = d.specularIntensity * 10;
+          });
+          n.setZ(0.0);
+          n.setY(0.0);
+          n.setX(-0.0);
+          n.rotation.axis = [1,0,0];
+          n.rotation.angle = Math.PI;
+          var cont = new Magi.Node();
+          shadow = new Magi.Disk(0.0,1.2,0.001,50,1);
+          shadow.material = Magi.ColorMaterial.get(null);
+          shadow.material.floats.Color = vec4.create([0,0,0,0.15]);
+          shadow.transparent = true;
+          shadow.blend = true;
+          shadow.setZ(0);
+          cont.appendChild(shadow);
+          cont.appendChild(n);
+          cube = new Magi.Node();
+          cube.appendChild(cont);
+          cube.setAxis(0,0,1);
+          cube.setAngle(-Math.PI/2);
+          cube.bounce = 100;
+          cube.bounceDir = vec3.create(0,0,-1);
+          cube.zeroVec = vec3.create(0,0,0);
+          cube.pivot = pivot;
+          cube.markerId = toInt(i);
+          var pv = new Magi.Node().setAxis(0,1,0);
+          pv.appendChild(cube);
+          pivot.n = n;
+          pivot.shadow = shadow;
+          pivot.appendChild(pv);
+          pivot.pv = pv;
+          pivot.cube = cube;
+          display.scene.appendChild(pivot);
+          cubes[i] = pivot;
+        }
+        cubes[i].display = true;
+        var mat = pastResults[i].transform;
+        var cm = cubes[i].transform;
+        cm[0] = mat.m00; cm[1] = -mat.m10; cm[2] = mat.m20; cm[3] = 0;
+        cm[4] = mat.m01; cm[5] = -mat.m11; cm[6] = mat.m21; cm[7] = 0;
+        cm[8] = -mat.m02; cm[9] = mat.m12; cm[10] = -mat.m22; cm[11] = 0;
+        cm[12] = mat.m03; cm[13] = -mat.m13; cm[14] = mat.m23; cm[15] = 1;
+        var v = vec4.create(0,0,1,0);
+        mat4.multiplyVec4(cm, v);
+        console.log(toArray(v));
+        vec3.normalize(v);
+        if (Math.abs(v[1]) > Math.max(Math.abs(v[0]), Math.abs(v[2]))) { // z is vertical
+          cubes[i].n.setAngle(Math.PI);
+          cubes[i].n.setY(0);
+          cubes[i].cube.setScale(1);
+          cubes[i].pv.setAngle(0);
+          var angle = (2*Math.PI + Math.atan2(v[1], v[0])) % (2*Math.PI);
+          console.log(angle);
+          var rot = 0;
+          if (angle > 0 && angle <= Math.PI/2) {
+            rot = Math.PI/2;
+          } else if (angle > Math.PI/2 && angle <= Math.PI) {
+            rot = Math.PI;
+          } else if (angle > Math.PI && angle <= Math.PI*1.5) {
+            rot = Math.PI*1.5;
+          } else {
+            rot = 0;
+          }
+          cubes[i].cube.setAngle(rot-Math.PI/2);
+          cubes[i].shadow.display = true;
+        } else {
+          cubes[i].shadow.display = false;
+          cubes[i].n.setAngle(-Math.PI/2);
+          cubes[i].n.setY(-3);
+          cubes[i].cube.setAngle(0);
+          cubes[i].cube.setScale(1.25);
+          cubes[i].pv.setAngle(0);
+          var sca = 0.33*(Math.abs(mat.m00) + Math.abs(mat.m11) + Math.abs(mat.m22));
+          console.log(sca, mat.m23);
+          sca *= mat.m23/600;
+          mat4.identity(cm);
+          cm[0] = sca;
+          cm[5] = sca;
+          cm[10] = sca;
+          cm[12] = mat.m03;
+          cm[13] = -mat.m13;
+          cm[14] = mat.m23;
+          cm[15] = 1;
+        }
+      }
+      updateImage();
+    }
+    image.src = "picture.jpg";
+  }
+</script>
+
+<style>
+body {
+  text-align: left;
+  font-family: sans-serif;
+  margin-left: 48px;
+}
+h1 {
+  -moz-transform-origin: 0% 0%;
+  -moz-transform: rotate(90deg);
+  -webkit-transform-origin: 0% 0%;
+  -webkit-transform: rotate(90deg);
+  transform-origin: 0% 0%;
+  transform: rotate(90deg);
+  position: fixed;
+  display: block;
+  text-align: left;
+  left: 1.2em;
+  top: 0em;
+  padding-left: 0.3em;
+  padding-right: 4em;
+  text-transform: uppercase;
+  font-size: 24px;
+  font-family: Helvetica;
+  color: white;
+  background: #A00;
+  margin: 0px;
+}
+html {
+/*   background: url(grand_vizier.jpg); */
+/*   background: -moz-linear-gradient(right center, rgba(0,0,34,0.9) 0%, rgba(255,255,255,0.9) 50%, rgba(0,0,34,0.9) 100%), url(grand_vizier.jpg); */
+/*   background: -webkit-gradient(linear, right center, left center, color-stop(0, rgba(0,0,34,0.9)), color-stop(0.5, rgba(255,255,255,0.9)), color-stop(1.0, rgba(0,0,34,0.9))), url(grand_vizier.jpg); */
+  min-height: 100%;
+}
+#instructions {
+  margin: 0px;
+}
+#instructions img {
+  margin: 0px;
+  line-height: 0px;
+}
+#display {
+  padding-top: 5px;
+  z-index: 2;
+  margin: 0px;
+  padding: 0px;
+}
+#display canvas {
+  margin: 0px;
+  padding: 0px;
+  display: inline-block;
+  -moz-box-shadow: 0px 2px 3px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 2px 3px rgba(0,0,0,0.75);
+  box-shadow: 0px 2px 3px rgba(0,0,0,0.75);
+}
+#fileinput {
+  display: inline-block;
+  margin-top: 1px;
+  width: 448px;
+  background: #222;
+  color: white;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-family: Helvetica;
+  font-weight: bold;
+  padding: 12px;
+  padding-bottom: 12px;
+  padding-left: 16px;
+  padding-right: 16px;
+/*   border-radius: 8px 8px 0px 0px; */
+  -moz-box-shadow: 0px 2px 3px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 2px 3px rgba(0,0,0,0.75);
+  box-shadow: 0px 2px 3px rgba(0,0,0,0.75);
+}
+#fileinput input {
+  margin-left: 8px;
+}
+
+</style>
+
+<title>Picture with Fox</title>
+</head>
+<body>
+<h1>Augmented Photobooth</h1>
+<div id="instructions"><img src="instructions_small.png"></div>
+<div id="controls">
+  <span id="fileinput">
+    Take a photo <input type="file" onchange="loadFiles(this.files);document.body.scrollIntoView();">
+  </span>
+</div>
+<div id="display"></div>
+</body>
+</html>

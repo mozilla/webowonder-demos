@@ -174,7 +174,7 @@
       if (DemoState.started) {
         window.paused = false;
       } else {
-        startGame();
+        startDemo();
         DemoState.started = true;
       }
     } else if ("stop_demo" == e.data) {

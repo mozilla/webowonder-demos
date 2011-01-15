@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+<link rel="stylesheet" type="text/css" href="css/main.css">
+
+
+<title>Globe Tweeter</title>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<script>
+var Viewer;
+</script>
+<script type="text/javascript" src="js/jquery-1.4.2.js"></script>
+<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="js/code.js"></script>
+<script type="text/javascript" src="js/flag.js"></script>
+<script type="text/javascript" src="js/osg.js"></script>
+<script type="text/javascript" src="js/osgGA.js"></script>
+<script type="text/javascript" src="js/osgUtil.js"></script>
+<script type="text/javascript" src="js/osgAnimation.js"></script>
+<script type="text/javascript" src="js/osgViewer.js"></script>
+<script type="text/javascript" src="js/demo2.js"></script>
+<script type="text/javascript" src="js/manipulator.js"></script>
+<script type="text/javascript" src="js/twitter.js"></script>
+
+<script type="text/javascript" src="js/world.js"></script>
+<script type="text/javascript" src="js/country.js"></script>
+<script type="text/javascript" src="js/coast.js"></script>
+<script type="text/javascript" src="js/height.js"></script>
+<script type="text/javascript" src="js/text.js"></script>
+<script type="text/javascript" src="js/wave.js"></script>
+<script type="text/javascript" src="js/coordinate.js"></script>
+<!-- change here to get the /socket.io/socket.io.js from your server -->
+<!-- <script type="text/javascript" src="http://184.106.112.6:22048/socket.io/socket.io.js"></script> -->
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/instructions.js"></script>
+
+<script type="text/javascript">
+function getWindowSize() {
+    var myWidth = 0, myHeight = 0;
+    
+    if( typeof( window.innerWidth ) == 'number' ) {
+        //Non-IE
+        myWidth = window.innerWidth;
+        myHeight = window.innerHeight;
+    } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+        //IE 6+ in 'standards compliant mode'
+        myWidth = document.documentElement.clientWidth;
+        myHeight = document.documentElement.clientHeight;
+    } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+        //IE 4 compatible
+        myWidth = document.body.clientWidth;
+        myHeight = document.body.clientHeight;
+    }
+    return { 'w': myWidth, 'h': myHeight };
+}
+var AutoStart = true;
+</script>
+<script type="text/javascript" src="js/state.js"></script>
+
+</head>
+
+<body>
+
+<header id="masthead">
+	<div id="logo">
+		<!--<img src="img/globetweeter.png" alt="">-->
+		<h1 class="acknowledgement"><span>Globe</span><span>Tweeter</span></h1>
+	</div>
+	<div id="sharing">
+		<div id="facebook">
+			<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like layout="button_count" show_faces="false" width="100"></fb:like>
+		</div>		
+		<div id="twitter">
+			<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" url="http://www.mozilla.com/">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+		</div>		
+	</div>	
+	<span id="pitch" class="cartoBook">
+		Watch Twitter's activity around the world in real-time
+	</span>
+</header>
+
+<div id="demo-instructions" class="hidden">
+	<div class="bubble">
+		<span>Welcome to GlobeTweeter!</span>
+		<p>Take the planet for a spin and discover what people are tweeting by clicking on their picture.</p>
+		<div id="shareLocation" class="cartoBold">
+			Find my location
+		</div>
+		<span id="location-instructions"></span>
+		<span class="dismiss blue"><img src="img/dismiss.png" alt="dismiss">hide this message</span>		
+	</div>
+</div>
+
+<ul id="countries" class="cartoBook">
+	<li>
+		<div class="flag"></div>
+		<span class="countryName"></span>
+		<span class="tweetCount cartoBold"></span>
+	</li>
+	<li>
+		<div class="flag"></div>
+		<span class="countryName"></span>
+		<span class="tweetCount"></span>
+	</li>	
+	<li>
+		<div class="flag"></div>
+		<span class="countryName"></span>
+		<span class="tweetCount"></span>
+	</li>
+	<li>
+		<div class="flag"></div>
+		<span class="countryName"></span>
+		<span class="tweetCount"></span>
+	</li>
+	<li>
+		<div class="flag"></div>
+		<span class="countryName"></span>
+		<span class="tweetCount"></span>
+	</li>
+	<li>
+		<div class="flag"></div>
+		<span class="countryName"></span>
+		<span class="tweetCount"></span>
+	</li>
+	<li>
+		<div class="flag"></div>
+		<span class="countryName"></span>
+		<span class="tweetCount"></span>
+	</li>
+	<li>
+		<div class="flag"></div>
+		<span class="countryName"></span>
+		<span class="tweetCount"></span>
+	</li>	
+</ul>
+
+<ul id="stats">
+	<li>
+		<span id="generalTweetCount" class="cartoBold">0</span>
+		TWEETS SENT
+	</li>
+	<li>		
+		<span id="generalCountriesCount" class="cartoBold">0</span>
+		ACTIVE COUNTRIES
+	</li>
+	<li>
+		<span id="generalTimer" class="cartoBold">0</span>		
+		ELAPSED TIME
+	</li>
+	<li>
+		<span id="tweetsPersecond" class="cartoBold">0</span>
+		TWEETS/SEC
+	</li>			
+</ul>
+
+<div id="instructions">
+	<div id="ranking-instructions" class="hidden">
+		<div class="corner">
+		</div>
+		<div class="bubble">
+			Click on a country to center it on your screen
+			<span class="dismiss blue"><img src="img/dismiss.png" alt="dismiss">hide this message</span>
+		</div>
+	</div>
+</div>
+
+<section id="credits" class="bubble">
+	<header><span id="arrow"></span>Credits</header>
+	<hr />
+	<ul id="authors">
+		<li>
+			<span>Code by</span>
+			<span>Cedric Pinson</span>
+			<span><a href="http://plopbyte.net" target="_blank" title="Visit Cedric's website">website</a> / <a href="http://twitter.com/trigrou" target="_blank" title="Follow Cedric on Twitter">twitter</a></span>
+		</li>
+		<li>
+			<span>Design by</span>
+			<span>Guillaume Lecollinet</span>
+			<span><a href="http://www.littleworkshop.fr" target="_blank" title="Visit Guillaume's website">website</a> / <a href="http://twitter.com/glecollinet" target="_blank" title="Follow Guillaume on Twitter">twitter</a></span>
+		</li>
+		<li>
+			<span>Node.js hacking</span>
+			<span>Johan Euprhosine</span>
+			<span><a href="http://aminche.com" target="_blank" title="Visit Johan's website">website</a> / <a href="http://twitter.com/proppy" target="_blank" title="Follow Johan on Twitter">twitter</a></span>
+		</li>
+
+	</ul>
+</section>
+
+<canvas id="3DView"></canvas>
+<div id="TweetsProcessedStats"></div>
+<div id="TweetsPerSeconds"></div>
+<div id="TweetContent" class="hidden">
+</div>
+<!-- 
+<div id="hudHead" class="hud" >test</div>
+<div id="hudSearch" class="hud" ></div>
+<div id="hudContent" class="hud" >test</div>
+-->
+<canvas id="TwitterRendering" width="512" height="128"> </canvas>
+<canvas id="TweetImpact" width="256" height="256"> </canvas>
+<canvas id="TweetPicture" width="64" height="64"> </canvas>
+<canvas id="TextRendering" width="512" height="32"> </canvas>
+<canvas id="HeightMap" width="128" height="64"> </canvas>
+<canvas id="HeightMap2" width="128" height="64"> </canvas>
+
+</body>
+</html>

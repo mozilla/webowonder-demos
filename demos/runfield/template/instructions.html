@@ -1,0 +1,78 @@
+<html>
+<head>
+<style>
+  img {
+    background-color: white;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(.1, transparent), color-stop(.1, rgba(200,200,200, .1)), to(rgba(200,200,200, .1))), -webkit-gradient(linear, 0 0, 100% 0, color-stop(.1, transparent), color-stop(.1, rgba(200,200,200, .1)), to(rgba(200,200,200, .1)));
+    background-image: -moz-linear-gradient(transparent 50%, rgba(200,200,200, .1) 50%, rgba(200,200,200, .1)), -moz-linear-gradient(0deg, transparent 50%, rgba(200,200,200, .1) 50%, rgba(200,200,200, .1));
+    background-image: -o-linear-gradient(transparent 50%, rgba(200,200,200, .1) 50%, rgba(200,200,200, .1)), -o-linear-gradient(0deg, transparent 50%, rgba(200,200,200, .1) 50%, rgba(200,200,200, .1));
+    background-image: linear-gradient(transparent 50%, rgba(200,200,200, .1) 50%, rgba(200,200,200, .1)), linear-gradient(0deg, transparent 50%, rgba(200,200,200, .1) 50%, rgba(200,200,200, .1));
+
+    -webkit-background-size: 16px 16px;
+    -moz-background-size: 16px 16px;
+    background-size: 16px 16px;
+  }
+</style>
+</head>
+<body>
+<h1>Making Runfield themes</h1>
+<p><a href="../demo.html">Runfield</a> themes are made up of five level images, two character animation images and a character shadow image.</p>
+<p>The level images are moved across the screen at different speeds, creating a pseudo-3D parallax effect.</p>
+<p>To make your own theme, you need to make your own versions of the theme images and save them in a directory on a web server. To use your theme, add ?theme=mythemedirURL to the Runfield URL.</p>
+<p><a href="runfield_template.zip">Here's a zip with the template images</a> to get you started.</p>
+
+<h2>The theme images</h2>
+
+<h3>Considerations</h3>
+<p>The theme images should be 512 pixels high and have a width divisible by 16.</p>
+
+<h3>sky.png</h3>
+<p>sky.png is the background layer. It scrolls slowly at a rate of single pixel per second.</p>
+<p><img src="../field/sky.png"></p>
+
+<h3>horizon.png</h3>
+<p>horizon.png is the layer in front of the sky.</p>
+<p><img src="../field/horizon.png"></p>
+
+<h3>background.png</h3>
+<p>background.png is the layer in front of the horizon. On fast machines, there are actually two background.png layers which are scrolled at different speeds.</p>
+<p><img src="../field/background.png"></p>
+
+<h3>path.png</h3>
+<p>path.png is the layer on which the character runs.</p>
+<p><img src="../field/path.png"></p>
+
+<h3>foreground.png</h3>
+<p>foreground.png is the layer drawn in front of the character and the path.</p>
+<p><img src="../field/foreground.png"></p>
+
+<h3>run_frames.png</h3>
+<p>run_frames.png has the running animation for the character. It has 20 frames. The frames progress from up to down, and the columns are from left to right.</p>
+<p><img src="../field/run_frames.png"></p>
+
+<h3>boost_frames.png</h3>
+<p>boost_frames.png has the boosting animation for the character. It has 4 frames. The frames progress from left to right.</p>
+<p><img src="../field/boost_frames.png"></p>
+
+<h3>shadow.png</h3>
+<p>shadow.png is the shadow of the character</h3>
+<p><img src="../field/shadow.png"></p>
+
+<h2>Theme making example</h2>
+<p>Start off with a sketch of the background.</p>
+<p><a href="instructions_images/full_size/field_sketch.jpg"><img src="instructions_images/field_sketch.jpg"></a> <a href="instructions_images/full_size/snow_sketch.jpg"><img src="instructions_images/snow_sketch.jpg"></a></p>
+
+<p>Then paint the theme. Paint the different parallax levels on separate layers to make it easier to cut them out.</p>
+<p><a href="instructions_images/full_size/field_concept.jpg"><img src="instructions_images/field_concept.jpg"></a> <a href="instructions_images/full_size/snow_concept.jpg"><img src="instructions_images/snow_concept.jpg"></a></p>
+
+<p>Adjust color curves and make a comp with the character to visualize how it'll look in-game.</p>
+<p><a href="instructions_images/full_size/field_comp.jpg"><img src="instructions_images/field_comp.jpg"></a> <a href="instructions_images/full_size/snow_comp.jpg"><img src="instructions_images/snow_comp.jpg"></a></p>
+
+<p>Cut the layers into separate images and make them horizontally tileable (duplicate layer, move one layer to the left and another to right so that their ends meet, merge layers, paint over the discontinuity). Do whatever other adjustments you want. Test the theme in-game. Tweak tweak. Adjust character sprite colors to match the level.</p>
+
+<p>Done! Party time!</p>
+<br>
+<br>
+
+</body>
+</html>

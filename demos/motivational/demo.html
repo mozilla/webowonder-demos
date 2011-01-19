@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+        <meta charset="utf8">
+        <title>Motivational poster</title>
+        <script src="main.js"></script>
+
+        <script>
+            var targetOrigin = '*';
+
+            window.addEventListener("load", function() {
+                window.parent.postMessage('loaded', targetOrigin);
+            }, true);
+ 
+            window.addEventListener("message", function(e) { 
+                if ("stop_demo" == e.data) {
+                    window.parent.postMessage('finished_exit', targetOrigin);
+                }
+            }, true);
+        </script>
+
+
+        <style>
+            html {
+                height: 100%;
+                background-color: black;
+                background: url(imgs/bg_home.jpg);
+                background: -moz-element(#background), url(imgs/bg_home.jpg);
+                background-size: 100% 100%, 100% 100%;
+                background-repeat: no-repeat, no-repeat;
+                font-family: "Times New Roman";
+            }
+
+            #hiddenbag {
+                height: 0; overflow: hidden;
+            }
+
+            #poster.dragging {
+                -moz-transform: scale(1.1);
+            }
+
+            #poster { display: block; }
+            .editor #posterView { display: none; }
+
+            .viewer #poster { display: none; }
+            .viewer #posterView { display: block; }
+
+            #share:before {
+                content: "Share:";
+                display: block;
+                font-size: 20px;
+                margin-bottom: 5px;
+            }
+            #share {
+                position: absolute;
+                background-color: rgba(0, 0, 0, 0.8);
+                border: 2px solid white;
+                top: 20px;
+                right: 100px;
+                padding: 10px;
+                display: none;
+                color: white;
+                width: 100px;
+            }
+
+            #share button {
+                border: 2px solid grey;
+                background-color: black;
+                color: white;
+                cursor: pointer;
+            }
+
+            #share p {
+                display: inline;
+                cursor: pointer;
+            }
+
+            .viewer #share {
+                display: block;
+            }
+
+            #poster, #posterView {
+                margin: auto;
+                margin-top: 50px;
+                width: 640px;
+                max-width: 640px;
+                -moz-transition-duration: 0.5s;
+                box-shadow: 0px 0px 10px black;
+                background-color: black;
+                min-width: 100px;
+                min-height: 100px;
+            }
+
+            #veil {
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background-color: rgba(0, 0, 0, 0.8);
+                opacity: 0;
+                -moz-transition-duration: 0.5s;
+                pointer-events: none;
+            }
+
+            .showveil #veil {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            #status {
+                width: 100%;
+                margin-top: 250px;
+                text-align: center;
+                font-size: 50px;
+                color: white;
+            }
+            #veil img {
+                display: block;
+                margin: auto;
+            }
+
+
+
+            .showEditor #editor {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            #editor {
+                position: absolute;
+                background-color: rgba(0, 0, 0, 0.8);
+                opacity: 0;
+                pointer-events: none;
+                border: 2px solid white;
+                top: 20px;
+                left: 10px;
+                padding: 20px;
+            }
+
+            #editor input {
+                font-family: "Times New Roman";
+                background-color: rgba(0, 0, 0, 1);
+                color: white;
+                text-align: center;
+                border: 1px dashed white;
+                vertical-align: middle;
+                height: 33px;
+            }
+
+            #editor img {
+                vertical-align: middle;
+                margin-right: 15px;
+            }
+
+            #editor button {
+                background-color: transparent;
+                border: none;
+                margin-top: 20px;
+                float: right;
+                cursor: pointer;
+            }
+
+            #title {
+                font-size: 30px;
+                width: 250px;
+                text-transform: uppercase;
+            }
+
+            #comment {
+                font-size: 15px;
+                width: 250px;
+            }
+
+            .viewer #tb, .showEditor #tb {
+                display: none;
+            }
+
+            #tb {
+                width: 620px;
+                margin: auto;
+                margin-top: 20px;
+
+                box-shadow: 0px 0px 10px black;
+                background-color: black;
+                color: white;
+                padding-top: 10px;
+                padding-right: 10px;
+                padding-left: 10px;
+                font-size: 18px;
+            }
+            #tb * { vertical-align: top; display: inline;}
+            #tb:before {
+                content: url("imgs/tb.png");
+                vertical-align: top;
+                margin-right: 10px;
+            }
+            #tb img { height: 23px; cursor: pointer;}
+            #tb > div {position: relative;}
+            #tb .tb { height: 100px; width: auto; position: absolute; top: -120px; left: -200%; border: 5px solid black; box-shadow: 0px 0px 10px white; opacity: 0; pointer-events: none; -moz-transition-duration: 0.4s;}
+            #tb > div:hover > .tb {opacity: 1;}
+
+            #credits {
+                position: fixed;
+                bottom: 10px; right: 10px;
+                width: 120px;
+                font-size: 14px;
+                font-family: Arial;
+            }
+            #credits a {
+                color: black;
+                text-decoration: none;
+            }
+        </style>
+
+    </head>
+
+    <body onload="init()" class="showveil">
+        <canvas id="poster" width="5" height="4"></canvas>
+        <div id="tb"><strong>Or</strong> select <em>one of these:</em>
+            <div><img class="tb" src="pictures/9.jpg"><img src="pictures/9.jpg"></div>
+            <div><img class="tb" src="pictures/1.jpg"><img src="pictures/1.jpg"></div>
+            <div><img class="tb" src="pictures/4.jpg"><img src="pictures/4.jpg"></div>
+            <div><img class="tb" src="pictures/5.jpg"><img src="pictures/5.jpg"></div>
+            <div><img class="tb" src="pictures/6.jpg"><img src="pictures/6.jpg"></div>
+            <div><img class="tb" src="pictures/11.jpg"><img src="pictures/11.jpg"></div>
+            <div><img class="tb" src="pictures/10.jpg"><img src="pictures/10.jpg"></div>
+            <div><img class="tb" src="pictures/8.jpg"><img src="pictures/8.jpg"></div>
+            <div><img class="tb" src="pictures/3.jpg"><img src="pictures/3.jpg"></div>
+            <div><img class="tb" src="pictures/2.jpg"><img src="pictures/2.jpg"></div>
+            <div><img class="tb" src="pictures/7.jpg"><img src="pictures/7.jpg"></div>
+            <div><img class="tb" src="pictures/12.jpg"><img src="pictures/12.jpg"></div>
+        </div>
+        <img id="posterView">
+
+        <div id="hiddenbag">
+            <img id="dropbox" src="imgs/placeholder.jpg">
+            <img id="placeholder">
+            <canvas id="background"></canvas>
+            <input type="file" id="filepicker" onchange="processFile(this.files[0])">
+        </div>
+
+        <div id="veil">
+            <p id="status">loading...</p>
+            <img src="imgs/loader.gif">
+        </div>
+
+        <div id="editor">
+            <p>
+            <img src="imgs/title_icon.png"><input id="title" placeholder="Title">
+            </p>
+            <p>
+            <img src="imgs/subtitle_icon.png"><input id="comment" placeholder="Comment">
+            </p>
+            <button onclick="upload()"><img src="imgs/valid.png"</button>
+            <button onclick="cancel()"><img src="imgs/cancel.png"</button>
+        </div>
+
+        <div id="share">
+            <p id="imgur" title="Imgur link" onclick="new_window('http://imgur.com/' + document.location.hash.split('#')[1], 800, 800)"><img src="imgs/imgur_icon.png"></p>
+            <p id="twitter" title="Tweet This" onclick="new_window('http://twitter.com/share?url=' + encodeURIComponent(document.location), 550, 425)"><img src="imgs/twitt_icon.png"></p>
+            <p id="facebook" title="Share This on Facebook" onclick="new_window('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(document.location), 755, 425)"><img src="imgs/fb_icon.png"></p>
+            <p id="reddit" title="Submit This to Reddit" onclick="new_window('http://reddit.com/submit?url=' + encodeURIComponent(document.location), 900, 680)"><img src="imgs/reddit_icon.png"></p>
+            <button onclick="initEditor()">Create your own</button>
+        </div>
+
+        <div id="credits">
+            <a href="http://imgur.com">Powered by:<img src="imgs/imgur_small.png"></a>
+        </div>
+
+    </body>
+</html>

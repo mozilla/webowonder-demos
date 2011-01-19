@@ -1,0 +1,465 @@
+<!--
+AUTHOR:
+    @paulrouget <paul@mozilla.com>
+
+LICENSE:
+    DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+    Version 2, December 2004
+
+    Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
+
+    Everyone is permitted to copy and distribute verbatim or modified
+    copies of this license document, and changing it is allowed as long
+    as the name is changed.
+
+    DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+    0. You just DO WHAT THE FUCK YOU WANT TO.
+
+BLABLA:
+    This is a web page with some videos and image moving.
+    No external JS or CSS file. One big single HTML5 file.
+    Now, stop reading the comments, and read the code.
+-->
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>London Project</title>
+
+        <!--
+
+        ************************************
+        *                                  *
+        *            JAVASCRIPT            *
+        *                                  *
+        ************************************
+
+        -->
+
+        <script>
+            var targetOrigin = '*';
+
+            window.addEventListener("load", function() {
+                window.parent.postMessage('loaded', targetOrigin);
+            }, true);
+
+            window.addEventListener("message", function(e) { 
+                if ("stop_demo" == e.data) {
+                    window.parent.postMessage('finished_exit', targetOrigin);
+                }
+            }, true);
+
+        </script>
+
+        <script>
+            var bigvideo, minivideo;
+            window.onload = function() {
+
+                // The two videos
+                minivideo = document.querySelector("#robot2 > video");
+                bigvideo = document.querySelector("#trailer > video");
+
+                // The "big" video starts with a black screen
+                // Let's jump into the video for more action
+
+                // bigvideo.currentTime = 13.38;
+
+                // When you click on the first text block,
+                // raise the text
+                var bubble1 = document.getElementById("bubble1");
+                bubble1.addEventListener("click", function() {
+                        document.body.classList.add("selectingvideo");
+                        setTimeout(function() {
+                            document.body.classList.remove("selectingvideo");
+                            document.body.classList.toggle("videoselected");
+                            }, 1000);
+                        }, true);
+
+                // Clicking on the "big" video, make it big
+                var trailer = document.querySelector("#trailer video");
+                trailer.addEventListener("click", function() {
+                            document.body.classList.toggle("fullpage");
+                        }, true);
+
+
+                // The video controls
+                minivideo.addEventListener("ended", updateButton, true);
+                minivideo.addEventListener("play", updateButton, true);
+                bigvideo.addEventListener("ended", updateButton, true);
+                bigvideo.addEventListener("play", updateButton, true);
+                updateButton();
+
+            }
+
+            function toggleminivideo() {
+                !isPlaying(minivideo) ? minivideo.play() : minivideo.pause();
+                updateButton();
+            }
+            function togglebigvideo() {
+                !isPlaying(bigvideo) ? bigvideo.play() : bigvideo.pause();
+                updateButton();
+            }
+
+            function updateButton() {
+                // MINI
+                document.querySelector("#robot2 .play").style.display =
+                    isPlaying(minivideo) ? "none":"block";
+                document.querySelector("#robot2 .pause").style.display =
+                    !isPlaying(minivideo) ? "none":"block";
+
+                // BIG
+                document.querySelector("#trailer .play").style.display =
+                    isPlaying(bigvideo) ? "none":"block";
+                document.querySelector("#trailer .pause").style.display =
+                    !isPlaying(bigvideo) ? "none":"block";
+            }
+
+
+            function isPlaying(video) {
+                return (!video.paused && !video.ended);
+            }
+        </script>
+
+        <!--
+
+        ************************************
+        *                                  *
+        *               CSS                *
+        *                                  *
+        ************************************
+
+        -->
+
+
+
+        <style>
+            @font-face  {
+                font-family: fface; src: url(Komika_display.ttf);
+            }
+
+            html {
+                background-image: url("BackgroundEdit.jpg");
+                background-color: black;
+                background-repeat: no-repeat;
+                height: 100%;
+                overflow: hidden;
+                font-family: fface;
+            }
+
+            #page {
+                background: #ddd;
+                border: 10px solid black;
+                -moz-border-radius-topleft: 150px;
+                -moz-transition-property: border-width;
+                -moz-transition-duration: 1.5s;
+                margin: auto;
+                margin-top: 50px;
+                width: 1030px;
+                height: 580px;
+                position: relative;
+            }
+
+            .frame {
+                position: absolute;
+            }
+
+            .bubble {
+                background-color: white;
+                border: 10px solid black;
+                color: black;
+                padding: 5px;
+                -moz-transition-duration: 1s;
+            }
+
+            /* Wellcome screen */
+            body.intro #intro {
+                opacity: 1;
+            }
+
+            #intro > a{
+                text-decoration: none;
+                color: black;
+            }
+
+            body.intro #logo {
+                -moz-transform: translate(0px, -250px);
+            }
+
+            body.intro #robot1 {
+                -moz-transform: translate(0px, 2000px);
+            }
+
+            body.intro #robot2 {
+                -moz-transform: translate(0px, -500px);
+            }
+
+            body.intro #trailer {
+                -moz-transform: translate(2000px, 0px);
+            }
+
+            body.intro #bubble1 {
+                -moz-transform: translate(0px, 2000px);
+            }
+
+            body.intro #bubble2 {
+                -moz-transform: translate(0px, -600px);
+            } 
+
+            body.videoselected #trailer {
+                z-index: 1000;
+            }
+
+            body.videoselected #bubble1,
+            body.videoselected #bubble2 {
+                background-color: #999;
+                -moz-transform: scale(0.7);
+            }
+
+            body.selectingvideo #bubble1 {
+                -moz-transform: translate(0px, -180px) scale(0.9) rotate(70deg);
+            }
+            body.selectingvideo #bubble2 {
+                -moz-transform: translate(0px, 180px) rotate(0deg);
+            }
+            body.selectingvideo #trailer {
+                -moz-transform: scale(0.9, 0.9);
+            }
+
+
+            .svgbutton path {pointer-events: none}
+            .svgbutton {
+                -moz-transition-property: opacity;
+                -moz-transition-duration: 0.5s;
+                opacity: 0.2;
+            }
+            #miniplayer:hover {
+                display: block;
+                opacity: 0.7;
+            }
+            #fullpage:hover,
+            #bigplayer:hover {
+                display: block;
+                opacity: 1;
+            }
+
+            /**** POSITION *****/
+            #intro {
+                opacity: 0;
+                top: 100px;
+                left: 250px;
+                font-size: 30px;
+                -moz-transition-duration: 0.2s;
+                text-align: center;
+            }
+
+            #logo {
+                top: 40px;
+                left: 400px;
+                -moz-transition-delay: 2s;
+                -moz-transition-duration: 1s;
+            }
+
+            #robot1 {
+                top: 270px;
+                left: 10px;
+                -moz-transition-delay: 1s;
+                -moz-transition-duration: 1s;
+            }
+
+            #robot2 {
+                top: 10px;
+                left: 10px;
+                -moz-transition-duration: 1s;
+            }
+
+            #trailer > video {
+                width: 100%;
+                height: 100%;
+            }
+
+            #trailer {
+                top: 170px;
+                left: 320px;
+                width: 675px;
+                height: 380px;
+                border: 10px solid black;
+                background-color: black;
+                -moz-transition-duration: 1s;
+            }
+
+            #trailer svg {
+                top: 260px;
+                left: 0px;
+            }
+
+            body.fullpage #page {
+            }
+            body.fullpage #trailer svg {
+                top: 440px;
+            }
+            body.fullpage #trailer {
+                top: -10px;
+                left: -10px;
+                width: 1030px;
+                height: 580px;
+            }
+
+            #bubble1 {
+                font-size: 18px;
+                top: 70px;
+                left: 750px;
+
+                width: 200px;
+                text-align: left;
+                background-color: #FFF;
+            }
+
+            #bubble2 {
+                top: 470px;
+                left: 490px;
+                font-size: 30px;
+            }
+
+            .svginside > * {
+                position: absolute;
+            }
+            #shadow {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                background-color: #111;
+                background-image: -moz-radial-gradient(50% 110% 90deg, circle, #FFF 0%, rgba(170, 200, 255, 50) 4%, rgba(0, 0, 0, 0) 40%);
+                -moz-transition-duration: 2s;
+                -moz-transition-delay: 0.5s;
+            }
+            body.fullpage #shadow {
+                opacity: 1;
+            }
+
+            #license {
+                position: absolute;
+                -moz-transform: rotate(90deg);
+                -moz-transform-origin: top left;
+                background-color: black;
+                border: 10px solid black;
+                color: white!important;
+                top: -10px;
+                left: 1080px;
+                width: 580px;
+                font-size: 20px;
+                font-family: fface;
+            }
+            #license > a {
+                color: white;
+            }
+
+
+        </style>
+    </head>
+
+
+    <!--
+
+    ************************************
+    *                                  *
+    *               HTML               *
+    *                                  *
+    ************************************
+
+    -->
+
+ 
+    <body class="intro">
+        <div id="shadow"></div>
+        <div id="page">
+            <div id="logo" class="frame">
+                <a href="http://projectlondonmovie.com/">
+                    <img src="logo.png"/>
+                </a>
+            </div>
+
+            <div id="intro" class="frame" onclick="document.body.classList.remove('intro')">
+                <a href="#">
+                    A very small demo from the future.<br/><br/>
+                    <img src="firefox.png" width="150"/><br/><br/>
+                    <img src="logo.png"/><br/>
+                </a>
+            </div>
+            <div id="license" xmlns:cc="http://creativecommons.org/ns#" about="http://projectlondonmovie.com/">
+                <a rel="cc:attributionURL" property="cc:attributionName" href="http://www.spiralproductions.com">
+                    Spiral Productions LLC </a> /
+                <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a> -
+            </div>
+
+            <div id="robot1" class="frame svginside">
+                <svg width="300px" height="300px">
+                <defs>
+                <path id="shape1" d="M 10 10 L 20 10 Q 150,120 280,10 L 290 10 L 290 290 L 20,290 L 10 290 z"/>
+                </defs>
+                <clipPath id="clip1">
+                <use xlink:href="#shape1"/>
+                </clipPath>
+                <use xlink:href="#shape1" fill="transparent" stroke="black" stroke-width="20px"/>
+                </svg>
+                <img src="robot1.jpg" style="clip-path: url(#clip1);" width="300px"/>
+            </div>
+
+            <div id="robot2" class="frame svginside">
+                <svg width="300px" height="300px">
+                <defs>
+                <circle id="shape4" cx="150" cy="150" r="140"/>
+                </defs>
+                <clipPath id="clip4">
+                <use xlink:href="#shape4"/>
+                </clipPath>
+                <use xlink:href="#shape4" fill="transparent" stroke="black" stroke-width="20px"/>
+                </svg>
+                <video src="http://videos.mozilla.org/serv/mozhacks/demos/resources/londonproject/fight.ogv" poster="robot2.jpg" autobuffer preload="auto"
+                onended="this.play()" style="clip-path: url(#clip4);"></video>
+                <svg width="300px" height="300px">
+                <g transform="scale(2) translate(-21 -21)" id="miniplayer" class="svgbutton">
+                <circle stroke="black" fill="transparent" stroke-width="10" cx="96" cy="96" r="30" onclick="toggleminivideo();"/>
+                <path class="play" fill="black" d="M 88 81 v 30 l 25 -15 Z"/>
+                <path class="pause" fill="black" stroke-width="10" stroke="black" d="M 88 81 v 30 m 16 -30 v 30"/>
+                </g>
+                </svg>
+            </div>
+
+            <div id="trailer" class="frame svginside">
+                <video poster="trailer.png" autobuffer preload="auto" src="http://videos.mozilla.org/serv/mozhacks/demos/resources/londonproject/trailer.webm">
+                </video>
+                <svg width="150px" height="150px">
+                <g transform="scale(2) translate(-60 -60)" id="bigplayer" class="svgbutton">
+                <rect stroke="black" fill="white" stroke-width="5" x="66" y="66" width="60" height="60" onclick="togglebigvideo();"/>
+                <path class="play" fill="black" d="M 88 81 v 30 l 25 -15 Z"/>
+                <path class="pause" fill="black" stroke-width="10" stroke="black" d="M 88 81 v 30 m 16 -30 v 30"/>
+                </g>
+                </svg>
+            </div>
+
+            <div class="bubble frame" id="bubble1">
+                Project London is an independent, no-budget, feature-length, live action movie with vivid, intense, and marrow-vibrating visual effects and animations created with Open Source software.
+            </div>
+            <div class="bubble frame" id="bubble2">
+                This Movie Will Eat Your Planet...
+            </div>
+
+            <svg>
+            <filter id="bw">
+            <feColorMatrix values="0.3 0.3 0.3 0 0 0.3 0.3 0.3 0 0 0.3 0.3 0.3 0 0 0 0 0 1 0"/>
+            </filter>
+            </svg>
+
+
+        </div>
+    </body>
+</html>

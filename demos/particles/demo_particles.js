@@ -1,4 +1,4 @@
-/*!
+/** -*- compile-command: "jslint-cli demo_particles.js" -*-
  * jQuery JavaScript Library v1.4.2
  * http://jquery.com/
  *
@@ -8578,7 +8578,7 @@ RenderParticles.prototype = {
             "varying vec4 color;",
             "void main(void) {",
             "vec4 c = color;",
-            "c *= 0.8;",
+            "c *= 0.4;",
             "gl_FragColor = c;",
             "}",
             ""
@@ -8642,8 +8642,8 @@ Particles.prototype = {
     },
 
     imageAreReady: function() {
-        if (this.imageReady['http://portfolio.plopbyte.net/wp-uploads/2010/demo-particles-osg-js/models/file_low.png'] === true &&
-            this.imageReady['http://portfolio.plopbyte.net/wp-uploads/2010/demo-particles-osg-js/models/file_high.png'] === true) {
+        if (this.imageReady['models/file_low.png'] === true &&
+            this.imageReady['models/file_high.png'] === true) {
             return true;
         }
         return false;
@@ -8722,7 +8722,7 @@ Particles.prototype = {
             "precision highp float;",
             "#endif",
             "void main(void) {",
-            "   gl_FragColor = vec4( 0.0, 0.0, 0.0, 0.4);",
+            "   gl_FragColor = vec4( 0.0, 0.0, 0.0, 0.8);",
             "}",
             ""
         ].join('\n');
@@ -8764,8 +8764,8 @@ Particles.prototype = {
         var fbSpawnHigh = this.createRttFrameBuffer(spawnHigh);
         this.spawnTextures = [spawnLow, spawnHigh];
         this.spawnFrameBuffers = [fbSpawnLow, fbSpawnHigh];
-        this.spawnSources = [ this.getTextureFromName("http://portfolio.plopbyte.net/wp-uploads/2010/demo-particles-osg-js/models/file_low.png"), this.getTextureFromName("http://portfolio.plopbyte.net/wp-uploads/2010/demo-particles-osg-js/models/file_high.png")];
-        this.sourceColorTexture = this.getTextureFromName("http://portfolio.plopbyte.net/wp-uploads/2010/demo-particles-osg-js/models/file_color.png");
+        this.spawnSources = [ this.getTextureFromName("models/file_low.png"), this.getTextureFromName("models/file_high.png")];
+        this.sourceColorTexture = this.getTextureFromName("models/file_color.png");
         this.computeParticles.setColorTexture(this.sourceColorTexture);
     },
 
@@ -8942,7 +8942,7 @@ function drawScene()
         DefaultImage.onload = function() {
             Ready = true;
         };
-        DefaultImage.src="http://portfolio.plopbyte.net/wp-uploads/2010/demo-particles-osg-js/models/file_low.png";
+        DefaultImage.src="models/file_low.png";
         NotReady=false;
     }
     if (!Ready) {
@@ -8974,22 +8974,22 @@ function drawScene()
         StartTime = (new Date).getTime();
         particlesSystem.initComputeBuffers();
         particlesSystem.render();
-        var myObject = document.getElementById("OpenSceneGraph-WebGL-demo-particles");
-        jQuery(myObject).click(
+        var myCanvas = document.getElementById("OpenSceneGraph-WebGL-demo-particles");
+        jQuery(myCanvas).click(
             function(e) {
                 var posx = 0;
-	        var posy = 0;
-	        if (!e) {
+                var posy = 0;
+                if (!e) {
                     e = window.event;
                 }
-	        if (e.pageX || e.pageY) {
-		    posx = e.pageX;
-		    posy = e.pageY;
-	        }
-	        else if (e.clientX || e.clientY) {
-		    posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-		    posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-	        }
+                if (e.pageX || e.pageY) {
+                    posx = e.pageX;
+                    posy = e.pageY;
+                }
+                else if (e.clientX || e.clientY) {
+                    posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+                    posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+                }
 
                 var divGlobalOffset = function ElementPosition(obj) {
                     var x=0, y=0;
@@ -9003,11 +9003,11 @@ function drawScene()
                     }
                     return [x,y];
                 };
-	        // posx and posy contain the mouse position relative to the document
-	        // Do something with this information
-                var globalOffset = divGlobalOffset(myObject);
-                posx = (posx - globalOffset[0]) / myObject.width - 0.5;
-                posy = -0.6 * ((posy - globalOffset[1] ) / myObject.height - 0.5);
+                // posx and posy contain the mouse position relative to the document
+                // Do something with this information
+                var globalOffset = divGlobalOffset(myCanvas);
+                posx = (posx - globalOffset[0]) / myCanvas.width - 0.5;
+                posy = -0.6 * ((posy - globalOffset[1] ) / myCanvas.height - 0.5);
 
                 particlesSystem.computeParticles.setPinch(1);
                 particlesSystem.computeParticles.setPhysics(1);
@@ -9018,6 +9018,9 @@ function drawScene()
 
                 if (MotionEnabled === 0) {
                     MotionEnabled=1;
+                    setTimeout(function() {
+                        window.parent.postMessage('show_exit_ui', targetOrigin);
+                    }, RestoreLogoTime * 1000 + 10000);
                 }
 
                 if (PinchFrame === 0 ) {
@@ -9581,7 +9584,7 @@ function webGLStart() {
     gl.depthFunc(gl.LEQUAL);
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 
-    setInterval(frame, 16);
+    setInterval(frame, 20);
 
 }
 var numberFrame = 0;

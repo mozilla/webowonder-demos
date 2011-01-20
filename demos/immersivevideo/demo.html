@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+        <script src="Sylvester.js"></script>
+        <script src="webglu.js"></script>
+        <script src="main.js"></script>
+
+        <script>
+            var targetOrigin = '*';
+
+            window.addEventListener("load", function() {
+                window.parent.postMessage('loaded', targetOrigin);
+            }, true);
+
+            window.addEventListener("message", function(e) { 
+                if ("stop_demo" == e.data) {
+                    window.parent.postMessage('finished_exit', targetOrigin);
+                }
+            }, true);
+
+        </script>
+
+
+
+        <style>
+            @font-face { font-family: merge; src: url(fonts/merge.otf); }
+            video {display: none}
+            body, html { padding: 0px; margin: 0px; width: 100%; height: 100%;}
+            * {pointer-events: none}
+            body { background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 130px, rgba(0, 0, 0, 0.4) 230px, rgba(0, 0, 0, 0.4) 280px, rgba(0, 0, 0, 0) 355px); background-color: #4C565D; background-size: 100% 100%; background-repeat: no-repeat; }
+            h1 { font-family: merge; color: #d9dadc; font-weight: normal; margin: 0px; margin-left: 20px; font-size: 32px; }
+            #instruction { margin-top: 0px; margin-left: 40px; font-family: merge; color: #d9dadc; }
+            #instruction * { vertical-align: top; display: inline-block; }
+            #instruction span { margin-left: 10px; margin-right: 10px; line-height: 40px; font-size: 20px; }
+            #instruction img { height: 30px; }
+            #hand { padding-top: 10px; }
+            #playerbox { width: 600px; height: 340px; margin: auto; top: 100px; left: 50%; margin-left: -300px; position: absolute; cursor: move; }
+            #playerbox:after { content: ""; position: absolute; display: block; width: 1000px; margin: auto; height: 80px; bottom: -60px; left: 50%; margin-left: -500px; background-image: url(imgs/shadow.png); background-size: 100% 100%; opacity: 0.7; }
+            canvas { display: block; pointer-events: auto; }
+            #tv { position: relative; margin-top: -340px; left: 0px; height: 340px; background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 30px, rgba(0, 0, 0, 0.4) 130px, rgba(0, 0, 0, 0.4) 180px, rgba(0, 0, 0, 0) 255px); background-color: #4C565D; mask: url(#shape); }
+            .loading * { pointer-events: none!important; }
+            #loader { background-image: url(imgs/throbber.gif); background-repeat: no-repeat; background-position: center center; position: absolute; top: 0; left: 50%; background-color: rgba(0, 0, 0, 0.5); width: 600px; height: 340px; display: none; margin-left: -300px; }
+            .loading #loader { display: block; }
+            #menu { position: fixed; top: 120px; left: 50%; margin: 0; padding: 0; list-style-type: none; margin-left: 320px; color: #d9dadc; font-family: merge; font-size: 20px; }
+            li { margin: 0; padding: 0; opacity: 0.5; cursor: pointer; pointer-events: auto; }
+            .selected { opacity: 1; }
+            #credits { position: fixed; bottom: 0; right: 0; font-family: merge; vertical-align: top; text-align: left; }
+            #credits * { vertical-align: top; display: inline; pointer-events: auto; }
+            #credits p { font-size: 16px; line-height: 49px; color: #d9dadc; }
+            a { border: 0px; pointer-events: auto; color: #d9dadc; }
+        </style>
+    </head>
+    <body onload='start()'>
+        <svg viewBox="231 184 340 233" preserveAspectRatio="none" style="height: 0px;">
+            <mask id="shape" >
+                <rect x="0" y="0" width="600" height="340" fill="white"/>
+                <path transform="scale(1.76, 1.45) translate(-231, -184)" d="M557.858,402c-0.733,3.31-4.051,6.293-7.358,6.646c-100.334,10.604-200.667,10.604-301,0 c-3.307-0.354-6.625-3.337-7.358-6.646c-14.882-67.666-14.882-135.333,0-203c0.733-3.31,4.051-6.293,7.358-6.647 c100.333-10.604,200.666-10.604,301,0c3.308,0.354,6.625,3.337,7.358,6.647C572.74,266.667,572.74,334.334,557.858,402z" fill="black" stroke=""/>
+            </mask>
+        </svg>
+        <h1>immersive video</h1>
+        <div id="instruction">
+            <img id="hand" src="imgs/hand.png"><span>pan &amp; scroll</span><img id="mouse" src="imgs/mouse.png">
+        </div>
+        <section id="playerbox">
+            <canvas id="player" width="600" height="340"></canvas>
+            <div id="loader"></div>
+            <div id="tv"></div>
+        </section>
+        <ul id="menu">
+            <li class="selected" onclick="switchVideo('http://videos.mozilla.org/serv/mozhacks/demos/resources/immersivevideo//cannes.webm', this);">Cannes Beach
+            <li onclick="switchVideo('http://videos.mozilla.org/serv/mozhacks/demos/resources/immersivevideo//dubai.webm', this);">Dubaï Street View
+            <li onclick="switchVideo('http://videos.mozilla.org/serv/mozhacks/demos/resources/immersivevideo//angkor.webm', this)">Temples of Angkor
+        </ul>
+        <div id="credits">
+            <p>Powered by <a href="https://github.com/OneGeek/WebGLU/">WebGLU.</a></p>
+            <p>Video provided by <a href="http://globalvision.ch"><img src="imgs/logo.png" width="150"></a></p>
+        </div>
+    </body>
+</html>

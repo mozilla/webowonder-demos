@@ -1,4 +1,4 @@
-  blahmodels = [BlenderExport.RedPanda];
+  blahmodels = [BlenderExport.finch, BlenderExport.ghost, BlenderExport.lotus];
   window.currentModel = blahmodels[0];
 
   // failing at vector math here

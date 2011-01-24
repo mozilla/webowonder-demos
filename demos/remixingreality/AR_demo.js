@@ -225,9 +225,18 @@
 
     toArray(byClass('content')).forEach(function(elem){
       elem.onmousedown = function(){
-        setImage(this);
+        if (this.tagName == 'IMG') {
+          var img = new Image();
+          img.onload = function() {
+            setImage(this);
+          };
+          img.src = this.src.replace(/thumb_([^\.]+)/, '$1_bg');
+        } else {
+          setImage(this);
+        }
       }
     });
+    currentElem.onmousedown();
 
     var gcanvas = E.canvas(video.width, video.height + offset);
     byId('display').appendChild(gcanvas);
@@ -236,7 +245,7 @@
     param.copyCameraMatrix(display2.camera.perspectiveMatrix, 100, 10000);
     display2.camera.useProjectionMatrix = true;
     display2.drawOnlyWhenChanged = true;
-    display2.camera.perspectiveMatrix[13] -= offset*0.66;
+    display2.camera.perspectiveMatrix[13] -= offset*0.80;
     display2.camera.perspectiveMatrix[5] *= (video.height/(video.height+offset));
 
     visibleLength=0, visibleRes=[];
@@ -258,15 +267,6 @@
     videoTex.material.textures.Texture0.image = videoCanvas;
     videoTex.material.textures.Texture0.generateMipmaps = false;
     display.scene.appendChild(videoTex);
-    var f = new Magi.RadialGlowFilter();
-    f.material.floats.radius = 0.05;
-    f.material.floats.intensity = 2.0;
-    f.material.floats.falloff = 0.9;
-    f.material.floats.currentFactor = -0.6;
-    f.material.floats.center[0] = 0.5;
-    f.material.floats.center[1] = 0;
-    filter = f;
-    //display.postEffects.push(f);
 
     display2.scene.addFrameListener(function(t,dt){
       display.draw(t,dt);
@@ -335,7 +335,6 @@
         pastResults[currId].id = currId;
         pastResults[currId].transform = Object.asCopy(resultMat);
       }
-      //console.log(new Date()-t);
       visibleLength = 0;
       visibleRes = [];
       for (var i in pastResults) {
@@ -399,7 +398,7 @@
           }
           pivot2 = new Magi.Node();
           pivot2.transform = mat4.identity();
-          pivot2.setScale(30.5);
+          pivot2.setScale(32);
           pivot.pivot = pivot2;
           pivot.appendChild(pivot2);
           pivot2.appendChild(hole);
@@ -424,19 +423,6 @@
               this.appendChild(model);
             }
             this.blenderModel.dance = !audioTag.paused;
-//             if (visibleLength > 1) {
-//               var other = (cubes[visibleRes[0]] != this) ? visibleRes[0] : visibleRes[1];
-//               var a = getZAngle(this.blenderModel, cubes[other].blenderModel, this.flip);
-//               this.blenderModel.cube.setAngle(-Math.PI/2+a);
-//               if (!this.danceStart)
-//                 this.danceStart = t;
-//               if (this.danceStart && t-this.danceStart > 1500)
-//                 this.blenderModel.dance = true;
-//             } else {
-//               this.danceStart = false;
-//               this.blenderModel.cube.setAngle(-Math.PI/2);
-//               this.blenderModel.dance = false;
-//             }
           });
           cubes[i] = pivot;
         }

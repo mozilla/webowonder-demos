@@ -2872,7 +2872,7 @@ Array.prototype.map = function(f) {
 Array.prototype.unique = function() {
   var a = [this[0]];
   for (var i=1; i<this.length; i++) {
-    if (this[i] != this[i-1]) 
+    if (this[i] != this[i-1])
       a.push(this[i]);
   }
   return a;
@@ -3175,7 +3175,7 @@ E.tags = "a abbr acronym address area audio b base bdo big blockquote body br bu
     TEXT( {id : 'foo', value : 'bar'} );
   is equivalent to
     E('INPUT', {type: 'TEXT'}, {id : 'foo', value : 'bar'});
-  
+
 */
 (function() {
   E.tags.forEach(function(t) {
@@ -4202,7 +4202,8 @@ Magi.Shader.createProgram = function(gl, shaders) {
   }
   if (gl.getProgramParameter(id, gl.VALIDATE_STATUS) != 1) {
     this.deleteShader(gl,prog);
-    throw(new Error("Failed to validate shader"));
+    console.log(shaders);
+    throw(new Error("Failed to validate shader: "+gl.getProgramInfoLog(id)));
   }
   return prog;
 }
@@ -6786,7 +6787,7 @@ Magi.MultiMaterial = {
     "  float specular = pow( max(dot(R, E), 0.0), 2.0 );"+
     "  vec4 lcolor = diffuse + matSpec * LightSpecular * specular;"+
     "  if (lambertTerm > 0.0) { color = color + lcolor * lambertTerm; }"+
-    "  else { color = color + lcolor * ambient.a * -lambertTerm; } "+ 
+    "  else { color = color + lcolor * ambient.a * -lambertTerm; } "+
     "  color *= matDiff.a;"+
     "  color.a = matDiff.a;"+
     "  gl_FragColor = color;"+
@@ -6935,13 +6936,13 @@ Magi.Tar.prototype = {
     xhr.setRequestHeader("Content-Type", "text/plain");
     xhr.send(null);
   },
- 
+
   cleanHighByte : function(s) {
-    return s.replace(/./g, function(m) { 
+    return s.replace(/./g, function(m) {
       return String.fromCharCode(m.charCodeAt(0) & 0xff);
     });
   },
-  
+
   parseTar : function(text) {
     this.initLoad();
     this.processTarChunks([text], 0, text.length);
@@ -6955,7 +6956,7 @@ Magi.Tar.prototype = {
           header.data = this.chunkSubstring(chunks, offset, offset+header.length);
           header.toDataURL = this.__toDataURL;
           offset += 512 * Math.ceil(header.length / 512);
-          if (this.onstream) 
+          if (this.onstream)
             this.onstream(header, this.gzip);
         } else { // not loaded yet
           break;
@@ -6976,7 +6977,7 @@ Magi.Tar.prototype = {
     this.parseTime += new Date() - t;
     return offset;
   },
-  
+
   parseTarHeader : function(text, offset) {
     var i = offset || 0;
     var h = {};
@@ -7322,7 +7323,7 @@ Magi.Bin.prototype = {
       raw_vertices.push(this.readNormalizedFixedPoint16(data, i));
     return i;
   },
-  
+
   readTexVerts : function(data, i, raw_vertices, vertCount) {
     for (var l=i+vertCount*2*2; i<l; i+=2)
       raw_vertices.push(this.readNormalizedUFixedPoint16(data, i));
@@ -7376,7 +7377,7 @@ Magi.Bin.prototype = {
     var xtrans = this.readFloat32(data, i); i+=4;
     var ytrans = this.readFloat32(data, i); i+=4;
     var ztrans = this.readFloat32(data, i); i+=4;
-    
+
     i = this.readVerts(data, i, raw_vertices, vertCount);
     this.translateAndScaleVertices(raw_vertices, xscale, yscale, zscale, xtrans, ytrans, ztrans);
     i = this.readTris(data, i, geo_tris, quadCount, triCount);
@@ -7471,7 +7472,7 @@ Magi.Bin.prototype = {
         vert_norms.addNormal(faces[fi+2], normal);
       }
     }
-    
+
     if (!no_interpolation) {
       vert_norms.normalize();
       for (var i=0; i<faces.length; i++) {

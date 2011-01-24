@@ -195,6 +195,7 @@
 
     byId('display').appendChild(video);
     new Draw(byId('draw'));
+    new AudioPlayer(byId('audio1'));
 
     var canvas = document.createElement('canvas');
     canvas.width = toInt(ratio*video.width);

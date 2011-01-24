@@ -80,3 +80,122 @@ TextEdit = Klass({
     this.canvas.changed = true;
   }
 });
+
+AudioPlayer = Klass({
+  sc : 1,
+
+  initialize : function(audio) {
+    var self = this;
+    this.point = {x:0, y:0};
+    this.lastTime = null;
+    this.audio = audio;
+    this.canvas = document.createElement('canvas');
+    this.canvas.width = 140;
+    this.canvas.height = 140;
+    audio.parentNode.insertBefore(this.canvas, audio);
+    audio.parentNode.removeChild(audio);
+    this.ctx = this.canvas.getContext('2d');
+    this.canvas.style.cursor = 'pointer';
+    this.canvas.onclick = function(ev) {
+      var p = Mouse.getRelativeCoords(this, ev);
+      self.point = p;
+      var w = self.canvas.width;
+      var h = self.canvas.height;
+      var dx = w/2-self.point.x;
+      var dy = h/2-self.point.y;
+      var dc = Math.sqrt(dx*dx + dy*dy);
+      if (dc > h/2-20-6 && dc < h/2-20+6) {
+        var pos = ((Math.atan2(dy,dx) / (2*Math.PI)) + 0.75) % 1;
+        self.audio.currentTime = pos * self.audio.duration;
+      } else {
+        if (self.audio.paused || self.audio.currentTime == self.audio.duration)
+          self.audio.play();
+        else
+          self.audio.pause();
+      }
+      ev.preventDefault();
+    };
+    window.addEventListener('mousemove', function(ev) {
+      self.point = null;
+    }, false);
+    this.canvas.onmouseout = function() {
+      self.point = null;
+    };
+    this.canvas.onmousemove = function(ev) {
+      var p = Mouse.getRelativeCoords(this, ev);
+      self.point = p;
+      var w = self.canvas.width;
+      var h = self.canvas.height;
+      var dx = w/2-self.point.x;
+      var dy = h/2-self.point.y;
+      var dc = Math.sqrt(dx*dx + dy*dy);
+      if (Mouse.state[Mouse.LEFT] && dc > h/2-20-6 && dc < h/2-20+6) {
+        var pos = ((Math.atan2(dy,dx) / (2*Math.PI)) + 0.75) % 1;
+        self.audio.currentTime = pos * self.audio.duration;
+      }
+      Event.stop(ev);
+    };
+    setInterval(function() {
+      self.draw();
+    }, 33);
+  },
+
+  draw : function() {
+    if (this.lastTime == this.audio.currentTime) {
+      return;
+    }
+    this.lastTime = this.audio.currentTime;
+    var t = new Date().getTime();
+    var w = this.canvas.width;
+    var h = this.canvas.height;
+    var ctx = this.ctx;
+    ctx.clearRect(0,0,w,h);
+    ctx.save();
+    ctx.translate(w/2,h/2);
+    var bufs = this.audio.buffered;
+    ctx.strokeStyle = 'rgba(0,192,255,0.1)';
+    ctx.lineWidth = 12;
+    for (var i=0; i<bufs.length; i++) {
+      var start = bufs.start(i) / this.audio.duration;
+      var end = bufs.end(i) / this.audio.duration;
+      ctx.beginPath();
+      ctx.arc(0,0, h/2 - 20, -Math.PI/2 + start*Math.PI*2, -Math.PI/2 + end*Math.PI*2);
+      ctx.stroke();
+    }
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(0,192,255,1)';
+    ctx.arc(0,0, h/2 - 20, -Math.PI/2, -Math.PI/2+Math.PI*2 * (this.audio.currentTime / this.audio.duration));
+    ctx.lineWidth = 8;
+    ctx.stroke();
+    ctx.beginPath();
+    this.sc += (1 - this.sc) / 2;
+    var lt = this.lastTime;
+    this.lastTime = null;
+    if (this.point) {
+      var dx = w/2-this.point.x;
+      var dy = h/2-this.point.y;
+      var dc = Math.sqrt(dx*dx + dy*dy);
+      if (dc < 30) {
+        if (lt == null)
+          lt = this.lastTime = t;
+        else
+          this.lastTime = lt;
+        this.sc = 1.1 + 0.1 * -Math.cos((t-lt)/250);
+      }
+    }
+    ctx.scale(this.sc, this.sc);
+    if (this.audio.paused || this.audio.currentTime == this.audio.duration) {
+      ctx.moveTo(+ 30, 0);
+      ctx.lineTo(- 20, - 20);
+      ctx.lineTo(- 20, + 20);
+      ctx.closePath();
+      ctx.fillStyle = '#00c0ff';
+      ctx.fill();
+    } else {
+      ctx.fillStyle = '#00c0ff';
+      ctx.fillRect(- 20, - 20, 15, 40);
+      ctx.fillRect(+ 5, - 20, 15, 40);
+    }
+    ctx.restore();
+  }
+});

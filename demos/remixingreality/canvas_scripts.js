@@ -4,6 +4,11 @@ Draw = Klass({
     this.canvas.setAttribute('tabindex', '-1');
     this.ctx = canvas.getContext('2d');
     var self = this;
+    var img = new Image();
+    img.onload = function() {
+      self.ctx.drawImage(img, 0, 0, self.canvas.width, self.canvas.height);
+    };
+    img.src = 'i/drawing_bg.png';
     this.canvas.onmousedown = function(ev) {
       this.focus();
     };
@@ -14,9 +19,11 @@ Draw = Klass({
       }
       Event.stop(ev);
     };
-    this.canvas.onkeydown = function(ev) {
-      if (Key.match(ev, [Key.DELETE, Key.BACKSPACE]))
+    window.onkeydown = function(ev) {
+      if (Key.match(ev, [Key.DELETE, Key.BACKSPACE])) {
         self.ctx.clearRect(0,0,self.canvas.width, self.canvas.height);
+        self.ctx.drawImage(img, 0, 0, self.canvas.width, self.canvas.height);
+      }
     }
     this.canvas.onmousemove = function(ev) {
       if (Mouse.state[Mouse.LEFT]) {
@@ -27,13 +34,14 @@ Draw = Klass({
       }
       Event.stop(ev);
     };
+    this.canvas.style.cursor = 'crosshair';
   },
 
   draw : function(ev) {
     var p = Mouse.getRelativeCoords(this.canvas, ev);
     if (!this.lastPoint)
       this.lastPoint = {x:p.x-1, y:p.y-1};
-    this.ctx.strokeStyle = 'lightblue';
+    this.ctx.strokeStyle = 'black';
     this.ctx.lineWidth = 3;
     this.ctx.beginPath();
     this.ctx.moveTo(this.lastPoint.x, this.lastPoint.y);

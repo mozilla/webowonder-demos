@@ -1,0 +1,71 @@
+body {
+  -moz-user-select: none;
+  background-color: #37383A;
+}
+
+html, body, #demo {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+
+#go {
+  -moz-transition-duration: 1s;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  margin-left: -24px;
+}
+
+#go.pressed {
+  -moz-box-shadow: 0px 0px 15px 10px white;
+  -moz-transform: scale(1.3);
+  background-color: white;
+}
+
+#panel {
+  -moz-transform: scale(0);
+  -moz-transition: all 0.3s;
+  -moz-transition-timing-function: linear;
+  -moz-transform-origin: 50% 100%;
+
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  margin-left: -200px;
+}
+
+#panel.selected {
+  -moz-transform: scale(1);
+  -moz-transition: all 0.5s;
+  -moz-transition-timing-function: cubic-bezier(0.2, 0.2, 0.6, 3);
+}
+
+#panel, #go {
+  z-index: 10000;
+}
+
+#bag {
+  display: none;
+}
+
+.player {
+  position: absolute;
+  left: 0;
+  top: 0;
+  -moz-transform-origin: 0px 0px;
+  padding: 0px;
+  margin: 0px;
+  opacity: 0.9;
+}
+
+.player.selected {
+  z-index: 999;
+}
+
+.player > canvas {
+  padding: 0px;
+  margin: 0px;
+}
+

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Multitouch</title>
+    <style>@import url(demo.css);</style>
+    <script src="sylvester.js"></script>
+    <script src="demo.js"></script>
+  </head>
+
+  <body>
+    <section id="demo">
+      <svg id="panel" width="400px" height="400px"  viewBox="-10 -10 420 420">
+      <path d="M 0 80 L 400 80 L 400 340 L 260 340 L 200 390 L 140 340 L 0 340 Z"
+      fill="rgba(0, 0, 0, 0.5)" stroke="#FFF" stroke-width="10px" style="stroke-linejoin: round;"/>
+
+      <foreignObject x="220" y="220" width="160" height="100">
+      <video preload="auto" src="http://videos.mozilla.org/serv/mozhacks/demos/resources/plztouchme/burritttoooo.webm" onended="this.play()" width="100%"></video>
+      </foreignObject>
+
+      <foreignObject x="220" y="100" width="160" height="100">
+      <video preload="auto" src="http://videos.mozilla.org/serv/mozhacks/demos/resources/plztouchme/jackie.webm" onended="this.play()" width="100%"></video>
+      </foreignObject>
+
+      <foreignObject x="20" y="100" width="160" height="100">
+      <img src="img1.jpg" width="100%">
+      </foreignObject>
+
+      <foreignObject x="20" y="220" width="160" height="100">
+      <img src="img2.jpg" width="100%">
+      </foreignObject>
+
+      </svg>
+      <div id="bag"></div>
+      <img id="go" src="go.png">
+    </section>
+  </body>
+
+  <textarea id="log" style="position: absolute; opacity: 0; width: 30px; height: 30px;"></textarea>
+</html>

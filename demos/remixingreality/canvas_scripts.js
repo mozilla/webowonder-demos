@@ -141,7 +141,7 @@ AudioPlayer = Klass({
   },
 
   draw : function() {
-    if (this.lastTime == this.audio.currentTime) {
+    if (this.point == null && this.lastTime == this.audio.currentTime) {
       return;
     }
     this.lastTime = this.audio.currentTime;
@@ -169,17 +169,17 @@ AudioPlayer = Klass({
     ctx.stroke();
     ctx.beginPath();
     this.sc += (1 - this.sc) / 2;
-    var lt = this.lastTime;
-    this.lastTime = null;
+    var lt = this.lastThrob;
+    this.lastThrob = null;
     if (this.point) {
       var dx = w/2-this.point.x;
       var dy = h/2-this.point.y;
       var dc = Math.sqrt(dx*dx + dy*dy);
       if (dc < 30) {
         if (lt == null)
-          lt = this.lastTime = t;
+          lt = this.lastThrob = t;
         else
-          this.lastTime = lt;
+          this.lastThrob = lt;
         this.sc = 1.1 + 0.1 * -Math.cos((t-lt)/250);
       }
     }

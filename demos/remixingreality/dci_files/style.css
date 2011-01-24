@@ -1,0 +1,108 @@
+body {
+  color:#CCCCCC; 
+  background: black;
+}
+
+#mirrorVideo {
+  -moz-border-image: url(tv-border.jpg) 25 31 37 31 stretch stretch;
+  border-width: 20px;
+
+  margin: 0 auto;
+}
+
+#wait {
+  font-size: 3em;
+}
+
+#video {
+  display:none;
+}
+
+circle {
+  stroke: white;
+  stroke-width: 5px;
+  fill-opacity: 0;
+}
+
+path {
+  fill: white;
+  stroke: white;
+}
+
+#stopButton path {
+  stroke-width: 10px;
+}
+
+#player {
+  display: none;
+  float: left;
+  margin-right: 100px;
+  text-align: center;
+}
+
+#playButton[play="true"] {
+  display:none;
+}
+
+#stopButton {
+  display:none;
+  opacity: 0.3;
+}
+
+#stopButton[play="true"] {
+  display: block;
+}
+
+svg {
+  position: absolute;
+  top: 450px;
+  left: 100px;
+}
+
+
+#stopButton:hover {
+  opacity: 1;
+}
+
+#playButton:hover circle {
+  stroke-width: 10;
+}
+
+#patterns {
+  text-align: center;
+  float: left;
+}
+
+#patterns span {
+  display: block;
+  margin: 2px;
+  width: 180px;
+  float: left;
+}
+
+#patterns span canvas,
+#patterns span img,
+#patterns span video {
+  border: 5px solid #333;
+}
+
+*[pattern="true"] {
+  border: 5px solid white !important;
+}
+
+#pong {
+  background: white;
+}
+
+br {
+  clear: both;
+}
+
+a img {
+  border: 0px;
+  margin-top: 1em;
+}
+
+#nofirefoxbeta {
+  display: none;
+}

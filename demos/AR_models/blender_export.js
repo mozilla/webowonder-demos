@@ -1,4 +1,18 @@
 
+BlenderExport.splitByMaterial = function(matIndexes, verts, sz) {
+  var matVerts = [];
+  for (var i=0; i<matIndexes.length; i++) {
+    var idx = matIndexes[i];
+    if (matVerts[idx] == null) {
+      matVerts[idx] = [];
+    }
+    for (var j=0; j<sz; j++) {
+      matVerts[idx].push(verts[i*sz + j]);
+    }
+  }
+  return matVerts;
+}
+
 BlenderExport.tmpVec = vec4.create();
 BlenderExport.tmpNo = vec4.create();
 BlenderExport.rv = vec3.create();
@@ -11,8 +25,11 @@ BlenderExport.setFrame = function(frame) {
     this.frameVertices = new Float32Array(this.vertices);
   if (!this.frameNormals)
     this.frameNormals = new Float32Array(this.normals);
-  if (!this.cachedFrames)
+  if (!this.cachedFrames) {
     this.cachedFrames = [];
+    this.splitTexCoords = BlenderExport.splitByMaterial(this.materials, this.texCoords, 2)
+                                       .map(function(a){ if (a) return new Float32Array(a); });
+  }
   if (!this.cachedFrames[frame]) {
     if (this.vertexGroups && this.vertexGroups.length > 0) {
       var tmpVec = BlenderExport.tmpVec;
@@ -70,19 +87,15 @@ BlenderExport.setFrame = function(frame) {
       }
     }
     this.cachedFrames[frame] = {
-      vertices : new Float32Array(this.frameVertices),
-      normals : new Float32Array(this.frameNormals)
+      vertices : BlenderExport.splitByMaterial(this.materials, this.frameVertices, 3)
+                              .map(function(a){ if (a) return new Float32Array(a); }),
+      normals : BlenderExport.splitByMaterial(this.materials, this.frameNormals, 3)
+                             .map(function(a){ if (a) return new Float32Array(a); }),
     };
   }
   this.frameVertices = this.cachedFrames[frame].vertices;
   this.frameNormals = this.cachedFrames[frame].normals;
 };
-
-(function() {
-  BlenderExport.RedPanda.setFrame = BlenderExport.setFrame;
-  for (var i=0; i<79; i++)
-    BlenderExport.RedPanda.setFrame(i);
-})();
 
 function importBlenderModel(model) {
   var minX,maxX,minY,maxY,minZ,maxZ;
@@ -109,20 +122,32 @@ function importBlenderModel(model) {
   model.setFrame = BlenderExport.setFrame;
   model.setFrame(0);
   if (model.indices) {
-    n.model = new Magi.VBO(null,
-        {size:1, data: model.indices, elements: true},
-        {size:3, data: model.frameVertices},
-        {size:3, data: model.frameNormals},
-        {size:2, data: model.texCoords},
-        {size:1, data: model.materials}
-    );
+    throw("Screw you");
   } else {
-    n.model = new Magi.VBO(null,
-        {size:3, data: model.frameVertices},
-        {size:3, data: model.frameNormals},
-        {size:2, data: model.texCoords},
-        {size:1, data: model.materials}
-    );
+    n.models = [];
+    for (var i=0; i<model.frameVertices.length; i++) {
+      n.childNodes[i] = new Magi.Node();
+      if (model.frameVertices[i]) {
+        n.models[i] = new Magi.VBO(null,
+          {size:3, data: model.frameVertices[i]},
+          {size:3, data: model.frameNormals[i]},
+          {size:2, data: model.splitTexCoords[i]}
+        );
+        n.models[i].attributes = ['Vertex', 'Normal', 'TexCoord'];
+        n.childNodes[i].model = n.models[i];
+        var d = model.materialDefinitions[i];
+        n.childNodes[i].material = Magi.DefaultMaterial.get();
+        n.childNodes[i].material.floats.LightPos = vec4.create([600, 1200, -2400, 1.0]);
+        n.childNodes[i].material.floats['LightDiffuse'].set([1,1,1,1]);
+        n.childNodes[i].material.floats['LightSpecular'].set([1,1,1,1]);
+        n.childNodes[i].material.floats['MaterialDiffuse'] = d.diffuse;
+        n.childNodes[i].material.floats['MaterialEmit'] = d.diffuse.map(function(v){ return v*0.1; });
+        n.childNodes[i].material.floats['MaterialSpecular'] = d.specular.map(function(c){return c*d.specularIntensity;});
+        n.childNodes[i].material.floats['MaterialAmbient'] = d.specular.map(function(v){ return v * d.ambient; });
+        n.childNodes[i].material.floats['MaterialAmbient'][3] = 0.8;
+        n.childNodes[i].material.floats['MaterialShininess'] = d.specularIntensity * 10;
+      }
+    }
   }
   n.frame = 0;
   var hopStart = 25;
@@ -131,7 +156,7 @@ function importBlenderModel(model) {
   var danceFrames = 41;
   n.addFrameListener(function(t,dt) {
     if (!this.lastFrameTime) this.lastFrameTime = t;
-    if (t-this.lastFrameTime > 60 && this.model.initialized) {
+    if (t-this.lastFrameTime > 60) {
       this.lastFrameTime = t;
       if (pivot.dance) {
         if (this.frame < danceStart)
@@ -142,26 +167,7 @@ function importBlenderModel(model) {
         this.frame = (this.frame + 1) % hopStart;
       }
       pivot.keepMoving = true; //this.frame < hopStart;
-      model.setFrame(this.frame);
-      var gl = this.model.gl;
-      gl.bindBuffer(gl.ARRAY_BUFFER, this.model.vbos[0]);
-      Magi.Stats.bindBufferCount++;
-      gl.bufferSubData(gl.ARRAY_BUFFER, 0, model.cachedFrames[this.frame].vertices);
-      gl.bindBuffer(gl.ARRAY_BUFFER, this.model.vbos[1]);
-      Magi.Stats.bindBufferCount++;
-      gl.bufferSubData(gl.ARRAY_BUFFER, 0, model.cachedFrames[this.frame].normals);
     }
-  });
-  n.model.attributes = ['Vertex', 'Normal', 'TexCoord', 'MaterialIndex'];
-  n.material = Magi.MultiMaterial.get();
-  n.material.floats.LightPos = vec4.create([600, 1200, -2400, 1.0]);
-  model.materialDefinitions.forEach(function(d, i) {
-    n.material.floats['Material'+i+'.diffuse'] = d.diffuse;
-    n.material.floats['Material'+i+'.emit'] = d.diffuse.map(function(v){ return v*0.1; });
-    n.material.floats['Material'+i+'.specular'] = d.specular.map(function(c){return c*d.specularIntensity;});
-    n.material.floats['Material'+i+'.ambient'] = d.specular.map(function(v){ return v * d.ambient; });
-    n.material.floats['Material'+i+'.ambient'][3] = 0.8;
-    n.material.floats['Material'+i+'.shininess'] = d.specularIntensity * 10;
   });
   n.setZ(0.0);
   n.setY(-0);
@@ -181,9 +187,6 @@ function importBlenderModel(model) {
   cube.appendChild(cont);
   cube.setAxis(0,0,1);
   cube.setAngle(-Math.PI/2);
-  cube.addFrameListener(function(t,dt) {
-//     this.setAngle(t/1000);
-  });
   cube.bounce = 100;
   cube.bounceDir = vec3.create(0,0,-1);
   cube.zeroVec = vec3.create(0,0,0);

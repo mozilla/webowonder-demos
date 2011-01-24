@@ -97,6 +97,7 @@
         ball.currentImage = f > 0.5 ? m1.image : m2.image;
       }
     });
+    ball.beatDetect = false;
     ballSphere.addFrameListener(function(t,dt){
       if (visibleLength > 0 && ball.dir) {
         var f = ball.f;
@@ -104,14 +105,16 @@
         this.rotation.angle += ball.dir*dt / 250;
         this.scaling[2] = 20 * (1-bounce);
         this.scaling[0] = this.scaling[1] = 20 * (1+bounce);
-        if (bd && bd.win_bpm_int_lo && !byId('audio1').paused) {
-          //var kickNorm = (m_BeatTimer / (60.0/bd.win_bpm_int_lo));
-          //if (kickNorm > 0.9)
-          //  ball.startTime = t;
-          //console.log(kickNorm);
-          //sphere.setScale(0.5+0.5*kickNorm);
-        } else {
-          //sphere.setScale(1.0);
+        if (ball.beatDetect) {
+          if (bd && bd.win_bpm_int_lo && !byId('audio1').paused) {
+            var kickNorm = (m_BeatTimer / (60.0/bd.win_bpm_int_lo));
+            if (kickNorm > 0.9)
+            ball.startTime = t;
+            console.log(kickNorm);
+            sphere.setScale(0.5+0.5*kickNorm);
+          } else {
+            sphere.setScale(1.0);
+          }
         }
         if (ballOn && (f == 0 || f == 1)) {
           ball.currentImage.position[2] = 1;

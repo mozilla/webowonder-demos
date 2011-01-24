@@ -191,6 +191,18 @@ function importBlenderModel(model) {
   cube.bounceDir = vec3.create(0,0,-1);
   cube.zeroVec = vec3.create(0,0,0);
   cube.pivot = pivot;
+  cube.addFrameListener(function(t,dt) {
+    if (pivot.dance) {
+      if (this.startDance == null)
+        this.startDance = t;
+      this.rotation.angle = -Math.PI/2+0.25*Math.PI*Math.sin((t-this.startDance)/500);
+      this.position[2] = 0.05*Math.PI*Math.sin((t-this.startDance)/100);
+    } else {
+      this.startDance = null;
+      this.rotation.angle += (-Math.PI/2-this.rotation.angle) * 0.25;
+      this.position[2] += (0-this.position[2]) * 0.25;
+    }
+  });
   var pv = new Magi.Node().setAxis(0,1,0);
   pv.appendChild(cube);
   pivot.n = n;

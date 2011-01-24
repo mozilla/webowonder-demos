@@ -33,8 +33,8 @@ Draw = Klass({
     var p = Mouse.getRelativeCoords(this.canvas, ev);
     if (!this.lastPoint)
       this.lastPoint = {x:p.x-1, y:p.y-1};
-    this.ctx.strokeStyle = 'red';
-    this.ctx.lineWidth = 2;
+    this.ctx.strokeStyle = 'lightblue';
+    this.ctx.lineWidth = 3;
     this.ctx.beginPath();
     this.ctx.moveTo(this.lastPoint.x, this.lastPoint.y);
     this.ctx.lineTo(p.x, p.y);

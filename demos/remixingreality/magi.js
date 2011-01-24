@@ -6077,7 +6077,7 @@ Magi.UberShader = Klass({
       defs.push("#define " + i + " " + defines[i]);
     }
     defs.sort();
-    var sk = keys.join("¤")+"¤"+defs.join("¤");
+    var sk = keys.join("Â¤")+"Â¤"+defs.join("Â¤");
     if (!this.shaderCache[sk]) {
       var vertVals = [];
       var fragVals = [];

@@ -1,5 +1,5 @@
-  blahmodels = [BlenderExport.finch, BlenderExport.lotus, BlenderExport.ghost, BlenderExport.RedPanda];
-  window.currentModel = blahmodels[0];
+  blahmodels = [BlenderExport.finch, BlenderExport.ghost, BlenderExport.lotus];
+  window.currentModel = blahmodels[1];
 
   // failing at vector math here
   getZAngle = function(a, b, flip) {
@@ -97,6 +97,7 @@
         ball.currentImage = f > 0.5 ? m1.image : m2.image;
       }
     });
+    ball.beatDetect = false;
     ballSphere.addFrameListener(function(t,dt){
       if (visibleLength > 0 && ball.dir) {
         var f = ball.f;
@@ -104,14 +105,16 @@
         this.rotation.angle += ball.dir*dt / 250;
         this.scaling[2] = 20 * (1-bounce);
         this.scaling[0] = this.scaling[1] = 20 * (1+bounce);
-        if (bd && bd.win_bpm_int_lo && !byId('audio1').paused) {
-          //var kickNorm = (m_BeatTimer / (60.0/bd.win_bpm_int_lo));
-          //if (kickNorm > 0.9)
-          //  ball.startTime = t;
-          //console.log(kickNorm);
-          //sphere.setScale(0.5+0.5*kickNorm);
-        } else {
-          //sphere.setScale(1.0);
+        if (ball.beatDetect) {
+          if (bd && bd.win_bpm_int_lo && !byId('audio1').paused) {
+            var kickNorm = (m_BeatTimer / (60.0/bd.win_bpm_int_lo));
+            if (kickNorm > 0.9)
+            ball.startTime = t;
+            console.log(kickNorm);
+            sphere.setScale(0.5+0.5*kickNorm);
+          } else {
+            sphere.setScale(1.0);
+          }
         }
         if (ballOn && (f == 0 || f == 1)) {
           ball.currentImage.position[2] = 1;
@@ -137,30 +140,61 @@
   showBall = function() { ballOn = true; }
   hideBall = function() { ballOn = false; }
 
-  threshold = 60;
+  threshold = 80;
   DEBUG = false;
 
   var video = document.createElement('video');
   video.width = 640;
-  video.height = 360;
+  video.height = 480;
   video.loop = true;
   video.volume = 0;
   video.autoplay = true;
   video.style.display = 'none';
   video.controls = true;
-  video.src = "Ilmari-desk-640-360.theora.ogv";
+  video.src = "desk_480.ogv";
   var offset = 180;
   video.style.marginTop = offset+'px';
 
   var ratio = 1;
 
-  window.onload = function() {
+  targetOrigin = '*';
+  var DemoState = {
+    running: false,
+    started: false
+  };
+  loaded = function() {
+    if (window.parent == window) {
+      DemoState.running = true;
+      startDemo();
+      DemoState.started = true;
+    } else {
+      window.parent.postMessage('loaded', targetOrigin);
+    }
+  }
+  window.addEventListener("message", function(e) {
+    if ("start_demo" == e.data) {
+      DemoState.running = true;
+      if (DemoState.started) {
+        window.paused = false;
+      } else {
+        startDemo();
+        DemoState.started = true;
+      }
+    } else if ("stop_demo" == e.data) {
+      DemoState.running = false;
+      window.paused = true;
+      window.parent.postMessage('finished_exit', targetOrigin);
+    }
+  }, false);
+
+  window.onload = loaded;
+
+  startDemo = function() {
     audioTag = byId('audio1');
     contentElems = byClass('content');
 
     byId('display').appendChild(video);
     new Draw(byId('draw'));
-    new TextEdit(byId('textedit'));
 
     var canvas = document.createElement('canvas');
     canvas.width = toInt(ratio*video.width);
@@ -202,7 +236,7 @@
     param.copyCameraMatrix(display2.camera.perspectiveMatrix, 100, 10000);
     display2.camera.useProjectionMatrix = true;
     display2.drawOnlyWhenChanged = true;
-    display2.camera.perspectiveMatrix[13] -= offset;
+    display2.camera.perspectiveMatrix[13] -= offset*0.66;
     display2.camera.perspectiveMatrix[5] *= (video.height/(video.height+offset));
 
     visibleLength=0, visibleRes=[];
@@ -430,6 +464,8 @@
         }
       }
     });
+
+    byId('display').style.pointerEvents = byId('fakeDisplay').style.pointerEvents = 'none';
 
     toggleAR = function(){
       if (video.style.display == 'none') {

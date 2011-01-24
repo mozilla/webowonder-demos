@@ -181,7 +181,6 @@ function importBlenderModel(model) {
   shadow.transparent = true;
   shadow.blend = true;
   shadow.setZ(0);
-//   cont.appendChild(shadow);
   cont.appendChild(n);
   cube = new Magi.Node();
   cube.appendChild(cont);

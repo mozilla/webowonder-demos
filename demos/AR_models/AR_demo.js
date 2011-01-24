@@ -145,13 +145,13 @@
 
   var video = document.createElement('video');
   video.width = 640;
-  video.height = 360;
+  video.height = 480;
   video.loop = true;
   video.volume = 0;
   video.autoplay = true;
   video.style.display = 'none';
   video.controls = true;
-  video.src = "desk.ogv";
+  video.src = "desk_480.ogv";
   var offset = 180;
   video.style.marginTop = offset+'px';
 
@@ -236,7 +236,7 @@
     param.copyCameraMatrix(display2.camera.perspectiveMatrix, 100, 10000);
     display2.camera.useProjectionMatrix = true;
     display2.drawOnlyWhenChanged = true;
-    display2.camera.perspectiveMatrix[13] -= offset;
+    display2.camera.perspectiveMatrix[13] -= offset*0.66;
     display2.camera.perspectiveMatrix[5] *= (video.height/(video.height+offset));
 
     visibleLength=0, visibleRes=[];

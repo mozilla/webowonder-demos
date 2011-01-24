@@ -1,5 +1,5 @@
   blahmodels = [BlenderExport.finch, BlenderExport.ghost, BlenderExport.lotus];
-  window.currentModel = blahmodels[0];
+  window.currentModel = blahmodels[1];
 
   // failing at vector math here
   getZAngle = function(a, b, flip) {

@@ -10,144 +10,165 @@
 <script src="audio_vis.js"></script>
 <script src="canvas_scripts.js"></script>
 <script src="AR_demo.js"></script>
-<style>
-  html {
-    background-color: #241a14;
-    background-image: url(bg.jpg);
-    background-repeat: repeat-x;
-    background-position: left top;
-    background:
-      url(rt_corner.png) no-repeat right top,
-      url(lt_corner.png) no-repeat left top,
-      url(rb_corner.png) no-repeat right bottom,
-      url(lb_corner.png) no-repeat left bottom,
-      #241a14 url(bg.jpg) repeat-x left top;
-    text-align: center;
-    color:#987;
-    font-family: sans-serif;
-    min-height: 100%;
-  }
-  body {
-    margin: 0;
-    padding: 0;
-    margin-top: 0px;
-    text-align: center;
-    white-space: nowrap;
-  }
-  h1 {
-    font-family: century schoolbook, serif;
-    display: block;
-    position: absolute;
-    width: 100%;
-    top: 0px;
-    left: 0px;
-    margin-top: 36px;
-    font-size: 64px;
-    text-transform: uppercase;
-    color: #bbb;
-    -moz-text-shadow: 0px 5px 10px rgba(0,0,0,0.75);
-    -webkit-text-shadow: 0px 5px 10px rgba(0,0,0,0.75);
-    text-shadow: 0px 5px 10px rgba(0,0,0,0.75);
-  }
-  .cd {
-    white-space: normal;
-    display:inline-block;
-    width: 120px;
-    vertical-align: top;
-    position:relative;
-    top: 180px;
-  }
-  .cd div {
-    display: inline-block;
-    vertical-align: top;
-    padding: 9px;
-    margin-bottom: 2px;
-    -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.75);
-    box-shadow: 0px 1px 3px rgba(0,0,0,0.75);
-    cursor: pointer;
-  }
-  .cd > div {
-    background-color: #e5d4b9;
-    color: black;
-  }
-  div #smalldivs {
-    width: 150px;
-    padding: 0px;
-    margin: 0px;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-  }
-  .cd canvas, .cd audio, .cd img {
-    display: block;
-    width: 100px;
-    height: 100px;
-  }
-  .cd audio {
-    margin-top: 4px;
-    height: 32px;
-  }
-  #displayContainer {
-    display: inline-block;
-  }
-  #display {
-    display: block;
-  }
-  #fakeDisplay {
-    display: block;
-    width: 640px; height: 360px;
-    margin-top: -360px;
-    -moz-box-shadow: 0px 3px 3px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 0px 3px 3px rgba(0,0,0,0.75);
-    box-shadow: 0px 3px 3px rgba(0,0,0,0.75);
-  }
-  #toggleAR {
-    margin-top: 24px;
-    /*  -moz-box-shadow: 0px 2px 2px rgba(0,0,0,0.75);
-        -webkit-box-shadow: 0px 2px 2px rgba(0,0,0,0.75);
-        box-shadow: 0px 2px 2px rgba(0,0,0,0.75);
-    */
-  }
-  p {
-    margin: 0px;
-    margin-top: 4px;
-    padding: 0px;
-  }
-</style>
 
+    <style>
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, font, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td {
+          margin: 0;
+          padding: 0;
+          border: 0;
+          outline: 0;
+          font-size: 100%;
+          vertical-align: baseline;
+          background: transparent;
+        }
+        body {
+          line-height: 1;
+        }
+
+        /* remember to define focus styles! */
+        :focus {
+          outline: 0;
+        }
+
+        /* tables still need 'cellspacing="0"' in the markup */
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        /* END reset styles */
+
+        body {
+            background : url('i/bg.png') repeat-x left top;
+        }
+
+        #wrap {
+            width : 940px;
+            margin : 0px auto;
+        }
+        #header {
+            width : 940px;
+            height : 77px;
+            background : url('i/header.png') no-repeat left top;
+        }
+
+        #main {
+            margin : 25px 0 15px 0;
+        }
+        #col-left {
+            float : left;
+            width : 145px;
+            margin-right : 5px;
+        }
+        #content {
+            float : left;
+            width : 640px;
+            height : 480px;
+            margin-right : 5px;
+        }
+        #col-right {
+            float : left;
+            width : 145px;
+        }
+        #col-left div, #col-right div {
+            margin-bottom : 1px;
+            padding : 3px;
+            background-color : #025172;
+        }
+        #draw, #audio1 {
+            display: block;
+            width: 140px;
+            height: 140px;
+            cursor: pointer;
+        }
+        img.thumb {
+            cursor: pointer;
+        }
+
+        #footer {
+            padding : 0 150px;
+        }
+        #pick {
+            width : 640px;
+            height : 13px;
+            background: url('i/pick-something.png') no-repeat left top;
+        }
+        #toggleAR {
+            border : none;
+            background : none;
+            float : right;
+        }
+
+
+        #display {
+            pointer-events: none;
+            margin-top: -180px;
+        }
+        #fakeDisplay {
+            pointer-events: none;
+        }
+
+        .cf:after {
+            visibility: hidden;
+            display: block;
+            font-size: 0;
+            content: " ";
+            clear: both;
+            height: 0;
+        }
+        * html .cf             { zoom: 1; } /* IE6 */
+        *:first-child+html .cf { zoom: 1; } /* IE7 */
+
+        .rpl {
+            text-indent : -9999em;
+        }
+
+    </style>
 </head>
 <body>
-<h1>Augmented Reality</h1>
-<div id="contentdivs" class="cd">
- <div><img src="dci_files/firefox.png" class="content"></div>
- <div><canvas id="draw" width="100" height="100" class="content"></canvas><p>Draw above</p></div>
- <div><audio id='audio1' tabindex="0" src="musa.ogg" controls="true"
-onmozaudioavailable="audioWritten(event);" onloadedmetadata="loadedMetadata();"></audio><p>Press play</p>
- </div>
-</div>
-<div id="displayContainer">
-  <div id="display"></div>
-  <div id="fakeDisplay"></div>
-</div>
-<div id="contentdivs2" class="cd">
- <div>
-    <img class="content" src="finch.jpg" onclick="window.currentModel=blahmodels[0];hideBall()">
- </div>
- <div>
-    <img class="content" src="ghost.jpg" onclick="window.currentModel=blahmodels[1];hideBall()">
- </div>
- <div>
-    <img class="content" src="lotus.jpg" onclick="window.currentModel=blahmodels[2];hideBall()">
- </div>
-</div>
-<div id="contentdivs3" class="cd">
- <div>
-    <img class="content" src="basketball.jpg" onclick="showBall()">
- </div>
-</div>
-<div id="buttons">
-<button id="toggleAR" onclick="toggleAR()">Toggle AR</button>
-</div>
+    <div id="wrap">
+        <div id="header">
+        </div>
+
+        <div id="main" class="cf">
+            <div id="col-left">
+                <div><img class="thumb content" src="i/thumb_spook.png" alt="" onclick="window.currentModel=blahmodels[1];hideBall()" /><img src="i/footer_spook.png" alt="Spook" /></div>
+                <div><img class="thumb content" src="i/thumb_bird.png" alt="" onclick="window.currentModel=blahmodels[0];hideBall()" /><img src="i/footer_bird.png" alt="Bird" /></div>
+                <div><img class="thumb content" src="i/thumb_lotus.png" alt="" onclick="window.currentModel=blahmodels[2];hideBall()" /><img src="i/footer_lotus.png" alt="Lotus" /></div>
+            </div>
+
+            <div id="content">
+                <div id="display"></div>
+                <div id="fakeDisplay"></div>
+            </div>
+
+            <div id="col-right">
+                <div id="yours">
+                    <canvas id="draw" width="140" height="140" class="content" title="Press delete to clear"></canvas>
+                    <img src="i/footer_draw.png" alt="Draw a picture" />
+                </div>
+                <div id="ball">
+                    <img class="thumb content" src="i/thumb_ball.png" alt="" onclick="showBall()" /><img src="i/footer_play-ball.png" alt="Ball" />
+                </div>
+                <div id="music">
+                    <audio id="audio1" src="musa.ogg" controls="true" onmozaudioavailable="audioWritten(event);" onloadedmetadata="loadedMetadata();"></audio>
+                    <img src="i/footer_press-play.png" alt="Press play" />
+                </div>
+            </div>
+
+        </div>
+
+        <div id="footer">
+            <div id="pick" class="rpl">Pick something from the sidebars to place into the video, then use the button below to</div>
+            <button id="toggleAR" onclick="toggleAR()"><img src="i/toggle_augreal.png" /></button>
+        </div>
+    </div>
 </body>
 </html>

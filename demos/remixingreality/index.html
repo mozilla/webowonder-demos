@@ -89,6 +89,10 @@
             display: block;
             width: 140px;
             height: 140px;
+            cursor: pointer;
+        }
+        img.thumb {
+            cursor: pointer;
         }
         
         #footer {
@@ -137,9 +141,9 @@
         
         <div id="main" class="cf">
             <div id="col-left">
-                <div><img src="i/thumb_spook.png" alt="" onclick="window.currentModel=blahmodels[1];hideBall()" /><img src="i/footer_spook.png" alt="Spook" /></div>
-                <div><img src="i/thumb_bird.png" alt="" onclick="window.currentModel=blahmodels[0];hideBall()" /><img src="i/footer_bird.png" alt="Bird" /></div>
-                <div><img src="i/thumb_lotus.png" alt="" onclick="window.currentModel=blahmodels[2];hideBall()" /><img src="i/footer_lotus.png" alt="Lotus" /></div>
+                <div><img class="thumb" src="i/thumb_spook.png" alt="" onclick="window.currentModel=blahmodels[1];hideBall()" /><img src="i/footer_spook.png" alt="Spook" /></div>
+                <div><img class="thumb" src="i/thumb_bird.png" alt="" onclick="window.currentModel=blahmodels[0];hideBall()" /><img src="i/footer_bird.png" alt="Bird" /></div>
+                <div><img class="thumb" src="i/thumb_lotus.png" alt="" onclick="window.currentModel=blahmodels[2];hideBall()" /><img src="i/footer_lotus.png" alt="Lotus" /></div>
             </div>
         
             <div id="content">
@@ -153,7 +157,7 @@
                     <img src="i/footer_draw.png" alt="Draw a picture" />
                 </div>
                 <div id="ball">
-                    <img src="i/thumb_ball.png" alt="" onclick="showBall()" /><img src="i/footer_play-ball.png" alt="Ball" />
+                    <img class="thumb" src="i/thumb_ball.png" alt="" onclick="showBall()" /><img src="i/footer_play-ball.png" alt="Ball" />
                 </div>
                 <div id="music">
                     <audio id="audio1" src="peliko.ogg" controls="true" onmozaudioavailable="audioWritten(event);" onloadedmetadata="loadedMetadata();"></audio>

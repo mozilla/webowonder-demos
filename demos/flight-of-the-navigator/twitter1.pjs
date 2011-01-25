@@ -1,0 +1,60 @@
+var letters;
+var userLength;
+var tweet = 0;
+var w = 3, h = 3;
+var col = 0;
+var offset = 0;
+
+void setup() {
+  size(1024, (8 + 3) * h);
+	noLoop();
+}
+
+void draw() {
+  background(0);
+
+  offset += 1;
+	if (!letters) { fetchTweet(); return; }
+  if (offset > letters.length + width / (w * 8)) {
+    fetchTweet();
+    offset = 0;
+  }
+  col = Math.floor(width / (w * 8)) - offset;
+  for (int i = 0; i < letters.length; i++) {
+    var c = letters[i].charCodeAt(0);
+    if (i < userLength) {
+      fill(220, 230, 255);
+    } else {
+      fill(255);
+    }
+
+    if (bitFont[c]) {
+      var x = 0, y = 0;
+      for(var j = 0; j < 64; j++) {
+        x = j % 8;
+        y = Math.floor(j / 8) + 1;
+        xOffset = (x * w) + (col * w * 8);
+        if ( bitFont[c][j] && xOffset < width && xOffset > 0 ) {
+          rect(xOffset, y * h, w, h);
+        }
+      }
+    }
+    col += 1;
+  }
+}
+
+void fetchTweet() {
+  if (!feed.length) {
+    // haven't gotten any results yet, bail
+    return;
+  }
+  if ( tweet >= feed.length ) {
+    tweet = 0; // or fetch a new batch
+  }
+
+  var fromUser = feed[tweet].from_user;
+  userLength = fromUser.length + 1;
+  var message = feed[tweet].text.replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&').replace(/&quot;/g, '"');
+  letters = (fromUser + ": " + message).split("");
+  tweet += 1;
+}

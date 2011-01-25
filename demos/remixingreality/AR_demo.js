@@ -1,5 +1,5 @@
-  blahmodels = [BlenderExport.finch, BlenderExport.lotus, BlenderExport.ghost, BlenderExport.RedPanda];
-  window.currentModel = blahmodels[0];
+  blahmodels = [BlenderExport.finch, BlenderExport.ghost, BlenderExport.lotus];
+  window.currentModel = blahmodels[1];
 
   // failing at vector math here
   getZAngle = function(a, b, flip) {
@@ -97,6 +97,7 @@
         ball.currentImage = f > 0.5 ? m1.image : m2.image;
       }
     });
+    ball.beatDetect = false;
     ballSphere.addFrameListener(function(t,dt){
       if (visibleLength > 0 && ball.dir) {
         var f = ball.f;
@@ -104,14 +105,16 @@
         this.rotation.angle += ball.dir*dt / 250;
         this.scaling[2] = 20 * (1-bounce);
         this.scaling[0] = this.scaling[1] = 20 * (1+bounce);
-        if (bd && bd.win_bpm_int_lo && !byId('audio1').paused) {
-          //var kickNorm = (m_BeatTimer / (60.0/bd.win_bpm_int_lo));
-          //if (kickNorm > 0.9)
-          //  ball.startTime = t;
-          //console.log(kickNorm);
-          //sphere.setScale(0.5+0.5*kickNorm);
-        } else {
-          //sphere.setScale(1.0);
+        if (ball.beatDetect) {
+          if (bd && bd.win_bpm_int_lo && !byId('audio1').paused) {
+            var kickNorm = (m_BeatTimer / (60.0/bd.win_bpm_int_lo));
+            if (kickNorm > 0.9)
+            ball.startTime = t;
+            console.log(kickNorm);
+            sphere.setScale(0.5+0.5*kickNorm);
+          } else {
+            sphere.setScale(1.0);
+          }
         }
         if (ballOn && (f == 0 || f == 1)) {
           ball.currentImage.position[2] = 1;
@@ -130,37 +133,69 @@
     display2.scene.appendChild(ball);
     display2.scene.appendChild(ballShadow);
   }
-  ballOn = false;
+  ballOn = true;
   toggleBall = function() {
     ballOn = !ballOn;
   }
   showBall = function() { ballOn = true; }
   hideBall = function() { ballOn = false; }
 
-  threshold = 60;
+  threshold = 80;
   DEBUG = false;
 
   var video = document.createElement('video');
   video.width = 640;
-  video.height = 360;
+  video.height = 480;
   video.loop = true;
   video.volume = 0;
   video.autoplay = true;
   video.style.display = 'none';
   video.controls = true;
-  video.src = "Ilmari-desk-640-360.theora.ogv";
+  video.src = "desk_480.ogv";
   var offset = 180;
   video.style.marginTop = offset+'px';
 
   var ratio = 1;
 
-  window.onload = function() {
+  targetOrigin = '*';
+  var DemoState = {
+    running: false,
+    started: false
+  };
+  loaded = function() {
+    if (window.parent == window) {
+      DemoState.running = true;
+      startDemo();
+      DemoState.started = true;
+    } else {
+      window.parent.postMessage('loaded', targetOrigin);
+    }
+  }
+  window.addEventListener("message", function(e) {
+    if ("start_demo" == e.data) {
+      DemoState.running = true;
+      if (DemoState.started) {
+        window.paused = false;
+      } else {
+        startDemo();
+        DemoState.started = true;
+      }
+    } else if ("stop_demo" == e.data) {
+      DemoState.running = false;
+      window.paused = true;
+      window.parent.postMessage('finished_exit', targetOrigin);
+    }
+  }, false);
+
+  window.onload = loaded;
+
+  startDemo = function() {
     audioTag = byId('audio1');
     contentElems = byClass('content');
 
     byId('display').appendChild(video);
     new Draw(byId('draw'));
-    new TextEdit(byId('textedit'));
+    new AudioPlayer(byId('audio1'));
 
     var canvas = document.createElement('canvas');
     canvas.width = toInt(ratio*video.width);
@@ -180,7 +215,7 @@
     var ctx = canvas.getContext('2d');
     ctx.font = "24px URW Gothic L, Arial, Sans-serif";
 
-    currentElem = byClass('content')[0];
+    currentElem = byClass('content')[4];
 
     setImage = function(elem) {
       images.forEach(function(img){ img.setImage(elem); });
@@ -191,9 +226,18 @@
 
     toArray(byClass('content')).forEach(function(elem){
       elem.onmousedown = function(){
-        setImage(this);
+        if (this.tagName == 'IMG') {
+          var img = new Image();
+          img.onload = function() {
+            setImage(this);
+          };
+          img.src = this.src.replace(/thumb_([^\.]+)/, '$1_bg');
+        } else {
+          setImage(this);
+        }
       }
     });
+    currentElem.onmousedown();
 
     var gcanvas = E.canvas(video.width, video.height + offset);
     byId('display').appendChild(gcanvas);
@@ -202,7 +246,7 @@
     param.copyCameraMatrix(display2.camera.perspectiveMatrix, 100, 10000);
     display2.camera.useProjectionMatrix = true;
     display2.drawOnlyWhenChanged = true;
-    display2.camera.perspectiveMatrix[13] -= offset;
+    display2.camera.perspectiveMatrix[13] -= offset*0.80;
     display2.camera.perspectiveMatrix[5] *= (video.height/(video.height+offset));
 
     visibleLength=0, visibleRes=[];
@@ -224,15 +268,6 @@
     videoTex.material.textures.Texture0.image = videoCanvas;
     videoTex.material.textures.Texture0.generateMipmaps = false;
     display.scene.appendChild(videoTex);
-    var f = new Magi.RadialGlowFilter();
-    f.material.floats.radius = 0.05;
-    f.material.floats.intensity = 2.0;
-    f.material.floats.falloff = 0.9;
-    f.material.floats.currentFactor = -0.6;
-    f.material.floats.center[0] = 0.5;
-    f.material.floats.center[1] = 0;
-    filter = f;
-    //display.postEffects.push(f);
 
     display2.scene.addFrameListener(function(t,dt){
       display.draw(t,dt);
@@ -301,7 +336,6 @@
         pastResults[currId].id = currId;
         pastResults[currId].transform = Object.asCopy(resultMat);
       }
-      //console.log(new Date()-t);
       visibleLength = 0;
       visibleRes = [];
       for (var i in pastResults) {
@@ -339,7 +373,7 @@
           images.push(image);
           pivot.image = image;
           image.addFrameListener(function(d,dt) {
-            this.position[2] += (0.5-this.position[2])*0.5;
+            this.position[2] += ((ballOn?0.5:0.005)-this.position[2])*0.5;
           });
           image.alignedNode.transparent = false;
           sides.forEach(function(c){
@@ -365,7 +399,7 @@
           }
           pivot2 = new Magi.Node();
           pivot2.transform = mat4.identity();
-          pivot2.setScale(30.5);
+          pivot2.setScale(32);
           pivot.pivot = pivot2;
           pivot.appendChild(pivot2);
           pivot2.appendChild(hole);
@@ -390,19 +424,6 @@
               this.appendChild(model);
             }
             this.blenderModel.dance = !audioTag.paused;
-//             if (visibleLength > 1) {
-//               var other = (cubes[visibleRes[0]] != this) ? visibleRes[0] : visibleRes[1];
-//               var a = getZAngle(this.blenderModel, cubes[other].blenderModel, this.flip);
-//               this.blenderModel.cube.setAngle(-Math.PI/2+a);
-//               if (!this.danceStart)
-//                 this.danceStart = t;
-//               if (this.danceStart && t-this.danceStart > 1500)
-//                 this.blenderModel.dance = true;
-//             } else {
-//               this.danceStart = false;
-//               this.blenderModel.cube.setAngle(-Math.PI/2);
-//               this.blenderModel.dance = false;
-//             }
           });
           cubes[i] = pivot;
         }
@@ -431,13 +452,22 @@
       }
     });
 
+    byId('display').style.pointerEvents = byId('fakeDisplay').style.pointerEvents = 'none';
+
     toggleAR = function(){
       if (video.style.display == 'none') {
-        video.style.display = 'inline-block';
-        gcanvas.style.display = 'none';
+        turnAROff();
       } else {
-        video.style.display = 'none';
-        gcanvas.style.display = 'inline-block';
+        turnAROn();
       }
+    }
+
+    turnAROn = function() {
+      video.style.display = 'none';
+      gcanvas.style.display = 'inline-block';
+    }
+    turnAROff = function() {
+      video.style.display = 'inline-block';
+      gcanvas.style.display = 'none';
     }
   }

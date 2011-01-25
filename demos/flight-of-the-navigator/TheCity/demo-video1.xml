@@ -1,0 +1,203 @@
+<?xml version="1.0" ?>
+<root>
+    <header>
+        <type>scene</type>
+        <version>0.1</version>
+        <name>demo-video1</name>
+        <generator>lws2xml</generator>
+    </header>
+    <properties>
+        <sceneobjects>
+            <sceneobject>
+                <name>ship-main-engine_a_0001</name>
+                <parent>ship-main_0001</parent>
+                <model>ship-main-engine_a.xml</model>
+                <position>-0,2.2366,2.63365</position>
+                <rotation>
+                    <z>
+                        <out>offset</out>
+                        <time>0 10.0333</time>
+                        <value>-0 -36000</value>
+                    </z>
+                </rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>ship-main-engine_b_0001</name>
+                <parent>ship-main_0001</parent>
+                <model>ship-main-engine_b.xml</model>
+                <position>-0,2.2366,2.63365</position>
+                <rotation>
+                    <z>
+                        <out>offset</out>
+                        <time>0 10.0333</time>
+                        <value>-0 3600</value>
+                    </z>
+                </rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>ship-main_0001</name>
+                <model>ship-main.xml</model>
+                <position>
+                    <x>
+                        <time>0 1.68667 3.74 5.35333 9.75333 12.1 21.2667</time>
+                        <value>2345.68 2071.93 1708.82 1261.71 262.346 -470.063 -2159.54</value>
+                    </x>
+                    <y>
+                        <time>0 1.68667 3.74 5.35333 6.08667 8.65333 9.75333</time>
+                        <value>190.117 304.924 483.203 517.025 511.983 285.562 269.078</value>
+                    </y>
+                    <z>
+                        <time>0 1.68667 3.74 5.35333 9.75333 12.1 21.2667</time>
+                        <value>515.869 844.016 1218.58 1377.43 821.475 737.922 8.685</value>
+                    </z>
+                </position>
+                <rotation>
+                    <y>
+                        <time>0 1.68667 3.74 6.08667 9.75333</time>
+                        <value>-138 -138 -122 -66.6001 -70.8001</value>
+                    </y>
+                    <z>
+                        <time>0 1.68667 3.74 6.08667 9.75333</time>
+                        <value>0 0 50.6 19.2 4.19998</value>
+                    </z>
+                </rotation>
+                <scale>
+                    <x>
+                        <time>0 0.766667</time>
+                        <value>1 1</value>
+                    </x>
+                    <y>
+                        <time>0 0.766667</time>
+                        <value>1 1</value>
+                    </y>
+                    <z>
+                        <time>0 0.766667</time>
+                        <value>1 1</value>
+                    </z>
+                </scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p1_0001</name>
+                <model>buildings-p1.xml</model>
+                <position>-269.919,0,1557.59</position>
+                <rotation>-0,0,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p2_0001</name>
+                <model>buildings-p2.xml</model>
+                <position>-1065.29,0,2516.97</position>
+                <rotation>-0,0,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p4_0001</name>
+                <model>buildings-p4.xml</model>
+                <position>1297.11,0,876.144</position>
+                <rotation>-0,0,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p4_0002</name>
+                <model>buildings-p4.xml</model>
+                <position>859.962,0,2628.43</position>
+                <rotation>-0,45.9999,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p4_0003</name>
+                <model>buildings-p4.xml</model>
+                <position>2024.4,0,1400.33</position>
+                <rotation>-0,0,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>CamTarget</name>
+                <position>
+                    <x>
+                        <time>0 5.20667 8.43333 10.12</time>
+                        <value>488.106 790.745 707.159 245.975</value>
+                    </x>
+                    <y>
+                        <time>0 5.20667 6.67333 8.43333 10.12</time>
+                        <value>502.404 640.646 785.903 521.061 422.273</value>
+                    </y>
+                    <z>
+                        <time>0 5.20667 8.43333 10.12</time>
+                        <value>1859.66 2225.18 1725.44 1234.54</value>
+                    </z>
+                </position>
+                <rotation>-0,0,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>videoscreen2_0001</name>
+                <model>videoscreen2.xml</model>
+                <position>245.618,422.185,1234.71</position>
+                <rotation>-0,90,-10.6</rotation>
+                <scale>3,3,3</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>b8_0001</name>
+                <model>b8.xml</model>
+                <position>272.46,0,1265.94</position>
+                <rotation>-0,89.4,0</rotation>
+                <scale>60,60,60</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>videoscreen2_0002</name>
+                <model>videoscreen2.xml</model>
+                <position>577.974,521.469,1492.61</position>
+                <rotation>-0,90,-5.2</rotation>
+                <scale>2,2,2</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>videoscreen2_0003</name>
+                <model>videoscreen2.xml</model>
+                <position>-611.513,419.132,1635.07</position>
+                <rotation>-0,90,-10.6</rotation>
+                <scale>3,3,3</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>videoscreen2_0004</name>
+                <model>videoscreen2.xml</model>
+                <position>663.938,563.691,2693.56</position>
+                <rotation>-0,74,10.6</rotation>
+                <scale>2,2,2</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>videoscreen2_0005</name>
+                <model>videoscreen2.xml</model>
+                <position>-29.0475,419.132,2109.73</position>
+                <rotation>-0,-90,10.6</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+        </sceneobjects>
+        <camera>
+            <position>
+                <x>
+                    <time>0 2.93361 4.03333 5.86667 11 23.0267 36.3333 44.1467 51.0767 66.0367</time>
+                    <value>2302.55 1973.58 1695.89 1194.65 105.201 227.142 413.619 213.592 269.724 -32.2246</value>
+                </x>
+                <y>
+                    <time>0 4.03333 5.86667 9.02 36.3367</time>
+                    <value>131.954 498.835 467.995 252.181 411.768</value>
+                </y>
+                <z>
+                    <time>0 2.93361 4.03333 5.86667 11 23.0267 30.3 36.3333 44.1467 51.0767 66.0367</time>
+                    <value>490.092 980.392 1178.08 1203.11 641.234 830.684 657.86 687.52 527.177 969.872 851.949</value>
+                </z>
+            </position>
+            <rotation>-0,180,-0</rotation>
+            <fov>
+                <fov>
+                    <time>0 7.13333 30.7667 40.2 50.1 60.1</time>
+                    <value>23.3981 20.3132 21.1001 17.3193 51.8913 28.4204</value>
+                </fov>
+            </fov>
+            <target>CamTarget</target>
+        </camera>
+    </properties>
+</root>

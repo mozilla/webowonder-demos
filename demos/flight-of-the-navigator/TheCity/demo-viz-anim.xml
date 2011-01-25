@@ -1,0 +1,203 @@
+<?xml version="1.0" ?>
+<root>
+    <header>
+        <type>scene</type>
+        <version>0.1</version>
+        <name>demo-viz-anim</name>
+        <generator>lws2xml</generator>
+    </header>
+    <properties>
+        <sceneobjects>
+            <sceneobject>
+                <name>buildings-p1_0001</name>
+                <model>buildings-p1.xml</model>
+                <position>-799.418,0,605.254</position>
+                <rotation>-0,0,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p2_0001</name>
+                <model>buildings-p2.xml</model>
+                <position>679.076,0,605.254</position>
+                <rotation>-0,0,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p3_0001</name>
+                <model>buildings-p3.xml</model>
+                <position>-464.178,0,34.3406</position>
+                <rotation>-0,0,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>display1_screen_0001</name>
+                <model>display1_screen.xml</model>
+                <position>781.238,254.034,277.493</position>
+                <rotation>-0,-90,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>display2_screen_0001</name>
+                <model>display2_screen.xml</model>
+                <position>714.032,254.034,347.132</position>
+                <rotation>-0,0,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>display3_screen_0001</name>
+                <model>display3_screen.xml</model>
+                <position>645.635,254.034,276.347</position>
+                <rotation>-0,89.9999,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>display4_screen_0001</name>
+                <model>display4_screen.xml</model>
+                <position>714.199,254.445,209.282</position>
+                <rotation>-0,180,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>videoscreen2_0001</name>
+                <model>videoscreen2.xml</model>
+                <position>-240.589,674.504,434.363</position>
+                <rotation>-0,90,0</rotation>
+                <scale>5,5,5</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>b7_0001</name>
+                <model>b7.xml</model>
+                <position>-240.685,0,510.817</position>
+                <rotation>-0,0,0</rotation>
+                <scale>50,50,50</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>CamTarget</name>
+                <position>
+                    <x>
+                        <time>0 4.1 10.1333 13.3667 16.7 20.8 25.0667 27.5333 28.9333 45.1 47.5 48.4 51.2</time>
+                        <value>-1048.45 -424.299 -368.163 -260.078 -238.385 -839.61 -233.434 281.476 711.829 710.743 -203.705 -202.544 -186.091</value>
+                        <tcb>0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0</tcb>
+                    </x>
+                    <y>
+                        <time>0 10.1333 13.3667 16.7 20.8 25.0667 28.9333 45.1 47.5 48.4 51.2 60</time>
+                        <value>595.089 782.493 696.163 705.957 547.549 547.549 269.91 255.178 644.625 500.019 735.247 587.053</value>
+                        <tcb>0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0</tcb>
+                    </y>
+                    <z>
+                        <time>0 4.1 13.3667 16.7 20.8 25.0667 27.5333 28.9333 45.1 47.5 48.4 51.2</time>
+                        <value>473.635 961.404 492.705 457.399 182.322 495.347 313.605 277.849 277.75 430.196 123.935 405.583</value>
+                        <tcb>0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0</tcb>
+                    </z>
+                </position>
+                <rotation>
+                    <x>
+                        <time>0 25.0667 28.9333 45.1</time>
+                        <value>-0 -0 -0 -0</value>
+                    </x>
+                    <y>
+                        <time>0 25.0667 28.9333 45.1</time>
+                        <value>0 0 0 0</value>
+                    </y>
+                    <z>
+                        <time>0 25.0667 28.9333 45.1</time>
+                        <value>0 0 0 0</value>
+                    </z>
+                </rotation>
+                <scale>
+                    <x>
+                        <time>0 25.0667 28.9333 45.1</time>
+                        <value>1 1 1 1</value>
+                    </x>
+                    <y>
+                        <time>0 25.0667 28.9333 45.1</time>
+                        <value>1 1 1 1</value>
+                    </y>
+                    <z>
+                        <time>0 25.0667 28.9333 45.1</time>
+                        <value>1 1 1 1</value>
+                    </z>
+                </scale>
+            </sceneobject>
+            <sceneobject>
+                <name>billboard-display-bracket_0001</name>
+                <model>billboard-display-bracket.xml</model>
+                <position>713.883,278.271,277.441</position>
+                <rotation>-0,0,0</rotation>
+                <scale>20,20,20</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>videoscreen2_0002</name>
+                <model>videoscreen2.xml</model>
+                <position>-833.611,550.05,186.966</position>
+                <rotation>-0,90,0</rotation>
+                <scale>2,2,2</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>videoscreen2_0003</name>
+                <model>videoscreen2.xml</model>
+                <position>460.226,599.319,743.304</position>
+                <rotation>-0,90,0</rotation>
+                <scale>2,2,2</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>videoscreen2_0004</name>
+                <model>videoscreen2.xml</model>
+                <position>-185.22,502.45,102.591</position>
+                <rotation>-0,90,0</rotation>
+                <scale>2,2,2</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>videoscreen2_0005</name>
+                <model>videoscreen2.xml</model>
+                <position>227.948,411.683,-218.232</position>
+                <rotation>-0,90,0</rotation>
+                <scale>2,2,2</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>twitter_banner2_0001</name>
+                <model>twitter_banner2.xml</model>
+                <position>714.24,330.405,277.692</position>
+                <rotation>-0,0,0</rotation>
+                <scale>0.2,0.2,0.2</scale>
+            </sceneobject>
+        </sceneobjects>
+        <camera>
+            <position>
+                <x>
+                    <time>0 10.1333 15.5333 18.4 20.8 25.0667 27.4333 28.9333 33.2 36.6667 38.7667 40.2667 42.6667 44.1667 45.8333 47 48.8 50.8 52.0667 60</time>
+                    <value>456.863 1.62891 127.023 -543.405 -1066.94 -833.085 219.362 841.513 1017.36 489.818 478.922 716.373 1064.91 1172.18 849.225 248.976 107.81 -517.078 -799.135 -1939.56</value>
+                </x>
+                <y>
+                    <time>0 15.5333 27.4333 28.9333 33.2 36.6667 44.1667 48.8</time>
+                    <value>317.694 567.283 309.854 106.144 215.486 120.761 184.889 450.813</value>
+                </y>
+                <z>
+                    <time>0 10.1333 15.5333 18.4 20.8 25.0667 27.4333 28.9333 33.2 36.6667 38.7667 40.2667 42.6667 44.1667 45.8333 47 48.8 50.8 52.0667 60</time>
+                    <value>-1656.97 39.1821 88.188 -228.109 -86.0551 95.0259 -173.829 -48.5175 352.919 541.092 129.705 -58.3315 -93.9169 243.654 407.543 219.008 -485.448 16.3485 -159.297 -1230.29</value>
+                </z>
+            </position>
+            <rotation>
+                <x>
+                    <time>0 33.2</time>
+                    <value>-3.56615 7.19016</value>
+                </x>
+                <y>
+                    <time>0 33.2</time>
+                    <value>161.907 74.7023</value>
+                </y>
+                <z>
+                    <time>0 33.2</time>
+                    <value>-0 -0</value>
+                </z>
+            </rotation>
+            <fov>
+                <fov>
+                    <time>0 4.5 13.7667 19.4 25.8667 35.4 45.8 59.9</time>
+                    <value>16.4741 36.9853 24.2845 34.4845 45.3567 20.2705 30.1938 25.1229</value>
+                </fov>
+            </fov>
+            <target>CamTarget</target>
+        </camera>
+    </properties>
+</root>

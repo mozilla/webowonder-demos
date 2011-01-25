@@ -1,0 +1,233 @@
+<?xml version="1.0" ?>
+<root>
+    <header>
+        <type>scene</type>
+        <version>0.1</version>
+        <name>demo-twitter-building</name>
+        <generator>lws2xml</generator>
+    </header>
+    <properties>
+        <sceneobjects>
+            <sceneobject>
+                <name>b4_0001</name>
+                <model>b4.xml</model>
+                <position>184.482,0,-65.762</position>
+                <rotation>-0,0,0</rotation>
+                <scale>50,50,50</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>b5_0001</name>
+                <model>b5.xml</model>
+                <position>294.239,0,-656.639</position>
+                <rotation>-0,0,0</rotation>
+                <scale>49.995,49.995,49.995</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>b6_0001</name>
+                <model>b6.xml</model>
+                <position>835.603,212.548,919.407</position>
+                <rotation>-0,0,0</rotation>
+                <scale>60,60,60</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>b7_0001</name>
+                <model>b7.xml</model>
+                <position>506.273,0,-859.782</position>
+                <rotation>-0,0,0</rotation>
+                <scale>50,50,50</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>b8_0001</name>
+                <model>b8.xml</model>
+                <position>-0,0,0</position>
+                <rotation>-0,0,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p1_0001</name>
+                <model>buildings-p1.xml</model>
+                <position>3169.32,0,30.9056</position>
+                <rotation>-0,-351.8,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p2_0001</name>
+                <model>buildings-p2.xml</model>
+                <position>448.982,0,-459.705</position>
+                <rotation>-0,0,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p3_0001</name>
+                <model>buildings-p3.xml</model>
+                <position>1547.09,0,-438.936</position>
+                <rotation>-0,0,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>CamTarget</name>
+                <position>
+                    <x>
+                        <time>0 11.4333 18.3 26.5 40.0333 45.9 51.8333 59.9333</time>
+                        <value>517.167 494.069 295.374 173.233 180.53 182.607 979.024 3085.08</value>
+                        <tcb>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0</tcb>
+                    </x>
+                    <y>
+                        <time>0 11.4333 26.5 40.0333 45.9 51.8333 59.9333 68.1333 74.3</time>
+                        <value>661.864 614.963 919.061 903.915 898.989 1785.55 2398.5 2415.37 2331.02</value>
+                        <tcb>0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0</tcb>
+                    </y>
+                    <z>
+                        <time>0 11.4333 18.3 26.5 40.0333 45.9 51.8333 59.9333</time>
+                        <value>-857.943 -915.581 -334.897 -75.5713 -64.8168 -67.5349 241.69 1193.15</value>
+                        <tcb>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0</tcb>
+                    </z>
+                </position>
+                <rotation>
+                    <x>
+                        <time>0 51.8333</time>
+                        <value>-0 -0</value>
+                    </x>
+                    <y>
+                        <time>0 51.8333</time>
+                        <value>0 0</value>
+                    </y>
+                    <z>
+                        <time>0 51.8333</time>
+                        <value>0 0</value>
+                    </z>
+                </rotation>
+                <scale>
+                    <x>
+                        <time>0 51.8333</time>
+                        <value>1 1</value>
+                    </x>
+                    <y>
+                        <time>0 51.8333</time>
+                        <value>1 1</value>
+                    </y>
+                    <z>
+                        <time>0 51.8333</time>
+                        <value>1 1</value>
+                    </z>
+                </scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p1_0002</name>
+                <model>buildings-p1.xml</model>
+                <position>624.386,0,372.584</position>
+                <rotation>-0,-45.2,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p1_0003</name>
+                <model>buildings-p1.xml</model>
+                <position>1508.86,0,780.931</position>
+                <rotation>-0,-50.6,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p3_0002</name>
+                <model>buildings-p3.xml</model>
+                <position>4275.59,0,119.417</position>
+                <rotation>-0,-115.6,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p1_0004</name>
+                <model>buildings-p1.xml</model>
+                <position>2551.86,0,2297.65</position>
+                <rotation>-0,-141.6,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>twitter_banner2_0001</name>
+                <model>twitter_banner2.xml</model>
+                <position>182.854,909.211,-64.8946</position>
+                <rotation>-0,0,0</rotation>
+                <scale>0.3,0.3,0.3</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>ship-blimp_0001</name>
+                <model>ship-blimp.xml</model>
+                <position>3076.33,2436.63,1411.82</position>
+                <rotation>-0,0,0</rotation>
+                <scale>8,8,8</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>display1_screen_0001</name>
+                <model>display1_screen.xml</model>
+                <position>2668.87,2425.11,1449.8</position>
+                <rotation>0,90,-0</rotation>
+                <scale>4,4,4</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>display2_screen_0001</name>
+                <model>display2_screen.xml</model>
+                <position>3485.38,2425.11,931.208</position>
+                <rotation>0,-90,-0</rotation>
+                <scale>4,4,4</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>display3_screen_0001</name>
+                <model>display3_screen.xml</model>
+                <position>2668.87,2425.11,948.622</position>
+                <rotation>0,90,-0</rotation>
+                <scale>4,4,4</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>display4_screen_0001</name>
+                <model>display4_screen.xml</model>
+                <position>3485.38,2425.11,1438.45</position>
+                <rotation>0,-90,-0</rotation>
+                <scale>4,4,4</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>twitter_banner2_0002</name>
+                <parent>ship-blimp_0001</parent>
+                <model>twitter_banner2.xml</model>
+                <position>-0.283371,-62.6884,-27.2709</position>
+                <rotation>0,0,-0</rotation>
+                <scale>0.0625,0.0625,0.0625</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>display3_screen_0002</name>
+                <model>display3_screen.xml</model>
+                <position>504.015,620.139,-926.439</position>
+                <rotation>0,180,-0</rotation>
+                <scale>2.5,2.5,2</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>display1_screen_0002</name>
+                <model>display1_screen.xml</model>
+                <position>2668.87,2425.11,1449.8</position>
+                <rotation>0,90,-0</rotation>
+                <scale>4,4,4</scale>
+            </sceneobject>
+        </sceneobjects>
+        <camera>
+            <position>
+                <x>
+                    <time>0 7 13.7667 20 40.0333 45.9 51.8333 59.9333 65.3667 68.1333 70.0667 73.5667 80.2667 83.2667</time>
+                    <value>277.974 634.052 236.726 -319.989 -242.154 -393.576 -457.044 170.815 170.815 3973.49 5401.75 3858.62 383.67 232.76</value>
+                </x>
+                <y>
+                    <time>0 7 13.7667 20 26.5 40.0333 45.9 68.1333</time>
+                    <value>257.688 505.714 560.124 642.154 855.057 901.926 866.531 2304.73</value>
+                </y>
+                <z>
+                    <time>0 7 13.7667 20 40.0333 45.9 51.8333 59.9333 65.3667 68.1333 70.0667 73.5667 80.2667</time>
+                    <value>-2606.94 -1366.88 -1136.09 -443.195 -205.726 -109.488 -644.603 -1724.91 -1724.91 -782.66 1347.83 3727.84 3694.46</value>
+                </z>
+            </position>
+            <rotation>-0,180,-0</rotation>
+            <fov>
+                <fov>
+                    <time>0 8.93333 37.7333 46.9667 62.5 72.8333 80.0667</time>
+                    <value>25.431 34.3552 34.9513 17.2222 15.3081 18.8359 17.8308</value>
+                </fov>
+            </fov>
+            <target>CamTarget</target>
+        </camera>
+    </properties>
+</root>

@@ -1,19 +1,17 @@
-<html>
-<head>
-    <title>Remixing Reality</title>
-    <script src="JSARToolKit.min.js"></script>
-    <script src="magi.js"></script>
-    <script src="BeatDetektor2/beatdetektor.js"></script>
-    <script src="BeatDetektor2/fft.js"></script>
-    <script src="models/RedPanda.js"></script>
-    <script src="models/ghost.js"></script>
-    <script src="models/finch.js"></script>
-    <script src="models/lotus.js"></script>
-    <script src="blender_export.js"></script>
-    <script src="audio_vis.js"></script>
-    <script src="canvas_scripts.js"></script>
-    <script src="AR_demo.js"></script>
-    
+<html><head>
+<title>Remixing Reality</title>
+<script src="JSARToolKit.min.js"></script>
+<script src="magi.js"></script>
+<script src="BeatDetektor2/beatdetektor.js"></script>
+<script src="BeatDetektor2/fft.js"></script>
+<script src="models/finch.js"></script>
+<script src="models/ghost.js"></script>
+<script src="models/lotus.js"></script>
+<script src="blender_export.js"></script>
+<script src="audio_vis.js"></script>
+<script src="canvas_scripts.js"></script>
+<script src="AR_demo.js"></script>
+
     <style>
         /* MetaWebPro font family licensed from fontshop.com. WOFF-FTW! */
         @font-face {
@@ -33,30 +31,30 @@
         dl, dt, dd, ol, ul, li,
         fieldset, form, label, legend,
         table, caption, tbody, tfoot, thead, tr, th, td {
-        	margin: 0;
-        	padding: 0;
-        	border: 0;
-        	outline: 0;
-        	font-size: 100%;
-        	vertical-align: baseline;
-        	background: transparent;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          outline: 0;
+          font-size: 100%;
+          vertical-align: baseline;
+          background: transparent;
         }
         body {
-        	line-height: 1;
+          line-height: 1;
         }
-        
+
         /* remember to define focus styles! */
         :focus {
-        	outline: 0;
+          outline: 0;
         }
-        
+
         /* tables still need 'cellspacing="0"' in the markup */
         table {
-        	border-collapse: collapse;
-        	border-spacing: 0;
+          border-collapse: collapse;
+          border-spacing: 0;
         }
         /* END reset styles */
-        
+
         body {
             background : url('i/bg.png') repeat-x left top;
         }
@@ -70,7 +68,7 @@
             height : 77px;
             background : url('i/header.png') no-repeat left top;
         }
-        
+
         #main {
             margin : 25px 0 15px 0;
         }
@@ -100,10 +98,13 @@
             height: 140px;
             cursor: pointer;
         }
+        #audio1 {
+          visibility: hidden;
+        }
         img.thumb {
             cursor: pointer;
         }
-        
+
         #footer {
             padding : 0 150px;
         }
@@ -121,11 +122,12 @@
 
         #display {
             pointer-events: none;
+            margin-top: -180px;
         }
         #fakeDisplay {
             pointer-events: none;
         }
-      
+
         .cf:after {
             visibility: hidden;
             display: block;
@@ -136,46 +138,46 @@
         }
         * html .cf             { zoom: 1; } /* IE6 */
         *:first-child+html .cf { zoom: 1; } /* IE7 */
-        
+
         .rpl {
             text-indent : -9999em;
-        }      
-        
+        }
+
     </style>
 </head>
 <body>
     <div id="wrap">
         <div id="header">
         </div>
-        
+
         <div id="main" class="cf">
             <div id="col-left">
-                <div><img class="thumb" src="i/thumb_spook.png" alt="" onclick="window.currentModel=blahmodels[1];hideBall()" /><img src="i/footer_spook.png" alt="Spook" /></div>
-                <div><img class="thumb" src="i/thumb_bird.png" alt="" onclick="window.currentModel=blahmodels[0];hideBall()" /><img src="i/footer_bird.png" alt="Bird" /></div>
-                <div><img class="thumb" src="i/thumb_lotus.png" alt="" onclick="window.currentModel=blahmodels[2];hideBall()" /><img src="i/footer_lotus.png" alt="Lotus" /></div>
+                <div><img class="thumb content" src="i/thumb_spook.png" alt="" onclick="window.currentModel=blahmodels[1];hideBall()" /><img src="i/footer_spook.png" alt="Spook" /></div>
+                <div><img class="thumb content" src="i/thumb_bird.png" alt="" onclick="window.currentModel=blahmodels[0];hideBall()" /><img src="i/footer_bird.png" alt="Bird" /></div>
+                <div><img class="thumb content" src="i/thumb_lotus.png" alt="" onclick="window.currentModel=blahmodels[2];hideBall()" /><img src="i/footer_lotus.png" alt="Lotus" /></div>
             </div>
-        
+
             <div id="content">
                 <div id="display"></div>
                 <div id="fakeDisplay"></div>
             </div>
-            
+
             <div id="col-right">
                 <div id="yours">
-                    <canvas id="draw" width="140" height="140" class="content"></canvas>
+                    <canvas id="draw" width="140" height="140" class="content" title="Press delete to clear"></canvas>
                     <img src="i/footer_draw.png" alt="Draw a picture" />
                 </div>
                 <div id="ball">
-                    <img class="thumb" src="i/thumb_ball.png" alt="" onclick="showBall()" /><img src="i/footer_play-ball.png" alt="Ball" />
+                    <img class="thumb content" src="i/thumb_ball.png" alt="" onclick="showBall()" /><img src="i/footer_play-ball.png" alt="Ball" />
                 </div>
                 <div id="music">
-                    <audio id="audio1" src="peliko.ogg" controls="true" onmozaudioavailable="audioWritten(event);" onloadedmetadata="loadedMetadata();"></audio>
+                    <audio id="audio1" src="musa.ogg" controls="true" onmozaudioavailable="audioWritten(event);" onloadedmetadata="loadedMetadata();"></audio>
                     <img src="i/footer_press-play.png" alt="Press play" />
                 </div>
             </div>
 
         </div>
-    
+
         <div id="footer">
             <div id="pick">Pick something from the sidebars to place into the video, then use the button below to</div>
             <button id="toggleAR" onclick="toggleAR()"><img src="i/toggle_augreal.png" /></button>

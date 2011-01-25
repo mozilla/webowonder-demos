@@ -1,0 +1,1631 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+    <head>
+        <title>Flight Of The Navigator</title>
+        <script>
+            var targetOrigin = '*';
+
+            window.addEventListener("load", function() {
+                window.addEventListener("message", function(e) { 
+                    if ("stop_demo" == e.data) {
+                        window.parent.postMessage('finished_exit', targetOrigin);
+                    }
+                }, true);
+
+                window.parent.postMessage('loaded', targetOrigin);
+            }, true);
+        </script>
+        <script src="bitFont.js"></script>
+        <script>
+            var getJson = function(url) {
+              var head = document.getElementsByTagName("head")[0];
+              var script = document.createElement("script");
+              script.src = url;
+              head.insertBefore( script, head.firstChild );
+            };
+
+            var feed    = [],
+                imgUrls = [];
+
+            var flickrCallback = function(o) {
+              for (var i in o.items) {
+                imgUrls.push((o.items[i].media.m).replace(/_m\.jpg$/, ".jpg"));
+              }
+              getNextImage();
+            };
+
+            var getNextImage = function() {
+              if (getNextImage.idx++ == imgUrls.length) {
+                return;
+              }
+
+              var nextUrl = imgUrls[getNextImage.idx],
+                  cacheImageFunc = function(url, img) {
+                                     Processing.getInstanceById('flickrCanvas').externals.sketch.imageCache.add(url, img);
+                                   };
+              setTimeout(function() { loadImage(nextUrl, cacheImageFunc, getNextImage); }, 30);
+            }
+            getNextImage.idx = 0;
+
+            var loadImage = function(url, aCacheImage, aCallback) {
+              var img = document.createElement('img');
+
+              img.onload = (function(aCacheImage, aCallback) {
+                var cacheImage = aCacheImage,
+                    callback = aCallback;
+                return function() {
+                  cacheImage(this.src, this);
+                  callback();
+                };
+              })(aCacheImage, aCallback);
+              img.src = url;
+            };
+
+            var twitterCallback = function(response) {
+              var results = response.results;
+              for (var i = 0, l = results.length; i < l; i++) {
+                feed.push(results[i]);
+              }
+            };
+        </script>
+        <script src="names.js">
+        </script>
+        <script src="processing-0.9.8.js">
+        </script>
+        <script src="CubicVR.js" type="text/javascript">
+        </script>
+        <script language="javascript" src="beatdetektor.js">
+        </script>
+        <script src="fft.js" type="text/javascript">
+        </script>
+        <script id="core-shader-vs" src="CubicVR_Core.vs" type="x-shader/x-vertex">
+        </script>
+        <script id="core-shader-fs" src="CubicVR_Core.fs" type="x-shader/x-fragment">
+        </script>
+        <script type='text/javascript'>
+            var obj_test;
+            var light_obj;
+            var landscape_test;
+            var audio_running = false;
+
+            var gl = null;
+
+            function initGL(canvas) {
+                try {
+                    gl = canvas.getContext("experimental-webgl");
+                    gl.viewport(0, 0, canvas.width, canvas.height);
+                } catch (e) {}
+                if (!gl) {
+                    alert("Could not initialise WebGL, sorry :-(");
+                }
+
+                CubicVR.core.init(gl, "core-shader-vs", "core-shader-fs");
+            }
+
+            var bufferSize = 0;
+            var signal = new Float32Array(bufferSize);
+            var channels = 0;
+            var rate = 0;
+            var frameBufferLength = 0;
+            var fft = null;
+
+            var light_test;
+            var scene;
+            var scenes = new Array();
+            var scene_list = new Array();
+            var light_test;
+            var skySphere;
+            var ss_starSphere;
+            var ss_cloudSphere;
+
+            var fx;
+            var fx_enabled = (window.location.search.indexOf('nofx') == -1);
+            var debugMode = (window.location.search.indexOf('debug') != -1);
+
+						var aElem = document.createElement("audio");
+						var browser_audio = (typeof(aElem.mozSetup) != "undefined");
+            var audio_enabled = browser_audio?(window.location.search.indexOf('noaudio') == -1):false;
+            var timer_ofs = 0;
+            var sequenceController = null;
+            var bd;
+            var vu;
+
+            bd = new BeatDetektor(50, 70);
+            kick_det = new BeatDetektor.modules.vis.BassKick();
+            vu = new BeatDetektor.modules.vis.VU();
+
+						function AudioRequest(url) {
+						  function loadAif(callback) {
+						    var req = new XMLHttpRequest();   
+						    req.open('GET', url, true);
+						    req.overrideMimeType('text/plain; charset=x-user-defined');   
+						    req.onreadystatechange = function (e) {   
+						      if (req.readyState == 4) {   
+						        if(req.status == 200 || req.status == 0) {
+						          var data = req.responseText;
+						          var channelCount = data.charCodeAt(21);
+						          var sampleCount = ((data.charCodeAt(22) & 0xFF) << 24) |
+						          ((data.charCodeAt(23) & 0xFF) << 16) | ((data.charCodeAt(24) & 0xFF) << 8) | (data.charCodeAt(25) & 0xFF);
+						          var offset = 54, len = sampleCount * channelCount;
+						          var samples = new Float32Array(len);
+						          for(var i=0; i < len; ++i) {
+						            var value = ((data.charCodeAt(offset) & 0xFF) << 8) | (data.charCodeAt(offset + 1) & 0xFF);
+						            if(value >= 0x8000) value |= ~0x7FFF;
+						            samples[i] = value / 0x8000;
+						            offset += 2;
+						          }
+						          callback(samples);
+						        } else {  
+						          callback(null);
+						        }
+						        req = null;
+						      }   
+						    };
+						    req.send(null);   
+						  } 
+
+						  this.onload = function() {};
+						  this.send = function() {
+						    var request = this;
+						    loadAif(function(data) {
+						      if (data) {
+						        request.data = data;
+						        request.onload();
+						      }
+						    });
+						  };
+						}
+
+						if (!audio_enabled)
+						{
+								var vizAudio = new AudioRequest("Shpongle-niswd-viz-22mono.aiff");
+								vizAudio.onload = function() { 
+					//				alert('loaded');
+								// startSendingEvents(request.data);
+								//	vizAudio.loaded = true;
+								};
+								vizAudio.send();
+
+								fft = new FFT(1024, 22050);
+								signal = new Float32Array(1024);
+						}
+
+						function getSampleAt(timeIndex)
+						{
+							  var portionSize = 1024;
+							  var intervalDuration = Math.floor(1000 * portionSize / 22050);
+								var offset = Math.round(22050 * timeIndex);
+							  var frame = new Float32Array(portionSize);
+
+								for(var i=0;i<portionSize;++i) 
+								{
+								  frame[i] = vizAudio.data[offset++];
+								}
+
+								return frame;
+						}
+									
+            function title(title_html) {
+                this.title_html = title_html;
+                this.time_index = 0;
+            }
+
+            function titler_set(start_time, title_a) // "title1", "title2"
+            {
+                this.start_time = start_time;
+                this.view_time = 6.0;
+                this.fade_time = 2.0;
+
+                this.sequences = new Array();
+                this.run_sequence = new Array();
+                this.currentTitle = 0;
+                this.run_time = 0;
+                this.last_sequence = 0;
+
+                this.title_elem = new Array();
+                this.title_elem[0] = document.getElementById(title_a);
+                //				this.title_elem[1] = document.getElementById(title_b);
+            }
+
+            titler_set.prototype.addTitle = function(title_html) {
+                this.sequences.push(new title(title_html));
+            }
+
+            titler_set.prototype.rebuild = function() {
+                var run_time = this.view_time * this.sequences.length;
+                run_time += this.fade_time * (this.sequences.length - 1);
+
+                this.run_time = run_time;
+
+                this.run_sequence = new Array();
+
+                var sTime = this.start_time;
+
+                var i;
+
+                for (i in this.sequences) {
+                    if (!this.sequences.hasOwnProperty(i)) continue;
+
+                    this.sequences[i].time_index = sTime;
+
+                    sTime += this.fade_time;
+                    sTime += this.view_time;
+
+                    this.run_sequence.push(this.sequences[i]);
+                }
+
+                this.last_sequence = i;
+            }
+
+            titler_set.prototype.runFrame = function(time_index) {
+                if (time_index < this.start_time) return;
+                if (time_index > this.start_time + this.run_time) return;
+
+                var ctime = time_index;
+                var cSeq = null;
+                var otime = 0;
+                var iSeq = 0;
+
+                for (var i in this.run_sequence) {
+                    if (!this.run_sequence.hasOwnProperty(i)) continue;
+
+                    if (this.run_sequence[i].time_index > ctime) {
+                        break;
+                    }
+                    else {
+                        cSeq = this.run_sequence[i];
+                        iSeq = i;
+                    }
+                }
+
+                if (cSeq == null || ctime > this.start_time + this.run_time) {
+                    this.title_elem[0].style.opacity = 0;
+                    return;
+                }
+
+                otime = time_index - cSeq.time_index;
+
+                var fading = false;
+
+                if (otime < this.fade_time) {
+                    fading = true;
+                }
+
+                if (fading) {
+                    this.title_elem[0].style.opacity = Math.abs(2.0 * ((otime / this.fade_time) - 0.5));
+
+                    var txt_val = ((otime / this.fade_time) > 0.5) ? (cSeq.title_html) : ((iSeq == 0) ? ("") : (this.run_sequence[iSeq - 1].title_html));
+
+                    if (this.title_elem[0].innerHTML != txt_val) this.title_elem[0].innerHTML = txt_val;
+                }
+                else {
+                    var txt_val = cSeq.title_html;
+
+                    this.title_elem[0].style.opacity = 1;
+
+                    if (this.title_elem[0].innerHTML != txt_val) this.title_elem[0].innerHTML = txt_val;
+                }
+
+            }
+
+
+            function sequence(time_index, time_offset, scene, sky, initFunc, destroyFunc) {
+                this.time_index = time_index;
+                this.time_offset = time_offset;
+                this.scene = scene;
+                this.sky = sky;
+
+                this.running = false;
+
+                this.initFunc = initFunc;
+                this.destroyFunc = destroyFunc;
+            }
+
+
+            function sequencer() {
+                this.lastSeq = new sequence(-1, 0, null, null, null, null);
+                this.sequence = Array();
+            }
+
+            sequencer.prototype.addSequence = function(seq) {
+                this.sequence.push(seq);
+                this.sequence.sort(function(a, b) {
+                    return (a.time_index - b.time_index);
+                });
+            }
+
+            sequencer.prototype.runFrame = function(time_index) {
+                var seqChoice = null;
+
+                for (var i in this.sequence) {
+                    if (!this.sequence.hasOwnProperty(i)) continue;
+
+                    var seq = this.sequence[i];
+
+                    if (time_index >= seq.time_index) {
+                        seqChoice = seq;
+                    }
+                }
+
+                if (seqChoice != null) if (seqChoice.time_index != this.lastSeq.time_index) {
+                    if (typeof(this.lastSeq.destroyFunc) == 'function') this.lastSeq.destroyFunc();
+                    this.lastSeq.running = false;
+
+                    if (typeof(seqChoice.initFunc) == 'function') seqChoice.initFunc();
+
+                    if (seqChoice.scene == null) {
+                        scene = null;
+                    }
+                    else {
+                        scene = scenes[seqChoice.scene];
+                    }
+
+                    if (debugMode)
+										{
+											document.getElementById("SceneNameDiv").innerHTML = seqChoice.scene;
+										}
+										
+                    skySphere = seqChoice.sky;
+                    timer_ofs = -seqChoice.time_index + seqChoice.time_offset;
+                    seqChoice.running = true;
+
+                    this.lastSeq = seqChoice;
+                }
+            }
+
+            var titler = null;
+            var vidTexture;
+            var vidCanvas;
+            var vid2Texture;
+            var vid2Canvas;
+            var vid2_enabled = false;
+            var twitter1PJS;
+            var viz1PJS;
+            var viz2PJS;
+            var vid2_timer = 0;
+            var vid2_drop_timer = 0;
+            var vid2_interval = 8;
+
+            var viz1Texture;
+            var viz1Canvas;
+            var viz2Texture;
+            var viz2Canvas;
+            var viz1_enabled = false;
+            var viz2_enabled = false;
+            var clearClr = [0, 0, 1];
+
+            var flickrPJS;
+            var flickrTexture = new Array();
+            var flickrPointer = 0;
+            var flickrCanvas;
+						var flickr_enabled = false;
+						var flickrTimer = 0;
+						var flickrTimerMax = 1.0/3.0;
+
+            var twitter1PJS;
+            var twitter1Texture;
+            var twitter1Canvas;
+						var twitter_enabled = false;
+						var twitterTimer = 0;
+						var twitterTimerMax = 1.0/12.0;
+
+            var creditCanvas;
+            var creditPJS;
+            var credits_enabled = false;
+
+						var video1_enabled = false;
+						var video2_enabled = false;
+						
+						var beatdetektor_enabled = false;
+
+            function updateTwitterTexture() {
+                gl.bindTexture(gl.TEXTURE_2D, CubicVR_Textures[twitter1Texture.tex_id]);
+                gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, twitter1Canvas);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                gl.bindTexture(gl.TEXTURE_2D, null);
+            }
+
+            function updateVideoTexture() {
+                gl.bindTexture(gl.TEXTURE_2D, CubicVR_Textures[vidTexture.tex_id]);
+                gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, vidCanvas);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                //						  gl.generateMipmap(gl.TEXTURE_2D);
+                gl.bindTexture(gl.TEXTURE_2D, null);
+            }
+
+
+            function updateVideo2Texture() {
+                gl.bindTexture(gl.TEXTURE_2D, CubicVR_Textures[vid2Texture.tex_id]);
+                gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, vid2Canvas);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                gl.bindTexture(gl.TEXTURE_2D, null);
+            }
+
+            function updateFlickrTexture() {
+                gl.bindTexture(gl.TEXTURE_2D, CubicVR_Textures[flickrTexture[flickrPointer].tex_id]);
+                gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, flickrCanvas);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                gl.generateMipmap(gl.TEXTURE_2D);
+                gl.bindTexture(gl.TEXTURE_2D, null);
+
+                flickrPointer++;
+                if (flickrPointer >= flickrTexture.length) flickrPointer = 0;
+            }
+
+
+            var buildingTex_backup;
+
+            function initVizModels() {
+                buildingTex_backup = Array();
+
+                var viz_models = ["buildings-p1.xml", "buildings-p2.xml", "buildings-p3.xml"];
+                var viz_materials = ["BuildingTex1", "BuildingTex2", "BuildingTex3", "BuildingTex4", "BuildingTex5"];
+
+                for (var i = 0; i < viz_models.length; i++) {
+                    for (var j = 0; j < viz_materials.length; j++) {
+                        var viz2Obj = CubicVR_MeshPool["TheCity/models/" + viz_models[i]];
+
+                        if (viz2Obj) {
+                            var viz2Material = viz2Obj.getMaterial(viz_materials[j]);
+                            if (viz2Material) {
+                                buildingTex_backup.push([viz2Material, viz2Material.textures[TEXTURE_MAP_AMBIENT], viz2Material.textures[TEXTURE_MAP_COLOR]]);
+                                viz2Material.setTexture(viz2Texture, TEXTURE_MAP_AMBIENT);
+                                viz2Material.setTexture(viz2Texture, TEXTURE_MAP_COLOR);
+                            }
+                        }
+                    }
+                }
+            }
+
+            function destroyVizModels() {
+                for (var i = 0; i < buildingTex_backup.length; i++) {
+                    buildingTex_backup[i][0].textures[TEXTURE_MAP_AMBIENT] = buildingTex_backup[i][1];
+                    buildingTex_backup[i][0].textures[TEXTURE_MAP_COLOR] = buildingTex_backup[i][2];
+                }
+            }
+
+
+						var currentSceneCount = 0, numScenes =0;
+						
+            function initSequencer() // load sky and start loading chain
+						{
+                canvas = document.getElementById("cubicvr-canvas");
+
+                ss_starSphere = CubicVR.loadMesh("TheCity/models/starsphere.xml", "TheCity/images/");
+                ss_cloudSphere = CubicVR.loadMesh("TheCity/models/skysphere.xml", "TheCity/images/");
+								
+								setLoadingBar(8);								
+								setTimeout(beginSequencerLoad,100);
+            }
+
+						function beginSequencerLoad()	// initial sequence stack setup
+						{
+              scene_list.push("TheCity/demo-intro.xml");
+              scene_list.push("TheCity/demo-overworld-entrance.xml");
+              scene_list.push("TheCity/demo-overworld-flight1.xml");
+              scene_list.push("TheCity/demo-twitter-building2.xml");
+              scene_list.push("TheCity/demo-video1.xml");
+              scene_list.push("TheCity/demo-viz-anim.xml");
+              scene_list.push("TheCity/demo-twitterfall.xml");
+              scene_list.push("TheCity/demo-extro.xml");
+							
+							numScenes = scene_list.length;
+
+							var next_scene_id = scene_list[0].substr(scene_list[0].lastIndexOf("/") + 1);
+							setLoadingBanner("Loading "+next_scene_id+"..");
+							
+							// if (navigator.userAgent.indexOf('Chrome')!=-1)
+							// {
+							// 	loadNextSequence();
+							// }
+							// else
+							{
+								setTimeout(loadNextSequence,100);
+							}
+						}
+
+						function loadNextSequence() // sequence loader loop
+						{
+                  var tmp = cubicvr_loadScene(scene_list[currentSceneCount], "TheCity/models/", "TheCity/images/");
+                  var scene_id = scene_list[currentSceneCount].substr(scene_list[currentSceneCount].lastIndexOf("/") + 1);
+
+                  scenes[scene_id] = tmp;
+                  scenes[scene_id].camera.setFOV(40);
+                  scenes[scene_id].camera.setDimensions(canvas_w, canvas_h);
+                  scenes[scene_id].camera.setClip(1, 10000);
+
+									currentSceneCount++;
+									
+									if (!(currentSceneCount<scene_list.length))
+									{
+										setLoadingBanner("Processing.js and dynamic texture init..");
+
+										setTimeout(sequencerSetupStage,100);
+									}
+									else
+									{
+										var next_scene_id = scene_list[currentSceneCount].substr(scene_list[currentSceneCount].lastIndexOf("/") + 1);
+										setLoadingBanner("Loading "+next_scene_id+"..");
+										setLoadingBar(((currentSceneCount+1)/numScenes)*100);
+
+										// if (navigator.userAgent.indexOf('Chrome')!=-1)
+										// {
+										// 	loadNextSequence();
+										// }
+										// else
+										{
+											setTimeout(loadNextSequence,100);
+										}
+									}
+						}
+
+						function sequencerSetupStage() // intialize lights, textures and dynamic processing.js textures
+						{
+
+              scenes["demo-intro.xml"].camera.setClip(1, 20000);
+              scenes["demo-extro.xml"].camera.setClip(1, 20000);
+
+              // lighting rigs
+              var lt = new cubicvr_light(LIGHT_TYPE_DIRECTIONAL);
+              lt.setRotation([45, 35, 0]);
+              lt.diffuse = [0.8, 0.8, 0.8];
+              lt.specular = [0.5, 0.5, 0.5];
+
+              scenes["demo-intro.xml"].bindLight(lt);
+              scenes["demo-extro.xml"].bindLight(lt);
+
+              lt = new cubicvr_light(LIGHT_TYPE_DIRECTIONAL);
+              lt.setRotation([35, 45, 0]);
+              lt.diffuse = [0.2, 0.2, 0.2];
+              lt.specular = [0.5, 0.5, 0.5];
+
+              scenes["demo-overworld-entrance.xml"].bindLight(lt);
+              scenes["demo-overworld-flight1.xml"].bindLight(lt);
+              scenes["demo-twitter-building2.xml"].bindLight(lt);
+              scenes["demo-viz-anim.xml"].bindLight(lt);
+              scenes["demo-twitterfall.xml"].bindLight(lt);
+
+              var lt = new cubicvr_light(LIGHT_TYPE_DIRECTIONAL);
+              lt.setRotation([35, -65, 0]);
+              lt.diffuse = [0.8, 0.8, 0.8];
+              lt.specular = [0.5, 0.5, 0.5];
+
+              scenes["demo-video1.xml"].bindLight(lt);
+
+
+              scene = scenes["demo-intro.xml"];
+              skySphere = ss_starSphere;
+
+
+              fx = new CubicVR.postProcessFX(canvas.width, canvas.height);
+              fx.bloom = true;
+              fx.blur = true;
+              fx.blurOpacity = 0.45;
+
+              twitter1Texture = new CubicVR.texture();
+
+              vidObj = CubicVR_MeshPool["TheCity/models/twitter_banner2.xml"];
+              twitMaterial = vidObj.getMaterial("Twitter2");
+
+              twitMaterial.setTexture(twitter1Texture, TEXTURE_MAP_AMBIENT);
+              twitMaterial.setTexture(twitter1Texture, TEXTURE_MAP_COLOR);
+
+              twitter1PJS = Processing.getInstanceById('twitter1Canvas');
+              twitter1PJS.noLoop();
+
+              twitter1Canvas = document.getElementById("twitter1Canvas");
+
+              vidTexture = new CubicVR.texture();
+
+              // document.getElementById("vidCanvas").addEventListener("timeupdate", updateVideoTexture, true);
+              // document.getElementById("vid2Canvas").addEventListener("timeupdate", updateVideo2Texture, true);
+
+              vidCanvas = document.getElementById("vidCanvas");
+              vidCanvas.muted = true;
+              vid2Canvas = document.getElementById("vid2Canvas");
+              vid2Canvas.muted = true;
+
+
+              vid2Texture = new CubicVR.texture();
+
+              var vid2Obj = CubicVR_MeshPool["TheCity/models/billboard-5.xml"];
+              var vid2Material = vid2Obj.getMaterial("Billboard5");
+
+              vid2Material.setTexture(vid2Texture, TEXTURE_MAP_AMBIENT);
+              vid2Material.setTexture(vid2Texture, TEXTURE_MAP_COLOR);
+
+
+
+              viz1Texture = new CubicVR.texture();
+              viz1Canvas = document.getElementById("viz1Canvas");
+              viz1PJS = Processing.getInstanceById('viz1Canvas');
+              viz1PJS.noLoop();
+
+              viz2Texture = new CubicVR.texture();
+              viz2Canvas = document.getElementById("viz2Canvas");
+              viz2PJS = Processing.getInstanceById('viz2Canvas');
+              viz2PJS.noLoop();
+
+
+              creditPJS = Processing.getInstanceById('creditCanvas');
+              creditCanvas = document.getElementById("creditCanvas");
+              creditPJS.noLoop();
+
+
+              flickrTexture[0] = new CubicVR.texture();
+              flickrTexture[1] = new CubicVR.texture();
+              flickrTexture[2] = new CubicVR.texture();
+              flickrTexture[3] = new CubicVR.texture();
+              flickrTexture[4] = new CubicVR.texture();
+              flickrTexture[5] = new CubicVR.texture();
+
+              var flickrObj = CubicVR_MeshPool["TheCity/models/billboard-1.xml"];
+              var flickrMat = flickrObj.getMaterial("Billboard1")
+
+              flickrMat.setTexture(flickrTexture[0], TEXTURE_MAP_AMBIENT);
+              flickrMat.setTexture(flickrTexture[0], TEXTURE_MAP_COLOR);
+
+              flickrObj = CubicVR_MeshPool["TheCity/models/billboard-2.xml"];
+              flickrMat = flickrObj.getMaterial("Billboard2")
+              flickrMat.setTexture(flickrTexture[1], TEXTURE_MAP_AMBIENT);
+              flickrMat.setTexture(flickrTexture[1], TEXTURE_MAP_COLOR);
+
+
+              flickrObj = CubicVR_MeshPool["TheCity/models/display1_screen.xml"];
+              flickrMat = flickrObj.getMaterial("PicScreen1")
+              flickrMat.setTexture(flickrTexture[2], TEXTURE_MAP_AMBIENT);
+              flickrMat.setTexture(flickrTexture[2], TEXTURE_MAP_COLOR);
+
+
+              flickrObj = CubicVR_MeshPool["TheCity/models/display2_screen.xml"];
+              flickrMat = flickrObj.getMaterial("PicScreen1")
+              flickrMat.setTexture(flickrTexture[3], TEXTURE_MAP_AMBIENT);
+              flickrMat.setTexture(flickrTexture[3], TEXTURE_MAP_COLOR);
+
+
+              flickrObj = CubicVR_MeshPool["TheCity/models/display3_screen.xml"];
+              flickrMat = flickrObj.getMaterial("PicScreen1")
+              flickrMat.setTexture(flickrTexture[4], TEXTURE_MAP_AMBIENT);
+              flickrMat.setTexture(flickrTexture[4], TEXTURE_MAP_COLOR);
+
+
+              flickrObj = CubicVR_MeshPool["TheCity/models/display4_screen.xml"];
+              flickrMat = flickrObj.getMaterial("PicScreen1")
+              flickrMat.setTexture(flickrTexture[5], TEXTURE_MAP_AMBIENT);
+              flickrMat.setTexture(flickrTexture[5], TEXTURE_MAP_COLOR);
+
+
+              flickrCanvas = document.getElementById("flickrCanvas");
+              flickrPJS = Processing.getInstanceById('flickrCanvas');
+              flickrPJS.noLoop();
+
+
+							setLoadingBanner("Sequencer Initializing..");
+
+							setTimeout(sequencerFinalStage,100);
+						}
+
+
+						function sequencerFinalStage()	// assemble the sequences
+						{
+              sequenceController = new sequencer();
+              sequenceController.addSequence(new sequence(0, 0, "demo-intro.xml", ss_starSphere, function() {
+                  document.getElementById("title1").style.display = "";
+                  titler = new titler_set(2.0, "title1");
+                  titler.addTitle("<span>&quot;Flight Of The Navigator&quot;<br/>presented by the Mozilla #audio hacking team</span>");
+                  titler.addTitle("<span>Code and Graphics<br/><br/>" + "Charles J. Cliffe (@ccliffe)<br/>" + "Corban Brook (@corban)<br/>" + "Alistair MacDonald (@F1LT3R)<br/>" + "David Humphrey (@humphd)<br/>" + "Andor Salga (@asalga)</span>");
+                  titler.addTitle("<span>Modelling and Animation<br/><br/>" + "Charles J. Cliffe (@ccliffe)<br/>" + "Maciej Adwent (@Maciek416)</span>");
+                  titler.addTitle("<span>Music<br/><br/>" + "Shpongle - Nothing is Something Worth Doing<br/>" + "Copyright &copy; Twisted Records, UK, All rights reserved</span>");
+                  titler.addTitle("<span>Brought to you via<br/><br/>" + "HTML5 &lt;canvas&gt;, &lt;video&gt;, &lt;audio&gt;<br/>" + "WebGL, WebM, WOFF, OGG and Mozilla Audio API<br/>" + "CubicVR 3D engine (www.cubicvr.org / @ccliffe)<br/>" + "Processing.js (www.processingjs.org)</span>");
+                  titler.addTitle("<span>Special Features<br/><br/>" + "Real-time flickr and twitter streams<br/>" + "use hash tag #firefox4 ;)</span>");
+                  titler.addTitle("");
+                  titler.rebuild();
+									flickr_enabled = false;
+              }, function() {
+                  document.getElementById("title1").style.display = "none";
+                  titler = null;                                                                        
+									flickr_enabled = false;										
+              }));
+
+              sequenceController.addSequence(new sequence(60, 0, "demo-overworld-entrance.xml", ss_cloudSphere, function() {
+									flickr_enabled = true;										
+									twitter_enabled = true;
+									updateFlickrTexture();
+									updateFlickrTexture();
+									updateFlickrTexture();
+									updateFlickrTexture();								
+							}, function() {
+									flickr_enabled = false;
+									twitter_enabled = false;
+							}));
+              sequenceController.addSequence(new sequence(90, 0, "demo-overworld-flight1.xml", ss_cloudSphere, function() {
+									flickr_enabled = true;										
+							}, function() {
+									flickr_enabled = false;
+							}));
+              sequenceController.addSequence(new sequence(122, 0, "demo-twitter-building2.xml", ss_cloudSphere, function() {
+									flickr_enabled = true;										
+									twitter_enabled = true;										
+							}, function() {
+									flickr_enabled = false;
+									twitter_enabled = false;
+							}));
+              sequenceController.addSequence(new sequence(177, 0, "demo-video1.xml", ss_cloudSphere, function() {
+                  var vidObj = CubicVR_MeshPool["TheCity/models/videoscreen2.xml"];
+                  var vidMaterial = vidObj.getMaterial("VideoScreen");
+
+                  vidMaterial.setTexture(vidTexture, TEXTURE_MAP_AMBIENT);
+                  vidMaterial.setTexture(vidTexture, TEXTURE_MAP_COLOR);
+
+                  document.getElementById("vidCanvas").currentTime = 0;
+                  document.getElementById("vidCanvas").play();
+                  //					document.getElementById('audio1').volume = 0.1;
+									video1_enabled = true;
+									beatdetektor_enabled = true;
+              }, function() {
+                  document.getElementById("vidCanvas").pause();
+                  //					document.getElementById('audio1').volume = 1.0;
+									video1_enabled = false;
+									beatdetektor_enabled = false;
+              }));
+              sequenceController.addSequence(new sequence(244, 0, "demo-viz-anim.xml", ss_cloudSphere, function() {
+                  var vizObj = CubicVR_MeshPool["TheCity/models/videoscreen2.xml"];
+                  var vizMaterial = vizObj.getMaterial("VideoScreen");
+
+                  vizMaterial.setTexture(viz1Texture, TEXTURE_MAP_AMBIENT);
+                  vizMaterial.setTexture(viz1Texture, TEXTURE_MAP_COLOR);
+
+                  //					pjsInterface2.lights = {vu: vu.vu_levels};
+                  viz1_enabled = true;
+                  viz2_enabled = true;
+									beatdetektor_enabled = true;
+									twitter_enabled = true;										
+									flickr_enabled = true;
+                  initVizModels();
+              }, function() {
+                  viz1_enabled = false;
+                  viz2_enabled = false;
+									beatdetektor_enabled = false;
+									twitter_enabled = false;										
+									flickr_enabled = false;
+                  destroyVizModels();
+              }));
+              sequenceController.addSequence(new sequence(304, 0, "demo-twitterfall.xml", ss_cloudSphere, function() {
+                  document.getElementById("vid2Canvas").currentTime = 0;
+                  document.getElementById("vid2Canvas").play();
+
+									flickr_enabled = true;
+									video2_enabled = true;										
+              }, function() {
+                  document.getElementById("vid2Canvas").pause();
+									flickr_enabled = false;
+									video2_enabled = false;										
+              }));
+              sequenceController.addSequence(new sequence(338, 0, "demo-extro.xml", ss_starSphere));
+              sequenceController.addSequence(new sequence(368.5, 0, null, ss_starSphere, function() {
+                  credits_enabled = true;
+                  creditCanvas.style.display = "";
+              }, function() {
+                  credits_enabled = false;
+                  creditCanvas.style.display = "none";
+              }));
+
+							setLoadingBanner("Done.");
+							document.getElementById('playButton').style.display="";
+							
+						}
+						
+            function webGLStart() {
+                var canvas = document.getElementById("cubicvr-canvas");
+
+                initGL(canvas);
+
+                CubicVR.setGlobalAmbient([0.3, 0.3, 0.3]);
+
+                gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+                gl.clearDepth(1.0);
+
+                gl.enable(gl.DEPTH_TEST);
+                gl.depthFunc(gl.LESS);
+
+								setLoadingBanner("Loading sky..");
+								setLoadingBar(5);								
+                setTimeout(initSequencer,100);
+            }
+
+
+            var audio;
+
+            function loadedMetadata() {
+								if (audio_enabled)
+								{
+	                var audio = document.getElementById('audio1');
+
+
+	                channels = audio.mozChannels;
+	                rate = audio.mozSampleRate;
+	                frameBufferLength = audio.mozFrameBufferLength;
+
+	                bufferSize = (frameBufferLength / channels) / 2;
+
+	                fft = new FFT(bufferSize, rate);
+	                signal = new Float32Array(bufferSize);
+
+	                audio.addEventListener("MozAudioAvailable", audioAvailable, false);
+								}
+            }
+
+            var audio_timer = 0;
+            var audio_sync_timer = 0;
+            var m_BeatTimer = 0;
+            var m_BeatCounter = 0;
+            var ftimer = 0;
+
+            function audioAvailable(event) {
+                audio_timer = event.time;								
+								if (!beatdetektor_enabled) return;
+								
+                if (fft == null) return;
+
+                var fb = event.frameBuffer;
+
+                for (var i = 0, fbl = bufferSize; i < fbl; i++) {
+                    // Assuming interlaced stereo channels,
+                    // need to split and merge into a stero-mix mono signal
+                    signal[i] = (fb[2 * i] + fb[2 * i + 1]) / 2;
+                }
+
+                fft.forward(signal);
+
+                //			timestamp = document.getElementById('audio1').currentTime;
+                timestamp = event.time;
+
+                bd.process(timestamp, fft.spectrum);
+
+                if (bd.win_bpm_int_lo) {
+                    m_BeatTimer += bd.last_update;
+
+                    if (m_BeatTimer > (60.0 / bd.win_bpm_int_lo)) {
+                        m_BeatTimer -= (60.0 / bd.win_bpm_int_lo);
+                        clearClr[0] = 0.5 + Math.random() / 2;
+                        clearClr[1] = 0.5 + Math.random() / 2;
+                        clearClr[2] = 0.5 + Math.random() / 2;
+                        m_BeatCounter++;
+                    }
+                }
+
+
+                ftimer += bd.last_update;
+                if (ftimer > 1.0 / 24.0) {
+                    vu.process(bd, ftimer);
+
+                    ftimer = 0;
+                }
+            }
+
+				    function pseudoAudioAvailable(timeIndex) 
+						{
+							if (fft == null) return;
+
+							signal = getSampleAt(timeIndex);
+
+			       fft.forward(signal);
+
+						  bd.process( timeIndex, fft.spectrum );
+
+							if (bd.win_bpm_int_lo)
+							{
+								m_BeatTimer += bd.last_update;
+
+								if (m_BeatTimer > (60.0/bd.win_bpm_int_lo)) 
+								{
+									m_BeatTimer -= (60.0/bd.win_bpm_int_lo);
+									clearClr[0] = 0.5+Math.random()/2;
+									clearClr[1] = 0.5+Math.random()/2;
+									clearClr[2] = 0.5+Math.random()/2;
+									m_BeatCounter++;
+								}
+							}
+
+
+							ftimer += bd.last_update;
+							if (ftimer > 1.0/24.0) 
+							{
+								vu.process(bd,ftimer);
+
+								ftimer = 0;
+							}		
+						}
+
+            function audioPlay(event) {
+                audio_running = true;
+            }
+
+            function audioPause(event) {
+                audio_running = false;
+            }
+
+            var canvas_w, canvas_h, aspect;
+
+            var timerMilliseconds;
+            var timerSeconds = 0;
+						var frameCounterSeconds = 0;
+            var timerLastSeconds = 0;
+            var frameCounter = 0;
+            var sceneTrigger = false;
+            var fpsSeconds = 0;
+            var fovFlip = false;
+            var doNextTwitterFall = false;
+            var creditSpeed = 1.0/30.0;
+            var creditTimer = 0;
+
+            function drawScene() {
+								if (!audio_enabled) audio_timer = document.getElementById('audio1').currentTime;
+								
+                if (!audio_running) return;
+                if (!audio_timer) return;
+                if (!timerMilliseconds) {
+                    timerMilliseconds = (new Date()).getTime();
+                    return;
+                }
+
+                frameCounter++;
+
+                var newTimerMilliseconds = (new Date()).getTime();
+
+                timerLastSeconds = (newTimerMilliseconds - timerMilliseconds) / 1000.0;
+
+                //				if (timerLastSeconds > (1/10)) timerLastSeconds = (1/10);
+                timerSeconds += timerLastSeconds;
+                fpsSeconds += timerLastSeconds;
+                timerMilliseconds = newTimerMilliseconds;
+
+                if (timerSeconds < audio_timer) timerSeconds = audio_timer;
+                if (timerSeconds > audio_timer + 0.5) timerSeconds = audio_timer;
+
+								if (debugMode) {
+									frameCounterSeconds += timerLastSeconds;
+									if (frameCounter%30==0)
+									{
+										fpsStr = ""+(30.0/frameCounterSeconds);
+										document.getElementById('TimerDiv').innerHTML=fpsStr.substring(0,6)+" fps";
+										frameCounterSeconds=0;
+									}
+								}
+								
+
+                sequenceController.runFrame(timerSeconds);
+                if (titler != null) titler.runFrame(timerSeconds);
+
+								if (video1_enabled)
+								{
+									updateVideoTexture();
+								}
+								
+								if (video2_enabled)
+								{
+									updateVideo2Texture();
+								}
+
+								if (twitter_enabled)
+								{
+									twitterTimer+=timerLastSeconds;
+	                if (twitterTimer >= twitterTimerMax) {
+                      setTimeout(function(){twitter1PJS.redraw();
+                      updateTwitterTexture();},1);
+											twitterTimer = 0;
+	                }
+								}
+
+								if (flickr_enabled)
+								{
+									flickrTimer+=timerLastSeconds;
+	                if (flickrTimer >= flickrTimerMax) {
+	                    setTimeout(function() {
+		                	flickrPJS.redraw();		
+	                    updateFlickrTexture();},1);
+											flickrTimer = 0;
+	                }									
+								}
+
+                if (viz1_enabled) {
+										if (!audio_enabled)
+										{
+											pseudoAudioAvailable(timerSeconds+timer_ofs);											
+										}
+	                  
+                    viz1PJS.redraw();
+                    gl.bindTexture(gl.TEXTURE_2D, CubicVR_Textures[viz1Texture.tex_id]);
+                    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+                    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, viz1Canvas);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+                    gl.generateMipmap(gl.TEXTURE_2D);
+                    gl.bindTexture(gl.TEXTURE_2D, null);
+                }
+
+                if (viz2_enabled) {
+                    setTimeout(function() {
+                    viz2PJS.redraw();
+                    gl.bindTexture(gl.TEXTURE_2D, CubicVR_Textures[viz2Texture.tex_id]);
+                    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+                    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, viz2Canvas);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+                    gl.generateMipmap(gl.TEXTURE_2D);
+                    gl.bindTexture(gl.TEXTURE_2D, null);
+                  },1);
+                }
+
+
+                //				document.getElementById("TimerDiv").innerHTML = (Math.round((timerSeconds+timer_ofs)*1000.0)/1000.0) + " / " + (Math.round((frameCounter/fpsSeconds)*1000.0)/1000.0) + "fps";
+                if (timerSeconds > 64 && timerSeconds < 72) {
+                    if (!fovFlip) {
+                        scene.camera.setClip(3000, 20000);
+                        fovFlip = true;
+                    }
+                }
+                else if (fovFlip && timerSeconds >= 72) {
+                    fovFlip = false;
+                    scene.camera.setClip(1, 10000);
+                }
+
+                if (scene) {
+
+                    if (fx_enabled) {
+                        fx.begin();
+                    }
+
+                    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+                    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+                    scene.evaluate(timerSeconds + timer_ofs);
+
+                    modelViewMat = CubicVR.lookat(0, 0, 0, scene.camera.target[0] - scene.camera.position[0], scene.camera.target[1] - scene.camera.position[1], scene.camera.target[2] - scene.camera.position[2], 0, 1, 0);
+
+                    CubicVR.renderObject(skySphere, modelViewMat, scene.camera.pMatrix, CubicVR.newTransform().scale(fovFlip ? [5000, 5000, 5000] : [10, 10, 10]).getResult());
+
+                    gl.clear(gl.DEPTH_BUFFER_BIT);
+										
+                    scene.render();
+
+                    if (fx_enabled) {
+                        fx.end();
+
+                        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+                        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+
+                        if (frameCounter) fx.render();
+                    }
+                }
+
+                if (credits_enabled) {
+                  creditTimer+=timerLastSeconds;
+                  if (creditTimer>creditSpeed)
+                  {
+                      creditTimer-=creditSpeed;
+                     creditPJS.redraw();
+                  }                   
+                }
+            }
+
+            function changeFX(elem) {
+                fx_enabled = elem.checked;
+            }
+
+						var windowTimer = null;
+
+						window.onresize = function()
+						{
+								if (windowTimer == null)
+								{
+									windowTimer = setTimeout(doWindowResize,1000);
+								}
+								else
+								{
+									clearTimeout(windowTimer);
+									windowTimer = setTimeout(doWindowResize,1000);
+								}
+						}
+						
+						
+						function doWindowResize()
+						{
+							if (!gl) return;
+							
+							var canvas = document.getElementById("cubicvr-canvas");
+							var credCanvas = document.getElementById("creditCanvas");
+              var target_aspect = 9.0 / 18.0;
+	            
+							var ncanvas_w = window.innerWidth;
+	            var ncanvas_h = parseInt(window.innerWidth * target_aspect);
+	            var naspect = canvas_w / canvas_h;
+
+							if ((ncanvas_w != canvas_w) || (ncanvas_h != canvas_h))
+							{
+								aspect = aspect;
+								canvas_w = ncanvas_w;
+								canvas_h = ncanvas_h;
+								
+								canvas.width=canvas_w;
+								canvas.height=canvas_h;
+								
+								credCanvas.width=canvas_w;
+								credCanvas.height=canvas_h;
+
+								fx.resize(canvas_w,canvas_h);
+
+								gl.viewport(0, 0, canvas_w, canvas_h);
+							}
+
+							document.getElementById('title1').style.fontSize = parseInt(window.innerHeight / 25)+"px";
+							document.getElementById('titleTable').style.width = window.innerWidth+"px";
+							document.getElementById('titleTable').style.height = window.innerHeight+"px";
+
+							var canvasTop = parseInt((window.innerHeight / 2) - (canvas_h / 2));
+							
+							credCanvas.style.top=canvasTop+"px";
+							canvas.style.top=canvasTop+"px";
+						}
+
+
+						var sliderTimer = null;
+						var sliderDir = 0;
+						var sliderMin = -115;
+						var sliderMax = 0;
+											
+						function slideIn()
+						{
+							if (sliderDir == -1) return;
+							
+							var s = document.getElementById('audioSlider');
+							var cs = parseFloat(s.style.top);
+							
+							if (cs<sliderMax-1)
+							{
+								sliderDir = 1;
+								s.style.top = parseFloat(cs+((sliderMax-cs)*0.20))+"px";							
+								sliderTimer = setTimeout(slideIn,20);
+							}
+							else
+							{
+								sliderDir = 0;
+								sliderTimer = null;
+								s.style.top = sliderMax+"px";
+							}							
+						}
+						
+						function slideOut()
+						{
+							if (sliderDir == 1) return;
+							
+							var s = document.getElementById('audioSlider');
+							var cs = parseFloat(s.style.top);
+							
+							if (cs>sliderMin+1)
+							{
+								sliderDir = -1;
+								s.style.top = parseFloat(cs+((sliderMin-cs)*0.20))+"px";							
+								sliderTimer = setTimeout(slideOut,20);
+							}
+							else
+							{
+								sliderDir = 0;
+								sliderTimer = null;
+								s.style.top = sliderMin+"px";
+							}							
+						}
+						
+						function setLoadingBar(percent)
+						{
+							document.getElementById("loadingBarInner").style.width=parseInt(percent)+"%";
+						}
+
+						function setLoadingBanner(message)
+						{
+							document.getElementById("loadingBanner").innerHTML=message;
+						}
+
+						function initialSlideOut()
+						{
+							var s = document.getElementById('audioSlider');
+							var cs = parseInt(s.style.top);
+							
+							if (cs > sliderMin && sliderDir==0)
+							{
+								slideOut();
+							}
+							else
+							{
+								setTimeout(initialSlideOut,1000);								
+							}
+						}
+
+						function doStart()
+						{
+						  var container = document.getElementById("container");
+							document.getElementById("audioSlider").style.display="";
+							document.getElementById("cubicvr-canvas").style.display="";							
+							document.getElementById("wrap").innerHTML="";
+							slideIn();                                          
+							setTimeout(initialSlideOut,4000);
+							document.getElementById("audio1").play();
+              setTimeout(function() {
+                getJson('http://api.flickr.com/services/feeds/photos_public.gne?tags=firefox&lang=en-us&format=json&jsoncallback=flickrCallback');
+                getJson('http://api.flickr.com/services/feeds/photos_public.gne?tags=mozilla&lang=en-us&format=json&jsoncallback=flickrCallback');
+                getJson('http://search.twitter.com/search.json?q=firefox4&rpp=8&callback=twitterCallback');
+              }, 1000);
+							setInterval(drawScene, 1);	// start drawing
+						}
+						
+			      function mouseReallyOut(oThis, e) {
+				
+			        if (e.relatedTarget) {
+								var p = e.relatedTarget;
+								
+								if (p == oThis) return false;
+								while (p.parentNode!=null)
+								{
+									if (p.parentNode == oThis) return false;
+									p = p.parentNode;
+								}
+								return true;
+			        }
+			
+							if (e.toElement == null) return false;
+			        return(e.toElement != oThis && e.toElement.parentNode  != oThis);
+			      }
+        </script>
+
+      	<link rel="stylesheet" href="fonts/digital-dream/stylesheet.css" type="text/css" charset="utf-8"> 
+      	<link rel="stylesheet" href="fonts/Inconsolata/stylesheet.css" type="text/css" charset="utf-8"> 
+      	<link rel="stylesheet" href="fonts/Plexifont-BV/stylesheet.css" type="text/css" charset="utf-8"> 
+      	<link rel="stylesheet" href="fonts/Undercover/stylesheet.css" type="text/css" charset="utf-8"> 
+      	<link rel="stylesheet" href="fonts/Dubtronic/stylesheet.css" type="text/css" charset="utf-8"> 
+      	<style type="text/css"> 
+					body {
+						margin:0px;
+						overflow:hidden;
+						background: #000;
+					}
+					
+					.gradient{
+					  position: absolute;
+					  top: -100px;
+					  left: 0px; 
+					  width: 100%;
+            background-image : -moz-radial-gradient(top, #777, #222);
+            background-image : -webkit-gradient(radial, center center, 10, center center, 1300, from(#777), to(#222), color-stop(10%, #777));
+            height: 1800px;
+            display:block;
+            position:relative;
+            padding: 100px 0 0 0;
+						font-family:arial;
+            text-align:center;
+  				  z-index:2000;
+/*          background: url(http://mozcom-cdn.mozilla.net/img/tignish/firefox/background-firefox-3.jpg) repeat-x;*/
+          }
+          
+  				.moz {
+  				  background: url('loader-ship.png') 50% 20% no-repeat;
+  				  height: 500px;
+  				}
+  				
+  				#container{
+  				  margin: 20px auto 0 auto;
+  				  padding: 0px 0 0 0;
+  				  width: 730px;    
+  				  display:block;
+  				  text-align: left;
+  				  position: relative;
+  				}
+
+					h1 {
+            /*
+                        font-family: 'DubtronicSolid', Arial, sans-serif;
+                        font-family: 'DigitaldreamRegular', Arial, sans-serif;
+                        font-family: 'InconsolataMedium', Arial, sans-serif;
+                        font-family: 'PlexifontBVRegular', Arial, sans-serif;*
+            */
+            font-family: 'UndercoverRegular', Arial, sans-serif;
+            font-size: 50px;
+            letter-spacing: 0;
+            text-shadow: none;
+          	font-weight: bold;
+          	line-height:2;
+          	color: #192a33;
+          	text-shadow: 	hsla(200,100%,70%,.9) 1px -1px 2px, hsla(200,100%,50%,.2) 0 -5px 20px, rgba(0,0,0,0.9) -2px 2px 15px;
+          	text-align: center;
+
+          }
+					
+					h2 {
+					  font-size: 20px;
+					  margin-top:25px;    
+					  margin-left: -30px;
+            font-family: 'InconsolataMedium', Arial, sans-serif;
+					}
+					
+					cite {
+            font-family: 'InconsolataMedium', Arial, sans-serif;
+					  margin:0px 0px 0px 420px;
+					  font-size: 14px;
+					  line-height:1;  
+					  color: #fff;
+					  text-shadow: 0px 0px 5px #000;
+            top: -50px;
+            position:relative;  
+            font-style:normal;
+					}
+  				
+  				a {
+  				  text-decoration:none;
+          	color: #000033;
+						text-shadow: 0px 1px 0px rgba(255, 255, 255, .3);
+ 					}
+ 					     
+ 					
+ 					cite a {
+ 					   color: #000077;
+ 					   text-shadow: 0px 0px 3px #444;
+ 					}
+ 					p {
+ 					  clear: both;
+ 					  margin: 5px 0px 50px 0px;
+ 					  font-size: 16px;
+ 					}
+					
+					#mainText {
+						font-size:16px;
+						overflow:visible;
+						height:0px;
+						color:rgba(0,0,0, .8);
+						font-weight: bolder;
+						text-shadow: 0px 1px 1px rgba(255, 255, 255, .2);
+						text-align:left;
+						font-weight:bold;   
+						top:10px;
+						position:relative;
+					}
+					
+					#playButton { /* Inspired by @simurai's bonbon */
+					  width: 90px;      
+					  text-align:center;
+          	color: #333;
+					  float: left;
+					  font-family: arial, helvetica, sans-serif;  
+          	font-weight: bold;                          
+						margin: 40px 0 0 0;
+          	text-shadow: rgba(255,255,255,.5) 0 1px 0;  
+          	cursor:pointer;
+          	font-size: 18px;
+          	padding: .6em .7em .6em .7em;
+          	-moz-border-radius: 8px;
+          	-webkit-border-radius: 8px;
+          	border-top: 1px solid rgba(255,255,255,0.8);
+          	border-bottom: 		1px solid rgba(0,0,0,0.1);
+          	background-image: 	-moz-radial-gradient(top, ellipse cover, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 100%);
+           	background-image: 	-webkit-gradient(radial, 50% 0, 100, 50% 0, 0, from( rgba(255,255,255,0) ), to( rgba(255,255,255,0.7) ));
+          	-moz-transition: 	background .2s ease-in-out;
+           	-webkit-transition: background .2s ease-in-out;
+          	background-color: 	hsl(0, 0%, 45%);
+          	-moz-box-shadow:   	inset rgba(255,254,255,0.4) 0 0.3em .3em, inset rgba(0,0,0,0.15) 0 -0.1em 2px, hsl(0, 0%, 20%) 0 1px 3px, hsl(0, 0%, 25%) 0 2px 1px, rgba(0,0,0,0.2) 0 3px 5px;
+           	-webkit-box-shadow: inset rgba(255,254,255,0.4) 0 0.3em .3em, inset rgba(0,0,0,0.15) 0 -0.1em 2px, hsl(0, 0%, 20%) 0 1px 3px, hsl(0, 0%, 25%) 0 2px 1px, rgba(0,0,0,0.2) 0 3px 5px;
+          }                       
+          
+          #playButton:hover {
+            background-color: #aaa;
+          }
+          					
+					#loadingBarOuter {
+						width:580px;
+						height:34px; 
+						margin: 40px 20px 0 0;
+						padding:7px;
+						border-radius:10px;    
+						background: #777;
+            -moz-box-shadow: 0 1px 3px #000 inset;
+            -webkit-box-shadow: 0 1px 3px #000 inset;
+            float: left;
+  				 }
+					
+					#loadingBanner {
+						position:relative;
+						top:-30px;
+						left:10px;
+						font-family:Arial;
+						height:0px;
+						overflow:visible;
+					}
+
+					#loadingBannerLower {
+						position:relative;
+						top:44px;
+						left:10px;
+
+						width:565px;
+						height:0px;
+						overflow:visible;
+						text-align:right;
+
+					  font-size: 14px;
+
+            font-family: 'InconsolataMedium', Arial, sans-serif;
+					}
+					
+					#loadingBarInner {
+						background-color:#444;
+						width:0%;
+						height:100%;
+						border-radius:7px;
+            -moz-box-shadow: 0 0px 2px #000 ;
+            -webkit-box-shadow: 0 0px 2px #000;
+					}             
+					
+					
+          #audioSlider {
+            width:100%;           
+            position:absolute;
+            height:105px;
+          }
+          
+          #audioSliderTab {
+            background-image: -moz-radial-gradient(center, #eee, #888);
+            background-image: -webkit-gradient(radial, center center, 10, center center, 1300, from(#eee), to(#aaa), color-stop(10%, #eee));
+            position:relative;
+            width:512px;
+            height:105px;
+            margin-top: -10px;
+            padding: 20px 10px 10px 10px;
+/*
+            border-left:2px solid white;
+            border-bottom:2px solid white;
+            border-right:2px solid white;
+*/
+            -moz-box-shadow: 0px 0px 3px #222;
+            -webkit-box-shadow: 0px 0px 3px #222;
+            border-bottom-left-radius:10px;
+            border-bottom-right-radius:10px;
+            z-index:5000;
+            color: #333;                      
+            cursor:pointer;
+          }
+
+          #audioSliderText {              
+            font-weight:bold;
+            text-shadow: 1px 1px 0px rgba(255, 255, 255, .2);
+            position:relative;
+            font-size:15px;
+            top:8px;
+            height:0px;
+            overflow:visible;
+            z-index:6000;
+            font-family:arial;
+          }
+          
+          #audio1 {
+            position:relative; 
+            top:0px; 
+            left:0px; 
+            height:100px; 
+            width:512px;
+            z-index:5001;
+          }
+          
+          #title1 {
+            width: 100%;
+            display:block;
+/*
+            background: rgba(25, 42, 51, .8);
+*/
+            color: #fff;
+            text-shadow: 1px 1px 10px #000;
+            font-family: 'InconsolataMedium', Arial, sans-serif;
+          }
+          
+          #title1 span{
+            padding: 10px 0px;
+          }
+				</style>    
+    </head>
+
+    <body onLoad="webGLStart();">
+			<script type='text/javascript'>
+			if (debugMode)
+			{
+				document.write("<div style='font-size:12px; font-family:Courier; color:white; position:absolute; z-index:10000; top:97%; left:20px; overflow:visible;' ><input type='checkbox' onchange='changeFX(this)' checked /> FX Enabled &nbsp;	Scene: [<span id='SceneNameDiv'>Loading...</span>] @[ <span id='TimerDiv'>0</span> ]</div>");
+			}
+			</script>
+		  <div align='center' id='audioSlider' style='display:none;top:-100px;'>
+			  <div id='audioSliderTab' onmouseover="slideIn();event.cancelBubble=true;" onmouseout="if (mouseReallyOut(this,event)) slideOut();event.cancelBubble=true;">
+				  <div id='audioSliderText'>
+						<a href="http://itunes.apple.com/gb/album/nothing-is-something-worth/id337841631?i=337841917" target="_blank">Shpongle - Nothing is Something Worth Doing<br/>Copyright &copy; Twisted Records, UK, All rights reserved</a>
+					</div>
+					<script type='text/javascript'>
+					  if ((navigator.userAgent.indexOf('Firefox')!=-1) || (navigator.userAgent.indexOf('Chrome')!=-1)) {
+							document.write("<audio id='audio1' tabindex='0' src='TheCity/music/sph-niswd.ogg' controls='true' preload='auto' onplay='audioPlay()' onpause='audioPause()' onmozaudioavailable='audioAvailable(event);' onloadedmetadata='loadedMetadata();'></audio>");
+						}
+						else
+						{
+						  document.write("<audio id='audio1' tabindex='0' src='TheCity/music/sph-niswd.mp3' controls='true' preload='auto' onplay='audioPlay()' onpause='audioPause()' onmozaudioavailable='audioAvailable(event);' onloadedmetadata='loadedMetadata();'></audio>");
+						}
+					</script>
+        </div>
+      </div>
+      <div id='wrap'> 
+        <div id='loadingScreen' class="gradient"> 
+          <div class="moz">			  
+            <div id="container">
+        		  <div id='mainText'>
+        			  <h1>Flight of the<br/>Navigator</h1>
+        				<cite>by the Mozilla <a href="irc://irc.mozilla.org#audio">#audio</a> hacking team</cite>
+        				<h2>by <a href="http://www.twitter.com/ccliffe" target='_blank'>@ccliffe</a>, <a href="http://www.twitter.com/corban" target='_blank'>@corban</a>, <a href="http://www.twitter.com/F1LT3R" target='_blank'>@F1LT3R</a>, <a href="http://www.twitter.com/humphd" target='_blank'>@humphd</a>, <a href="http://www.twitter.com/asalga" target='_blank'>@asalga</a> <span class="fancy">&amp;</span> <a href="http://www.twitter.com/Maciek416" target='_blank'>@Maciek416</a>.</h2>
+
+        				<h2>music by <a target='_blank' href="http://itunes.apple.com/gb/album/nothing-is-something-worth/id337841631?i=337841917">Shpongle - Nothing is Something Worth Doing</a>.</h2>
+
+        				<div id='loadingBarOuter'>
+        				  <div id='loadingBanner'>Loading...</div>
+        				  <div id='loadingBannerLower'>CSS enhanced by <a href="http://www.twitter.com/BoazSender" target='_blank'>@BoazSender</a></div>
+        					<div id='loadingBarInner'></div>
+        				</div>
+        				<div id='loadingScreenButtons'>
+        				  <div id='playButton' style='display:none' onclick='doStart()'>
+        					  Start
+        					</div>
+        				</div>
+        			</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script type='text/javascript'>
+        var target_aspect = 9.0 / 18.0;
+        canvas_w = window.innerWidth;
+        canvas_h = parseInt(window.innerWidth * target_aspect);
+        aspect = canvas_w / canvas_h;
+        
+        document.write("<canvas id='cubicvr-canvas' style='border: none; position:absolute; left:0px; display:none; top:" + parseInt((window.innerHeight / 2) - (canvas_h / 2)) + "px' width='" + (canvas_w) + "' height='" + (canvas_h) + "'></canvas>");
+        document.write("<canvas data-processing-sources='credits.pjs' id='creditCanvas' style='border: none; display:none; position:absolute; z-index:1000; left:0px; top:" + parseInt((window.innerHeight / 2) - (canvas_h / 2)) + "px' width='" + (canvas_w) + "' height='" + (canvas_h) + "'></canvas>");
+      </script>
+
+      <canvas id='twitter1Canvas' data-processing-sources="twitter1.pjs" width="200" height="200" style='position:absolute; top:0px; left:0px; z-index:100; display:none;'></canvas>
+
+      <script type='text/javascript'>
+            document.write("<table border='0' cellpadding='0' cellspacing='0' style='position:absolute; top:0px; left:0px; overflow:hidden; width:" + (window.innerWidth) + "px; height:" + (window.innerHeight) + "px; z-index:300; padding-top:30%;' id='titleTable'><tr><td style='font-size:" + parseInt(window.innerHeight / 25) + "px' valign='middle' align='center'><span id='title1'></span></td></tr></table>");
+            //				document.write("<table border='0' cellpadding='0' cellspacing='0' style='position:absolute; top:0px; left:0px; overflow:hidden; width:"+(window.innerWidth)+"px; height:"+(window.innerHeight)+"px; z-index:300;'><tr><td style='color:white; font-size:"+parseInt(window.innerHeight/15)+"px' id='title2' valign='middle' align='center'></td></tr></table>");
+      </script>
+
+      <video id='vidCanvas' width="256" style='display:none;position:absolute;top:0px;left:0px;z-index:1000'>
+          <source src="TheCity/video/Firefox_4_beta.webm" type="video/webm" />
+          <source src="TheCity/video/Firefox_4_beta.mov" type="video/mp4" />
+      </video>
+      <video id='vid2Canvas' width="256" style='display:none;position:absolute;top:0px;left:0px;z-index:1000'>
+          <source src="TheCity/video/big_buck_bunny.webm" type="video/webm" />
+          <source src="TheCity/video/big_buck_bunny.mov" type="video/mp4" />
+      </video>
+
+      <canvas width="128" height="128" id='viz1Canvas' data-processing-sources="viz_tex1.pde" style='display:none'></canvas>
+      <canvas width="128" height="128" data-src="viz_tex2.pde" id='viz2Canvas' style='display:none; position:absolute; top:300px; left:0px; z-index:1000;' origin-clean='true'></canvas>
+      <canvas data-processing-sources="flickr1.pjs" style="display:none; position:absolute; top:0px; left:0px; z-index:1000" id="flickrCanvas" width="256" height="256"></canvas>
+
+    </body>
+</html>

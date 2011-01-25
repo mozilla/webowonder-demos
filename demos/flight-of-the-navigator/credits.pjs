@@ -1,0 +1,257 @@
+/* @pjs preload = "img.jpg" */
+
+NameParticle lastName = null;
+
+PFont font;
+ArrayList renderedNames = new ArrayList();
+int currNameIndex = 0;
+NameParticle particle;
+namesSetup = false;
+
+PImage vortexImage;
+float vortexRot = 0;
+float texTop = 0;
+float texBottom = 200;
+float SPEED = 1;
+
+// vortex is a cylinder
+int CYLINDER_RES = 7;
+float[] tubeX = new float[CYLINDER_RES];
+float[] tubeY = new float[CYLINDER_RES];
+
+int NUM_STARS = 25;
+ArrayList stars;
+
+int cw;
+int ch;
+
+//
+// small point
+//
+class Star{
+  PVector pos;
+  PVector vel;
+
+  Star(){
+    reset();
+  }
+
+  void reset(){
+    pos = new PVector(random(-width*2, width*2),random(-height*2, height*2),0);
+    vel = new PVector(pos.x,pos.y, pos.z);
+    vel.normalize();
+    vel.mult(random(5,15));
+  }
+
+  void update(){
+    pos.x += vel.x;
+    pos.y += vel.y;
+    pos.z += vel.z;
+
+    if(abs(pos.x) > width*2 || abs(pos.y) > height*2){
+      reset();
+    }
+  }
+
+  void render(){
+    stroke(255);
+    strokeWeight(1);
+    pushMatrix();
+    translate(width/2,height/2, 0);
+    point(pos.x, pos.y, 0);
+    popMatrix();
+  }
+}
+
+//
+//
+//
+class NameParticle{
+  String str;
+  PVector pos;
+  PVector vel;
+  float life;
+  PVector col;
+
+  boolean redIncreasing;
+  float red;
+
+  NameParticle(){
+    reset();
+  }
+
+  void update(){
+    pos.x += vel.x;
+    pos.y += vel.y;
+    pos.z += vel.z;
+
+    pos.x -= 5;
+
+    if(pos.z > life){
+      reset();
+    }
+
+    if(red + col.x >= 255){
+      redIncreasing = false;
+    }
+    else if(red <= 0){
+      redIncreasing = true;
+    }
+
+    if(redIncreasing){
+      red += 5;
+    }
+    else
+    {
+      red -= 5;
+    }
+  }
+
+  float getZ(){
+    return pos.z;
+  }
+
+  void reset(){
+    str = getNextName();
+
+    pos = new PVector();
+    pos.x = -textWidth(str)/2;
+    pos.y = 0;
+    pos.z = -1000;
+
+    if(lastName != null){
+      pos.z = lastName.getZ() - 1000;
+    }
+
+    vel = new PVector();
+    vel.x = random(-10,10);
+    vel.y = random(-10,10);
+    vel.z = 25;
+
+    col = new PVector();
+    col.x = random(0,250);
+    col.y = random(0,250);
+    col.z = random(0,250);
+
+    red = 0;
+    redIncreasing = true;
+
+    life = 400;
+    lastName = this;
+  }
+
+  void draw(){
+    fill(255);
+    text(str, pos.x, pos.y, pos.z);
+  }
+}
+
+void setup()
+{
+  size(canvas_w, canvas_h, OPENGL);
+  cw = canvas_w;
+  ch = canvas_h;
+
+  vortexImage = loadImage("img.jpg");
+
+  font = loadFont("Rexlia");
+  textFont(font);
+  textSize(100);
+
+  // don't want to care about drawing stars over vortex
+  hint(DISABLE_DEPTH_TEST);
+
+  stars = new ArrayList();
+  for(int i=0; i < NUM_STARS; i++){
+    stars.push(new Star());
+  }
+
+  float angle = 360.0 / CYLINDER_RES;
+  int i;
+  for (i = 0; i <= CYLINDER_RES; i++) {
+    tubeX[i] = cos(radians(i * angle));
+    tubeY[i] = sin(radians(i * angle));
+  }
+	
+	noLoop();
+}
+
+String getNextName(){
+  String ret = names[currNameIndex++];
+  if(currNameIndex >= names.length()){
+    currNameIndex = 0;
+  }
+  return ret;
+}
+
+void draw()
+{
+  if(cw != canvas_w || ch != canvas_h){
+    cw = canvas_w;
+    ch = canvas_h;
+    size(canvas_w, canvas_h, OPENGL);
+	  hint(DISABLE_DEPTH_TEST);
+		noLoop();
+  }
+
+  // stretch the vortex to hide the small circle on the end.
+  float fov = PI/1.5;
+  float cameraZ = (width/2.0) / tan(fov/2.0);
+  perspective(PI/1.5, float(width)/float(height), cameraZ/10.0, cameraZ*100.0);
+
+  background(0);
+
+  // one line in vortex is being draw (why?), just color it black
+  stroke(0);
+  pushMatrix();
+  translate(width/2, height/2, -1000);
+
+  scale(1,1,50);
+  rotateZ(vortexRot+=0.01);
+  rotateX(PI/2);
+
+  beginShape(QUAD_STRIP);
+  texture(vortexImage);
+
+  for (int i = 0; i <= CYLINDER_RES; i++) {
+    float x = tubeX[i] * 300;
+    float z = tubeY[i] * 300;
+    float u = vortexImage.width / CYLINDER_RES * i;
+
+    vertex(x, -100, z, u, texBottom);
+    vertex(x, 100, z, u, texTop);
+  }
+  endShape();
+
+  texTop += SPEED;
+  texBottom += SPEED;
+
+  if(texBottom >= vortexImage.height ){
+    texTop = 0;
+    texBottom = 200;
+  }
+  popMatrix();
+
+   // Stars
+  for(int i = 0; i < NUM_STARS; i++){
+    stars[i].render();
+  }
+
+  if(texBottom >= 300 && !namesSetup){
+    for(int i = 0; i < 2; i++){
+      renderedNames.add(new NameParticle);
+    }
+    namesSetup = true;
+  }
+
+  if(renderedNames.length() > 0){
+    // Names
+    pushMatrix();
+    translate(width/2, height/2, 100);
+    for(int i = 0; i < renderedNames.length(); i++){
+      renderedNames[i].update();
+      renderedNames[i].draw();
+    }
+    popMatrix();
+  }
+}

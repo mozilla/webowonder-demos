@@ -373,7 +373,7 @@
           images.push(image);
           pivot.image = image;
           image.addFrameListener(function(d,dt) {
-            this.position[2] += (0.5-this.position[2])*0.5;
+            this.position[2] += ((ballOn?0.5:0.005)-this.position[2])*0.5;
           });
           image.alignedNode.transparent = false;
           sides.forEach(function(c){

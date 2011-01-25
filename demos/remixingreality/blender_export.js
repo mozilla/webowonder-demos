@@ -114,7 +114,7 @@ function importBlenderModel(model) {
   var width = maxX-minX;
   var depth = maxY-minY;
   var height = maxZ-minZ;
-  var sc = 2.5/(Math.max(width,depth,height));
+  var sc = 2.2/(Math.max(width,depth,height));
   var pivot = new Magi.Node();
   var cube;
   var n = new Magi.Node();
@@ -122,7 +122,7 @@ function importBlenderModel(model) {
   model.setFrame = BlenderExport.setFrame;
   model.setFrame(0);
   if (model.indices) {
-    throw("Screw you");
+    throw("UNIMPLEMENT!");
   } else {
     n.models = [];
     for (var i=0; i<model.frameVertices.length; i++) {
@@ -175,10 +175,10 @@ function importBlenderModel(model) {
   n.rotation.axis = [1,0,0];
   n.rotation.angle = Math.PI;
   var cont = new Magi.Node();
-  shadow = new Magi.Disk(0.0,0.5,0.001,50,1);
+  shadow = new Magi.Disk(0.0,0.85,0.001,50,1);
   shadow.material = Magi.ColorMaterial.get(null);
   shadow.material.floats.Color = vec4.create([0,0,0,0.15]);
-  shadow.transparent = true;
+  shadow.transparent = false;
   shadow.blend = true;
   shadow.setZ(0);
   cont.appendChild(n);
@@ -195,7 +195,7 @@ function importBlenderModel(model) {
       if (this.startDance == null)
         this.startDance = t;
       this.rotation.angle = -Math.PI/2+0.25*Math.PI*Math.sin((t-this.startDance)/500);
-      this.position[2] = 0.05*Math.PI*Math.sin((t-this.startDance)/100);
+      this.position[2] = -0.05*Math.PI+0.05*Math.PI*Math.cos((t-this.startDance)/100);
     } else {
       this.startDance = null;
       this.rotation.angle += (-Math.PI/2-this.rotation.angle) * 0.25;
@@ -206,6 +206,7 @@ function importBlenderModel(model) {
   pv.appendChild(cube);
   pivot.n = n;
   pivot.shadow = shadow;
+  pivot.appendChild(shadow);
   pivot.appendChild(pv);
   pivot.pv = pv;
   pivot.cube = cube;

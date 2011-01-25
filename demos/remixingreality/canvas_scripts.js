@@ -94,6 +94,15 @@ AudioPlayer = Klass({
     this.canvas.height = 140;
     audio.parentNode.insertBefore(this.canvas, audio);
     audio.parentNode.removeChild(audio);
+    audio.addEventListener('progress', function() {
+      self.noProgress = false;
+    }, false);
+    audio.addEventListener('loaded', function() {
+      self.noProgress = false;
+    }, false);
+    audio.addEventListener('durationchange', function() {
+      self.noProgress = false;
+    }, false);
     this.ctx = this.canvas.getContext('2d');
     this.canvas.style.cursor = 'pointer';
     this.canvas.onclick = function(ev) {
@@ -141,9 +150,10 @@ AudioPlayer = Klass({
   },
 
   draw : function() {
-    if (this.point == null && this.lastTime == this.audio.currentTime) {
+    if (this.point == null && this.lastTime == this.audio.currentTime && this.noProgress) {
       return;
     }
+    this.noProgress = true;
     this.lastTime = this.audio.currentTime;
     var t = new Date().getTime();
     var w = this.canvas.width;

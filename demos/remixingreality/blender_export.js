@@ -140,12 +140,12 @@ function importBlenderModel(model) {
         n.childNodes[i].material.floats.LightPos = vec4.create([600, 1200, -2400, 1.0]);
         n.childNodes[i].material.floats['LightDiffuse'].set([1,1,1,1]);
         n.childNodes[i].material.floats['LightSpecular'].set([1,1,1,1]);
-        n.childNodes[i].material.floats['MaterialDiffuse'] = d.diffuse;
-        n.childNodes[i].material.floats['MaterialEmit'] = d.diffuse.map(function(v){ return v*0.1; });
-        n.childNodes[i].material.floats['MaterialSpecular'] = d.specular.map(function(c){return c*d.specularIntensity;});
-        n.childNodes[i].material.floats['MaterialAmbient'] = d.specular.map(function(v){ return v * d.ambient; });
+        n.childNodes[i].material.floats['MaterialDiffuse'].set(d.diffuse);
+        n.childNodes[i].material.floats['MaterialEmit'].set(d.diffuse.map(function(v){ return v*0.1; }));
+        n.childNodes[i].material.floats['MaterialSpecular'].set(d.specular.map(function(c){return c*d.specularIntensity;}));
+        n.childNodes[i].material.floats['MaterialAmbient'].set(d.specular.map(function(v){ return v * d.ambient; }));
         n.childNodes[i].material.floats['MaterialAmbient'][3] = 0.8;
-        n.childNodes[i].material.floats['MaterialShininess'] = d.specularIntensity * 10;
+        n.childNodes[i].material.floats['MaterialShininess'] = 2.0;
       }
     }
   }

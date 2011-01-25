@@ -3561,7 +3561,7 @@ osg.Camera.prototype = osg.objectInehrit(osg.Node.prototype, {
 osg.NodeVisitor = function () {
     this.traversalMask = ~0x0;
     this.nodeMaskOverride = 0;
-}
+};
 osg.NodeVisitor.prototype = {
     setTraversalMask: function(m) { this.traversalMask = m; },
     getTraversalMask: function() { return this.traversalMask; },

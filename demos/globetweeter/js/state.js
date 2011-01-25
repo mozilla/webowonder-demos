@@ -57,14 +57,16 @@ window.addEventListener("load", function() {
     var size = getWindowSize();
 
     var canvas = document.getElementById("3DView");
+
     canvas.width = size.w;
     canvas.height = size.h;
+    var ratio = canvas.width/canvas.height;
 
     var viewer = new osgViewer.Viewer(document.getElementById("3DView"));
     Viewer = viewer;
     viewer.init();
     viewer.setupManipulator(new osgGA.OrbitManipulator2());
-
+    viewer.view.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, 1000.0, 100000000.0));
     viewer.manipulator.setDistance(2.5*6378137);
     viewer.manipulator.setMaxDistance(2.5*6378137);
     viewer.manipulator.setMinDistance(6378137);

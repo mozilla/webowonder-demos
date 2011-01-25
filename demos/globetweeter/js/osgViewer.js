@@ -27,7 +27,6 @@ var osgViewer = {};
 osgViewer.Viewer = function(canvas) {
     try {
         gl = canvas.getContext("experimental-webgl", {alpha: true, antialias : true });
-        //gl = canvas.getContext("experimental-webgl");
         osg.init();
     } catch(e) {
         alert("Could not initialise WebGL, sorry :-(" + e);
@@ -35,7 +34,7 @@ osgViewer.Viewer = function(canvas) {
     }
 
     this.canvas = canvas;
-    this.frameRate = Math.floor(1.0/60.0*1000.0);
+    this.frameRate = 60.0;
     osgUtil.UpdateVisitor = osg.UpdateVisitor;
     osgUtil.CullVisitor = osg.CullVisitorNew;
 };
@@ -51,9 +50,10 @@ osgViewer.Viewer.prototype = {
         var ratio = this.canvas.width/this.canvas.height;
         this.view.setViewport(new osg.Viewport(0,0, this.canvas.width, this.canvas.height));
         this.view.setViewMatrix(osg.Matrix.makeLookAt([0,0,-10], [0,0,0], [0,1,0]));
-        this.view.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, 1000.0, 100000000.0));
+        this.view.setProjectionMatrix(osg.Matrix.makePerspective(60, ratio, 1.0, 1000.0));
 
         this.view.light = new osg.Light();
+        this.view.getOrCreateStateSet().setAttributeAndMode(new osg.Material());
 
         gl.enable(gl.DEPTH_TEST);
         gl.enable(gl.BLEND);
@@ -142,8 +142,9 @@ osgViewer.Viewer.prototype = {
         var call = function() {
             that.frame();
         };
-        osg.log("run loop at " + 1.0/this.frameRate + " fps");
-        setInterval( call , this.frameRate);
+        var t = Math.floor(1.0/this.frameRate*1000.0);
+        osg.log("run loop at " + this.frameRate + " fps");
+        setInterval( call , t);
     }, 
 
     getManipulator: function() { return this.manipulator; },

@@ -133,7 +133,7 @@
     display2.scene.appendChild(ball);
     display2.scene.appendChild(ballShadow);
   }
-  ballOn = false;
+  ballOn = true;
   toggleBall = function() {
     ballOn = !ballOn;
   }
@@ -195,6 +195,7 @@
 
     byId('display').appendChild(video);
     new Draw(byId('draw'));
+    new AudioPlayer(byId('audio1'));
 
     var canvas = document.createElement('canvas');
     canvas.width = toInt(ratio*video.width);
@@ -214,7 +215,7 @@
     var ctx = canvas.getContext('2d');
     ctx.font = "24px URW Gothic L, Arial, Sans-serif";
 
-    currentElem = byClass('content')[0];
+    currentElem = byClass('content')[4];
 
     setImage = function(elem) {
       images.forEach(function(img){ img.setImage(elem); });
@@ -455,11 +456,18 @@
 
     toggleAR = function(){
       if (video.style.display == 'none') {
-        video.style.display = 'inline-block';
-        gcanvas.style.display = 'none';
+        turnAROff();
       } else {
-        video.style.display = 'none';
-        gcanvas.style.display = 'inline-block';
+        turnAROn();
       }
+    }
+
+    turnAROn = function() {
+      video.style.display = 'none';
+      gcanvas.style.display = 'inline-block';
+    }
+    turnAROff = function() {
+      video.style.display = 'inline-block';
+      gcanvas.style.display = 'none';
     }
   }

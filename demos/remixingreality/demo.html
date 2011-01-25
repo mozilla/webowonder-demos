@@ -15,6 +15,15 @@
     <script src="AR_demo.js"></script>
     
     <style>
+        /* MetaWebPro font family licensed from fontshop.com. WOFF-FTW! */
+        @font-face {
+            font-family: 'MetaBlack';
+            src: url('http://mozcom-cdn.mozilla.net/img/fonts/MetaWebPro-Black.eot');
+            src: local('☺'), url('http://mozcom-cdn.mozilla.net/img/fonts/MetaWebPro-Black.woff') format('woff');
+            font-weight: bold;
+        }
+
+    
         html, body, div, span, applet, object, iframe,
         h1, h2, h3, h4, h5, h6, p, blockquote, pre,
         a, abbr, acronym, address, big, cite, code,
@@ -99,9 +108,9 @@
             padding : 0 150px;
         }
         #pick {
-            width : 640px;
-            height : 13px;
-            background: url('i/pick-something.png') no-repeat left top;
+            font-family : MetaBlack;
+            font-size : 16px;
+            color : #890c08;
         }
         #toggleAR {
             border : none;
@@ -168,7 +177,7 @@
         </div>
     
         <div id="footer">
-            <div id="pick" class="rpl">Pick something from the sidebars to place into the video, then use the button below to</div>
+            <div id="pick">Pick something from the sidebars to place into the video, then use the button below to</div>
             <button id="toggleAR" onclick="toggleAR()"><img src="i/toggle_augreal.png" /></button>
         </div>
     </div>

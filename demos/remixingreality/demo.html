@@ -11,13 +11,19 @@
 <script src="audio_vis.js"></script>
 <script src="canvas_scripts.js"></script>
 <script src="AR_demo.js"></script>
-
+<script src="http://mozilla.org/script/1.0/jquery-1.4.3.min.js"></script>
+<script src="jquery.lettering.js"></script>
+<script>
+$(document).ready(function() {
+  $('#header').lettering('lines');
+});
+</script>
     <style>
-        /* MetaWebPro font family licensed from fontshop.com. WOFF-FTW! */
+/* MetaWebPro font family licensed from fontshop.com. WOFF-FTW! */
         @font-face {
             font-family: 'MetaBlack';
             src: url('http://mozcom-cdn.mozilla.net/img/fonts/MetaWebPro-Black.eot');
-            src: local('☺'), url('http://mozcom-cdn.mozilla.net/img/fonts/MetaWebPro-Black.woff') format('woff');
+            src: local('â˜º'), url('http://mozcom-cdn.mozilla.net/img/fonts/MetaWebPro-Black.woff') format('woff');
             font-weight: bold;
         }
 
@@ -57,6 +63,9 @@
 
         body {
             background : url('i/bg.png') repeat-x left top;
+            font-family : MetaBlack;
+            font-size : 16px;
+            color : #890c08;
         }
 
         #wrap {
@@ -64,9 +73,19 @@
             margin : 0px auto;
         }
         #header {
-            width : 940px;
-            height : 77px;
+            width : 555px;
+            height : 67px;
+            padding : 10px 0 0 385px;
             background : url('i/header.png') no-repeat left top;
+        }
+        #header span {
+            display : block;
+        }
+        #header .line1 {
+            margin-left : 39px;
+        }
+        #header .line2 {
+            margin-left : 19px;
         }
 
         #main {
@@ -109,9 +128,6 @@
             padding : 0 150px;
         }
         #pick {
-            font-family : MetaBlack;
-            font-size : 16px;
-            color : #890c08;
         }
         #toggleAR {
             border : none;
@@ -142,13 +158,12 @@
         .rpl {
             text-indent : -9999em;
         }
-
     </style>
 </head>
 <body>
     <div id="wrap">
-        <div id="header">
-        </div>
+        <!--div id="header">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New visual dimensions are within your grasp!  WebGL allows you<br />&nbsp;&nbsp;&nbsp;&nbsp;to add real-time rendered 3D models, layered with imagery and visual<br />effects to photos and videos, giving visual media new depth.</div-->
+        <div id="header">New visual dimensions are within your grasp! WebGL allows you<br />to add real-time rendered 3D models, layered with imagery and visual<br />effects to photos and videos, giving visual media new depth.</div>
 
         <div id="main" class="cf">
             <div id="col-left">

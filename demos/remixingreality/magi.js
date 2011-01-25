@@ -4197,13 +4197,21 @@ Magi.Shader.createProgram = function(gl, shaders) {
   gl.linkProgram(id);
   gl.validateProgram(id);
   if (gl.getProgramParameter(id, gl.LINK_STATUS) != 1) {
+    var ilog = gl.getProgramInfoLog(id);
     this.deleteShader(gl,prog);
-    throw(new Error("Failed to link shader: "+gl.getProgramInfoLog(id)));
+    throw(new Error("Failed to link shader: "+ilog));
   }
   if (gl.getProgramParameter(id, gl.VALIDATE_STATUS) != 1) {
+    var ilog = gl.getProgramInfoLog(id);
     this.deleteShader(gl,prog);
-    console.log(shaders);
-    throw(new Error("Failed to validate shader: "+gl.getProgramInfoLog(id)));
+    for (var i=0; i<shaders.length; i++) {
+      if (shaders[i].type) {
+        console.log(shaders[i].type, shaders[i].source);
+      } else {
+        console.log(shaders[i]);
+      }
+    }
+    throw(new Error("Failed to validate shader: "+ilog));
   }
   return prog;
 }
@@ -6391,7 +6399,9 @@ Magi.CubeText = Klass(Magi.Text, {
 
 Magi.ShaderLib = {
   defaultTransform: (
-    "precision highp float;"+
+    "#ifdef GL_ES\n"+
+    "precision highp float;\n"+
+    "#endif\n"+
     "attribute vec3 Vertex;"+
     "attribute vec2 TexCoord;"+
     "uniform mat4 PMatrix;"+
@@ -6431,7 +6441,9 @@ Magi.FilterMaterial = {
   )},
 
   frag : {type: 'FRAGMENT_SHADER', text: (
-    "precision highp float;"+
+    "#ifdef GL_ES\n"+
+    "precision highp float;\n"+
+    "#endif\n"+
     "uniform sampler2D Texture0;"+
     "uniform float offsetY;"+
     "uniform float offsetX;"+
@@ -6496,7 +6508,9 @@ Magi.FlipFilterQuadMaterial.vert = {type: 'VERTEX_SHADER', text: (
 
 Magi.IdFilterMaterial = Object.clone(Magi.FilterQuadMaterial);
 Magi.IdFilterMaterial.frag = {type: 'FRAGMENT_SHADER', text: (
-  "precision highp float;"+
+  "#ifdef GL_ES\n"+
+  "precision highp float;\n"+
+  "#endif\n"+
   "uniform sampler2D Texture0;"+
   "varying vec2 texCoord0;"+
   "void main()"+
@@ -6508,7 +6522,9 @@ Magi.IdFilterMaterial.frag = {type: 'FRAGMENT_SHADER', text: (
 
 Magi.RadialGlowMaterial = Object.clone(Magi.FilterQuadMaterial);
 Magi.RadialGlowMaterial.frag = {type:'FRAGMENT_SHADER', text: (
-  "precision highp float;"+
+  "#ifdef GL_ES\n"+
+  "precision highp float;\n"+
+  "#endif\n"+
   "uniform sampler2D Texture0;"+
   "varying vec2 texCoord0;"+
   "uniform vec2 center;"+
@@ -6578,7 +6594,9 @@ Magi.ColorQuadMaterial.vert = {type: 'VERTEX_SHADER', text: (
   "}"
 )};
 Magi.ColorQuadMaterial.frag = {type: 'FRAGMENT_SHADER', text: (
-  "precision highp float;"+
+  "#ifdef GL_ES\n"+
+  "precision highp float;\n"+
+  "#endif\n"+
   "uniform vec4 Color;"+
   "void main()"+
   "{"+
@@ -6595,7 +6613,9 @@ Magi.ColorMaterial.vert = {type: 'VERTEX_SHADER', text: (
   "}"
 )};
 Magi.ColorMaterial.frag = {type: 'FRAGMENT_SHADER', text: (
-  "precision highp float;"+
+  "#ifdef GL_ES\n"+
+  "precision highp float;\n"+
+  "#endif\n"+
   "uniform vec4 Color;"+
   "void main()"+
   "{"+
@@ -6605,7 +6625,9 @@ Magi.ColorMaterial.frag = {type: 'FRAGMENT_SHADER', text: (
 
 Magi.DefaultMaterial = {
   vert : {type: 'VERTEX_SHADER', text: (
-    "precision highp float;"+
+    "#ifdef GL_ES\n"+
+    "precision highp float;\n"+
+    "#endif\n"+
     "attribute vec3 Vertex;"+
     "attribute vec3 Normal;"+
     "attribute vec2 TexCoord;"+
@@ -6631,14 +6653,16 @@ Magi.DefaultMaterial = {
     "  lightVector = vec3(lightWorldPos - worldPos);"+
     "  lightDir = normalize(lightVector);"+
     "  float dist = length(lightVector);"+
-    "  eyeVec = -vec3(worldPos);"+
+    "  eyeVec = normalize(-vec3(worldPos));"+
     "  attenuation = 1.0 / (1.0 + LightConstantAtt + LightLinearAtt*dist + LightQuadraticAtt * dist*dist);"+
     "  gl_Position = PMatrix * worldPos;"+
     "}"
   )},
 
   frag : {type: 'FRAGMENT_SHADER', text: (
-    "precision highp float;"+
+    "#ifdef GL_ES\n"+
+    "precision highp float;\n"+
+    "#endif\n"+
     "uniform vec4 LightDiffuse;"+
     "uniform vec4 LightSpecular;"+
     "uniform vec4 LightAmbient;"+
@@ -6662,12 +6686,12 @@ Magi.DefaultMaterial = {
     "  vec4 diffuse = LightDiffuse * matDiff;"+
     "  float lambertTerm = dot(normal, lightDir);"+
     "  vec4 lcolor = diffuse * lambertTerm * attenuation;"+
-    "  vec3 E = normalize(eyeVec);"+
     "  vec3 R = reflect(-lightDir, normal);"+
-    "  float specular = pow( max(dot(R, E), 0.0), MaterialShininess );"+
+    "  float specular = pow( max(dot(R, eyeVec), 0.0), MaterialShininess );"+
     "  lcolor += matSpec * LightSpecular * specular * attenuation;"+
-    "  if (lambertTerm > 0.0) color += lcolor * lambertTerm;"+
-    "  else color += diffuse * attenuation * MaterialAmbient.a * -lambertTerm;"+
+    "  vec4 lightContribution = lcolor * lambertTerm;"+
+    "  vec4 shadowContribution = diffuse * attenuation * MaterialAmbient.a * -lambertTerm;"+
+    "  color += mix(shadowContribution, lightContribution, min(1.0, ceil(max(0.0, lambertTerm))));"+
     "  color += MaterialEmit + texture2D(EmitTex, texCoord0);" +
     "  color *= matDiff.a;"+
     "  color.a = matDiff.a;"+

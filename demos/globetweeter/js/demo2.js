@@ -750,7 +750,7 @@ function createScene()
     scene.addChild(world1);
     scene.addChild(country);
     scene.addChild(height);
-    scene.addChild(frontTweets);
+//    scene.addChild(frontTweets);
 
 
     world.getOrCreateStateSet().setAttributeAndMode(new osg.BlendFunc('ONE', 'ONE_MINUS_SRC_ALPHA'));
@@ -791,7 +791,7 @@ function createScene()
     var updateCountryStatsLastUpdate = 0;
     var updateCountryStats = function(data) {
         var date = (new Date()).getTime()/1000.0;
-        if (date - updateCountryStatsLastUpdate > 0.2) {
+        if (date - updateCountryStatsLastUpdate > 0.3) {
             updateCountryStatsLastUpdate = date;
             var array = [];
             for (var k in data) {
@@ -808,6 +808,12 @@ function createScene()
 
             var key;
             var name;
+
+            var setupGlow = function(l) {
+                l.addClass("glowing");
+                setTimeout(function() { l.removeClass("glowing");}, 200);
+            };
+
             for (var i = 0, l = array.length; i < l; i++) {
                 key = array[i].key;
                 var hits = data[key].hits;
@@ -843,8 +849,11 @@ function createScene()
                     if (currentRank[i].flag !== array[i].flag) {
                         li.find("div").removeClass("flag-" + currentRank[i].flag);
                         li.find("div").addClass("flag-" + array[i].flag);
+                        if (i === 0  ||  (array[i].flag !== currentRank[i-1].flag) ) {
+                            setupGlow(li);
+                        }
                     }
-                    if (currentRank[i].flag !== array[i].country) {
+                    if (currentRank[i].country !== array[i].country) {
                         li.find("span.countryName").html(array[i].country);
                     }
                     li.find("span.tweetCount").html(hits);

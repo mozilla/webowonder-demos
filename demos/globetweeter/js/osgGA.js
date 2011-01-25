@@ -106,7 +106,7 @@ osgGA.OrbitManipulator.prototype = {
     mouseup: function(ev) {
         this.dragging = false;
         this.panning = false;
-        this.releaseButton();
+        this.releaseButton(ev);
     },
     mousedown: function(ev) {
         this.panning = true;
@@ -114,7 +114,7 @@ osgGA.OrbitManipulator.prototype = {
         var pos = this.convertEventToCanvas(ev);
         this.clientX = pos[0];
         this.clientY = pos[1];
-        this.pushButton();
+        this.pushButton(ev);
     },
 
     dblclick: function(ev) {

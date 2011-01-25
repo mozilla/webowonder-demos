@@ -4197,13 +4197,21 @@ Magi.Shader.createProgram = function(gl, shaders) {
   gl.linkProgram(id);
   gl.validateProgram(id);
   if (gl.getProgramParameter(id, gl.LINK_STATUS) != 1) {
+    var ilog = gl.getProgramInfoLog(id);
     this.deleteShader(gl,prog);
-    throw(new Error("Failed to link shader: "+gl.getProgramInfoLog(id)));
+    throw(new Error("Failed to link shader: "+ilog));
   }
   if (gl.getProgramParameter(id, gl.VALIDATE_STATUS) != 1) {
+    var ilog = gl.getProgramInfoLog(id);
     this.deleteShader(gl,prog);
-    console.log(shaders);
-    throw(new Error("Failed to validate shader: "+gl.getProgramInfoLog(id)));
+    for (var i=0; i<shaders.length; i++) {
+      if (shaders[i].type) {
+        console.log(shaders[i].type, shaders[i].source);
+      } else {
+        console.log(shaders[i]);
+      }
+    }
+    throw(new Error("Failed to validate shader: "+ilog));
   }
   return prog;
 }

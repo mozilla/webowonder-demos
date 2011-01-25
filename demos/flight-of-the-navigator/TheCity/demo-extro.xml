@@ -1,0 +1,409 @@
+<?xml version="1.0" ?>
+<root>
+    <header>
+        <type>scene</type>
+        <version>0.1</version>
+        <name>demo-extro</name>
+        <generator>lws2xml</generator>
+    </header>
+    <properties>
+        <sceneobjects>
+            <sceneobject>
+                <name>ship-main_0001</name>
+                <model>ship-main.xml</model>
+                <position>
+                    <x>
+                        <time>0 2.6 10.1 20 23.2667 27.9333 40.8667</time>
+                        <value>-12710.2 -9480.74 -4368.23 -2296.15 -1956.22 -1956.22 113211</value>
+                        <tcb>0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 1 0 0</tcb>
+                    </x>
+                    <y>
+                        <time>0 20 27.9333</time>
+                        <value>257.364 -3.46686 -3.46686</value>
+                        <tcb>0 0 0 1 0 0 1 0 0</tcb>
+                    </y>
+                    <z>
+                        <time>0 2.6 10.1 20 27.9333</time>
+                        <value>15558.1 14367.8 8827.32 8125.99 8125.99</value>
+                        <tcb>0 0 0 0 0 0 0 0 0 1 0 0 1 0 0</tcb>
+                    </z>
+                </position>
+                <rotation>
+                    <x>
+                        <time>0 27.9333</time>
+                        <value>-0 -0</value>
+                    </x>
+                    <y>
+                        <time>0 1.13333 2.6 5.93333 8.8 10.1 15.9667 18.5 20 27.9333</time>
+                        <value>70.2 73.0668 51.2 40.686 42.238 49 94.2163 114.785 90 90</value>
+                    </y>
+                    <z>
+                        <time>0 27.9333</time>
+                        <value>0 0</value>
+                    </z>
+                </rotation>
+                <scale>
+                    <x>
+                        <time>0 27.9333</time>
+                        <value>1 1</value>
+                    </x>
+                    <y>
+                        <time>0 27.9333</time>
+                        <value>1 1</value>
+                    </y>
+                    <z>
+                        <time>0 27.9333</time>
+                        <value>1 1</value>
+                    </z>
+                </scale>
+            </sceneobject>
+            <sceneobject>
+                <name>ship-main-engine_a_0001</name>
+                <parent>ship-main_0001</parent>
+                <model>ship-main-engine_a.xml</model>
+                <position>-0,2.27427,2.5543</position>
+                <rotation>
+                    <z>
+                        <out>offset</out>
+                        <time>0 1</time>
+                        <value>0 360</value>
+                    </z>
+                </rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>ship-main-engine_b_0001</name>
+                <parent>ship-main_0001</parent>
+                <model>ship-main-engine_b.xml</model>
+                <position>-0,2.27427,2.5543</position>
+                <rotation>
+                    <z>
+                        <out>offset</out>
+                        <time>0 1</time>
+                        <value>0 -360</value>
+                    </z>
+                </rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>earth_0001</name>
+                <model>earth.xml</model>
+                <position>-12680.9,-2384.3,9562.3</position>
+                <rotation>
+                    <y>
+                        <in>offset</in>
+                        <out>offset</out>
+                        <time>0 1.33333</time>
+                        <value>0 0.1</value>
+                    </y>
+                </rotation>
+                <scale>5000,5000,5000</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>CamTarget</name>
+                <position>
+                    <x>
+                        <time>0 2.6 10.1 20 23.2667 27.9333 40.8667</time>
+                        <value>-12710 -9480.63 -4368.11 -2296.03 -1956.1 -1956.1 113211</value>
+                        <tcb>0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 1 0 0</tcb>
+                    </x>
+                    <y>
+                        <time>0 2.6 10.1 20 27.9333</time>
+                        <value>258.309 219.68 93.92 -2.27031 -2.27031</value>
+                        <tcb>0 0 0 0 0 0 0 0 0 1 0 0 1 0 0</tcb>
+                    </y>
+                    <z>
+                        <time>0 2.6 10.1 20 27.9333</time>
+                        <value>15556.9 14366.6 8826.1 8124.78 8124.78</value>
+                        <tcb>0 0 0 0 0 0 0 0 0 1 0 0 1 0 0</tcb>
+                    </z>
+                </position>
+                <rotation>
+                    <x>
+                        <time>0 27.9333</time>
+                        <value>-0 -0</value>
+                    </x>
+                    <y>
+                        <time>0 27.9333</time>
+                        <value>0 0</value>
+                    </y>
+                    <z>
+                        <time>0 27.9333</time>
+                        <value>0 0</value>
+                    </z>
+                </rotation>
+                <scale>
+                    <x>
+                        <time>0 27.9333</time>
+                        <value>1 1</value>
+                    </x>
+                    <y>
+                        <time>0 27.9333</time>
+                        <value>1 1</value>
+                    </y>
+                    <z>
+                        <time>0 27.9333</time>
+                        <value>1 1</value>
+                    </z>
+                </scale>
+            </sceneobject>
+            <sceneobject>
+                <name>earth_clouds_0001</name>
+                <model>earth_clouds.xml</model>
+                <position>-12680.9,-2384.3,9562.3</position>
+                <rotation>-0,0,0</rotation>
+                <scale>5000,5000,5000</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>tunnel1_0001</name>
+                <model>tunnel1.xml</model>
+                <position>
+                    <x>
+                        <time>0 20.1333 25.4</time>
+                        <value>-1699.92 -1699.92 -1699.92</value>
+                    </x>
+                    <y>
+                        <time>0 20.1333 25.4</time>
+                        <value>0 0 0</value>
+                    </y>
+                    <z>
+                        <time>0 20.1333 25.4</time>
+                        <value>8122.94 8122.94 8122.94</value>
+                    </z>
+                </position>
+                <rotation>
+                    <x>
+                        <time>0 20.1333 25.4</time>
+                        <value>-0 -0 -0</value>
+                    </x>
+                    <y>
+                        <time>0 20.1333 25.4</time>
+                        <value>90 90 90</value>
+                    </y>
+                    <z>
+                        <time>0 20.1333 25.4 28.6667 33.3</time>
+                        <value>0 0 -720 -720 -2160</value>
+                    </z>
+                </rotation>
+                <scale>
+                    <x>
+                        <time>0 20.1333 25.4</time>
+                        <value>100 100 100</value>
+                    </x>
+                    <y>
+                        <time>0 20.1333 25.4</time>
+                        <value>100 100 100</value>
+                    </y>
+                    <z>
+                        <time>0 20.1333 25.4</time>
+                        <value>100 100 100</value>
+                    </z>
+                </scale>
+            </sceneobject>
+            <sceneobject>
+                <name>tunnel2_0001</name>
+                <model>tunnel2.xml</model>
+                <position>-1699.92,0,8122.94</position>
+                <rotation>-0,90,0</rotation>
+                <scale>100,100,100</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>tunnel1_0002</name>
+                <model>tunnel1.xml</model>
+                <position>
+                    <x>
+                        <time>0 20.1333</time>
+                        <value>-1422.3 -1422.3</value>
+                    </x>
+                    <y>
+                        <time>0 20.1333</time>
+                        <value>0 0</value>
+                    </y>
+                    <z>
+                        <time>0 20.1333</time>
+                        <value>8122.94 8122.94</value>
+                    </z>
+                </position>
+                <rotation>
+                    <x>
+                        <time>0 20.1333</time>
+                        <value>-0 -0</value>
+                    </x>
+                    <y>
+                        <time>0 20.1333</time>
+                        <value>90 90</value>
+                    </y>
+                    <z>
+                        <time>0 20.1333 25.8667 28.6667 33.3</time>
+                        <value>0 0 720 720 2160</value>
+                    </z>
+                </rotation>
+                <scale>
+                    <x>
+                        <time>0 20.1333</time>
+                        <value>100 100</value>
+                    </x>
+                    <y>
+                        <time>0 20.1333</time>
+                        <value>100 100</value>
+                    </y>
+                    <z>
+                        <time>0 20.1333</time>
+                        <value>100 100</value>
+                    </z>
+                </scale>
+            </sceneobject>
+            <sceneobject>
+                <name>tunnel1_0003</name>
+                <model>tunnel1.xml</model>
+                <position>
+                    <x>
+                        <time>0 20.1333</time>
+                        <value>-1144.68 -1144.68</value>
+                    </x>
+                    <y>
+                        <time>0 20.1333</time>
+                        <value>0 0</value>
+                    </y>
+                    <z>
+                        <time>0 20.1333</time>
+                        <value>8122.94 8122.94</value>
+                    </z>
+                </position>
+                <rotation>
+                    <x>
+                        <time>0 20.1333</time>
+                        <value>-0 -0</value>
+                    </x>
+                    <y>
+                        <time>0 20.1333</time>
+                        <value>90 90</value>
+                    </y>
+                    <z>
+                        <time>0 20.1333 26.3333 28.6667 33.3</time>
+                        <value>0 0 -720 -720 -2160</value>
+                    </z>
+                </rotation>
+                <scale>
+                    <x>
+                        <time>0 20.1333</time>
+                        <value>100 100</value>
+                    </x>
+                    <y>
+                        <time>0 20.1333</time>
+                        <value>100 100</value>
+                    </y>
+                    <z>
+                        <time>0 20.1333</time>
+                        <value>100 100</value>
+                    </z>
+                </scale>
+            </sceneobject>
+            <sceneobject>
+                <name>tunnel1_0004</name>
+                <model>tunnel1.xml</model>
+                <position>
+                    <x>
+                        <time>0 20.1333 24.8</time>
+                        <value>-1964.11 -1964.11 -1964.11</value>
+                    </x>
+                    <y>
+                        <time>0 20.1333 24.8</time>
+                        <value>0 0 0</value>
+                    </y>
+                    <z>
+                        <time>0 20.1333 24.8</time>
+                        <value>8122.94 8122.94 8122.94</value>
+                    </z>
+                </position>
+                <rotation>
+                    <x>
+                        <time>0 20.1333 24.8</time>
+                        <value>-0 -0 -0</value>
+                    </x>
+                    <y>
+                        <time>0 20.1333 24.8</time>
+                        <value>90 90 90</value>
+                    </y>
+                    <z>
+                        <time>0 20.1333 24.8 28.6667 33.3</time>
+                        <value>0 0 720 720 2160</value>
+                    </z>
+                </rotation>
+                <scale>
+                    <x>
+                        <time>0 20.1333 24.8</time>
+                        <value>100 100 100</value>
+                    </x>
+                    <y>
+                        <time>0 20.1333 24.8</time>
+                        <value>100 100 100</value>
+                    </y>
+                    <z>
+                        <time>0 20.1333 24.8</time>
+                        <value>100 100 100</value>
+                    </z>
+                </scale>
+            </sceneobject>
+            <sceneobject>
+                <name>tunnel2_0002</name>
+                <model>tunnel2.xml</model>
+                <position>-1422.3,0,8122.94</position>
+                <rotation>-0,90,0</rotation>
+                <scale>100,100,100</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>tunnel2_0003</name>
+                <model>tunnel2.xml</model>
+                <position>-1144.68,0,8122.94</position>
+                <rotation>-0,90,0</rotation>
+                <scale>100,100,100</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>tunnel2_0004</name>
+                <model>tunnel2.xml</model>
+                <position>-1964.11,0,8122.94</position>
+                <rotation>-0,90,0</rotation>
+                <scale>100,100,100</scale>
+            </sceneobject>
+        </sceneobjects>
+        <camera>
+            <position>
+                <x>
+                    <time>0 10.1 20 24.9333 30.1667 33.5</time>
+                    <value>1655.73 -4133.23 -2495.04 -2112.48 -2009.09 1940.31</value>
+                </x>
+                <y>
+                    <time>0 10.1 24.9333 30.1667</time>
+                    <value>1800.31 11.2595 -1.43738 -1.43738</value>
+                </y>
+                <z>
+                    <time>0 10.1 20 24.9333 30.1667</time>
+                    <value>2080.85 7699.76 8108.8 8125.03 8125.03</value>
+                </z>
+            </position>
+            <rotation>
+                <x>
+                    <time>0 10.1 30.1667</time>
+                    <value>-0 5.73796 -0.000120557</value>
+                </x>
+                <y>
+                    <time>0 10.1 30.1667</time>
+                    <value>180 168.221 270</value>
+                </y>
+                <z>
+                    <time>0 10.1 30.1667</time>
+                    <value>-0 -0 -0</value>
+                </z>
+            </rotation>
+            <fov>
+                <fov>
+                    <time>0 5.2 11.5 19.6 23.6667 28.1 31.0333</time>
+                    <value>34.708 1.90043 4.77968 68.4552 70.4589 19.9097 3.07928</value>
+                    <tcb>0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0 0 0 0 0 0</tcb>
+                </fov>
+            </fov>
+            <target>CamTarget</target>
+        </camera>
+    </properties>
+</root>

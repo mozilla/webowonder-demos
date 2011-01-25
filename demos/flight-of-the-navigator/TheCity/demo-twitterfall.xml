@@ -1,0 +1,222 @@
+<?xml version="1.0" ?>
+<root>
+    <header>
+        <type>scene</type>
+        <version>0.1</version>
+        <name>demo-twitterfall</name>
+        <generator>lws2xml</generator>
+    </header>
+    <properties>
+        <sceneobjects>
+            <sceneobject>
+                <name>billboard-1_0001</name>
+                <model>billboard-1.xml</model>
+                <position>303.055,-295.374,299.184</position>
+                <rotation>-0,0,0</rotation>
+                <scale>30,30,30</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>billboard-2_0001</name>
+                <model>billboard-2.xml</model>
+                <position>822.711,-455.368,-292.738</position>
+                <rotation>-0,-92,0</rotation>
+                <scale>30,30,30</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>billboard-5_0001</name>
+                <model>billboard-5.xml</model>
+                <position>124.548,0,-526.277</position>
+                <rotation>-0,-48.6,0</rotation>
+                <scale>60,60,60</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p1_0001</name>
+                <model>buildings-p1.xml</model>
+                <position>162.871,0,554.977</position>
+                <rotation>-0,0,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p2_0001</name>
+                <model>buildings-p2.xml</model>
+                <position>1896.97,0,947.296</position>
+                <rotation>-0,-97.2,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p4_0001</name>
+                <model>buildings-p4.xml</model>
+                <position>1034.71,0,-803.766</position>
+                <rotation>-0,-73.8,0</rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>CamTarget</name>
+                <position>
+                    <x>
+                        <time>0 15.7 25.3 27.4 28 28.9 36.4667</time>
+                        <value>1095 123.404 123.404 300.265 307.559 310.04 -282.886</value>
+                        <tcb>0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0</tcb>
+                    </x>
+                    <y>
+                        <time>0 5.33333 10 15.7 25.3 27.4 28 28.9 36.4667</time>
+                        <value>630.327 586.02 554.646 618.019 618.019 576.662 576.696 575.396 3646.64</value>
+                        <tcb>0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0</tcb>
+                    </y>
+                    <z>
+                        <time>0 15.7 25.3 27.4 28 28.9 36.4667</time>
+                        <value>557.704 -523.865 -523.865 -226.54 61.5969 173.338 5853.35</value>
+                        <tcb>0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0</tcb>
+                    </z>
+                </position>
+                <rotation>
+                    <x>
+                        <time>0 28.9</time>
+                        <value>-0 -0</value>
+                    </x>
+                    <y>
+                        <time>0 28.9</time>
+                        <value>0 0</value>
+                    </y>
+                    <z>
+                        <time>0 28.9</time>
+                        <value>0 0</value>
+                    </z>
+                </rotation>
+                <scale>
+                    <x>
+                        <time>0 28.9</time>
+                        <value>1 1</value>
+                    </x>
+                    <y>
+                        <time>0 28.9</time>
+                        <value>1 1</value>
+                    </y>
+                    <z>
+                        <time>0 28.9</time>
+                        <value>1 1</value>
+                    </z>
+                </scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p1_0002</name>
+                <model>buildings-p1.xml</model>
+                <position>6630.05,-172.302,3759.25</position>
+                <rotation>-0,-75.2,0</rotation>
+                <scale>1.5,1.5,1.5</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>buildings-p1_0003</name>
+                <model>buildings-p1.xml</model>
+                <position>2409.69,-172.302,3324.6</position>
+                <rotation>-0,-75.2,0</rotation>
+                <scale>1.5,1.5,1.5</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>ship-main-engine_a_0001</name>
+                <parent>ship-main_0001</parent>
+                <model>ship-main-engine_a.xml</model>
+                <position>-0,2.2366,2.63365</position>
+                <rotation>
+                    <z>
+                        <out>offset</out>
+                        <time>0 10.0333</time>
+                        <value>-0 -36000</value>
+                    </z>
+                </rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>ship-main-engine_b_0001</name>
+                <parent>ship-main_0001</parent>
+                <model>ship-main-engine_b.xml</model>
+                <position>-0,2.2366,2.63365</position>
+                <rotation>
+                    <z>
+                        <out>offset</out>
+                        <time>0 10.0333</time>
+                        <value>-0 3600</value>
+                    </z>
+                </rotation>
+                <scale>1,1,1</scale>
+            </sceneobject>
+            <sceneobject>
+                <name>ship-main_0001</name>
+                <model>ship-main.xml</model>
+                <position>
+                    <x>
+                        <time>0 26.2333 28.1667 28.9 36.4667</time>
+                        <value>-1665.87 251.859 308.188 308.736 -284.19</value>
+                        <tcb>0 0 0 0 0 0 0 0 0 1 0 0 0 0 0</tcb>
+                    </x>
+                    <y>
+                        <time>0 28.1667 28.9 36.4667</time>
+                        <value>637.099 574.832 574.753 3646</value>
+                        <tcb>0 0 0 0 0 0 1 0 0 0 0 0</tcb>
+                    </y>
+                    <z>
+                        <time>0 26.2333 28.1667 28.9 36.4667</time>
+                        <value>-2219.21 -695.541 25.5895 174.722 5854.74</value>
+                        <tcb>0 0 0 0 0 0 0 0 0 1 0 0 0 0 0</tcb>
+                    </z>
+                </position>
+                <rotation>
+                    <x>
+                        <time>28.1667 28.9</time>
+                        <value>-0 26.6</value>
+                    </x>
+                    <y>
+                        <time>0 13.3333 21.1 25.5 26.2333 26.9333 28.1667 28.9</time>
+                        <value>128.8 124.649 133.03 140.822 147.685 174.778 183.422 186.2</value>
+                    </y>
+                    <z>
+                        <time>28.1667 28.9</time>
+                        <value>0 0</value>
+                    </z>
+                </rotation>
+                <scale>
+                    <x>
+                        <time>0 28.1667 28.9</time>
+                        <value>1 1 1</value>
+                    </x>
+                    <y>
+                        <time>0 28.1667 28.9</time>
+                        <value>1 1 1</value>
+                    </y>
+                    <z>
+                        <time>0 28.1667 28.9</time>
+                        <value>1 1 1</value>
+                    </z>
+                </scale>
+            </sceneobject>
+        </sceneobjects>
+        <camera>
+            <position>
+                <x>
+                    <time>0 10 15.7 21.2667 27.2 32 38.5333 40</time>
+                    <value>-815.16 -228.154 -329.362 -673.469 -875.885 -218.125 -133.316 -126.946</value>
+                    <tcb>0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</tcb>
+                </x>
+                <y>
+                    <time>0 10 21.2667 32</time>
+                    <value>601.952 713.66 558.368 260.057</value>
+                    <tcb>0 0 0 1 0 0 0 0 0 0 0 0</tcb>
+                </y>
+                <z>
+                    <time>0 10 15.7 21.2667 27.2 32 38.5333 40</time>
+                    <value>-1594.41 -927.271 -1089 -1260.84 -896.947 -1162.61 -838.831 -755.434</value>
+                    <tcb>0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</tcb>
+                </z>
+            </position>
+            <rotation>-0,180,-0</rotation>
+            <fov>
+                <fov>
+                    <time>0 7.26667 18.4333 23.6 25.8667 30 34.3 39.6</time>
+                    <value>19.1073 24.0509 18.099 19.5028 28.262 5.15696 4.57846 25.735</value>
+                    <tcb>0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0</tcb>
+                </fov>
+            </fov>
+            <target>CamTarget</target>
+        </camera>
+    </properties>
+</root>

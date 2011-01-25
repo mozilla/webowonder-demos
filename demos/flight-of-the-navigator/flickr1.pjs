@@ -1,0 +1,58 @@
+var currentImageIdx = 0;
+
+void setup() {
+  // Seed a few known good images from flickr, pull the rest live when run.
+  imgUrls.splice(0, 0, "http://farm4.static.flickr.com/3011/2379541098_bc3e26263d.jpg",
+                       "http://farm5.static.flickr.com/4074/4762543340_f9817dda6e.jpg",
+                       "http://farm4.static.flickr.com/3498/3928567413_553b994495.jpg",
+                       "http://farm3.static.flickr.com/2453/3928564893_4768eed4d0.jpg",
+                       "http://farm4.static.flickr.com/3071/2588156399_6f6aab58ee.jpg",
+                       "http://farm4.static.flickr.com/3093/2589011082_f6d3718b7d.jpg",
+                       "http://farm4.static.flickr.com/3497/4565307644_263243e3a2.jpg",
+                       "http://farm3.static.flickr.com/2799/4322360795_a902272c1d.jpg",
+                       "http://farm5.static.flickr.com/4096/4756015720_08646e00ae_o.png",
+                       "http://farm5.static.flickr.com/4026/4389505576_b3351456be.jpg",
+                       "http://farm5.static.flickr.com/4007/4277266686_c2b1f77b2a.jpg",
+                       "http://farm4.static.flickr.com/3621/3483477059_cb36571204.jpg");
+  size(512, 256);
+  frameRate(1);
+  background(0);
+	noLoop();
+}
+
+void draw() {
+  PImage bg = getPImage();
+  if (!bg) {
+    return;
+  }
+
+  background(0);
+
+  if (bg.loaded) {
+    var rat;
+    if (384 > bg.height) {
+      rat = 384 / width;
+    } else {
+      rat = bg.height / height;
+    }
+    var scaleHeight = bg.height / rat;
+    var scaleWidth = 384 / rat;
+
+    var xpos = -(scaleWidth - width) / 2;
+    var ypos = -(scaleHeight - height) / 2;
+
+    image(bg, xpos, ypos, scaleWidth, scaleHeight);
+  }
+  for (var i = 0; i < height; i+=3) {
+    stroke(0, 160);
+    line(0, i, width, i);
+  }
+}
+
+PImage getPImage() {
+  if (currentImageIdx == imgUrls.length) {
+    currentImageIdx = 0;
+  }
+
+  return loadImage(imgUrls[currentImageIdx++]);
+}

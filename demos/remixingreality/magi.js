@@ -4129,6 +4129,8 @@ Magi.Shader = Klass({
 Magi.Shader.createShader = function(gl, type, source) {
   if (typeof type == 'string') type = gl[type];
   var shader = gl.createShader(type);
+  shader.type = type;
+  shader.source = source;
 
   gl.shaderSource(shader, source);
   gl.compileShader(shader);
@@ -4204,12 +4206,23 @@ Magi.Shader.createProgram = function(gl, shaders) {
   if (gl.getProgramParameter(id, gl.VALIDATE_STATUS) != 1) {
     var ilog = gl.getProgramInfoLog(id);
     this.deleteShader(gl,prog);
-    for (var i=0; i<shaders.length; i++) {
-      if (shaders[i].type) {
-        console.log(shaders[i].type, shaders[i].source);
-      } else {
-        console.log(shaders[i]);
+    if (!Magi.Shader.alreadyLoggedShader) {
+      Magi.Shader.alreadyLoggedShader = true;
+      var ta = TEXTAREA();
+      ta.textContent = "Failed to validate the following shader:\n\n";
+      ta.rows = 20;
+      ta.cols = 80;
+      for (var i=0; i<shaders.length; i++) {
+        if (shaders[i].type) {
+          console.log(shaders[i].type, shaders[i].source);
+          ta.textContent += shaders[i].type + ": " + shaders[i].source + "\n\n---\n\n";
+        } else {
+          console.log(shaders[i]);
+          ta.textContent += shaders[i] + "\n\n---\n\n";
+        }
       }
+      ta.textContent += ilog;
+      document.body.appendChild(ta);
     }
     throw(new Error("Failed to validate shader: "+ilog));
   }
@@ -6691,7 +6704,7 @@ Magi.DefaultMaterial = {
     "  lcolor += matSpec * LightSpecular * specular * attenuation;"+
     "  vec4 lightContribution = lcolor * lambertTerm;"+
     "  vec4 shadowContribution = diffuse * attenuation * MaterialAmbient.a * -lambertTerm;"+
-    "  color += mix(shadowContribution, lightContribution, min(1.0, ceil(max(0.0, lambertTerm))));"+
+    "  color += (lambertTerm > 0.0) ? lightContribution : shadowContribution;"+
     "  color += MaterialEmit + texture2D(EmitTex, texCoord0);" +
     "  color *= matDiff.a;"+
     "  color.a = matDiff.a;"+
@@ -6808,7 +6821,7 @@ Magi.MultiMaterial = {
     "  float lambertTerm = dot(normal, lightDir);"+
     "  vec3 E = eyeVec;"+
     "  vec3 R = reflect(-lightDir, normal);"+
-    "  float specular = pow( max(dot(R, E), 0.0), 2.0 );"+
+    "  float specular = pow( max(dot(R, E), 0.0), shininess );"+
     "  vec4 lcolor = diffuse + matSpec * LightSpecular * specular;"+
     "  if (lambertTerm > 0.0) { color = color + lcolor * lambertTerm; }"+
     "  else { color = color + lcolor * ambient.a * -lambertTerm; } "+

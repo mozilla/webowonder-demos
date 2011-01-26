@@ -21,12 +21,13 @@
     });
     </script>
     <style>
+    <style>
+    
         @font-face {
-            font-family: 'URWGothicL-Demi';
-            src: url('URWGothicL-Demi.eot');
-            src: local('â˜º'), url('URWGothicL-Demi.woff') format('woff'), url('URWGothicL-Demi.otf') format('opentype');
+            font-family: 'MetaMedium';
+            src: url('metaot-medium-webfont.eot');
+            src: local('☺'), url('metaot-medium-webfont.woff') format('woff'), url('metaot-medium-webfont.ttf') format('opentype');
         }
-
 
         html, body, div, span, applet, object, iframe,
         h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -46,7 +47,7 @@
           background: transparent;
         }
         body {
-          line-height: 1;
+          line-height: 1.0;
         }
 
         /* remember to define focus styles! */
@@ -63,10 +64,7 @@
 
         body {
             background : url('i/bg.png') repeat-x left top;
-            font-family : URW Gothic L Demi, URWGothicL-Demi;
-            font-size : 14px;
-            line-height: 18px;
-            color : #890c08;
+            font-family : MetaMedium;
         }
 
         #wrap {
@@ -79,6 +77,9 @@
             padding : 10px 0 0 385px;
             background : url('i/header.png') no-repeat left top;
             position: relative;
+            font-size : 16px;
+            line-height: 1.0;
+            color : #890c08;
         }
         #header span {
             display : block;
@@ -166,22 +167,24 @@
         #main img {
           display: block;
         }
+        
         #col-left .itemdesc, #col-right .itemdesc {
           text-transform: uppercase;
-          font-size: 10.5px;
+          font-size: 11px;
+          line-height : 1.0;
           letter-spacing: 1px;
-          height: 14px;
           margin: 0px;
           padding: 0px;
           text-align: center;
-          color: #f0f0ff;
+          color: #fefefe;
         }
+        
         #clearButton {
-          /*
-          position: absolute;
-          margin-top: -144px;
-          margin-left: 150px;
-          */
+            margin : 0;
+            border : none;
+            padding : 0;
+            background-color : transparent;
+            vertical-align : middle;
         }
     </style>
 </head>
@@ -203,8 +206,7 @@
             <div id="col-right">
                 <div id="yours">
                     <canvas id="draw" width="140" height="140" class="content" title="Press delete to clear"></canvas>
-                    <button id="clearButton" onclick="byId('draw').Draw.clear()">Clear</button>
-                    <div class="itemdesc">Draw a picture</div>
+                    <div class="itemdesc">Draw a picture <button id="clearButton" onclick="byId('draw').Draw.clear()"><img class="thumb content" src="i/clear-canvas.png" alt="Clear" /></button></div>
                 </div>
                 <div id="ball">
                     <img class="thumb content" src="i/thumb_ball.png" alt="" onclick="showBall()" /><div class="itemdesc">Play ball</div>

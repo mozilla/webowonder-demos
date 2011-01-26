@@ -21,8 +21,7 @@
     });
     </script>
     <style>
-    <style>
-    
+
         @font-face {
             font-family: 'MetaMedium';
             src: url('metaot-medium-webfont.eot');
@@ -167,7 +166,7 @@
         #main img {
           display: block;
         }
-        
+
         #col-left .itemdesc, #col-right .itemdesc {
           text-transform: uppercase;
           font-size: 11px;
@@ -175,16 +174,20 @@
           letter-spacing: 1px;
           margin: 0px;
           padding: 0px;
+          padding-top: 3px;
           text-align: center;
           color: #fefefe;
         }
-        
+
         #clearButton {
             margin : 0;
             border : none;
             padding : 0;
             background-color : transparent;
-            vertical-align : middle;
+            cursor: pointer;
+            position: absolute;
+            margin-top: -1px;
+            margin-left: 8px;
         }
     </style>
 </head>
@@ -206,7 +209,7 @@
             <div id="col-right">
                 <div id="yours">
                     <canvas id="draw" width="140" height="140" class="content" title="Press delete to clear"></canvas>
-                    <div class="itemdesc">Draw a picture <button id="clearButton" onclick="byId('draw').Draw.clear()"><img class="thumb content" src="i/clear-canvas.png" alt="Clear" /></button></div>
+                    <div class="itemdesc">Draw a picture <button id="clearButton" onclick="byId('draw').Draw.clear()"><img src="i/clear-canvas.png" alt="Clear" /></button></div>
                 </div>
                 <div id="ball">
                     <img class="thumb content" src="i/thumb_ball.png" alt="" onclick="showBall()" /><div class="itemdesc">Play ball</div>

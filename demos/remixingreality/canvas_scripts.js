@@ -36,20 +36,7 @@ Draw = Klass({
       Event.stop(ev);
     };
     this.canvas.style.cursor = 'crosshair';
-    this.canvas.parentNode.insertBefore(
-      BUTTON({
-        textContent: 'Clear',
-        onclick: function(){ self.clear(); },
-        style: {
-          position: 'absolute',
-          marginTop: '-142px',
-          marginLeft: '142px',
-          height: '27px',
-          padding: '1px',
-          paddingBottom: '3px'
-        }
-      }), this.canvas.nextSibling
-    );
+    this.canvas.Draw = this;
   },
 
   clear : function() {

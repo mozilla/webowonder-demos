@@ -37,7 +37,7 @@
         var glowy = new Magi.Cube();
         glowy.material = c.material.copy();
         glowy.material.floats.MaterialDiffuse[3] = 1;
-//         glowy.material.floats.MaterialEmit = a.map(function(i){ return i / 6; });
+        // glowy.material.floats.MaterialEmit = a.map(function(i){ return i / 6; });
         glowy.material.floats.MaterialAmbient[3] = 0.9;
         glowy.setScale(0.8);
         glowy.setZ(0.1);
@@ -318,6 +318,8 @@
     window.updateImage = function() {
       display.changed = display2.changed = true;
     }
+
+    byId('display').style.pointerEvents = 'none';
 
     videoTex.addFrameListener(function(){
       if (video.ended) video.play();

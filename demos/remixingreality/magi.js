@@ -3577,7 +3577,9 @@ Magi.log=function(msg) {
     var ctx = c.getContext('2d');
     ctx.font = '14px Sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#c24';
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.fillRect(0, c.height/2-20, c.width, 30);
+    ctx.fillStyle = '#fee';
     ctx.fillText(msg,c.width/2,c.height/2,c.width-20);
   }
   if (this.logElement) {

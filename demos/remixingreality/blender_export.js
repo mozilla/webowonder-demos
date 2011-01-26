@@ -140,11 +140,12 @@ function importBlenderModel(model) {
         n.childNodes[i].material.floats.LightPos = vec4.create([600, 1200, -2400, 1.0]);
         n.childNodes[i].material.floats['LightDiffuse'].set([1,1,1,1]);
         n.childNodes[i].material.floats['LightSpecular'].set([1,1,1,1]);
+        n.childNodes[i].material.floats['LightAmbient'].set([0.09,0.075,0.05,1]);
         n.childNodes[i].material.floats['MaterialDiffuse'].set(d.diffuse);
         n.childNodes[i].material.floats['MaterialEmit'].set(d.diffuse.map(function(v){ return v*0.1; }));
         n.childNodes[i].material.floats['MaterialSpecular'].set(d.specular.map(function(c){return c*d.specularIntensity;}));
-        n.childNodes[i].material.floats['MaterialAmbient'].set(d.specular.map(function(v){ return v * d.ambient; }));
-        n.childNodes[i].material.floats['MaterialAmbient'][3] = 0.8;
+        n.childNodes[i].material.floats['MaterialAmbient'].set([1,1,1,1]);//d.specular.map(function(v){ return v * d.ambient; }));
+        n.childNodes[i].material.floats['MaterialAmbient'][3] = 0.5;
         n.childNodes[i].material.floats['MaterialShininess'] = 2.0;
       }
     }
@@ -195,11 +196,11 @@ function importBlenderModel(model) {
       if (this.startDance == null)
         this.startDance = t;
       this.rotation.angle = -Math.PI/2+0.25*Math.PI*Math.sin((t-this.startDance)/500);
-      this.position[2] = -0.05*Math.PI+0.05*Math.PI*Math.cos((t-this.startDance)/100);
+      this.position[2] = -0.1*Math.PI+0.05*Math.PI*Math.cos((t-this.startDance)/100);
     } else {
       this.startDance = null;
       this.rotation.angle += (-Math.PI/2-this.rotation.angle) * 0.25;
-      this.position[2] += (0-this.position[2]) * 0.25;
+      this.position[2] += (-0.05-this.position[2]) * 0.25;
     }
   });
   var pv = new Magi.Node().setAxis(0,1,0);

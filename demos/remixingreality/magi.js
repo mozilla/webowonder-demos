@@ -3854,20 +3854,6 @@ Magi.Texture = Klass({
         this.changed = true;
         return;
       }
-      if ((this.image.tagName == 'IMG' && (/\.svgz?$/i).test(this.image.src)) ||
-          (this.image.tagName == 'VIDEO' &&
-          (/WebKit\/\d+/).test(window.navigator.userAgent)))
-      {
-        if (!this.image.tmpCanvas ||
-            this.image.tmpCanvas.width != this.image.width ||
-            this.image.tmpCanvas.height != this.image.height)
-        {
-          this.image.tmpCanvas = E.canvas(this.image.width, this.image.height);
-        }
-        this.image.tmpCanvas.getContext('2d')
-            .drawImage(this.image, 0, 0, this.image.width, this.image.height);
-        img = this.image.tmpCanvas;
-      }
       this.width = img.naturalWidth || img.videoWidth || img.width;
       this.height = img.naturalHeight || img.videoHeight || img.height;
       if (this.previousWidth == this.width && this.previousHeight == this.height)

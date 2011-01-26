@@ -178,7 +178,7 @@
   var offset = 180;
   video.style.marginTop = offset+'px';
 
-  var ratio = 1;
+  var ratio = 0.5;
 
   targetOrigin = '*';
   var DemoState = {
@@ -269,7 +269,7 @@
     param.copyCameraMatrix(display2.camera.perspectiveMatrix, 100, 10000);
     display2.camera.useProjectionMatrix = true;
     display2.drawOnlyWhenChanged = true;
-    display2.camera.perspectiveMatrix[13] -= offset*0.80;
+    display2.camera.perspectiveMatrix[13] -= offset*1.5;
     display2.camera.perspectiveMatrix[5] *= (video.height/(video.height+offset));
 
     visibleLength=0, visibleRes=[];
@@ -310,7 +310,6 @@
 
     var times = [];
     var pastResults = {};
-    var lastTime = 0;
     cubes = {};
     var cubesLength = 0;
     var images = [];
@@ -328,8 +327,8 @@
       if (video.currentTime == video.duration) {
         video.currentTime = 0;
       }
-      if (video.currentTime == lastTime) return;
-      lastTime = video.currentTime;
+      if (video.currentTime == video.lastTime) return;
+      video.lastTime = video.currentTime;
       var dt = new Date().getTime();
 
       videoCanvas.getContext('2d').drawImage(video, 0, 0, videoCanvas.width, videoCanvas.height);
@@ -476,8 +475,6 @@
         }
       }
     });
-
-    byId('display').style.pointerEvents = byId('fakeDisplay').style.pointerEvents = 'none';
 
     toggleAR = function(){
       if (video.style.display == 'none') {

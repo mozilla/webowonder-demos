@@ -216,7 +216,7 @@ $(document).ready(function() {
 
         <div id="footer">
             <div id="pick">Pick something from the sidebars to place into the video, then use the button below to</div>
-            <button id="toggleAR" onclick="toggleAR()"><img src="i/toggle_augreal.png" /></button>
+            <button id="toggleAR" onclick="if (window.AR_on) {turnAROff(); byId('ar-toggle').src='i/toggle_augreal.png'; } else {turnAROn(); byId('ar-toggle').src='i/toggle_augreal.png';}"><img id="ar-toggle" src="i/toggle_augreal.png" /></button>
         </div>
     </div>
 </body>

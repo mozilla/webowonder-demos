@@ -484,12 +484,16 @@
       }
     }
 
+    window.AR_on = true;
+
     turnAROn = function() {
       video.style.display = 'none';
       gcanvas.style.display = 'inline-block';
+      window.AR_on = true;
     }
     turnAROff = function() {
       video.style.display = 'inline-block';
       gcanvas.style.display = 'none';
+      window.AR_on = false;
     }
   }

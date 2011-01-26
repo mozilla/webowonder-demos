@@ -113,7 +113,7 @@ AudioPlayer = Klass({
     this.canvas.width = 140;
     this.canvas.height = 140;
     audio.parentNode.insertBefore(this.canvas, audio);
-    audio.parentNode.removeChild(audio);
+    audio.style.display = 'none';
     audio.addEventListener('progress', function() {
       self.noProgress = false;
     }, false);

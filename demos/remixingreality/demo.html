@@ -19,12 +19,10 @@ $(document).ready(function() {
 });
 </script>
     <style>
-/* MetaWebPro font family licensed from fontshop.com. WOFF-FTW! */
         @font-face {
-            font-family: 'MetaBlack';
-            src: url('http://mozcom-cdn.mozilla.net/img/fonts/MetaWebPro-Black.eot');
-            src: local('â˜º'), url('http://mozcom-cdn.mozilla.net/img/fonts/MetaWebPro-Black.woff') format('woff');
-            font-weight: bold;
+            font-family: 'URWGothicL-Demi';
+            src: url('URWGothicL-Demi.eot');
+            src: local('â˜º'), url('URWGothicL-Demi.woff') format('woff'), url('URWGothicL-Demi.otf') format('opentype');
         }
 
 
@@ -63,8 +61,9 @@ $(document).ready(function() {
 
         body {
             background : url('i/bg.png') repeat-x left top;
-            font-family : MetaBlack;
-            font-size : 16px;
+            font-family : URW Gothic L Demi, URWGothicL-Demi;
+            font-size : 14px;
+            line-height: 18px;
             color : #890c08;
         }
 
@@ -130,6 +129,12 @@ $(document).ready(function() {
             padding : 0 150px;
         }
         #pick {
+          text-align: right;
+          margin-bottom: 4px;
+          margin-right: 18px;
+          font-size: 12px;
+          letter-spacing: 0.75px;
+          text-transform: uppercase;
         }
         #toggleAR {
             border : none;
@@ -160,6 +165,19 @@ $(document).ready(function() {
         .rpl {
             text-indent : -9999em;
         }
+        #main img {
+          display: block;
+        }
+        #col-left .itemdesc, #col-right .itemdesc {
+          text-transform: uppercase;
+          font-size: 10.5px;
+          letter-spacing: 1px;
+          height: 14px;
+          margin: 0px;
+          padding: 0px;
+          text-align: center;
+          color: #f0f0ff;
+        }
     </style>
 </head>
 <body>
@@ -169,9 +187,9 @@ $(document).ready(function() {
 
         <div id="main" class="cf">
             <div id="col-left">
-                <div><img class="thumb content" src="i/thumb_spook.png" alt="" onclick="window.currentModel=blahmodels[1];hideBall()" /><img src="i/footer_spook.png" alt="Spook" /></div>
-                <div><img class="thumb content" src="i/thumb_bird.png" alt="" onclick="window.currentModel=blahmodels[0];hideBall()" /><img src="i/footer_bird.png" alt="Bird" /></div>
-                <div><img class="thumb content" src="i/thumb_lotus.png" alt="" onclick="window.currentModel=blahmodels[2];hideBall()" /><img src="i/footer_lotus.png" alt="Lotus" /></div>
+                <div><img class="thumb content" src="i/thumb_spook.png" alt="" onclick="window.currentModel=blahmodels[1];hideBall()" /><div class="itemdesc">Spook</div></div>
+                <div><img class="thumb content" src="i/thumb_bird.png" alt="" onclick="window.currentModel=blahmodels[0];hideBall()" /><div class="itemdesc">Bird</div></div>
+                <div><img class="thumb content" src="i/thumb_lotus.png" alt="" onclick="window.currentModel=blahmodels[2];hideBall()" /><div class="itemdesc">Lotus</div></div>
             </div>
 
             <div id="content">
@@ -182,14 +200,14 @@ $(document).ready(function() {
             <div id="col-right">
                 <div id="yours">
                     <canvas id="draw" width="140" height="140" class="content" title="Press delete to clear"></canvas>
-                    <img src="i/footer_draw.png" alt="Draw a picture" />
+                    <div class="itemdesc">Draw a picture</div>
                 </div>
                 <div id="ball">
-                    <img class="thumb content" src="i/thumb_ball.png" alt="" onclick="showBall()" /><img src="i/footer_play-ball.png" alt="Ball" />
+                    <img class="thumb content" src="i/thumb_ball.png" alt="" onclick="showBall()" /><div class="itemdesc">Play ball</div>
                 </div>
                 <div id="music">
                     <audio id="audio1" src="musa.ogg" controls="true" onmozaudioavailable="audioWritten(event);" onloadedmetadata="loadedMetadata();"></audio>
-                    <img src="i/footer_press-play.png" alt="Press play" />
+                    <div class="itemdesc">Press play</div>
                 </div>
             </div>
 

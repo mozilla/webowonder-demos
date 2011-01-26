@@ -6,9 +6,10 @@ Draw = Klass({
     var self = this;
     var img = new Image();
     img.onload = function() {
-      self.ctx.drawImage(img, 0, 0, self.canvas.width, self.canvas.height);
+      self.clear();
     };
     img.src = 'i/drawing_bg.png';
+    this.background = img;
     this.canvas.onmousedown = function(ev) {
       this.focus();
     };
@@ -35,6 +36,25 @@ Draw = Klass({
       Event.stop(ev);
     };
     this.canvas.style.cursor = 'crosshair';
+    this.canvas.parentNode.insertBefore(
+      BUTTON({
+        textContent: 'Clear',
+        onclick: function(){ self.clear(); },
+        style: {
+          position: 'absolute',
+          marginTop: '-142px',
+          marginLeft: '142px',
+          height: '27px',
+          padding: '1px',
+          paddingBottom: '3px'
+        }
+      }), this.canvas.nextSibling
+    );
+  },
+
+  clear : function() {
+    this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
+    this.ctx.drawImage(this.background, 0, 0, this.canvas.width, this.canvas.height);
   },
 
   draw : function(ev) {

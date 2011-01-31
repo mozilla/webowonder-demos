@@ -3577,7 +3577,9 @@ Magi.log=function(msg) {
     var ctx = c.getContext('2d');
     ctx.font = '14px Sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#c24';
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.fillRect(0, c.height/2-20, c.width, 30);
+    ctx.fillStyle = '#fee';
     ctx.fillText(msg,c.width/2,c.height/2,c.width-20);
   }
   if (this.logElement) {
@@ -3852,20 +3854,6 @@ Magi.Texture = Klass({
         this.changed = true;
         return;
       }
-      if ((this.image.tagName == 'IMG' && (/\.svgz?$/i).test(this.image.src)) ||
-          (this.image.tagName == 'VIDEO' &&
-          (/WebKit\/\d+/).test(window.navigator.userAgent)))
-      {
-        if (!this.image.tmpCanvas ||
-            this.image.tmpCanvas.width != this.image.width ||
-            this.image.tmpCanvas.height != this.image.height)
-        {
-          this.image.tmpCanvas = E.canvas(this.image.width, this.image.height);
-        }
-        this.image.tmpCanvas.getContext('2d')
-            .drawImage(this.image, 0, 0, this.image.width, this.image.height);
-        img = this.image.tmpCanvas;
-      }
       this.width = img.naturalWidth || img.videoWidth || img.width;
       this.height = img.naturalHeight || img.videoHeight || img.height;
       if (this.previousWidth == this.width && this.previousHeight == this.height)
@@ -4129,6 +4117,8 @@ Magi.Shader = Klass({
 Magi.Shader.createShader = function(gl, type, source) {
   if (typeof type == 'string') type = gl[type];
   var shader = gl.createShader(type);
+  shader.type = type;
+  shader.source = source;
 
   gl.shaderSource(shader, source);
   gl.compileShader(shader);
@@ -4204,12 +4194,23 @@ Magi.Shader.createProgram = function(gl, shaders) {
   if (gl.getProgramParameter(id, gl.VALIDATE_STATUS) != 1) {
     var ilog = gl.getProgramInfoLog(id);
     this.deleteShader(gl,prog);
-    for (var i=0; i<shaders.length; i++) {
-      if (shaders[i].type) {
-        console.log(shaders[i].type, shaders[i].source);
-      } else {
-        console.log(shaders[i]);
+    if (!Magi.Shader.alreadyLoggedShader) {
+      Magi.Shader.alreadyLoggedShader = true;
+      var ta = TEXTAREA();
+      ta.textContent = "Failed to validate the following shader:\n\n";
+      ta.rows = 20;
+      ta.cols = 80;
+      for (var i=0; i<shaders.length; i++) {
+        if (shaders[i].type) {
+          console.log(shaders[i].type, shaders[i].source);
+          ta.textContent += shaders[i].type + ": " + shaders[i].source + "\n\n---\n\n";
+        } else {
+          console.log(shaders[i]);
+          ta.textContent += shaders[i] + "\n\n---\n\n";
+        }
       }
+      ta.textContent += ilog;
+      document.body.appendChild(ta);
     }
     throw(new Error("Failed to validate shader: "+ilog));
   }
@@ -6691,7 +6692,7 @@ Magi.DefaultMaterial = {
     "  lcolor += matSpec * LightSpecular * specular * attenuation;"+
     "  vec4 lightContribution = lcolor * lambertTerm;"+
     "  vec4 shadowContribution = diffuse * attenuation * MaterialAmbient.a * -lambertTerm;"+
-    "  color += mix(shadowContribution, lightContribution, min(1.0, ceil(max(0.0, lambertTerm))));"+
+    "  color += (lambertTerm > 0.0) ? lightContribution : shadowContribution;"+
     "  color += MaterialEmit + texture2D(EmitTex, texCoord0);" +
     "  color *= matDiff.a;"+
     "  color.a = matDiff.a;"+
@@ -6808,7 +6809,7 @@ Magi.MultiMaterial = {
     "  float lambertTerm = dot(normal, lightDir);"+
     "  vec3 E = eyeVec;"+
     "  vec3 R = reflect(-lightDir, normal);"+
-    "  float specular = pow( max(dot(R, E), 0.0), 2.0 );"+
+    "  float specular = pow( max(dot(R, E), 0.0), shininess );"+
     "  vec4 lcolor = diffuse + matSpec * LightSpecular * specular;"+
     "  if (lambertTerm > 0.0) { color = color + lcolor * lambertTerm; }"+
     "  else { color = color + lcolor * ambient.a * -lambertTerm; } "+

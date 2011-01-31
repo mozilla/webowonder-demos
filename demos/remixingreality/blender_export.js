@@ -114,7 +114,7 @@ function importBlenderModel(model) {
   var width = maxX-minX;
   var depth = maxY-minY;
   var height = maxZ-minZ;
-  var sc = 2.5/(Math.max(width,depth,height));
+  var sc = 2.2/(Math.max(width,depth,height));
   var pivot = new Magi.Node();
   var cube;
   var n = new Magi.Node();
@@ -122,7 +122,7 @@ function importBlenderModel(model) {
   model.setFrame = BlenderExport.setFrame;
   model.setFrame(0);
   if (model.indices) {
-    throw("Screw you");
+    throw("UNIMPLEMENT!");
   } else {
     n.models = [];
     for (var i=0; i<model.frameVertices.length; i++) {
@@ -140,12 +140,13 @@ function importBlenderModel(model) {
         n.childNodes[i].material.floats.LightPos = vec4.create([600, 1200, -2400, 1.0]);
         n.childNodes[i].material.floats['LightDiffuse'].set([1,1,1,1]);
         n.childNodes[i].material.floats['LightSpecular'].set([1,1,1,1]);
-        n.childNodes[i].material.floats['MaterialDiffuse'] = d.diffuse;
-        n.childNodes[i].material.floats['MaterialEmit'] = d.diffuse.map(function(v){ return v*0.1; });
-        n.childNodes[i].material.floats['MaterialSpecular'] = d.specular.map(function(c){return c*d.specularIntensity;});
-        n.childNodes[i].material.floats['MaterialAmbient'] = d.specular.map(function(v){ return v * d.ambient; });
-        n.childNodes[i].material.floats['MaterialAmbient'][3] = 0.8;
-        n.childNodes[i].material.floats['MaterialShininess'] = d.specularIntensity * 10;
+        n.childNodes[i].material.floats['LightAmbient'].set([0.09,0.075,0.05,1]);
+        n.childNodes[i].material.floats['MaterialDiffuse'].set(d.diffuse);
+        n.childNodes[i].material.floats['MaterialEmit'].set(d.diffuse.map(function(v){ return v*0.1; }));
+        n.childNodes[i].material.floats['MaterialSpecular'].set(d.specular.map(function(c){return c*d.specularIntensity;}));
+        n.childNodes[i].material.floats['MaterialAmbient'].set([1,1,1,1]);//d.specular.map(function(v){ return v * d.ambient; }));
+        n.childNodes[i].material.floats['MaterialAmbient'][3] = 0.5;
+        n.childNodes[i].material.floats['MaterialShininess'] = 2.0;
       }
     }
   }
@@ -175,10 +176,10 @@ function importBlenderModel(model) {
   n.rotation.axis = [1,0,0];
   n.rotation.angle = Math.PI;
   var cont = new Magi.Node();
-  shadow = new Magi.Disk(0.0,0.5,0.001,50,1);
+  shadow = new Magi.Disk(0.0,0.85,0.001,50,1);
   shadow.material = Magi.ColorMaterial.get(null);
   shadow.material.floats.Color = vec4.create([0,0,0,0.15]);
-  shadow.transparent = true;
+  shadow.transparent = false;
   shadow.blend = true;
   shadow.setZ(0);
   cont.appendChild(n);
@@ -195,17 +196,18 @@ function importBlenderModel(model) {
       if (this.startDance == null)
         this.startDance = t;
       this.rotation.angle = -Math.PI/2+0.25*Math.PI*Math.sin((t-this.startDance)/500);
-      this.position[2] = 0.05*Math.PI*Math.sin((t-this.startDance)/100);
+      this.position[2] = -0.1*Math.PI+0.05*Math.PI*Math.cos((t-this.startDance)/100);
     } else {
       this.startDance = null;
       this.rotation.angle += (-Math.PI/2-this.rotation.angle) * 0.25;
-      this.position[2] += (0-this.position[2]) * 0.25;
+      this.position[2] += (-0.05-this.position[2]) * 0.25;
     }
   });
   var pv = new Magi.Node().setAxis(0,1,0);
   pv.appendChild(cube);
   pivot.n = n;
   pivot.shadow = shadow;
+  pivot.appendChild(shadow);
   pivot.appendChild(pv);
   pivot.pv = pv;
   pivot.cube = cube;

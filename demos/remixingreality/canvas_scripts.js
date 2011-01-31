@@ -6,9 +6,10 @@ Draw = Klass({
     var self = this;
     var img = new Image();
     img.onload = function() {
-      self.ctx.drawImage(img, 0, 0, self.canvas.width, self.canvas.height);
+      self.clear();
     };
     img.src = 'i/drawing_bg.png';
+    this.background = img;
     this.canvas.onmousedown = function(ev) {
       this.focus();
     };
@@ -35,6 +36,12 @@ Draw = Klass({
       Event.stop(ev);
     };
     this.canvas.style.cursor = 'crosshair';
+    this.canvas.Draw = this;
+  },
+
+  clear : function() {
+    this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
+    this.ctx.drawImage(this.background, 0, 0, this.canvas.width, this.canvas.height);
   },
 
   draw : function(ev) {
@@ -93,7 +100,16 @@ AudioPlayer = Klass({
     this.canvas.width = 140;
     this.canvas.height = 140;
     audio.parentNode.insertBefore(this.canvas, audio);
-    audio.parentNode.removeChild(audio);
+    audio.style.display = 'none';
+    audio.addEventListener('progress', function() {
+      self.noProgress = false;
+    }, false);
+    audio.addEventListener('loaded', function() {
+      self.noProgress = false;
+    }, false);
+    audio.addEventListener('durationchange', function() {
+      self.noProgress = false;
+    }, false);
     this.ctx = this.canvas.getContext('2d');
     this.canvas.style.cursor = 'pointer';
     this.canvas.onclick = function(ev) {
@@ -141,9 +157,10 @@ AudioPlayer = Klass({
   },
 
   draw : function() {
-    if (this.point == null && this.lastTime == this.audio.currentTime) {
+    if (this.point == null && this.lastTime == this.audio.currentTime && this.noProgress) {
       return;
     }
+    this.noProgress = true;
     this.lastTime = this.audio.currentTime;
     var t = new Date().getTime();
     var w = this.canvas.width;

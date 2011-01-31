@@ -13,25 +13,48 @@
     return flip ? Math.PI-a : Math.PI+a;
   }
 
+  interpolate = function(a,b,f,r) {
+    if (r == null) r = [];
+    for (var i=0; i<a.length; i++)
+      r[i] = a[i] * (1-f) + b[i] * f;
+    return r;
+  }
+
   createCubes = function(container){
     var bdcubemodel = new Magi.Node();
     var bdcubes = [];
-    var cubemat = material.copy();
-    cubemat.floats.MaterialAmbient[3] = 0.5;
     for (var i=-5; i<5; i++) {
       for (var j=-5; j<5; j++) {
         var c = new Magi.Cube();
         c.setPosition(i+0.5,j+0.5,0);
-        c.material = cubemat;
+        c.material = material.copy();
+        var f = (i+5)/10;
+        var a = interpolate([0,0.5,1,1], [1,0,0,1], f);
+        c.material.floats.MaterialAmbient[3] = 0.5;
+        c.material.floats.MaterialDiffuse = a;
+        c.material.floats.MaterialDiffuse[3] = 0.35;
+        c.depthMask = false;
+        var glowy = new Magi.Cube();
+        glowy.material = c.material.copy();
+        glowy.material.floats.MaterialDiffuse[3] = 1;
+        // glowy.material.floats.MaterialEmit = a.map(function(i){ return i / 6; });
+        glowy.material.floats.MaterialAmbient[3] = 0.9;
+        glowy.setScale(0.8);
+        glowy.setZ(0.1);
+        glowy.setAxis(1,0,0).setAngle(j*0.1);
+        c.setAxis(1,1,1).setAngle(j*0.1);
+        c.appendChild(glowy);
         bdcubes.push(c);
         bdcubemodel.appendChild(bdcubes.last());
       }
     }
-    bdcubemodel.setScale(1/5, 1/10, 1/5);
-    bdcubemodel.setY(-1.5);
+    bdcubemodel.setScale(1/5, 1/12, 1/5);
+    bdcubemodel.setX(+(1+5/10));
+    bdcubemodel.setY(-0.05);
+    bdcubemodel.setAngle(-Math.PI/2).setAxis(0,0,1);
     bdcubemodel.addFrameListener(function(t,dt){
       updateVU(bdcubes);
-      this.display = !audioTag.paused;
+      this.display = !(audioTag.paused || audioTag.currentTime == audioTag.duration);
     });
     container.appendChild(bdcubemodel);
   }
@@ -150,12 +173,12 @@
   video.volume = 0;
   video.autoplay = true;
   video.style.display = 'none';
-  video.controls = true;
+  video.controls = false;
   video.src = "desk_480.ogv";
   var offset = 180;
   video.style.marginTop = offset+'px';
 
-  var ratio = 1;
+  var ratio = 0.5;
 
   targetOrigin = '*';
   var DemoState = {
@@ -246,7 +269,7 @@
     param.copyCameraMatrix(display2.camera.perspectiveMatrix, 100, 10000);
     display2.camera.useProjectionMatrix = true;
     display2.drawOnlyWhenChanged = true;
-    display2.camera.perspectiveMatrix[13] -= offset*0.80;
+    display2.camera.perspectiveMatrix[13] -= offset*1.5;
     display2.camera.perspectiveMatrix[5] *= (video.height/(video.height+offset));
 
     visibleLength=0, visibleRes=[];
@@ -287,7 +310,6 @@
 
     var times = [];
     var pastResults = {};
-    var lastTime = 0;
     cubes = {};
     var cubesLength = 0;
     var images = [];
@@ -296,6 +318,8 @@
       display.changed = display2.changed = true;
     }
 
+    byId('display').style.pointerEvents = 'none';
+
     videoTex.addFrameListener(function(){
       if (video.ended) video.play();
       if (video.paused) return;
@@ -303,8 +327,8 @@
       if (video.currentTime == video.duration) {
         video.currentTime = 0;
       }
-      if (video.currentTime == lastTime) return;
-      lastTime = video.currentTime;
+      if (video.currentTime == video.lastTime) return;
+      video.lastTime = video.currentTime;
       var dt = new Date().getTime();
 
       videoCanvas.getContext('2d').drawImage(video, 0, 0, videoCanvas.width, videoCanvas.height);
@@ -373,7 +397,7 @@
           images.push(image);
           pivot.image = image;
           image.addFrameListener(function(d,dt) {
-            this.position[2] += (0.5-this.position[2])*0.5;
+            this.position[2] += ((ballOn?0.5:0.005)-this.position[2])*0.5;
           });
           image.alignedNode.transparent = false;
           sides.forEach(function(c){
@@ -452,8 +476,6 @@
       }
     });
 
-    byId('display').style.pointerEvents = byId('fakeDisplay').style.pointerEvents = 'none';
-
     toggleAR = function(){
       if (video.style.display == 'none') {
         turnAROff();
@@ -462,12 +484,16 @@
       }
     }
 
+    window.AR_on = true;
+
     turnAROn = function() {
       video.style.display = 'none';
       gcanvas.style.display = 'inline-block';
+      window.AR_on = true;
     }
     turnAROff = function() {
       video.style.display = 'inline-block';
       gcanvas.style.display = 'none';
+      window.AR_on = false;
     }
   }

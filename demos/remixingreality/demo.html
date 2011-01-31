@@ -1,18 +1,33 @@
-<html><head>
-<title>Remixing Reality</title>
-<script src="JSARToolKit.min.js"></script>
-<script src="magi.js"></script>
-<script src="BeatDetektor2/beatdetektor.js"></script>
-<script src="BeatDetektor2/fft.js"></script>
-<script src="models/finch.js"></script>
-<script src="models/ghost.js"></script>
-<script src="models/lotus.js"></script>
-<script src="blender_export.js"></script>
-<script src="audio_vis.js"></script>
-<script src="canvas_scripts.js"></script>
-<script src="AR_demo.js"></script>
-
+<!doctype html>
+<html>
+<head>
+    <title>Remixing Reality</title>
+    <script src="JSARToolKit.min.js"></script>
+    <script src="magi.js"></script>
+    <script src="BeatDetektor2/beatdetektor.js"></script>
+    <script src="BeatDetektor2/fft.js"></script>
+    <script src="models/finch.js"></script>
+    <script src="models/ghost.js"></script>
+    <script src="models/lotus.js"></script>
+    <script src="blender_export.js"></script>
+    <script src="audio_vis.js"></script>
+    <script src="canvas_scripts.js"></script>
+    <script src="AR_demo.js"></script>
+    <script src="http://mozilla.org/script/1.0/jquery-1.4.3.min.js"></script>
+    <script src="jquery.lettering.js"></script>
+    <script>
+    $(document).ready(function() {
+      $('#header').lettering('lines');
+    });
+    </script>
     <style>
+
+        @font-face {
+            font-family: 'MetaMedium';
+            src: url('metaot-medium-webfont.eot');
+            src: local('☺'), url('metaot-medium-webfont.woff') format('woff'), url('metaot-medium-webfont.ttf') format('opentype');
+        }
+
         html, body, div, span, applet, object, iframe,
         h1, h2, h3, h4, h5, h6, p, blockquote, pre,
         a, abbr, acronym, address, big, cite, code,
@@ -31,7 +46,7 @@
           background: transparent;
         }
         body {
-          line-height: 1;
+          line-height: 1.0;
         }
 
         /* remember to define focus styles! */
@@ -48,6 +63,8 @@
 
         body {
             background : url('i/bg.png') repeat-x left top;
+            font-family : MetaMedium;
+            color : #890c08;
         }
 
         #wrap {
@@ -55,13 +72,27 @@
             margin : 0px auto;
         }
         #header {
-            width : 940px;
-            height : 77px;
+            width : 555px;
+            height : 67px;
+            padding : 12px 0 0 385px;
             background : url('i/header.png') no-repeat left top;
+            position: relative;
+            font-size : 16px;
+            line-height: 1.0;
+        }
+        #header span {
+            display : block;
+        }
+        #header .line1 {
+            margin : 0 0 3px 39px;
+        }
+        #header .line2 {
+            margin : 0 0 3px 19px;
         }
 
         #main {
             margin : 25px 0 15px 0;
+            position: relative;
         }
         #col-left {
             float : left;
@@ -100,23 +131,23 @@
             padding : 0 150px;
         }
         #pick {
-            width : 640px;
-            height : 13px;
-            background: url('i/pick-something.png') no-repeat left top;
+          text-align: right;
+          margin-bottom: 4px;
+          margin-right: 18px;
+          font-size: 12px;
+          letter-spacing: 0.75px;
+          text-transform: uppercase;
         }
         #toggleAR {
             border : none;
             background : none;
             float : right;
+            cursor: pointer;
         }
 
 
         #display {
-            pointer-events: none;
             margin-top: -180px;
-        }
-        #fakeDisplay {
-            pointer-events: none;
         }
 
         .cf:after {
@@ -133,45 +164,68 @@
         .rpl {
             text-indent : -9999em;
         }
+        #main img {
+          display: block;
+        }
 
+        #col-left .itemdesc, #col-right .itemdesc {
+          text-transform: uppercase;
+          font-size: 11px;
+          line-height : 1.0;
+          letter-spacing: 1px;
+          margin: 0px;
+          padding: 0px;
+          padding-top: 3px;
+          text-align: center;
+          color: #fefefe;
+        }
+
+        #clearButton {
+            margin : 0;
+            border : none;
+            padding : 0;
+            background-color : transparent;
+            cursor: pointer;
+            position: absolute;
+            margin-top: -1px;
+            margin-left: 8px;
+        }
     </style>
 </head>
 <body>
     <div id="wrap">
-        <div id="header">
-        </div>
+        <div id="header">New visual dimensions are within your grasp! WebGL allows you<br />to add real-time rendered 3D models, layered with imagery and visual<br />effects to photos and videos, giving visual media new depth.</div>
 
         <div id="main" class="cf">
             <div id="col-left">
-                <div><img class="thumb content" src="i/thumb_spook.png" alt="" onclick="window.currentModel=blahmodels[1];hideBall()" /><img src="i/footer_spook.png" alt="Spook" /></div>
-                <div><img class="thumb content" src="i/thumb_bird.png" alt="" onclick="window.currentModel=blahmodels[0];hideBall()" /><img src="i/footer_bird.png" alt="Bird" /></div>
-                <div><img class="thumb content" src="i/thumb_lotus.png" alt="" onclick="window.currentModel=blahmodels[2];hideBall()" /><img src="i/footer_lotus.png" alt="Lotus" /></div>
+                <div><img class="thumb content" src="i/thumb_spook.png" alt="" onclick="window.currentModel=blahmodels[1];hideBall()" /><div class="itemdesc">Spook</div></div>
+                <div><img class="thumb content" src="i/thumb_bird.png" alt="" onclick="window.currentModel=blahmodels[0];hideBall()" /><div class="itemdesc">Bird</div></div>
+                <div><img class="thumb content" src="i/thumb_lotus.png" alt="" onclick="window.currentModel=blahmodels[2];hideBall()" /><div class="itemdesc">Lotus</div></div>
             </div>
 
             <div id="content">
                 <div id="display"></div>
-                <div id="fakeDisplay"></div>
             </div>
 
             <div id="col-right">
                 <div id="yours">
                     <canvas id="draw" width="140" height="140" class="content" title="Press delete to clear"></canvas>
-                    <img src="i/footer_draw.png" alt="Draw a picture" />
+                    <div class="itemdesc">Draw a picture <button id="clearButton" onclick="byId('draw').Draw.clear()"><img src="i/clear-canvas.png" alt="Clear" /></button></div>
                 </div>
                 <div id="ball">
-                    <img class="thumb content" src="i/thumb_ball.png" alt="" onclick="showBall()" /><img src="i/footer_play-ball.png" alt="Ball" />
+                    <img class="thumb content" src="i/thumb_ball.png" alt="" onclick="showBall()" /><div class="itemdesc">Play ball</div>
                 </div>
                 <div id="music">
                     <audio id="audio1" src="musa.ogg" controls="true" onmozaudioavailable="audioWritten(event);" onloadedmetadata="loadedMetadata();"></audio>
-                    <img src="i/footer_press-play.png" alt="Press play" />
+                    <div class="itemdesc">Press play</div>
                 </div>
             </div>
 
         </div>
 
         <div id="footer">
-            <div id="pick" class="rpl">Pick something from the sidebars to place into the video, then use the button below to</div>
-            <button id="toggleAR" onclick="toggleAR()"><img src="i/toggle_augreal.png" /></button>
+            <div id="pick">Pick something from the sidebars to place into the video, then use the button below to</div>
+            <button id="toggleAR" onclick="if (window.AR_on) {turnAROff(); byId('ar-toggle').src='i/toggle_augreal_on.png'; } else {turnAROn(); byId('ar-toggle').src='i/toggle_augreal_off.png';}"><img id="ar-toggle" src="i/toggle_augreal_off.png" /></button>
         </div>
     </div>
 </body>

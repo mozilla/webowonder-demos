@@ -4,6 +4,16 @@
 - Geoffrey Dorne
 - http://imneway.net/
 - http://html5demos.com/geo
+
+
+TODO:
+× better top links mechanism
+× not in IE version
+× rename "HOW"
+× what about 3.6, Chrome and IE9?
+× no demo if no 3D
+× loading page
+× white board for demos
 -->
 
 <html>
@@ -13,38 +23,22 @@
 
         <script src="scripts/main.js"></script>
         <style> @import url(style.css); </style>
+        <style> @import url(demos.css); </style>
 
     </head>
-    <body>
+    <body class="loading">
+        <div id="plzwait"><img src="imgs/throbber.gif"></div>
         <section id="wall">
             <h1>HTML5 &amp; Friends</h1>
             <p id="shortcredit">By <a href="http://twitter.com/paulrouget">Paul Rouget</a> &amp; <a href="http://graphism.fr/">Geoffrey Dorne</a>. See <a href="#longcredits">the footer for full credits</a>.</p>
 
             <section id="overview">
-                <style>
-                    .tag.c0{color: #005f6b;}
-                    .tag.c0:hover {color: #00a2b7;}
-                    .tag.c1{color: #008c9e;}
-                    .tag.c1:hover {color: #00cfea;}
-                    .tag.c2{color: #00dffc;}
-                    .tag.c2:hover {color: #00e1ff;}
-                    .tag.c3{color: #00b4cc;}
-                    .tag.c3:hover {color: #00e1ff;}
-                    .tag {
-                        margin-top: 10px;
-                        margin-left: 15px;
-                        font-family: bebas;
-                        position: absolute;
-                        text-decoration: none;
-                    }
-                </style>
-
-                <a class="tag c0" href="#JaegerMonkey" style="top: 219px; left: 254px; font-size: 50px;">JaegerMonkey</a> <a class="tag c1" href="#&lt;canvas&gt; 2D" style="top: 95px; left: 325px; font-size: 50px;">&lt;canvas&gt; 2D</a> <a class="tag c3" href="#HTML5" style="top: 180px; left: 491px; font-size: 50px;">HTML5</a> <a class="tag c3" href="#performance" style="top: 259px; left: 210px; font-size: 50px;">performance</a> <a class="tag c2" href="#Javascript" style="top: 6px; left: 287px; font-size: 50px;">Javascript</a> <a class="tag c2" href="#&lt;video&gt;" style="top: 51px; left: 413px; font-size: 50px;">&lt;video&gt;</a> <a class="tag c0" href="#hardware acceleration" style="top: 140px; left: 226px; font-size: 50px;">hardware acceleration</a> <a class="tag c1" href="#SVG" style="top: 225px; left: 598px; font-size: 50px;">SVG</a> <a class="tag c1" href="#CSS3" style="top: 88px; left: 239px; font-size: 50px;">CSS3</a> <a class="tag c0" href="#WebGL" style="top: 234px; left: 495px; font-size: 50px;">WebGL</a> <a class="tag c3" href="#Security" style="top: 47px; left: 256px; font-size: 50px;">Security</a> <a class="tag c0" href="#Multi-platform" style="top: 179px; left: 224px; font-size: 50px;">Multi-platform</a> <a class="tag c1" href="#Open Codecs" style="top: 11px; left: 466px; font-size: 50px;">Open Codecs</a> <a class="tag c2" href="#File API" style="top: 20px; left: 48px; font-size: 18px;">File API</a> <a class="tag c2" href="#Scalable Vector Graphics" style="top: 54px; left: 96px; font-size: 18px;">Scalable Vector Graphics</a> <a class="tag c1" href="#Geolocation API" style="top: 125px; left: 134px; font-size: 18px;">Geolocation API</a> <a class="tag c0" href="#Native JSON" style="top: 126px; left: 63px; font-size: 18px;">Native JSON</a> <a class="tag c1" href="#WOFF" style="top: 187px; left: 834px; font-size: 18px;">WOFF</a> <a class="tag c0" href="#GNU/Linux" style="top: 78px; left: 784px; font-size: 18px;">GNU/Linux</a> <a class="tag c2" href="#Border Image" style="top: 6px; left: 756px; font-size: 18px;">Border Image</a> <a class="tag c2" href="#Meego" style="top: 18px; left: 7px; font-size: 18px;">Meego</a> <a class="tag c0" href="#HTML5 parser" style="top: 89px; left: 42px; font-size: 18px;">HTML5 parser</a> <a class="tag c1" href="#-moz-element" style="top: 112px; left: 765px; font-size: 18px;">-moz-element</a> <a class="tag c0" href="#Application Cache" style="top: 280px; left: 667px; font-size: 18px;">Application Cache</a> <a class="tag c1" href="#HTTP Strict Transport Security" style="top: 206px; left: 602px; font-size: 18px;">HTTP Strict Transport Security</a> <a class="tag c1" href="#image-rect" style="top: 215px; left: 34px; font-size: 18px;">image-rect</a> <a class="tag c3" href="#classList" style="top: 260px; left: 434px; font-size: 18px;">classList</a> <a class="tag c3" href="#box-shadow" style="top: 223px; left: 774px; font-size: 18px;">box-shadow</a> <a class="tag c2" href="#Transition" style="top: 241px; left: 776px; font-size: 18px;">Transition</a> <a class="tag c2" href="#SVG as a CSS background" style="top: 131px; left: 637px; font-size: 18px;">SVG as a CSS background</a> <a class="tag c3" href="#IndexedDB" style="top: 250px; left: 42px; font-size: 18px;">IndexedDB</a> <a class="tag c3" href="#Border Radius" style="top: 6px; left: 669px; font-size: 18px;">Border Radius</a> <a class="tag c2" href="#Multiple Backgrounds" style="top: 240px; left: 112px; font-size: 18px;">Multiple Backgrounds</a> <a class="tag c1" href="#TraceMonkey" style="top: 180px; left: 35px; font-size: 18px;">TraceMonkey</a> <a class="tag c3" href="#WebSockets" style="top: 72px; left: 32px; font-size: 18px;"><!--WebSockets--></a> <a class="tag c2" href="#QuerySelector" style="top: 259px; left: 112px; font-size: 18px;">QuerySelector</a> <a class="tag c2" href="#Android" style="top: 125px; left: 10px; font-size: 18px;">Android</a> <a class="tag c2" href="#Javascript Animation Scheduler" style="top: 1px; left: 88px; font-size: 18px;">Javascript Animation Scheduler</a> <a class="tag c0" href="#Multi-touch" style="top: 281px; left: 777px; font-size: 18px;">Multi-touch</a> <a class="tag c1" href="#@media Queries" style="top: 179px; left: 123px; font-size: 18px;">@media Queries</a> <a class="tag c2" href="#formData" style="top: 37px; left: 28px; font-size: 18px;">formData</a> <a class="tag c0" href="#:visited" style="top: 0px; left: 41px; font-size: 18px;">:visited</a> <a class="tag c0" href="#Drag and Drop files from the Desktop" style="top: 278px; left: 432px; font-size: 18px;">Drag and Drop files from the Desktop</a> <a class="tag c1" href="#Text Shadow" style="top: 108px; left: 41px; font-size: 18px;">Text Shadow</a> <a class="tag c1" href="#X-Frame-Options" style="top: 23px; left: 677px; font-size: 18px;">X-Frame-Options</a> <a class="tag c2" href="#postMessage" style="top: 278px; left: 46px; font-size: 18px;">postMessage</a> <a class="tag c1" href="#Retained layers" style="top: 144px; left: 120px; font-size: 18px;">Retained layers</a> <a class="tag c2" href="#JavaScript typed arrays" style="top: 150px; left: 629px; font-size: 18px;">JavaScript typed arrays</a> <a class="tag c1" href="#XHR Level 2" style="top: 198px; left: 59px; font-size: 18px;">XHR Level 2</a> <a class="tag c1" href="#Content Editable" style="top: 88px; left: 134px; font-size: 18px;">Content Editable</a> <a class="tag c1" href="#Cross-Domain XHR" style="top: 107px; left: 125px; font-size: 18px;">Cross-Domain XHR</a> <a class="tag c0" href="#Compositing acceleration" style="top: 37px; left: 94px; font-size: 18px;">Compositing acceleration</a> <a class="tag c2" href="#Forms" style="top: 169px; left: 804px; font-size: 18px;">Forms</a> <a class="tag c2" href="#Web Workers" style="top: 95px; left: 759px; font-size: 18px;">Web Workers</a> <a class="tag c0" href="#Transform" style="top: 233px; left: 41px; font-size: 18px;">Transform</a> <a class="tag c3" href="#Structural pseudo-classes" style="top: 169px; left: 635px; font-size: 18px;">Structural pseudo-classes</a> <a class="tag c1" href="#Windows" style="top: 55px; left: 34px; font-size: 18px;">Windows</a> <a class="tag c0" href="#Protocol handlers" style="top: 42px; left: 671px; font-size: 18px;">Protocol handlers</a> <a class="tag c2" href="#Cross-Origin Resource Sharing" style="top: 188px; left: 604px; font-size: 18px;">Cross-Origin Resource Sharing</a> <a class="tag c1" href="#async &amp; defer" style="top: 239px; left: 661px; font-size: 18px;">async &amp; defer</a> <a class="tag c3" href="#Asynchronous plug-in painting" style="top: 19px; left: 103px; font-size: 18px;">Asynchronous plug-in painting</a> <a class="tag c3" href="#any()" style="top: 186px; left: 800px; font-size: 18px;">any()</a> <a class="tag c2" href="#Gradients" style="top: 150px; left: 783px; font-size: 18px;">Gradients</a> <a class="tag c2" href="#ECMAScript 5" style="top: 59px; left: 750px; font-size: 18px;">ECMAScript 5</a> <a class="tag c3" href="#Javascript engine" style="top: 259px; left: 658px; font-size: 18px;">Javascript engine</a> <a class="tag c1" href="#localStorage" style="top: 162px; left: 52px; font-size: 18px;">localStorage</a> <a class="tag c3" href="#Mac OS" style="top: 40px; left: 790px; font-size: 18px;">Mac OS</a> <a class="tag c1" href="#Device Orientation" style="top: 60px; left: 637px; font-size: 18px;">Device Orientation</a> <a class="tag c1" href="#Audio Data API" style="top: 161px; left: 143px; font-size: 18px;">Audio Data API</a> <a class="tag c3" href="#calc()" style="top: 162px; left: 14px; font-size: 18px;">calc()</a> <a class="tag c2" href="#Content Acceleration" style="top: 77px; left: 646px; font-size: 18px;">Content Acceleration</a> <a class="tag c1" href="#@font-face" style="top: 260px; left: 775px; font-size: 18px;">@font-face</a> <a class="tag c0" href="#Native Drag and Drop" style="top: 95px; left: 630px; font-size: 18px;">Native Drag and Drop</a> <a class="tag c1" href="#SVG as an &lt;img&gt;" style="top: 112px; left: 631px; font-size: 18px;">SVG as an &lt;img&gt;</a> <a class="tag c3" href="#foreignObject" style="top: 198px; left: 135px; font-size: 18px;">foreignObject</a> <a class="tag c3" href="#font-feature-settings" style="top: 71px; left: 114px; font-size: 18px;">font-feature-settings</a> <a class="tag c1" href="#History API" style="top: 144px; left: 48px; font-size: 18px;">History API</a> <a class="tag c3" href="#Maemo" style="top: 205px; left: 792px; font-size: 18px;">Maemo</a> <a class="tag c2" href="#mask, filter, clip-path" style="top: 219px; left: 114px; font-size: 18px;">mask, filter, clip-path</a> <a class="tag c0" href="#&lt;audio&gt;" style="top: 278px; left: 130px; font-size: 18px;">&lt;audio&gt;</a> <a class="tag c2" href="#Columns" style="top: 133px; left: 790px; font-size: 18px;">Columns</a> <a class="tag c3" href="#semantic" style="top: 23px; left: 782px; font-size: 18px;">semantic</a>
+                <a class="tag c0" href="#JaegerMonkey" style="top: 219px; left: 254px; font-size: 50px;">JaegerMonkey</a> <a class="tag c1" href="#&lt;canvas&gt; 2D" style="top: 95px; left: 325px; font-size: 50px;">&lt;canvas&gt; 2D</a> <a class="tag c3" href="#HTML5" style="top: 180px; left: 491px; font-size: 50px;">HTML5</a> <a class="tag c3" href="#performance" style="top: 259px; left: 210px; font-size: 50px;">performance</a> <a class="tag c2" href="#Javascript" style="top: 6px; left: 287px; font-size: 50px;">Javascript</a> <a class="tag c2" href="#&lt;video&gt;" style="top: 51px; left: 413px; font-size: 50px;">&lt;video&gt;</a> <a class="tag c0" href="#hardware acceleration" style="top: 140px; left: 226px; font-size: 50px;">hardware acceleration</a> <a class="tag c1" href="#SVG" style="top: 225px; left: 598px; font-size: 50px;">SVG</a> <a class="tag c1" href="#CSS3" style="top: 88px; left: 239px; font-size: 50px;">CSS3</a> <a class="tag c0" href="#WebGL" style="top: 234px; left: 495px; font-size: 50px;">WebGL</a> <a class="tag c3" href="#Security" style="top: 47px; left: 256px; font-size: 50px;">Security</a> <a class="tag c0" href="#Multi-platform" style="top: 179px; left: 224px; font-size: 50px;">Multi-platform</a> <a class="tag c1" href="#Open Codecs" style="top: 11px; left: 466px; font-size: 50px;">Open Codecs</a> <a class="tag c2" href="#File API" style="top: 20px; left: 48px; font-size: 18px;">File API</a> <a class="tag c2" href="#Scalable Vector Graphics" style="top: 54px; left: 96px; font-size: 18px;">Scalable Vector Graphics</a> <a class="tag c1" href="#Geolocation API" style="top: 125px; left: 134px; font-size: 18px;">Geolocation API</a> <a class="tag c0" href="#Native JSON" style="top: 126px; left: 63px; font-size: 18px;">Native JSON</a> <a class="tag c1" href="#WOFF" style="top: 187px; left: 834px; font-size: 18px;">WOFF</a> <a class="tag c0" href="#GNU/Linux" style="top: 78px; left: 784px; font-size: 18px;">GNU/Linux</a> <a class="tag c2" href="#Border Image" style="top: 6px; left: 756px; font-size: 18px;">Border Image</a> <a class="tag c2" href="#Meego" style="top: 18px; left: 7px; font-size: 18px;">Meego</a> <a class="tag c0" href="#HTML5 parser" style="top: 89px; left: 42px; font-size: 18px;">HTML5 parser</a> <a class="tag c1" href="#-moz-element" style="top: 112px; left: 765px; font-size: 18px;">-moz-element</a> <a class="tag c0" href="#Application Cache" style="top: 280px; left: 667px; font-size: 18px;">Application Cache</a> <a class="tag c1" href="#HTTP Strict Transport Security" style="top: 206px; left: 602px; font-size: 18px;">HTTP Strict Transport Security</a> <a class="tag c1" href="#image-rect" style="top: 215px; left: 34px; font-size: 18px;">image-rect</a> <a class="tag c3" href="#classList" style="top: 260px; left: 434px; font-size: 18px;">classList</a> <a class="tag c3" href="#box-shadow" style="top: 223px; left: 774px; font-size: 18px;">box-shadow</a> <a class="tag c2" href="#Transition" style="top: 241px; left: 776px; font-size: 18px;">Transition</a> <a class="tag c2" href="#SVG as a CSS background" style="top: 131px; left: 637px; font-size: 18px;">SVG as a CSS background</a> <a class="tag c3" href="#IndexedDB" style="top: 250px; left: 42px; font-size: 18px;">IndexedDB</a> <a class="tag c3" href="#Border Radius" style="top: 6px; left: 669px; font-size: 18px;">Border Radius</a> <a class="tag c2" href="#Multiple Backgrounds" style="top: 240px; left: 112px; font-size: 18px;">Multiple Backgrounds</a> <a class="tag c1" href="#TraceMonkey" style="top: 180px; left: 35px; font-size: 18px;">TraceMonkey</a> <a class="tag c3" href="#WebSockets" style="top: 72px; left: 32px; font-size: 18px;"><!--WebSockets--></a> <a class="tag c2" href="#QuerySelector" style="top: 259px; left: 112px; font-size: 18px;">QuerySelector</a> <a class="tag c2" href="#Android" style="top: 125px; left: 10px; font-size: 18px;">Android</a> <a class="tag c2" href="#Javascript Animation Scheduler" style="top: 1px; left: 88px; font-size: 18px;">Javascript Animation Scheduler</a> <a class="tag c0" href="#Multi-touch" style="top: 281px; left: 777px; font-size: 18px;">Multi-touch</a> <a class="tag c1" href="#@media Queries" style="top: 179px; left: 123px; font-size: 18px;">@media Queries</a> <a class="tag c2" href="#formData" style="top: 37px; left: 28px; font-size: 18px;">formData</a> <a class="tag c0" href="#:visited" style="top: 0px; left: 41px; font-size: 18px;">:visited</a> <a class="tag c0" href="#Drag and Drop files from the Desktop" style="top: 278px; left: 432px; font-size: 18px;">Drag and Drop files from the Desktop</a> <a class="tag c1" href="#Text Shadow" style="top: 108px; left: 41px; font-size: 18px;">Text Shadow</a> <a class="tag c1" href="#X-Frame-Options" style="top: 23px; left: 677px; font-size: 18px;">X-Frame-Options</a> <a class="tag c2" href="#postMessage" style="top: 278px; left: 46px; font-size: 18px;">postMessage</a> <a class="tag c1" href="#Retained layers" style="top: 144px; left: 120px; font-size: 18px;">Retained layers</a> <a class="tag c2" href="#JavaScript typed arrays" style="top: 150px; left: 629px; font-size: 18px;">JavaScript typed arrays</a> <a class="tag c1" href="#XHR Level 2" style="top: 198px; left: 59px; font-size: 18px;">XHR Level 2</a> <a class="tag c1" href="#Content Editable" style="top: 88px; left: 134px; font-size: 18px;">Content Editable</a> <a class="tag c1" href="#Cross-Domain XHR" style="top: 107px; left: 125px; font-size: 18px;">Cross-Domain XHR</a> <a class="tag c0" href="#Compositing acceleration" style="top: 37px; left: 94px; font-size: 18px;">Compositing acceleration</a> <a class="tag c2" href="#Forms" style="top: 169px; left: 804px; font-size: 18px;">Forms</a> <a class="tag c2" href="#Web Workers" style="top: 95px; left: 759px; font-size: 18px;">Web Workers</a> <a class="tag c0" href="#Transform" style="top: 233px; left: 41px; font-size: 18px;">Transform</a> <a class="tag c3" href="#Structural pseudo-classes" style="top: 169px; left: 635px; font-size: 18px;">Structural pseudo-classes</a> <a class="tag c1" href="#Windows" style="top: 55px; left: 34px; font-size: 18px;">Windows</a> <a class="tag c0" href="#Protocol handlers" style="top: 42px; left: 671px; font-size: 18px;">Protocol handlers</a> <a class="tag c2" href="#Cross-Origin Resource Sharing" style="top: 188px; left: 604px; font-size: 18px;">Cross-Origin Resource Sharing</a> <a class="tag c1" href="#async &amp; defer" style="top: 239px; left: 661px; font-size: 18px;">async &amp; defer</a> <a class="tag c3" href="#Asynchronous plug-in painting" style="top: 19px; left: 103px; font-size: 18px;">Asynchronous plug-in painting</a> <a class="tag c3" href="#any()" style="top: 186px; left: 800px; font-size: 18px;">any()</a> <a class="tag c2" href="#Gradients" style="top: 150px; left: 783px; font-size: 18px;">Gradients</a> <a class="tag c2" href="#ECMAScript 5" style="top: 59px; left: 750px; font-size: 18px;">ECMAScript 5</a> <a class="tag c3" href="#Javascript engine" style="top: 259px; left: 658px; font-size: 18px;">Javascript engine</a> <a class="tag c1" href="#localStorage" style="top: 162px; left: 52px; font-size: 18px;">localStorage</a> <a class="tag c3" href="#Mac OS" style="top: 40px; left: 790px; font-size: 18px;">Mac OS</a> <a class="tag c1" href="#Device Orientation" style="top: 60px; left: 637px; font-size: 18px;">Device Orientation</a> <a class="tag c1" href="#Audio Data API" style="top: 161px; left: 143px; font-size: 18px;">Audio Data API</a> <a class="tag c3" href="#calc()" style="top: 162px; left: 14px; font-size: 18px;">calc()</a> <a class="tag c2" href="#Content Acceleration" style="top: 77px; left: 646px; font-size: 18px;">Content Acceleration</a> <a class="tag c1" href="#@font-face" style="top: 260px; left: 775px; font-size: 18px;">@font-face</a> <a class="tag c0" href="#Native Drag and Drop" style="top: 95px; left: 630px; font-size: 18px;">Native Drag and Drop</a> <a class="tag c1" href="#SVG as an &lt;img&gt;" style="top: 112px; left: 631px; font-size: 18px;">SVG as an &lt;img&gt;</a> <a class="tag c3" href="#foreignObject" style="top: 198px; left: 135px; font-size: 18px;">foreignObject</a> <a class="tag c3" href="#font-feature-settings" style="top: 71px; left: 114px; font-size: 18px;">font-feature-settings</a> <a class="tag c1" href="#History API" style="top: 144px; left: 48px; font-size: 18px;">History API</a> <a class="tag c3" href="#Maemo" style="top: 205px; left: 792px; font-size: 18px;">Maemo</a> <a class="tag c2" href="#mask, filter, clip-path" style="top: 219px; left: 114px; font-size: 18px;">mask, filter, clip-path</a> <a class="tag c0" href="#&lt;audio&gt;" style="top: 278px; left: 130px; font-size: 18px;">&lt;audio&gt;</a> <a class="tag c2" href="#Columns" style="top: 133px; left: 790px; font-size: 18px;">Columns</a> <a class="tag c3" href="#semantics" style="top: 23px; left: 782px; font-size: 18px;">semantics</a>
             </section>
 
             <section><h1>Standards</h1>
 
-                <article id="html5">
+                <article id="html5" class="closedXXX">
                     <h1>HTML5</h1>
 
                     <script src="scripts/canvas2d.js"></script>
@@ -63,7 +57,9 @@
                         <div class="demo">
                             <video preload="auto" width="160" src="media/enfants.webm" onmouseover="this.play()" onmouseout="this.pause()"></video>
                         </div>
-                        <p>HTML5 defines a standard way to embed video in a web page, using a &lt;video&gt; element. Support for the &lt;video&gt; element is still evolving, which is a polite way of saying it doesn't work yet. At least, it doesn't work everywhere. But don't despair! There are alternatives and fallbacks and options galore.</p>
+                        <p>
+                        <strong>NEED REVIEW: </strong>
+                        HTML5 defines a standard way to embed video in a web page, using a &lt;video&gt; element. The same way we can use images in web pages, we can use videos. Videos can be styles with CSS and controled via Javascript</p>
                         <a href="https://developer.mozilla.org/En/Using_audio_and_video_in_Firefox" title="documentation">learn more</a>
                     </article>
 
@@ -74,7 +70,7 @@
                             <img src="logos/xiph.png" width="160">
                         </div>
                         <p>
-                        Mozilla is proud to support and bring to web content free and open video and audio codecs: <strong>Webm/VP8</strong>, <strong>OGG/Theora</strong> and <strong>Vorbis</strong>.
+                        Mozilla is proud to support, and bring to web content, free and open video and audio codecs: <strong>Webm/VP8</strong>, <strong>OGG/Theora</strong> and <strong>Vorbis</strong>.
                         </p>
                         <a href="https://developer.mozilla.org/En/Media_formats_supported_by_the_audio_and_video_elements" title="documentation">learn more</a>
                     </article>
@@ -95,8 +91,8 @@
                         <a href="https://developer.mozilla.org/en/HTML/HTML5/HTML5_Parser" title="documentation">learn more</a>
                     </article>
 
-                    <article id="tagsoup">
-                        <h1>semantic</h1>
+                    <article id="tagsoup" class="large">
+                        <h1>semantics</h1>
                         <div class="demo" style="width: 170px">
                             <p>
                                 <span style="font-size: 20px;">&lt;!DOCTYPE html&gt;</span><br>
@@ -108,7 +104,7 @@
                                 <span style="font-size: 32px;">&lt;footer&gt;</span>
                             </p>
                         </div>
-                        <p>Elements, attributes, and attribute values in HTML are defined (by the HTML specification) to have certain meanings (semantics). HTML5 brings more elements to improve the semantic of a document.</p>
+                        <p>Elements, attributes, and attribute values in HTML are defined (by the HTML specification) to have certain meanings (semantics). HTML5 brings more elements to improve the semantics of a document.</p>
                         <a href="https://developer.mozilla.org/en/HTML/Element" title="documentation">learn more</a>
                     </article>
 
@@ -116,7 +112,7 @@
                     <script src="scripts/jquery.rotate.js"></script>
                     <script src="scripts/jquery.jplayer.min.js"></script>
                     <script src="scripts/audioplayer.js"></script>
-                    <article id="audioplayerdemo">
+                    <article id="audioplayerdemo" class="large">
                         <h1>&lt;audio&gt;</h1>
                         <div class="demo">
                             <div id="jquery_jplayer_1" class="jp-jplayer"></div>
@@ -134,11 +130,11 @@
                                 </ul>
                             </div>
                         </div>
-                        <p>The HTML 5 &lt;audio&gt; element offersthe ability to easily embed audio files into HTML documents. Once you've embedded media into your HTML document using the new elements, you can programmatically control them from your JavaScript code.</p>
+                        <p>The HTML 5 &lt;audio&gt; element offers the ability to easily embed audio files into HTML documents. Once you've embedded media into your HTML document using the new element, you can programmatically control them from your JavaScript code.</p>
                         <a href="https://developer.mozilla.org/en/HTML/Element/audio" title="documentation">learn more</a>
                     </article>
 
-                    <article id="formdemo">
+                    <article id="formdemo" class="large">
                         <h1>Forms</h1>
                         <div class="demo">
                             <form><p><strong>Dear Mozilla,</strong><br>My name is <input placeholder="yourname" pattern="....*">. I think this demo is <input placeholder="awesome?">. BTW, I want to tell you that you should <input placeholder="...">.</p><em>Thank you<button onclick="return submitForm();">send</button></em></form>
@@ -171,13 +167,13 @@
                         <div class="demo" style="background-color: black;">
                             <canvas width="300" height="200" onmouseover="startTeaPot()" onmouseout="stopTeaPot()"></canvas>
                         </div>
-                        <p><strong>Canvas 3D.</strong> WebGL brings 3D graphics to the Web by introducing an API that closely conforms to OpenGL ES 2.0 that can be used in HTML5 canvas elements.</p>
+                        <p><strong>Canvas 3D.</strong> WebGL brings 3D graphics to the Web by introducing an API that closely conforms to OpenGL ES 2.0 and can be used in HTML5 canvas elements.</p>
                         <a href="https://developer.mozilla.org/en/WebGL" title="documentation">learn more</a>
                     </article>
                 </article>
 
 
-                <article id="css3">
+                <article id="css3" class="closed">
                     <h1>CSS3</h1>
 
 
@@ -221,7 +217,7 @@
 
                     <article id="borderimagedemo">
                         <h1>Border Image</h1>
-                        <p><strong>The border-image CSS property</strong> allows drawing an image on the borders of elements. This makes drawing complex looking widgets much simpler than it has been and removes the need for nine boxes in some cases.</p>
+                        <p><strong>The border-image CSS property</strong> allows drawing an image on the borders of elements. This makes drawing complex looking widgets much simpler than it has been and removes the need for as many as nine boxes in some cases.</p>
                         <a href="https://developer.mozilla.org/en/CSS/-moz-border-image" title="documentation">learn more</a>
                     </article>
 
@@ -234,20 +230,19 @@
 
                     <article>
                         <h1>Multiple Backgrounds</h1>
-                        <p>You can apply multiple backgrounds to elements. These are layered atop one another with the first background you provide on top and the last background listed in the back.</p>
+                        <p>You can apply multiple backgrounds to elements. These are layered atop one another with the first background you provide on top and the last background displayed in the back.</p>
                         <a href="https://developer.mozilla.org/en/Using_gradients" title="documentation">learn more</a>
                     </article>
 
                     <article id="columndemo">
                         <h1>Columns</h1>
-                        <p>The CSS <strong>column layout</strong>. People have trouble reading text if lines are too long; if it takes too long for the eyes to move from the end of the one line to the beginning of the next, they lose track of which line they were on. Therefore, to make maximum use of a large screen, authors should have limited-width columns of text placed side by side, just as newspapers do.</p>
+                        <p><strong>The column layout</strong>.<br> People have trouble reading text if lines are too long; if it takes too long for the eyes to move from the end of the one line to the beginning of the next, they lose track of which line they were on. Therefore, to make maximum use of a large screen, authors should have limited-width columns of text placed side by side, just as newspapers do.</p>
                         <a href="https://developer.mozilla.org/en/CSS3_Columns" title="documentation">learn more</a>
                     </article>
 
                     <article id="boxshadowdemo">
                         <h1>box-shadow</h1>
-                        <p><strong>The box-shadow CSS property</strong> accepts one or more shadow effects as a comma-separated list. It allows to cast a drop shadow from the frame of almost any arbitrary element.
-                        </p>
+                        <p><strong>The box-shadow CSS property</strong> allows casting a drop shadow from the outline of almost any element. It can define multiple shadow effects at once. </p>
                         <a href="https://developer.mozilla.org/en/CSS/box-shadow" title="documentation">learn more</a>
                     </article>
 
@@ -283,7 +278,7 @@
                     <article class="experimental" style="background-image: -moz-element(fixme)">
                         <h1>-moz-element</h1>
                         <div class="demo">fixme: add the top demo</div>
-                        <p><em>-moz-element</em> is a new extension to the CSS background-image property: the ability to draw arbitrary elements as backgrounds using <em>-moz-element(#elementID)</em>.</p>
+                        <p><em>-moz-element</em> is an experiment extension to the CSS background-image property: the ability to draw arbitrary elements as backgrounds using <em>-moz-element(#elementID)</em>.</p>
                         <a href="https://developer.mozilla.org/en/CSS/-moz-element" title="documentation">learn more</a>
                     </article>
 
@@ -353,20 +348,20 @@
                         <p>
                         The Web Open Font Format (WOFF) has two main advantages over raw TrueType or OpenType fonts.
                         It is compressed, which means that you will typically see much smaller download sizes compared with raw TrueType or OpenType fonts.
-                        It contains information that allows you to see where the font came from – without DRM or labeling for a specific domain – which means it has support from a large number of font creators and font foundries. 
+                        It contains information that allows you to see where the font came from &mdash; without DRM or labeling for a specific domain &mdash; which means it has support from a large number of font creators and font foundries.
                         </p>
 
                         <a href="https://developer.mozilla.org/en/About_WOFF" title="documentation">learn more</a>
                     </article>
                 </article>
 
-                <article id="js">
+                <article id="js" class="closed">
 
                     <h1>Javascript</h1>
 
                     <article>
                         <h1>ECMAScript 5</h1>
-                        <p>ECMAScript 5 is the new version of the JavaScript language. which includes new features and API like <strong>Strict Mode</strong> or the <strong>JSON API</strong>.</p>
+                        <p>ECMAScript 5 is the new version of the JavaScript language, which includes new features and API like <strong>Strict Mode</strong> and the <strong>JSON API</strong>.</p>
                         <a href="https://developer.mozilla.org/Special:Tags?tag=ECMAScript5" title="documentation">learn more</a>
                     </article>
 
@@ -375,7 +370,7 @@
                         <h1><abbr title="XMLHttpRequest">XHR</abbr> Level 2</h1>
                         <p>
                         XMLHttpRequest makes sending HTTP requests very easy. You simply create an instance of the object, open a URL, and send the request.  The HTTP status of the result, as well as the result's contents, are available in the request object when the transaction is completed.
-                        <br><strong>This new <em>Level</em> brings interesting feature such like progress events or support for cross-site requests</strong>.
+                        <br><strong>This new <em>Level</em> brings interesting feature such as progress events and support for cross-site requests</strong>.
                         </p>
                         <a href="https://developer.mozilla.org/En/Using_XMLHttpRequest" title="documentation">learn more</a>
                     </article>
@@ -395,7 +390,7 @@
 
                     <article>
                         <h1>History API</h1>
-                        <p>The DOM  window object provides access to the browser's history through the window.history object. It exposes useful methods and properties that let you move back and forth through the user's history, as well as -- starting with HTML5 -- manipulate the contents of the history stack.</p>
+                        <p>The DOM  window object provides access to the browser's history through the window.history object. It exposes useful methods and properties that let you move back and forth through the user's history, as well as &mdash; starting with HTML5 &mdash; manipulate the contents of the history stack.</p>
                         <a href="https://developer.mozilla.org/en/DOM/Manipulating_the_browser_history" title="documentation">learn more</a>
                     </article>
 
@@ -407,13 +402,13 @@
 
                     <article>
                         <h1>QuerySelector</h1>
-                        <p>The Selectors API provides methods that make it quick and easy to retrieve Element nodes from the DOM by matching against a set of selectors.  This is much faster than past techniques, wherein it was necessary to, for example, use a loop in JavaScript code to locate the specific items you needed to find.</p>
+                        <p>The Selectors API provides methods that make it quick and easy to retrieve Element nodes from the DOM by matching against a set of selectors.  This is much faster than past techniques, where it was necessary, for example, to use a loop in JavaScript code to locate the specific items you needed to find.</p>
                         <a href="https://developer.mozilla.org/En/DOM/Document.querySelector" title="documentation">learn more</a>
                     </article>
 
                     <article>
                         <h1>classList</h1>
-                        <p>The bridge between the document and its style if often based on the <em>class</em> attribute. Being able to manipulate this attribute in an efficient way is important.
+                        <p>The bridge between the document and its style is often based on the <em>class</em> attribute. Being able to manipulate this attribute in an efficient way is important.
                         <strong>classList</strong> lets you toggle, add and remove classes from any element easily.</p>
                         <a href="https://developer.mozilla.org/en/DOM/element.classList" title="documentation">learn more</a>
                     </article>
@@ -427,9 +422,7 @@
 
                     <article>
                         <h1>async &amp; defer</h1>
-                        <p>These are &lt;script&gt; attributes.
-                        <strong>async</strong> is set to indicate that the browser should, if possible, execute the script asynchronously.
-                        <strong>defer</strong> is set to indicate to a browser that the script is meant to be executed after the document has been parsed.</p>
+                        <p>These are attributes of the &l;script&gt; element. Set async to tell the browser to, if possible, execute the script asynchronously. Set defer to tell the browser to execute the script after it has parsed the document.  </p>
                         <a href="https://developer.mozilla.org/En/HTML/Element/Script" title="documentation">learn more</a>
                     </article>
 
@@ -458,13 +451,13 @@
 
                     <article>
                         <h1>File API</h1>
-                        <p>The File API specifies the ability to asynchronously read the selected file into memory, and perform operations on the file data within the web application (for example, to display a thumbnail preview of an image, before it is uploaded, or to look for ID3 tags within an MP3 file, or to look for EXIF data in JPEG files, all on the client side).</p>
+                        <p>The File API specifies the ability to asynchronously read a selected file into memory, and perform operations on the file data within the web application (for example, to display a thumbnail preview of an image, before it is uploaded, or to look for ID3 tags within an MP3 file, or to look for EXIF data in JPEG files, all on the client side).</p>
                         <a href="https://developer.mozilla.org/en/Using_files_from_web_applications" title="documentation">learn more</a>
                     </article>
 
                     <article class="experimental">
                         <h1>Multi-touch</h1>
-                        <p>With the Multitouch API, regular webpages are capable of using multitouch input, allowing webdevelopers to create new interactive experiences for their websites.</p>
+                        <p>With the Multitouch API, regular webpages are capable of using multitouch input, allowing web developers to create new interactive experiences for their websites.</p>
                         <a href="https://developer.mozilla.org/en/DOM/Touch_events" title="documentation">learn more</a>
                     </article>
 
@@ -478,7 +471,10 @@
                     <article>
                         <h1>Protocol handlers</h1>
 
-                        <p> Web authors can use a <code>mailto:</code> when they want to provide a way for users to send an email. The browser then launch the default desktop email client.  It's a desktop-based protocol handler.<br>Web-based protocol handlers allow web-based applications to participate in the process too. This is becoming more important as more types of applications migrate to the web.</p>
+                        <p>Browsers need a way to deal with links that use protocols other
+than HTTP (for example, mailto:). They have traditionally used desktop
+programs such as a desktop e-mail client, to handle these protocols.
+Web-based protocol handlers enable web-based applications ...</p>
 
                         <a href="https://developer.mozilla.org/en/Web-based_protocol_handlers" title="documentation">learn more</a>
                     </article>
@@ -517,18 +513,18 @@
 
                     <article>
                         <h1>Cross-Domain <abbr title="XMLHttpRequest">XHR</abbr></h1>
-                        <p>Cross-site HTTP requests are HTTP requests for resources from a different domain than the domain of the resource making the request. For instance, a resource loaded from Domain A such as an HTML web page, makes a XMLHttpRequest for a resource on Domain B. This is by default forbiden by the browser. As a distant service, you can allow such request with the <code>Access-Control-Allow-Origin:</code> header.</p>
+                        <p>Cross-site HTTP requests are HTTP requests for resources from a different domain than the domain of the resource making the request. For instance, a resource loaded from Domain A such as an HTML web page, makes a XMLHttpRequest for a resource on Domain B. This is by default forbidden by the browser. As Domain B, you can allow such request with the <code>Access-Control-Allow-Origin:</code> header.</p>
                         <a href="https://developer.mozilla.org/En/HTTP_Access_Control" title="documentation">learn more</a>
                     </article>
                 </article>
 
-                <article id="svg"  style="background-image: url(imgs/tiger.svg); background-repeat: no-repeat;  background-position: 400px 300px;">
+                <article id="svg"  style="background-image: url(imgs/tiger.svg); background-repeat: no-repeat;  background-position: 400px 300px;" class="closed">
 
                     <h1>SVG</h1>
 
                     <article>
                         <h1>Scalable Vector Graphics</h1>
-                        <p>SVG is an XML language which can be used to draw graphics.  It can be used to create an image either by specifying all the lines and shapes necessary, or by modifying already existing raster images, or by a combination of both. The image and its components can also be transformed, composited together, or filtered to change its appearance completely.</p> 
+                        <p>SVG is an XML language which can be used to draw graphics.  It can be used to create an image either by specifying all the lines and shapes necessary, or by modifying existing raster images, or by a combination. The image and its components can also be transformed, composited, or filtered to change its appearance completely.</p> 
                         <a href="https://developer.mozilla.org/En/SVG" title="documentation">learn more</a>
                     </article>
 
@@ -539,7 +535,7 @@
 
                     <article>
                         <h1>mask, filter, clip-path</h1>
-                        <p>Clipping paths, which uses any combination of ‘path’, ‘text’ and basic shapes to serve as the outline of a (in the absence of anti-aliasing) 1-bit mask, where everything on the "inside" of the outline is allowed to show through but everything on the outside is masked out masks, which are container elements which can contain graphics elements or other container elements which define a set of graphics that is to be used as a semi-transparent mask for compositing foreground objects into the current background.</p>
+                        <p>FIXME</p>
                     </article>
 
                     <article>
@@ -561,7 +557,7 @@
             <section><h1>How</h1>
 
 
-                <article id="performance">
+                <article id="performance" class="closed">
                     <h1>performance</h1>
 
                     <article>
@@ -587,7 +583,7 @@
 
                     <article>
                         <h1>Javascript engine</h1>
-                        <p>Firefox's Javascript Engine is named "SpiderMonkey". To compete with native application, JavaScript execution speed is crucial. SpiderMonkey brings two different optimisations
+                        <p>Firefox's Javascript Engine is named "SpiderMonkey". To compete with platform-native application, JavaScript execution speed is crucial. SpiderMonkey brings two different optimisations
                         <ul><li><strong>TraceMonkey</strong></li><li><strong>JaëgerMonkey</strong></li></ul></p>
 
                         <a href="https://developer.mozilla.org/en/spidermonkey" title="documentation">learn more</a>
@@ -600,8 +596,8 @@
                     </article>
 
                     <article>
-                        <h1>JaëgerMonkey</h1>
-                        <p>JaëgerMonkey is a new method JIT for SpiderMonkey. The goal is to get reliable baseline performance on the order of other JS JIT systems. JM will be a baseline whole-method JIT that doesn't necessarily do many traditional compiler optimizations. Instead, it does dynamic-language-JIT-oriented optimizations like PICs and specialization of constant operands.</p>
+                        <h1>Jägermonkey</h1>
+                        <p>JaëgerMonkey is a new method JIT for SpiderMonkey. The goal is to get reliable baseline performance on the order of other JS JIT systems. Jägermonkey will be a baseline whole-method JIT that doesn't necessarily do many traditional compiler optimizations. Instead, it does dynamic-language-JIT-oriented optimizations like PICs and specialization of constant operands.</p>
                         <a href="https://hacks.mozilla.org/2010/03/improving-javascript-performance-with-jagermonkey/" title="documentation">learn more</a>
                     </article>
 
@@ -613,7 +609,7 @@
 
                     <article>
                         <h1>Retained layers</h1>
-                        <p>Firefox has an internal Layers system for improved drawing performance. Images, fixed backgrounds, inline video, etc. are now rendered to an internal layer and then composited with other parts of a web page in a way that can take advantage of hardware acceleration. This improves the page load time and interactive performance of many web pages. 
+                        <p>Firefox has an internal layers system for improved drawing performance. Images, fixed backgrounds, inline video, etc. are now rendered to an internal layer and then composited with other parts of a web page in a way that can take advantage of hardware acceleration. This improves the page load time and interactive performance of many web pages. 
                         </p>
                         <a href="http://weblogs.mozillazine.org/roc/archives/2010/07/retained_layers.html" title="documentation">learn more</a>
                     </article>
@@ -621,7 +617,11 @@
                     <article>
                         <h1>Asynchronous plug-in painting</h1>
                         <p>
-                        On Windows and Linux we now paint plug-ins asynchronously. In previous releases when we wanted to paint a web page that included a plug-in, we would have to ask the plug-in for the data to paint. If a plug-in was slow or was hung, it would make the browser feel slow. Now we’re able to get that data asynchronously, which means that the overall responsiveness of the browser should be improved. 
+                        On Windows and Linux, Firefox now paints plug-ins asynchronously.
+                        In previous releases, to paint a web page that used a plug-in, Firefox
+                        had to ask the plug-in for the data to paint. If a plug-in was slow or
+                        was hung, it would make the browser feel slow. Now Firefox can get
+                        that data asynchronously, ...
                         </p>
                         <a href="http://benjamin.smedbergs.us/blog/2010-11-18/asynchronous-plugin-layer-painting/" title="documentation">learn more</a>
                     </article>
@@ -630,7 +630,7 @@
                 </article>
 
 
-                <article id="security">
+                <article id="security" class="closed">
                     <h1>Security</h1>
 
                     <article>
@@ -666,7 +666,7 @@
 
                 </article>
 
-                <article id="multiplatform">
+                <article id="multiplatform" class="closed">
                     <h1>Multi-platform</h1>
 
                     <article>

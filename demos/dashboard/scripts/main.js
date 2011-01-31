@@ -4,6 +4,7 @@ window.onload = function() {
     initFolders();
 
     createAnchors();
+    fixZIndex()
 
     //createCloud();
 
@@ -12,15 +13,29 @@ window.onload = function() {
         demos[i].style.marginLeft = (-demos[i].clientWidth / 2) + "px";
     }
 
-
-
     window.addEventListener("message", function(e) { 
         if ("stop_demo" == e.data) {
             window.parent.postMessage('finished_exit', targetOrigin);
         }
     }, true);
 
+    document.body.classList.remove("loading");
     window.parent.postMessage('loaded', targetOrigin);
+}
+
+function fixZIndex() {
+    var a = document.querySelectorAll("#wall > section > article > article");
+    for (var i = 0; i < a.length; i++) {
+        var article = a[i];
+        (function(article) {
+            article.addEventListener("mouseover", function() {
+                article.style.zIndex = 4000;
+            }, true);
+            article.addEventListener("mouseout", function(e) {
+                article.style.zIndex = 3999;
+            }, true);
+        })(article);
+    }
 }
 
 function createAnchors() {
@@ -36,9 +51,24 @@ function initFolders() {
     for (var i = 0; i < h1.length; i++) {
         var elt = h1[i];
 
+        if (elt.parentNode.classList.contains("closed")) {
+            elt.parentNode.classList.add("pre-closed");
+        }
+
         (function(elt) {
             elt.addEventListener("click", function() {
-                elt.parentNode.classList.toggle("closed");
+                var p = elt.parentNode;
+
+                if (p.classList.contains("closed")) {
+                    p.classList.remove("closed");
+                    p.addEventListener("transitionend", function() {
+                        p.classList.remove("pre-closed");
+                        p.removeEventListener("transitionend", arguments.callee, true)
+                    }, true);
+                } else {
+                    p.classList.add("pre-closed");
+                    p.classList.add("closed");
+                }
             }, true);
         })(elt);
     }

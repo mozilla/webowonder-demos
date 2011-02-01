@@ -12,16 +12,11 @@
             var targetOrigin = '*';
 
             window.addEventListener("load", function() {
+                webGLStart();
                 window.parent.postMessage('loaded', targetOrigin);
-                if (document.location.hash == "#standalone") {
-                    webGLStart();
-                }
             }, true);
  
             window.addEventListener("message", function(e) { 
-                if ("start_demo" == e.data) {
-                    webGLStart();
-                }
                 if ("stop_demo" == e.data) {
                     window.parent.postMessage('finished_exit', targetOrigin);
                 }

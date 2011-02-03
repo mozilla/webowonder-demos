@@ -6,6 +6,21 @@
     <link rel="stylesheet" href="css/no-comply-styles.css" />
 	</head>
 	<body>
+  <script>
+      var targetOrigin = '*';
+
+      window.addEventListener("load", function() {
+          window.parent.postMessage('loaded', targetOrigin);
+      }, true);
+
+      window.addEventListener("message", function(e) { 
+          if ("stop_demo" == e.data) {
+              window.parent.postMessage('finished_exit', targetOrigin);
+          }
+      }, true);
+
+  </script>
+
   <script type='text/javascript'>
   (function() {
     var canvas_w, canvas_h, aspect;

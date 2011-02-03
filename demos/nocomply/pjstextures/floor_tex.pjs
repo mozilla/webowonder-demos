@@ -1,0 +1,15 @@
+﻿PImage img;
+
+void setup(){
+  size(256,256);
+  img = loadImage("images/floor-tile.jpg");
+}
+
+void draw(){
+  if (img.width > 0) {
+    //image(img, 0, 0);
+    image(img, (frameCount * 10) % width, 0);
+    image(img, (frameCount * 10) % width - 256, 0);
+    
+  }
+};

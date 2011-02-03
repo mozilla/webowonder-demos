@@ -1,0 +1,188 @@
+ArrayList paths = new ArrayList();
+int pathTotal = 5;
+
+int SCALE = 10;
+int RAD = 5;
+float DRIFT = 0.02;
+
+int[] binRecognizer = {1, 50, 100};
+
+Path selectedPath;
+
+int pulseFrames = 10;
+int lineWeight = 5;
+
+void setup() {
+  size(512, 256);
+  
+  for (int i = 0; i < pathTotal; i++) {
+    paths.add(new Path());
+  }
+
+  selectedPath = (Path) paths.get(0);
+  
+  strokeWeight(lineWeight);
+  strokeJoin(ROUND); // BEVEL
+  strokeCap(ROUND);
+  stroke(255, 0, 0);
+  smooth();
+}
+
+void draw() {
+  background(0);
+  
+  if (frameCount % 300 == 0) {
+    clearPaths();
+  }
+  
+  for (int i = 0; i < pathTotal; i++) {
+    Path p = (Path) paths.get(i);
+    buildPath(p);
+  }
+  
+  for (int i = 0; i < pathTotal; i++) {
+    Path p = (Path) paths.get(i);
+    p.draw();
+  }
+}
+
+class Path {
+  ArrayList verts = new ArrayList();
+  ArrayList drift = new ArrayList();
+  
+  int fftBin; 
+  int id;
+  color col;
+  
+  Path() {
+    this.id = paths.size(); 
+    this.col = color(int(random(255)), int(random(255)), int(random(255)));
+  }
+  
+  int size() {
+    return this.verts.size();
+  }
+  
+  void addPulse() {
+    if (this.verts.size() > 0) {
+      PVector v = (PVector) verts.get(0); // get first
+      v.z = pulseFrames;
+    }
+  }
+  
+  void addVert(int x, int y) {
+    //this.verts.add(new PVector(x, y, 0));
+    this.verts.add(new PVector(x - x % SCALE + SCALE/2, y - y % SCALE + SCALE/2, 0));
+    //this.drift.add(new PVector(random(-DRIFT, DRIFT), random(-DRIFT, DRIFT), 0));
+    this.drift.add(new PVector(0, random(0, DRIFT), 0));
+  }
+  
+  void draw() {
+    fill(255);
+    
+    /*
+    if (fft.spectrum[1] > 50) {
+      selectedPath.addPulse();
+    }
+    */
+    
+    for (int i = 0; i < this.verts.size() - 1; i++) {
+      PVector v = (PVector) this.verts.get(i);
+      PVector nv = (PVector) this.verts.get(i+1);
+      
+      stroke(this.col);
+      
+      line(v.x, v.y, nv.x, nv.y);
+      
+      // choose stroke color
+      if (v.z > 0) {
+        stroke(255, v.z * 25);
+        line(v.x, v.y, nv.x, nv.y);
+        v.z -= 1;
+        
+        if (v.z < 1 && i + 2 < this.verts.size()) {
+          nv.z = pulseFrames;
+        }
+      }
+    }
+      
+    for (int i = 0; i < this.verts.size(); i++) {
+      PVector v = (PVector) this.verts.get(i);
+      PVector d = (PVector) this.drift.get(i);
+      v.add(d);
+      
+      stroke(this.col, v.z*20);
+      fill(this.col);
+      float rad = lineWeight + v.z;
+      ellipse(v.x, v.y, rad, rad);
+      
+      //stroke(255);
+      fill(255, 200);
+      noStroke();
+      ellipse(v.x, v.y, rad/2, rad/2);
+      
+      /*
+      strokeWeight(1);
+      stroke(255);
+      line(v.x, v.y, v.x + 20, v.y + 20);
+      line(v.x + 20, v.y + 20, v.x + 20, v.y + 80);
+      strokeWeight(lineWeight);
+      */
+    }
+  }
+}
+
+void mouseReleased() {
+  selectedPath.addVert(mouseX, mouseY);
+}
+
+void keyPressed() {
+  if (key == ' ') {
+    selectedPath.addPulse();
+  } else if (key == ENTER) {
+    paths.add(new Path());
+    selectedPath = (Path) paths.get(paths.size() - 1);
+  }
+}
+
+void buildPath(Path path) {
+  int steps = 25;
+  
+  PVector randomDir;
+  float rand = random(100);
+  if (rand > 80) {
+    randomDir = new PVector(SCALE, SCALE, 0);
+  } else if (rand > 60) {
+    randomDir = new PVector(SCALE, -SCALE, 0);
+  } else {
+    randomDir = new PVector(random(SCALE, SCALE * 3), 0, 0);
+  }
+  
+  if (path.size() == 0) {  
+    path.addVert(SCALE, height/2 - 100 + ((path.id + 1) * SCALE));
+  } else if (path.size() < steps) {
+    PVector v1 = (PVector) path.verts.get(path.size() -1);
+    PVector v2 = PVector.add(v1, randomDir);
+    
+    if (v2.x > width - SCALE) {
+       v2.x = v1.x;
+       v2.y += SCALE;
+    }
+    
+    if (v2.y > height - SCALE) {
+      v2.y -= SCALE;
+    } else if (v2.y < SCALE) {
+      v2.y += SCALE;
+    }
+    
+    path.addVert((int) v2.x, (int) v2.y);
+  }
+}
+
+void clearPaths() {
+  for (int i = 0; i < paths.size(); i++) {
+    Path p = (Path) paths.get(i);
+    p.verts.clear();
+    p.col = color(int(random(255)), int(random(255)), int(random(255)));
+  }
+}

@@ -1,0 +1,111 @@
+/* @pjs transparent=true; */
+
+void setup() {
+  size(512, 512);
+  strokeCap(SQUARE);
+  noFill();
+}
+
+var cues = [];
+
+int BIG = 16;
+int SMALL = BIG * 0.7;
+
+float ZOOM = 1;
+float ZOOM_TARGET = ZOOM;
+float OFFSET_X = 0;
+float OFFSET_Y = 0;
+float OFFSET_TARGET_X = OFFSET_X;
+float OFFSET_TARGET_Y = OFFSET_Y;
+//float OFFSET_TARGET_Y = 100;
+
+void animate(current, target, inc) {
+  if (current != target) {
+    if (current < target) {
+      current += inc;  
+      if (target - current < inc) {
+        current = target;
+      }
+    } else {
+      current -= inc;
+      if (target - current > inc) {
+        current = target;
+      }
+    }
+  }
+  return current;
+}
+
+void draw() {  
+  //audioPositionInRadians = (frameCount / 100.0) % TWO_PI;
+  
+  background(0, 0);
+  
+  //beatDetection();
+
+  translate(width/2, height/2);
+
+  //ZOOM = animate(ZOOM, ZOOM_TARGET, 0.1);
+  //OFFSET_X = animate(OFFSET_X, OFFSET_TARGET_X, 1);
+  //OFFSET_Y = animate(OFFSET_Y, OFFSET_TARGET_Y, 1);
+
+  //translate(OFFSET_X, OFFSET_Y);
+  //scale(ZOOM);
+  rotate(-audioPositionInRadians);
+
+  int row = 0;
+  var activeBanks = findActiveBanks(audioPositionInRadians);
+
+  for (var i in banks) {
+    pushMatrix();
+      rotate(radians(-90));
+
+      for (var j = 0; j < banks[i].length; j++) {
+        if (selected.bank == i && selected.track == j) { // Selected track
+          stroke(255, 0, 0);
+          strokeWeight(BIG);
+        } else if (activeBanks[i] == j) { // Active track
+          stroke(255);
+          strokeWeight(BIG);
+        } else { // Deactive track
+          stroke(200);
+          strokeWeight(SMALL);
+        }
+        
+        if (findActiveTrack("clap", audioPositionInRadians)) {
+          strokeWeight(BIG * random(10));
+          BIG = 20;
+        } else {
+          BIG = 16;
+        }
+
+        if (typeof banks[i][j].end == "number") {
+          arc2(0, 0, 32 + row * BIG, banks[i][j].start, banks[i][j].end);
+        } else {
+          arc2(0, 0, 32 + row * BIG, banks[i][j].start, audioPositionInRadians);
+        }
+      }
+    popMatrix();
+    row += 1;
+  }
+
+  stroke(100, 100);
+  strokeWeight(SMALL);
+  pushMatrix();
+    rotate(radians(-90));
+    arc2(0, 0, 32 + row * BIG, 0, audioPositionInRadians);
+  popMatrix();
+
+  stroke(100, 100);
+  strokeWeight(SMALL/2);
+  arc2(0, 0, 20, 0, TWO_PI);
+
+  strokeWeight(1);
+  line(0, -23, 0, -(row * BIG + 22));
+
+  stroke(100, 50);
+  pushMatrix();
+    rotate(audioPositionInRadians);
+    line(0, -23, 0, -(row * BIG + 22));
+  popMatrix();
+}

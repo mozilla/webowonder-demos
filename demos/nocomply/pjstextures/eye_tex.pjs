@@ -1,0 +1,14 @@
+﻿PImage img;
+
+void setup(){
+  size(128,128);
+  background(0);
+  img = loadImage("images/eyes.jpg");
+  fill(203, 21, 10);
+}
+
+void draw(){
+  if(img.width > 0) {
+    image(img,frameCount * 10 % 128 - 128, 0);
+  }
+};

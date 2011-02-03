@@ -1,0 +1,93 @@
+{
+  "name": "new",
+  "notes": "8-bit Rat",
+  "author": "Artwork: Omar, Spritework: F1LT3R",
+  "website": "http://thisisallido.com, http://bocoup.com",
+  "datauri": "data:image/png;base64,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",
+  "rect": [
+    [
+      0,
+      51,
+      25,
+      99,
+      20,
+      16
+    ],
+    [
+      27,
+      51,
+      52,
+      99,
+      20,
+      16
+    ],
+    [
+      56,
+      51,
+      80,
+      99,
+      20,
+      16
+    ],
+    [
+      86,
+      51,
+      111,
+      99,
+      20,
+      16
+    ],
+    [
+      0,
+      0,
+      25,
+      52,
+      20,
+      13
+    ],
+    [
+      27,
+      0,
+      52,
+      52,
+      20,
+      13
+    ],
+    [
+      56,
+      0,
+      80,
+      52,
+      20,
+      13
+    ],
+    [
+      86,
+      0,
+      111,
+      52,
+      20,
+      13
+    ]
+  ],
+  "action": {
+    "walk": {
+      "speed": 0.5,
+      "rects": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "walk-cj": {
+      "speed": 0.5,
+      "rects": [
+        4,
+        5,
+        6,
+        7
+      ]
+    }
+  }
+}

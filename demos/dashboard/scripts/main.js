@@ -3,14 +3,38 @@ var targetOrigin = '*';
 window.onload = function() {
     initFolders();
 
-    createAnchors();
-    fixZIndex()
-
+    //createAnchors();
+    //fixZIndex()
     //createCloud();
+    addDelayToTags();
+
+    if (document.location.hash == "#ie") {
+        document.body.classList.add("comparewithie");
+    }
 
     var demos = document.querySelectorAll("#wall > section > article > article .demo");
     for (var i = 0; i < demos.length; i++) {
-        demos[i].style.marginLeft = (-demos[i].clientWidth / 2) + "px";
+        var d = demos[i];
+        d.style.marginLeft = (-d.clientWidth / 2) + "px";
+        /*
+        var img = document.createElement("img");
+        img.src = "imgs/close.png";
+        img.className = "closebutton";
+
+        img.addEventListener("click",
+                             (function(d) {
+                                 return function() {
+                                     d.classList.add("close");
+                                 }
+                             })(d), true);
+        d.parentNode.addEventListener("mouseenter",
+                             (function(d) {
+                                 return function() {
+                                     d.classList.remove("close");
+                                 }
+                             })(d), false);
+        d.appendChild(img);
+        */
     }
 
     window.addEventListener("message", function(e) { 
@@ -21,6 +45,13 @@ window.onload = function() {
 
     document.body.classList.remove("loading");
     window.parent.postMessage('loaded', targetOrigin);
+}
+
+function addDelayToTags() {
+    var s = document.querySelectorAll("#overview span");
+    for (var i = 0; i < s.length; i++) {
+        s[i].style.MozTransitionDelay = (~~(Math.random() * 50))/10 + "s";
+    }
 }
 
 function fixZIndex() {
@@ -51,22 +82,13 @@ function initFolders() {
     for (var i = 0; i < h1.length; i++) {
         var elt = h1[i];
 
-        if (elt.parentNode.classList.contains("closed")) {
-            elt.parentNode.classList.add("pre-closed");
-        }
-
         (function(elt) {
             elt.addEventListener("click", function() {
                 var p = elt.parentNode;
 
                 if (p.classList.contains("closed")) {
                     p.classList.remove("closed");
-                    p.addEventListener("transitionend", function() {
-                        p.classList.remove("pre-closed");
-                        p.removeEventListener("transitionend", arguments.callee, true)
-                    }, true);
                 } else {
-                    p.classList.add("pre-closed");
                     p.classList.add("closed");
                 }
             }, true);

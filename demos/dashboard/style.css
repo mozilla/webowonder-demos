@@ -10,7 +10,7 @@
 body { font-family: ubuntu; }
 
 #plzwait { display: none; }
-body.loading #plzwait {display: inline;}
+body.loading #plzwait {display: block; width: 100%; height: 100%; text-align: center; padding-top: 200px;}
 body.loading #wall {opacity: 0;}
 
 h1, h2, h3, h4 { font-family: bebas; }
@@ -35,6 +35,9 @@ html { box-shadow: inset 0px 0px 20px black; }
 
 #overview { margin: 5px; position: relative; background-color: #343838; box-shadow: inset 0px 0px 20px black; height: 320px; border-radius: 10px; margin-left: -5px; margin-right: -5px; }
 
+.tag {font-size: 18px; -moz-transition-duration: 1s; cursor: default;}
+.tag.big {font-size: 50px;}
+.tag { margin-top: 10px; margin-left: 15px; font-family: bebas; position: absolute; text-decoration: none; }
 .tag.c0{color: #005f6b;}
 .tag.c0:hover {color: #00a2b7;}
 .tag.c1{color: #008c9e;}
@@ -43,7 +46,6 @@ html { box-shadow: inset 0px 0px 20px black; }
 .tag.c2:hover {color: #00e1ff;}
 .tag.c3{color: #00b4cc;}
 .tag.c3:hover {color: #00e1ff;}
-.tag { margin-top: 10px; margin-left: 15px; font-family: bebas; position: absolute; text-decoration: none; }
 
 /**********************/
 
@@ -56,134 +58,99 @@ html { box-shadow: inset 0px 0px 20px black; }
 #wall > section > article > article > h1 { font-size: 32px; line-height: 32px; letter-spacing: 0px; vertical-align: bottom; font-weight: normal; position: absolute; bottom: 200px; }
 
 
-
 #wall > section > article { border-top: 10px solid #28C2DA; }
 #wall > section > article { line-height: 0px; }
 #wall > section > article * { line-height: normal; }
-#wall > section > article > article {-moz-transition: height 1s 0s; font-size: 12px; border-top: 0px solid #777; border-bottom: 1px solid #777; width: 225px; display: inline-block; margin-top: 10px; margin-bottom: 10px; padding-top: 10px; padding-bottom: 10px; margin-left: 6px; margin-right: 6px; height: 250px; vertical-align: middle; position: relative; padding-left: 30px; padding-right: 30px; }
+#wall > section > article > article {-moz-transition-duration: 1s; font-size: 12px; border-top: 0px solid #777; border-bottom: 1px solid #777; width: 225px; display: inline-block; margin-top: 10px; margin-bottom: 10px; padding-top: 10px; padding-bottom: 10px; margin-left: 6px; margin-right: 6px; height: 250px; vertical-align: middle; position: relative; padding-left: 30px; padding-right: 30px; }
 
 #wall > section > article.closed > h1:after { -moz-transform: rotate(-90deg); }
 
 #wall > section > article.closed > article { height: 0px; border: none; margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px; }
 
-#wall > section > article.pre-closed > article { overflow: hidden;}
+#wall > section > article > article { overflow: hidden;}
 
-#wall > section > article > article > p { line-height: 16px; margin-top: 65px; text-align: justify; position: relative;}
+#wall > section > article > article > p { line-height: 16px; margin-top: 65px; text-align: justify; position: relative; z-index: 41;}
 
-#wall > section > article > article {z-index: 3999;}
-#wall > section > article > article > * {z-index: 40001;}
-
-#wall > section > article > article:before {
-    content: "";
-    width: 265px;
-    height: 380px;
-    background-color: white;
+.demo {
     position: absolute;
-    top: 0; left: 0; 
-    z-index: 43;
-    opacity: 0;
-    pointer-events: none;
-    -moz-transition: opacity 0.2s 0.2s;
-    border: 10px solid black;
+    top: 400px;
+    left: 50%;
+    background-color: white;
+    border: 5px solid #28C2DA;
+    z-index: 42;
+    box-shadow: 0 0 30px black;
+    -moz-transition-duration: 1s;
+    -moz-transition-timing-function: cubic-bezier(0.05, 1.4, 0.25, 1);
 }
 
-#wall > section > article > .large:before {
-    width: 500px;
-}
-#wall > section > article > .large .demo {
-    left: 393px;
+article:hover >  .demo {
     top: 100px;
 }
 
-
-#wall > section > article > article:nth-of-type(3n).large:before {
-    right: 0px;
-    left: auto;
+article:hover > .demo.close {
+    top: 400px;
 }
 
-#wall > section > article > article:nth-of-type(3n).large .demo{
-    left: -107px;
+.comparewithie .notinie {
+    opacity: 0.4;
+    -moz-transform: scale(0.7);
 }
 
-/*
-@media all and (max-width: 900px) {
-    #wall > section > article > article:nth-of-type(2n).large:before {
-        right: 0px;
-        left: auto;
-    }
-}
-*/
-
-
-#wall > section > article > article:hover:before {
+.comparewithie #overview .notinie {
     opacity: 1;
-    pointer-events: auto;
+    -moz-transform: scale(0)!important;
 }
 
-article .demo {
-    position: absolute;
-    bottom: -50px;
-    left: 50%;
-    pointer-events: none;
-    -moz-transition: opacity 0.4s 0s;
-    opacity: 0;
-}
-
-#wall > section > article > article:hover >  .demo {
+#iebutton:hover {
     opacity: 1;
-    pointer-events: auto;
-    -moz-transition: opacity 0.4s 0.5s;
 }
-
+#iebutton {
+    opacity: 0.2;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100px;
+    z-index: 45;
+    -moz-transform: scale(0.8);
+    -moz-transform-origin: top left;
+}
 
 #wall > section > article > article > a {
-    width: 265px;
-    margin-left: -20px;
     position: absolute;
-    bottom: -130px;
-    line-height: 50px;
+    z-index: 44;
+    bottom: -30px; left: 0;
+    -moz-transition-duration: 0.3s;
+    background-color: #28C2DA;
+    line-height: 20px;
     text-align: center;
-    font-weight: bold;
-    background-image: url(https://developer.mozilla.org/forums/styles/MDN/theme/images/mdn-logo-tiny.png);
-    background-repeat: no-repeat;
-    background-color: black;
     color: white;
-    -moz-transition: opacity 0.2s 0.2s;
-    opacity: 0;
-    pointer-events: none;
-    border-top: 5px solid black;
-    border-bottom: 5px solid black;
-}
-#wall > section > article > .large > a {
-    width: 500px;
+    width: 100%;
+    font-weight: bold;
+    box-shadow: 0px 0px 20px black;
 }
 
-#wall > section > article > article:nth-of-type(3n).large > a{
-    left: -205px;
-}
+#wall > section > article > article:hover > a { bottom: 0px; }
 
-
-#wall > section > article > article:hover > a {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-
-#wall > section > article > article > .demo > * {
+article > .demo > * {
     display: block;
 }
 
-#wall > section > article > .experimental > h1:before {
+#wall > section > article > .experimental:before {
     vertical-align: bottom;
     content: url(imgs/phial.svg);
     position: absolute;
-    top: 4px; left: -25px;
+    top: 37px; left: 0px;
+    background-color: #343838;
+    height: 23px;
+    border-radius: 5px;
+
 }
 
-
-
-
-
+.demo .closebutton {
+    position: absolute;
+    top: -18px;
+    right: -18px;
+    cursor: pointer;
+}
 
 @media all and (max-width: 900px) { #wall { width: 600px; } #overview {display: none;}}
 @media all and (max-width: 600px) { #wall { width: 300px; } #wall > section > h1 { font-size: 70px; } }

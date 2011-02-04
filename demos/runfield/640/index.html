@@ -181,7 +181,7 @@
         trailergradient.addColorStop(0, 'rgba(255,255,255,0.5)');
         trailergradient.addColorStop(1, 'rgba(255,255,255,0)');
         ctx.fillStyle = 'white';
-        try {ctx.font = 30*magF+'px Ubuntu';} catch(e) {}
+        ctx.font = 30*magF+'px Ubuntu';
         ctx.fillText("Loading...", 16*magF, 44*magF);
         var fox_right = load('run_frames.png');
         var fox_boost = load('boost_frames.png');

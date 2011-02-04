@@ -247,8 +247,8 @@
 
       window.onload = function() {
         var c = document.getElementById('c');
-        var ctx = c.getContext('2d');
         var lowres = false;
+        var ctx = c.getContext('2d');
         if (lowres) {
           c.width /= 2;
           c.height /= 2;
@@ -258,7 +258,7 @@
         trailergradient.addColorStop(0, 'rgba(255,255,255,0.5)');
         trailergradient.addColorStop(1, 'rgba(255,255,255,0)');
         ctx.fillStyle = 'white';
-        try { ctx.font = '30px Ubuntu'; } catch(e) {}
+        ctx.font = '30px Ubuntu';
         ctx.fillText("Loading...", 16, 44);
         var query = URL.parse(document.location.toString()).query;
         loadPrefix = query.theme ? query.theme+'/' : 'field/';

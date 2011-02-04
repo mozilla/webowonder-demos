@@ -124,7 +124,7 @@ TODO:
                     <h1>HTML5</h1>
 
                     <script src="scripts/canvas2d.js"></script>
-                    <article>
+                    <article class="hasademo">
                         <h1>&lt;canvas&gt; 2D</h1>
                         <div class="demo canvas2d">
                             <canvas width="240" height="160" id="canvas2d"></canvas>
@@ -134,7 +134,7 @@ TODO:
                     </article>
 
 
-                    <article>
+                    <article class="hasademo" >
                         <h1>&lt;video&gt;</h1>
                         <div class="demo">
                             <video preload="auto" width="160" src="media/enfants.webm" onmouseover="this.play()" onmouseout="this.pause()"></video>
@@ -145,7 +145,7 @@ TODO:
                         <a href="https://developer.mozilla.org/En/Using_audio_and_video_in_Firefox" title="documentation">learn more</a>
                     </article>
 
-                    <article class="notinie">
+                    <article class="hasademo notinie">
                         <h1>Open Codecs</h1>
                         <div class="demo">
                             <img src="logos/webm.png" width="160">
@@ -163,7 +163,7 @@ TODO:
                         <a href="https://developer.mozilla.org/en/rich-text_editing_in_mozilla" title="documentation">learn more</a>
                     </article>
 
-                    <article>
+                    <article class="hasademo">
                         <h1>HTML5 parser</h1>
                         <div class="demo parser">
                             <svg viewBox="0 0 200 100"><path stroke-width="1" stroke-dasharray="3,3" stroke="black" fill="none" d="M20 80L60 20L100 80L140 20L180 80"/><circle cx="20" cy="80" r="15" fill="none" stroke="#000"> <animate attributeName="cx" repeatDur="indefinite" values="0; 160; 0" dur="16s" accumulate="none" additive="sum" fill="freeze"/> <animate attributeName="cy" repeatDur="indefinite" values="80; 20; 80; 20; 80" dur="8s" accumulate="none" fill="freeze"/> </circle> </svg>
@@ -173,7 +173,7 @@ TODO:
                         <a href="https://developer.mozilla.org/en/HTML/HTML5/HTML5_Parser" title="documentation">learn more</a>
                     </article>
 
-                    <article id="tagsoup">
+                    <article class="hasademo" id="tagsoup">
                         <h1>semantics</h1>
                         <div class="demo" style="width: 170px">
                             <p>
@@ -194,7 +194,7 @@ TODO:
                     <script src="scripts/jquery.rotate.js"></script>
                     <script src="scripts/jquery.jplayer.min.js"></script>
                     <script src="scripts/audioplayer.js"></script>
-                    <article id="audioplayerdemo">
+                    <article class="hasademo" id="audioplayerdemo">
                         <h1>&lt;audio&gt;</h1>
                         <div class="demo">
                             <div id="jquery_jplayer_1" class="jp-jplayer"></div>
@@ -216,7 +216,7 @@ TODO:
                         <a href="https://developer.mozilla.org/en/HTML/Element/audio" title="documentation">learn more</a>
                     </article>
 
-                    <article class="notinie" id="formdemo">
+                    <article class="hasademo notinie" id="formdemo">
                         <h1>Forms</h1>
                         <div class="demo">
                             <form><p><strong>Dear Mozilla,</strong><br>My name is <input placeholder="yourname" pattern="....*">. I think this demo is <input placeholder="awesome?">. BTW, I want to tell you that you should <input placeholder="...">.</p><em>Thank you<button onclick="return submitForm();">send</button></em></form>
@@ -231,7 +231,7 @@ TODO:
                     <script src="audio_scripts/dsp.js"></script>
                     <script src="audio_scripts/main.js"></script>
                     <audio id="grappes" src="media/track.ogg" preload="auto"></audio>
-                    <article class="experimental notinie" id="audiodemo">
+                    <article class="hasademo experimental notinie" id="audiodemo">
                         <h1>Audio Data API</h1>
                         <div class="demo">
                             <canvas data-processing-sources="audio_scripts/anim.pde" id="audiocube" onmouseover="startProcessingAudio()" onmouseout="stopProcessingAudio()"></canvas>
@@ -241,7 +241,7 @@ TODO:
                     </article>
 
 
-                    <article class="experimental notinie" id="webgldemo">
+                    <article class="hasademo experimental notinie" id="webgldemo">
                         <h1>WebGL</h1>
                         <script src="webgl_assets/sylvester.js"></script>
                         <script src="webgl_assets/glUtils.js"></script>
@@ -265,7 +265,7 @@ TODO:
                         <a href="https://developer.mozilla.org/en/css/-moz-transform" title="documentation">learn more</a>
                     </article>
 
-                    <article class="notinie">
+                    <article class="hasademo notinie">
                         <h1>Transition</h1>
                         <div id="transitiondemo" class="demo"><span>❖✪</span></div>
                         <p>CSS transitions, part of the draft CSS3 specification, provide a way to animate changes to CSS properties, instead of having the changes take effect instantly. For example, if you change the color of an element from white to black, normally the change is instantaneous. With CSS transitions enabled, the change occurs over an interval of time you can specify, following an acceleration curve you can customize.</p>
@@ -274,16 +274,16 @@ TODO:
 
 
 
-                    <article>
+                    <article class="hasademo" >
                         <h1>@media Queries</h1>
-                        <p>A media query consists of a media type and at least one expression that limits the style sheets' scope by using media features, such as width, height, and color.  Media queries let the presentation of content be tailored to a specific range of output devices without having to change the content itself.</p>
                         <div class="demo" style="width: 150px">
                             Resize your window to see the layout of this page being adapted to fit the new size.
                         </div>
+                        <p>A media query consists of a media type and at least one expression that limits the style sheets' scope by using media features, such as width, height, and color.  Media queries let the presentation of content be tailored to a specific range of output devices without having to change the content itself.</p>
                         <a href="https://developer.mozilla.org/En/CSS/Media_queries" title="documentation">learn more</a>
                     </article>
 
-                    <article>
+                    <article class="hasademo" >
                         <h1>Structural pseudo-classes</h1>
                         <div class="demo" style="max-width: 120px;"><strong>:nth-child, :nth-last-child, :nth-of-type, :nth-last-of-type, …</strong></div>
                         <p>Selectors introduces the concept of structural pseudo-classes to permit selection based on extra information that lies in the document tree but cannot be represented by other simple selectors or combinators.</p>
@@ -329,7 +329,7 @@ TODO:
                     </article>
 
 
-                    <article class="notinie" id="textshadowdemo">
+                    <article class="hasademo notinie" id="textshadowdemo">
                         <h1>Text Shadow</h1>
                         <div class="demo" style="width: 140px;">
                             <p>CSS3 is AWESOME</p>
@@ -363,7 +363,7 @@ TODO:
                         <a href="https://developer.mozilla.org/en/CSS/-moz-element" title="documentation">learn more</a>
                     </article>
 
-                    <article class="experimental notinie">
+                    <article class="hasademo experimental notinie">
                         <h1>mask, filter, clip-path</h1>
                         <div class="demo" style="border: none; -moz-box-shadow: none;background-color: transparent; height: 250px; padding-top: 0px;">
                             <video preload="auto" width="160" src="media/enfants.webm" onmouseover="this.play()" onmouseout="this.pause()" style="clip-path: url(#clipPath);" ></video>
@@ -380,9 +380,9 @@ TODO:
                         <a href="https://developer.mozilla.org/En/Applying_SVG_effects_to_HTML_content" title="documentation">learn more</a>
                     </article>
 
-                    <article>
+                    <article class="hasademo" >
                         <h1>@font-face</h1>
-                        <div  class="demo" id="fontfacedemo">
+                        <div class="demo" id="fontfacedemo">
                             <p><span style="font-family: ubuntu;">the QUICK</span> <span style="font-family: marketing;">brown</span></p>
                             <p>
                             <span style="display: inline-block; margin-top: -20px; margin-left: 45px; font-family: megalopolis; font-weight: bold; font-size: 40px;">━</span>
@@ -404,7 +404,7 @@ TODO:
                     </article>
 
 
-                    <article class="experimental notinie" id="ffsdemo">
+                    <article class="hasademo experimental notinie" id="ffsdemo">
                         <h1>font-feature-settings</h1>
                         <div class="demo">
                         <table class="sample">
@@ -476,7 +476,7 @@ TODO:
                         <a href="https://developer.mozilla.org/En/DragDrop/Drag_and_Drop" title="documentation">learn more</a>
                     </article>
 
-                    <article class="notinie">
+                    <article class="hasademo notinie">
                         <h1>Drag and Drop files from the Desktop</h1>
                         <div class="demo">FIXME: DROPBOX</div>
                         <p>Users can drag and drop files directly into your web page, without going through the file picker.</p>
@@ -529,7 +529,7 @@ TODO:
 
                     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
                     <script src="scripts/geolocation.js"></script>
-                    <article id="geodemo" class="notinie">
+                    <article class="hasademo notinie" id="geodemo">
                         <h1>Geolocation API</h1>
                         <div class="demo" style="width: 200px;">
                             <button onclick="getCoords()" style="width: 200px;">Show me my position.</button>
@@ -556,7 +556,7 @@ TODO:
                         <a href="https://developer.mozilla.org/en/DOM/Touch_events" title="documentation">learn more</a>
                     </article>
 
-                    <article class="experimental notinie">
+                    <article class="hasademo experimental notinie">
                         <h1>Device Orientation</h1>
                         <div class="demo">FIXME: Demo</div>
                         <p>The MozOrientation event provides a way to handle orientation information. This event is sent when the accelerometer detects a change to the orientation of the device. By receiving and processing the data reported by MozOrientation events, it's possible to interactively respond to rotation and elevation changes caused by the user moving the device.</p>

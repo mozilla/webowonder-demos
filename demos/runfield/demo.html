@@ -122,25 +122,30 @@
     <script type="text/javascript">
       getImageFirstY = function(img) {
         if (img.firstY == null) {
-          var h = img.height;
-          var w = img.width;
-          var c = document.createElement('canvas');
-          c.id = img.src;
-          c.width = w;
-          c.height = h;
-          var cx = c.getContext('2d')
-          cx.drawImage(img, 0,0);
-          var id = cx.getImageData(0,0,w,h);
-          top: for (var y=0; y<h; y++) {
-            for (var x=0; x<w; x++) {
-              if (id.data[y*w*4+x*4+3] > 0) {
-                img.firstY = y;
-                break top;
+          try {
+            var h = img.height;
+            var w = img.width;
+            var c = document.createElement('canvas');
+            c.id = img.src;
+            c.width = w;
+            c.height = h;
+            var cx = c.getContext('2d')
+            cx.drawImage(img, 0,0);
+            var id = cx.getImageData(0,0,w,h);
+            top: for (var y=0; y<h; y++) {
+              for (var x=0; x<w; x++) {
+                if (id.data[y*w*4+x*4+3] > 0) {
+                  img.firstY = y;
+                  break top;
+                }
               }
             }
+            if (img.firstY == null)
+              img.firstY = h-1;
+          } catch(e) {
+            // security exception, use first row
+            img.firstY = 0;
           }
-          if (img.firstY == null)
-            img.firstY = h-1;
         }
         return img.firstY;
       }
@@ -687,7 +692,11 @@
                 ctx.globalAlpha = 1;
               }
               // force draw completion
-              ctx.getImageData(0,0,1,1);
+              try {
+                ctx.getImageData(0,0,1,1);
+              } catch(e) {
+                // security exception, let's ignore it
+              }
               t = new Date().getTime();
               drawTime = t-st;
               elapsed = t - lastFrameTime;
@@ -809,7 +818,11 @@
                 ctx.fillText(againText, 512-rtw/2, 420);
               }
               // force draw completion
-              ctx.getImageData(0,0,1,1);
+              try {
+                ctx.getImageData(0,0,1,1);
+              } catch(e) {
+                // security exception, let's ignore it
+              }
               t = new Date().getTime();
               drawTime = t-st;
               elapsed = t - lastFrameTime;

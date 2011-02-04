@@ -16,25 +16,6 @@ window.onload = function() {
     for (var i = 0; i < demos.length; i++) {
         var d = demos[i];
         d.style.marginLeft = (-d.clientWidth / 2) + "px";
-        /*
-        var img = document.createElement("img");
-        img.src = "imgs/close.png";
-        img.className = "closebutton";
-
-        img.addEventListener("click",
-                             (function(d) {
-                                 return function() {
-                                     d.classList.add("close");
-                                 }
-                             })(d), true);
-        d.parentNode.addEventListener("mouseenter",
-                             (function(d) {
-                                 return function() {
-                                     d.classList.remove("close");
-                                 }
-                             })(d), false);
-        d.appendChild(img);
-        */
     }
 
     window.addEventListener("message", function(e) { 

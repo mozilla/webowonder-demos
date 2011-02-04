@@ -15,7 +15,7 @@
                 webGLStart();
                 window.parent.postMessage('loaded', targetOrigin);
             }, true);
- 
+
             window.addEventListener("message", function(e) { 
                 if ("stop_demo" == e.data) {
                     window.parent.postMessage('finished_exit', targetOrigin);

@@ -732,6 +732,8 @@
               window.requestAnimationFrame(draw);
             } else if (window.mozRequestAnimationFrame) {
               window.mozRequestAnimationFrame(draw);
+            } else if (window.webkitRequestAnimationFrame) {
+              window.webkitRequestAnimationFrame(draw);
             } else {
               setTimeout(draw, Math.floor(15-(t % 15)));
             }

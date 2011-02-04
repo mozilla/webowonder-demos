@@ -258,7 +258,7 @@
         trailergradient.addColorStop(0, 'rgba(255,255,255,0.5)');
         trailergradient.addColorStop(1, 'rgba(255,255,255,0)');
         ctx.fillStyle = 'white';
-        ctx.font = '30px Ubuntu';
+        try { ctx.font = '30px Ubuntu'; } catch() {}
         ctx.fillText("Loading...", 16, 44);
         var query = URL.parse(document.location.toString()).query;
         loadPrefix = query.theme ? query.theme+'/' : 'field/';

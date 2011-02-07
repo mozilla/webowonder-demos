@@ -60,6 +60,7 @@
         }
     </script>
     <script type="text/javascript" src="../mt.js"></script>
+    <script type="text/javascript" src="../audio.js"></script>
     <script>
       magF = (360/512);
       getImageFirstY = function(img) {
@@ -217,10 +218,10 @@
             var arg = arguments[i];
             if (arg instanceof Array) {
               arg.forEach(function(e) {
-                a.push(new Audio('../'+e+'.ogg'));
+                a.push(createAudio('../'+e));
               });
             } else {
-              a.push(new Audio('../'+arg+'.ogg'));
+              a.push(createAudio('../'+arg));
             }
           }
           return a;

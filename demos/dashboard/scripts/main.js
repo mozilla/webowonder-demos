@@ -6,10 +6,10 @@ window.onload = function() {
     //createAnchors();
     //fixZIndex()
     //createCloud();
-    addDelayToTags();
+    //addDelayToTags();
 
-    if (document.location.hash == "#ie") {
-        document.body.classList.add("comparewithie");
+    if (document.location.hash == "#xxxie") {
+        document.body.classList.add("activexxxie");
     }
 
     var demos = document.querySelectorAll("#wall > section > article > article .demo");

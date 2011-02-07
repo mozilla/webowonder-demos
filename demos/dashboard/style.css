@@ -35,7 +35,7 @@ html { box-shadow: inset 0px 0px 20px black; }
 
 #overview { margin: 5px; position: relative; background-color: #343838; box-shadow: inset 0px 0px 20px black; height: 320px; border-radius: 10px; margin-left: -5px; margin-right: -5px; }
 
-.tag {font-size: 18px; -moz-transition-duration: 1s; cursor: default;}
+.tag {font-size: 18px; transition-duration: 1s;  -webkit-transition-duration: 1s;  -moz-transition-duration: 1s; cursor: default;}
 .tag.big {font-size: 50px;}
 .tag { margin-top: 10px; margin-left: 15px; font-family: bebas; position: absolute; text-decoration: none; }
 .tag.c0{color: #005f6b;}
@@ -52,8 +52,8 @@ html { box-shadow: inset 0px 0px 20px black; }
 /* Title */
 #wall > section > h1 { font-size: 100px; line-height: 100px; color: #2EC4DD; font-weight: normal; border-top: 2px solid black; padding-top: 20px; }
 #wall > section:nth-of-type(2) > h1 { margin-top: 40px; border-top: none; }
-#wall > section > article > h1:after { content: "▾"; margin-left: 25px; font-size: 50px; vertical-align: middle; -moz-transition-duration: 1s; -moz-transform: rotate(0deg); }
-#wall > section > article > h1 { font-size: 80px; height: 80px; font-weight: normal; background-image: url(imgs/dashed.png); background-repeat: repeat-x; background-position: left bottom; cursor: pointer; padding-bottom: 10px; -moz-transition: text-indent 0.1s; }
+#wall > section > article > h1:after { content: "▾"; margin-left: 25px; font-size: 50px; vertical-align: middle; -moz-transition-duration: 1s; -moz-transform: rotate(0deg);  -webkit-transition-duration: 1s; -webkit-transform: rotate(0deg);  transition-duration: 1s; transform: rotate(0deg); }
+#wall > section > article > h1 { font-size: 80px; height: 80px; font-weight: normal; background-image: url(imgs/dashed.png); background-repeat: repeat-x; background-position: left bottom; cursor: pointer; padding-bottom: 10px; -moz-transition: text-indent 0.1s; -webkit-transition: text-indent 0.1s; transition: text-indent 0.1s; }
 #wall > section > article > h1:hover { text-indent: 5px; }
 #wall > section > article > article > h1 { font-size: 32px; line-height: 32px; letter-spacing: 0px; vertical-align: bottom; font-weight: normal; position: absolute; bottom: 200px; }
 
@@ -61,9 +61,9 @@ html { box-shadow: inset 0px 0px 20px black; }
 #wall > section > article { border-top: 10px solid #28C2DA; }
 #wall > section > article { line-height: 0px; }
 #wall > section > article * { line-height: normal; }
-#wall > section > article > article {-moz-transition-duration: 1s; font-size: 12px; border-top: 0px solid #777; border-bottom: 1px solid #777; width: 225px; display: inline-block; margin-top: 10px; margin-bottom: 10px; padding-top: 10px; padding-bottom: 10px; margin-left: 6px; margin-right: 6px; height: 250px; vertical-align: middle; position: relative; padding-left: 30px; padding-right: 30px; }
+#wall > section > article > article {transition-duration: 1s; -webkit-transition-duration: 1s;  -moz-transition-duration: 1s; font-size: 12px; border-top: 0px solid #777; border-bottom: 1px solid #777; width: 225px; display: inline-block; margin-top: 10px; margin-bottom: 10px; padding-top: 10px; padding-bottom: 10px; margin-left: 6px; margin-right: 6px; height: 250px; vertical-align: middle; position: relative; padding-left: 30px; padding-right: 30px; }
 
-#wall > section > article.closed > h1:after { -moz-transform: rotate(-90deg); }
+#wall > section > article.closed > h1:after { -moz-transform: rotate(-90deg); -webkit-transform: rotate(-90deg); transform: rotate(-90deg); }
 
 #wall > section > article.closed > article { height: 0px; border: none; margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px; }
 
@@ -81,6 +81,12 @@ html { box-shadow: inset 0px 0px 20px black; }
     box-shadow: 0 0 30px black;
     -moz-transition-duration: 1s;
     -moz-transition-timing-function: cubic-bezier(0.05, 1.4, 0.25, 1);
+
+    -webkit-transition-duration: 1s;
+    -webkit-transition-timing-function: cubic-bezier(0.05, 1.4, 0.25, 1);
+
+    transition-duration: 1s;
+    transition-timing-function: cubic-bezier(0.05, 1.4, 0.25, 1);
 }
 
 article:hover >  .demo {
@@ -91,27 +97,18 @@ article:hover > .demo.close {
     top: 400px;
 }
 
-.comparewithie .notinie {
+.activexxxie .xxxie {
     opacity: 0.4;
     -moz-transform: scale(0.7);
+    -webkit-transform: scale(0.7);
+    transform: scale(0.7);
 }
 
-.comparewithie #overview .notinie {
+.activexxxie #overview .xxxie {
     opacity: 1;
     -moz-transform: scale(0)!important;
-}
-
-#iebutton:hover {
-    opacity: 1;
-}
-#iebutton {
-    opacity: 0.2;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100px;
-    z-index: 45;
-    -moz-transform: scale(0.8);
-    -moz-transform-origin: top left;
+    -webkit-transform: scale(0)!important;
+    transform: scale(0)!important;
 }
 
 #wall > section > article > article > a {
@@ -119,6 +116,8 @@ article:hover > .demo.close {
     z-index: 44;
     bottom: -30px; left: 0;
     -moz-transition-duration: 0.3s;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
     background-color: #28C2DA;
     line-height: 20px;
     text-align: center;

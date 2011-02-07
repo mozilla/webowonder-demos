@@ -27,7 +27,11 @@ function geo_success(position) {
 
 function getCoords() {
     var demo = document.querySelector('#geodemo .demo');
-    demo.style.top = "40px";
+    demo.classList.add("showme");
+    window.addEventListener("click", function() {
+        demo.classList.remove("showme");
+        window.removeEventListener("click", arguments.callee, true);
+    }, true);
 
     navigator.geolocation.getCurrentPosition(geo_success, function() {console.log("geo error")});
 }

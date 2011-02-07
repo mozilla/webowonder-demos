@@ -64,6 +64,15 @@
         z-index: 10;
       }
     </style>
+    <script>
+        // IE9 doesn't support new Audio
+        if (!("Audio" in window)) {
+            function Audio() {
+                this.play = function(){};
+                this.pause = function(){};
+            }
+        }
+    </script>
     <script type="text/javascript" src="mt.js"></script>
     <script type="text/javascript">
       Query = {

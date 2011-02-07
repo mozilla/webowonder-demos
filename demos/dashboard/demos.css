@@ -1,5 +1,7 @@
 /* SOME SPECIFIC LAYOUTS */
 
+article, section {display: block;}
+
 .parser { width: 140px; text-align: center}
 .parser > * { vertical-align: middle; display: inline; }
 
@@ -17,26 +19,55 @@
 #fontfacedemo * { margin: 0; padding: 0; vertical-align: top;}
 #fontfacedemo span {font-size: 18px; letter-spacing: -1px; display: inline-block;}
 
-#radiusdemo { -moz-transition-duration: 3s; border: 1px solid transparent;  max-width: 220px; border-top: 1px solid transparent!important; }
+#radiusdemo { transition-duration: 3s;-moz-transition-duration: 3s;-webkit-transition-duration: 3s;   border: 1px solid transparent;  max-width: 220px; border-top: 1px solid transparent!important; }
 #radiusdemo:hover { border: 1px solid black; border-top: 1px solid black!important; border-radius: 35px;}
 
-#gradientdemo:hover {background-image:  -moz-radial-gradient(50% 120%, circle, white, rgba(40, 194, 218, 1) 40%, rgba(0, 194, 218, 0) 60%) , url("imgs/texture.png")   !important;}
+#gradientdemo:hover {
+    background-image:  -moz-radial-gradient(50% 120%, circle, white, rgba(40, 194, 218, 1) 40%, rgba(0, 194, 218, 0) 60%) , url("imgs/texture.png")   !important;
+    background-image:  -webkit-radial-gradient(50% 120%, circle, white, rgba(40, 194, 218, 1) 40%, rgba(0, 194, 218, 0) 60%) , url("imgs/texture.png")   !important;
+}
+
+#geodemo .demo.showme { top: 40px; }
+
+#orientationdemo .demo {padding: 10px;}
+
+.dnding #dnddemo .demo {top: 100px;}
+#dnddemo .demo img {width: 200px;}
+#dnddemo .demo {text-align: center; padding: 5px;}
+
+#dragdemo {background-color: #E1E6E9; cursor: pointer;}
+#dragdemo .demo {width: 200px;}
 
 #columndemo {width: 245px!important; padding-right: 10px!important;}
 #columndemo > p {-moz-column-count: 2; text-align: left!important;}
 
-#boxshadowdemo { box-shadow: inset 0px 0px 0px black; -moz-transition-duration: 0.4s;}
-#boxshadowdemo:hover { box-shadow: inset 0px 0px 100px black; }
+#boxshadowdemo { box-shadow: inset 0px 0px 0px black; transition-duration: 0.4s; -moz-transition-duration: 0.4s; -webkit-transition-duration: 0.4s;  -webkit-box-shadow: inset 0px 0px 0px black; }
+#boxshadowdemo:hover { box-shadow: inset 0px 0px 100px black;  -webkit-box-shadow: inset 0px 0px 100px black; }
 
 #textshadowdemo > div { padding: 10px; }
 #textshadowdemo > .demo {background-color: #E1E6E9!important;}
 #textshadowdemo > div > p { color: white; font-family: bebas; font-size: 25px; text-shadow: 0px 0px 4px black; }
 
-#transformdemo p { -moz-transition-duration: 1.4s; }
-#transformdemo:hover p { -moz-transform: rotate(900deg) scale(-1, -1);}
+#transformdemo p { transition-duration: 1.4s;-moz-transition-duration: 1.4s;-webkit-transition-duration: 1.4s;   }
+#transformdemo:hover p { -moz-transform: rotate(900deg) scale(-1, -1); -webkit-transform: rotate(900deg) scale(-1, -1);}
 
-#transitiondemo { background-color: transparent!important; border-width: 0!important; -moz-box-shadow: none!important; font-family: ubuntu; font-size: 60px; display: block; text-align: center; margin: auto; text-shadow: 0px 0px 5px black; color: rgba(0, 0, 0, 0); margin-top: 20px; -moz-transition-duration: 6s!important; -moz-transition-timing-function: cubic-bezier(0.05, 1.6, 0.25, 1); }
-#transitiondemo:hover { -moz-transform: scale(3) rotate(360deg); text-shadow: 0px 0px 3px #28C2DA; }
+#transitiondemo { background-color: transparent!important;
+    border-width: 0!important;
+    -webkit-box-shadow: none!important;
+    -moz-box-shadow: none!important;
+    font-family: ubuntu;
+    font-size: 60px;
+    display: block;
+    text-align: center;
+    margin: auto;
+    text-shadow: 0px 0px 5px black;
+    color: rgba(0, 0, 0, 0);
+    margin-top: 20px;
+    -webkit-transition-duration: 1s!important;
+    -moz-transition-duration: 6s!important;
+    -moz-transition-timing-function: cubic-bezier(0.05, 1.6, 0.25, 1);
+ }
+#transitiondemo:hover { -webkit-transform: scale(3) rotate(360deg);  -moz-transform: scale(3) rotate(360deg); text-shadow: 0px 0px 3px #28C2DA; }
 
 #formdemo input { display: inline; width: 70px; border: none; font-size: 12px; box-shadow: 0px 0px 5px #28C2DA; }
 #formdemo button { box-shadow: 0px 0px 5px #28C2DA; background-color: white; color: #28C2DA; border: none; font-weight: bold; float: right; }
@@ -50,11 +81,12 @@
 
 #multiplatform img {width: 150px; display: block; margin-top: 80px;}
 
-#webgldemo canvas { -moz-transition-duration: 1s; width: 150px; height: 100px; -moz-transition-delay: 1s; z-index: 10000;}
-#webgldemo canvas:hover { -moz-transform: scale(2);}
+.nogl #webgldemo .demo {display: none;}
+#webgldemo canvas { transition-duration: 1s; -webkit-transition-duration: 1s;   -moz-transition-duration: 1s; width: 150px; height: 100px; transition-delay: 1s; -webkit-transition-delay: 1s; -moz-transition-delay: 1s; z-index: 10000;}
+#webgldemo canvas:hover { transform: scale(2); -webkit-transform: scale(2); -moz-transform: scale(2);}
 
-#borderimagedemo {-moz-transition: none;}
-#borderimagedemo:hover { -moz-border-image: url(imgs/tv-border.jpg) 25 31 37 31 stretch stretch; border-width: 20px!important; background-color: white!important; color: white; padding: 10px!important; max-height: 210px; }
+#borderimagedemo {transition: none;-webkit-transition: none;-moz-transition: none;}
+#borderimagedemo:hover { -webkit-border-image: url(imgs/tv-border.jpg) 25 31 37 31 stretch stretch; -moz-border-image: url(imgs/tv-border.jpg) 25 31 37 31 stretch stretch; border-width: 20px!important; background-color: white!important; color: white; padding: 10px!important; max-height: 210px; }
 #borderimagedemo:hover p {margin-top: 40px;}
 #borderimagedemo:hover h1 {top: 20px;}
 

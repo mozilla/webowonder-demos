@@ -65,14 +65,18 @@ var per_fragment_lighting_vs = [
 
 var gl;
 
+var nogl;
+
 function initGL(canvas) {
     try {
         gl = canvas.getContext("experimental-webgl");
         gl.viewportWidth = canvas.width;
         gl.viewportHeight = canvas.height;
+        nogl = false;
     } catch(e) {}
     if (!gl) {
-        alert("Could not initialise WebGL, sorry :-(");
+        nogl = true;
+        document.body.classList.add("nogl");
     }
 }
 
@@ -362,8 +366,10 @@ function webGLStart() {
 window.addEventListener("load", webGLStart, true);
 
 function startTeaPot() {
+    if (nogl) return;
     teapotRotating = true; tick();
 }
 function stopTeaPot()  {
+    if (nogl) return;
     teapotRotating = false;
 }

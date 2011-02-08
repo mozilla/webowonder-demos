@@ -130,8 +130,8 @@ osgGA.OrbitManipulator2.prototype = {
         } else if (dx < 0) {
             this.direction = -1.0;
         }
-        this.dx = dx;
-        this.dy = dy;
+        this.dx += dx;
+        this.dy += dy;
 
         if (Math.abs(dx) + Math.abs(dy) > 0.0) {
             this.time = (new Date()).getTime();

@@ -1,4 +1,7 @@
 function start() {
+    if ("mask" in document.body.style) {
+        document.body.classList.add("csssgveffectavailable");
+    }
     if (!$W.initialize(document.getElementById("player"))) return;
     $W.camera.setTarget(1,0,10);
     $W.camera.yfov = 90;
@@ -18,7 +21,7 @@ function start() {
                 {name:"textured_fs", path: "texture.frag"}
             ]
         },
-        textures: [{name:"video", type:"Video", path: "http://videos.mozilla.org/serv/mozhacks/demos/resources/immersivevideo/cannes.webm"}]
+        textures: [{name:"video", type:"Video", path: "http://videos.mozilla.org/serv/mozhacks/demos/resources/immersivevideo/cannes.r.webm"}]
     };
 
 

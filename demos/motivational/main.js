@@ -148,7 +148,7 @@ function initEditor() {
     poster.addEventListener("dragleave", function(e) { poster.classList.remove("dragging"); }, true);
     poster.addEventListener("dragenter", function(e) { e.preventDefault(); poster.classList.add("dragging"); }, false);
 
-    poster.onclick = function() {
+    poster.onclick = function(e) {
         document.getElementById("filepicker").click();
     }
 
@@ -176,17 +176,31 @@ function processFile(file) {
     loading("resizing");
     var placeholder = document.getElementById("placeholder");
     setTimeout(function() {
-        var url =  window.URL.createObjectURL(file);
-        placeholder.src = url;
-        placeholder.onload = function() {
-            addFrame(placeholder);
 
-            var bg = document.getElementById("background");
-            bg.width = 5; bg.height = 5;
-            bg.getContext("2d").drawImage(placeholder, 0, 0, bg.width, bg.height);
+        var setupURL = function(url) {
+            placeholder.src = url;
+            placeholder.onload = function() {
+                addFrame(placeholder);
 
-            stoploading();
-            document.body.classList.add("showEditor");
+                var bg = document.getElementById("background");
+                bg.width = 5; bg.height = 5;
+                bg.getContext("2d").drawImage(placeholder, 0, 0, bg.width, bg.height);
+
+                stoploading();
+                document.body.classList.add("showEditor");
+            }
+        }
+
+
+        if ("URL" in window) {
+            var url =  window.URL.createObjectURL(file);
+            setupURL(url);
+        } else {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                setupURL(e.target.result);
+            }
         }
     }, 1000);
 }
@@ -196,7 +210,13 @@ function upload() {
     document.body.classList.remove("showEditor");
 
     var fd = new FormData();
-    fd.append("image", poster.mozGetAsFile("foo.png"));
+    var toSend;
+    if ("mozGetAsFile" in poster) {
+        toSend = poster.mozGetAsFile("foo.png");
+    } else {
+        toSend = poster.toDataURL("image/png").replace(/^data:image\/(png|jpg);base64,/, "");
+    }
+    fd.append("image", toSend)
     fd.append("key", "6528448c258cff474ca9701c5bab6927");
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "http://api.imgur.com/2/upload.json");

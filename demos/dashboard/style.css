@@ -20,7 +20,8 @@ html { box-shadow: inset 0px 0px 20px black; }
 
 #wall { background-color: #E1E6E9; width: 900px; padding: 20px; margin: auto; margin-top: 10px; box-shadow: 0px 0px 5px black;}
 
-#wall > h1 {font-size: 90px; width: 500px; vertical-align: middle; font-weight: normal; text-align: center; margin: auto; margin-top: 30px; text-align: center;}
+#wall > h1 {font-size: 90px; width: 500px; vertical-align: middle; font-weight: normal; text-align: center; margin: auto; margin-top: 30px; text-align: center; position: relative;}
+#wall > h1 > span {font-size: 30px; position: absolute; bottom: -2px; right: 48px; color: #999;}
 
 #shortcredit a { color: #555; }
 #shortcredit { opacity: 0.5; top: -150px; right: 0px; font-size: 10px; color: #777; position: relative; width: 100%; text-align: right; }

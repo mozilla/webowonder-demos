@@ -178,8 +178,12 @@
       };
 
       toLoad = 0;
-      load = function(src) {
+      loads = [];
+      loadPrefix = '';
+      load = function(src, prefix) {
         toLoad++;
+        if (prefix == null)
+          prefix = loadPrefix;
         var img = new Image();
         var obj = new ImageObj(img);
         img.onload = function(){
@@ -187,8 +191,12 @@
           if (toLoad == 0)
             loaded();
         }
-        img.src = src;
+        img.loadsrc = prefix + src;
+        loads.push(img);
         return obj;
+      }
+      startLoad = function() {
+        loads.forEach(function(img){ img.src = img.loadsrc; });
       }
 
       window.onload = function() {
@@ -285,6 +293,8 @@
             window.parent.postMessage('finished_exit', targetOrigin);
           }
         }, false);
+
+
         startGame = function() {
           music.play();
           var randomFactors = function() {
@@ -793,6 +803,9 @@
             musicToggle.onclick();
           }
         }
+
+        startLoad();
+
       };
     </script>
   </head>

@@ -2042,9 +2042,14 @@ $W.initUtil = function() {
                   type = 'webgl';          
                   gl = canvas.getContext(type);
         }} catch (e){}
+        try { if (!gl) {                       
+                  type = 'experimental-WebGL';
+                  gl = canvas.getContext(type);
+        }} catch (e){}
 
         if (!!gl) { $W.debug('using ' + type); }
 
+        if (!gl) {alert("WebGL not supported :(")}
         return gl;
     };
 

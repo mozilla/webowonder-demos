@@ -247,6 +247,7 @@
       };
 
       toLoad = 0;
+      loads = [];
       loadPrefix = '';
       load = function(src, prefix) {
         toLoad++;
@@ -259,8 +260,12 @@
           if (toLoad == 0)
             loaded();
         }
-        img.src = prefix + src;
+        img.loadsrc = prefix + src;
+        loads.push(img);
         return obj;
+      }
+      startLoad = function() {
+        loads.forEach(function(img){ img.src = img.loadsrc; });
       }
 
       window.onload = function() {
@@ -278,8 +283,41 @@
         ctx.fillStyle = 'white';
         ctx.font = '30px Ubuntu';
         ctx.fillText("Loading...", 16, 44);
+
+        targetOrigin = '*';
+        var DemoState = {
+          running: false,
+          started: false
+        };
+
+        loaded = function() {
+          if (window.parent == window) {
+            DemoState.running = true;
+            startGame();
+            DemoState.started = true;
+          } else {
+            window.parent.postMessage('loaded', targetOrigin);
+          }
+        }
+        window.addEventListener("message", function(e) {
+          if ("start_demo" == e.data) {
+            DemoState.running = true;
+            if (DemoState.started) {
+              draw();
+            } else {
+              startGame();
+              DemoState.started = true;
+            }
+          } else if ("stop_demo" == e.data) {
+            DemoState.running = false;
+            music.pause();
+            window.parent.postMessage('finished_exit', targetOrigin);
+          }
+        }, false);
+
         var query = URL.parse(document.location.toString()).query;
         loadPrefix = query.theme ? query.theme+'/' : 'field/';
+
         var fox_right = load('run_frames.png');
         var fox_boost = load('boost_frames.png');
         var shadow = load('shadow.png');
@@ -290,6 +328,9 @@
         var fg_front = load('foreground.png');
         var title = load('Runfield.png', '');
         var instructions = load('instructions.png', '');
+
+
+
         var musicOn = localStorage.musicOn != "false";
         var makeAudios = function(){
           var a = [];
@@ -337,35 +378,8 @@
         var music = createAudio('musa');
         music.loop = true;
         music.volume = 0;
-        targetOrigin = '*';
-        var DemoState = {
-          running: false,
-          started: false
-        };
-        loaded = function() {
-          if (window.parent == window) {
-            DemoState.running = true;
-            startGame();
-            DemoState.started = true;
-          } else {
-            window.parent.postMessage('loaded', targetOrigin);
-          }
-        }
-        window.addEventListener("message", function(e) {
-          if ("start_demo" == e.data) {
-            DemoState.running = true;
-            if (DemoState.started) {
-              draw();
-            } else {
-              startGame();
-              DemoState.started = true;
-            }
-          } else if ("stop_demo" == e.data) {
-            DemoState.running = false;
-            music.pause();
-            window.parent.postMessage('finished_exit', targetOrigin);
-          }
-        }, false);
+
+
         startGame = function() {
           music.play();
           var randomFactors = function() {
@@ -910,6 +924,9 @@
             musicToggle.onclick();
           }
         }
+
+        startLoad();
+
       };
     </script>
   </head>

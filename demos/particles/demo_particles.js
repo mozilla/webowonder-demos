@@ -6292,6 +6292,11 @@ var OpenSceneGraph = {
 function initGL(canvas) {
     try {
         gl = canvas.getContext("experimental-webgl");
+        var numTexturesAvailableInVertexShader = gl.getParameter(gl.MAX_VERTEX_TEXTURE_IMAGE_UNITS);
+        console.log("Nb Texture Unit in vertex shader " + numTexturesAvailableInVertexShader);
+        if (numTexturesAvailableInVertexShader <= 3) {
+           console.log("This demo can't work with less than 3 texture unit on vertex shader");
+        }
         OpenSceneGraph.init();
 
     } catch(e) {

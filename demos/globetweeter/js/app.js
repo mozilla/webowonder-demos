@@ -40,7 +40,7 @@ function startNetwork() {
         };
 
         // change here to point to your socket.io server
-        var socket = new io.Socket("184.106.112.6",{ port: 22048 });
+        var socket = new io.Socket("184.106.112.6",{ port: 22048 }, {transports:['websocket', 'htmlfile', 'xhr-polling']});
         //var socket = new io.Socket(document.location.hostname);
         Socket = socket;
         socket.connect();

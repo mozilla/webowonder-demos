@@ -39,17 +39,17 @@ $W = {
      */
     paths:{
         /** Path to *GLU libraries themselved */
-        libsrc : "../../src/",
+        libsrc : "src/",
 
         /** Where shaders are stored */
-        shaders : "../../shaders/",
+        shaders : "shaders/",
 
         /** Where external libraries, like Sylvester, are stored */
-        external : "../../external/",
+        external : "external/",
 
-        textures : "../../textures/",
+        textures : "textures/",
 
-        materials : "../../materials/",
+        materials : "materials/",
 
         /** Which Sylvester lib to load
          * Sylvester.src.js or Sylvester.js
@@ -2042,9 +2042,14 @@ $W.initUtil = function() {
                   type = 'webgl';          
                   gl = canvas.getContext(type);
         }} catch (e){}
+        try { if (!gl) {                       
+                  type = 'experimental-WebGL';
+                  gl = canvas.getContext(type);
+        }} catch (e){}
 
         if (!!gl) { $W.debug('using ' + type); }
 
+        if (!gl) {alert("WebGL not supported :(")}
         return gl;
     };
 

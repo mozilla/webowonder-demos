@@ -220,6 +220,7 @@
     })();
 
     function initGL(canvas) {
+		  var gl;
 		  try {
 		    gl = canvas.getContext("experimental-webgl");
 		    gl.viewport(0, 0, canvas.width, canvas.height);

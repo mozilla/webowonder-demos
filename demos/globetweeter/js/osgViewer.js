@@ -29,7 +29,8 @@ osgViewer.Viewer = function(canvas) {
         gl = canvas.getContext("experimental-webgl", {alpha: true, antialias : true });
         osg.init();
     } catch(e) {
-        alert("Could not initialise WebGL, sorry :-(" + e);
+        //alert("Could not initialise WebGL, sorry :-(" + e);
+        alert("Could not initialise WebGL, sorry :-(");
         return;
     }
 

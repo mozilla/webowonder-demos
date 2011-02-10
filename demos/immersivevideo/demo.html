@@ -18,7 +18,6 @@
                     window.parent.postMessage('finished_exit', targetOrigin);
                 }
             }, true);
-
         </script>
 
 
@@ -38,7 +37,8 @@
             #playerbox { width: 600px; height: 340px; margin: auto; top: 100px; left: 50%; margin-left: -300px; position: absolute; cursor: move; }
             #playerbox:after { content: ""; position: absolute; display: block; width: 1000px; margin: auto; height: 80px; bottom: -60px; left: 50%; margin-left: -500px; background-image: url(imgs/shadow.png); background-size: 100% 100%; opacity: 0.7; }
             canvas { display: block; pointer-events: auto; }
-            #tv { position: relative; margin-top: -340px; left: 0px; height: 340px; background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 30px, rgba(0, 0, 0, 0.4) 130px, rgba(0, 0, 0, 0.4) 180px, rgba(0, 0, 0, 0) 255px); background-color: #4C565D; mask: url(#shape); }
+            #tv { display: none;}
+            .csssgveffectavailable #tv {display: block; position: relative; margin-top: -340px; left: 0px; height: 340px; background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 30px, rgba(0, 0, 0, 0.4) 130px, rgba(0, 0, 0, 0.4) 180px, rgba(0, 0, 0, 0) 255px); background-color: #4C565D; mask: url(#shape); }
             .loading * { pointer-events: none!important; }
             #loader { background-image: url(imgs/throbber.gif); background-repeat: no-repeat; background-position: center center; position: absolute; top: 0; left: 50%; background-color: rgba(0, 0, 0, 0.5); width: 600px; height: 340px; display: none; margin-left: -300px; }
             .loading #loader { display: block; }
@@ -68,9 +68,9 @@
             <div id="tv"></div>
         </section>
         <ul id="menu">
-            <li class="selected" onclick="switchVideo('http://videos.mozilla.org/serv/mozhacks/demos/resources/immersivevideo//cannes.webm', this);">Cannes Beach
-            <li onclick="switchVideo('http://videos.mozilla.org/serv/mozhacks/demos/resources/immersivevideo//dubai.webm', this);">Dubaï Street View
-            <li onclick="switchVideo('http://videos.mozilla.org/serv/mozhacks/demos/resources/immersivevideo//angkor.webm', this)">Temples of Angkor
+            <li class="selected" onclick="switchVideo('http://videos.mozilla.org/serv/mozhacks/demos/resources/immersivevideo/cannes.r.webm', this);">Cannes Beach
+            <li onclick="switchVideo('http://videos.mozilla.org/serv/mozhacks/demos/resources/immersivevideo/dubai.r.webm', this);">Dubaï Street View
+            <li onclick="switchVideo('http://videos.mozilla.org/serv/mozhacks/demos/resources/immersivevideo/angkor.r.webm', this)">Temples of Angkor
         </ul>
         <div id="credits">
             <p>Powered by <a href="https://github.com/OneGeek/WebGLU/">WebGLU.</a> - </p>

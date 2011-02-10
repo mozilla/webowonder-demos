@@ -220,14 +220,13 @@
     })();
 
     function initGL(canvas) {
-		  var gl;
-		  try {
-		    gl = canvas.getContext("experimental-webgl");
-		  } catch(e) {
-		  }
-		  if (!gl) {
-		    alert("Could not initialise WebGL, sorry :-(");
-		  }
+      try {
+        gl = canvas.getContext("experimental-webgl");
+      } catch(e) {
+      }
+      if (!gl) {
+        alert("Could not initialise WebGL, sorry :-(");
+      }
 
       CubicVR.GLCore.init(gl, "core-shader-vs", "core-shader-fs");
       CubicVR.setGlobalAmbient([0,0,0]);

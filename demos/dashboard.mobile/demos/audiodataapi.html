@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<body>
+
+<audio id="grappes" src="media/track.ogg" preload="auto"></audio>
+<div>
+<canvas onclick="startProcessingAudio();" data-processing-sources="audio_scripts/anim.pde" id="audiocube"></canvas>
+</div>
+
+<script src="audio_scripts/processing.js"></script>
+<script src="audio_scripts/beatdetektor.js"></script>
+<script src="audio_scripts/dsp.js"></script>
+<script src="audio_scripts/main.js"></script>
+
+<script>
+var a = document.getElementById("grappes");
+a.addEventListener("canplaythrough", function() {
+document.body.classList.add("ready");
+}, true)
+</script>
+
+<style>
+div {
+width: 128px;
+margin: auto;
+}
+canvas {
+	opacity: 0.4;
+	pointer-events: none;
+}
+.ready canvas {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+</style>
+
+
+</body>

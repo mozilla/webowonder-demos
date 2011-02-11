@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<input style="display: none;" type="file" onchange="preview(this)">
+
+<img src="placeholder.png" style="display: block; width: auto; height:170px;margin: auto; margin-top: 0px;">
+
+<img  style="display: none; width: 31px; height: 31px; box-shadow: 0 0 10px 10px black; position: absolute; top: 60px; left: 50%; margin-left: -15px; border-radius: 50%;" id="throbber" src="throbber.gif">
+
+<script>
+
+var imgs = document.querySelectorAll("img");
+var img = imgs[0];
+var throbber = imgs[1];
+var input = document.querySelector("input");
+
+var file;
+
+img.onclick = function() {
+	input.click();
+}
+
+function preview(input) {
+	if (input.files.length == 0) return;
+	file = input.files[0];
+	if (!file.type.match(/image.*/)) return;
+	img.src = window.URL.createObjectURL(file);
+	img.onclick = upload;
+}
+
+function upload() {
+    throbber.style.display = "block";
+    var fd = new FormData();
+    fd.append("image", file)
+    fd.append("key", "6528448c258cff474ca9701c5bab6927");
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://api.imgur.com/2/upload.json");
+    xhr.addEventListener("error", function() {
+        alert("Upload Error :(");
+    }, false);
+    xhr.addEventListener("load", function() {
+        try {
+            var links = JSON.parse(xhr.responseText).upload.links;
+            var url = links.original;
+            url = url.replace(".png", "");
+            url = url.replace(".jpg", "");
+    	    throbber.style.display = "none";
+            img.onclick = function() {
+		window.open(url, "", "");
+	    }
+        } catch(e) {
+            alert("Upload Error :" + e);
+        }
+    }, false);
+    xhr.send(fd);
+
+}
+
+</script>

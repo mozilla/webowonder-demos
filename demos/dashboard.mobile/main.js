@@ -1,11 +1,11 @@
 var stars;
 
 window.onload = function() {
-    makeMenuClickable();
-    makeSubMenuClickable();
     loadStars();
     highlightStars();
     countArticles();
+    makeMenuClickable();
+    makeSubMenuClickable();
 }
 
 function loadStars() {
@@ -41,6 +41,7 @@ function highlightStars() {
 	document.querySelector("#content > h1").classList.add("star");
     }
     countArticles();
+    makeSubMenuClickable();
 }
 
 function addStar(name) {
@@ -64,6 +65,8 @@ function toggleMenu(article) {
 }
 
 function closeArticle() {
+    var demo = document.getElementById("demo");
+    demo.src = "about:blank";
     document.body.classList.remove('showpopup');
     document.querySelector(".opened").classList.remove("opened");
 }
@@ -90,6 +93,11 @@ function openArticle(article) {
 	saveStars();
     }
 
+    if (article.classList.contains("demoinside")) {
+       var demo = document.getElementById("demo");
+       demo.src = "demos/" + article.id + ".html";
+    }
+
     document.body.classList.add('showpopup');
 }
 
@@ -105,9 +113,9 @@ function makeMenuClickable() {
 function makeSubMenuClickable() {
     var menus = document.querySelectorAll("#menu > section > article > h1");
     menus.forEach(function(h1) {
-        h1.addEventListener("click", function() {
+        h1.onclick = function() {
             openArticle(h1.parentNode);
-        }, true);
+        };
     });
 }
 

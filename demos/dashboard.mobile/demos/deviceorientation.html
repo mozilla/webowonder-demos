@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<img id="v" src="../HTML5_Logo.svg" width="150px">
+
+<script>
+var v = document.querySelector("#v");
+
+window.addEventListener("MozOrientation", function(e) {
+    if (!v) return;
+    var angle = (e.x * 90) + "deg";
+    var scale = (e.y);
+    v.style.MozTransform = "rotate(" + angle + ") scale(" + scale + ")";
+}, true);
+
+</script>
+
+<style>
+body {
+	width: 150px; margin: auto;
+}
+</style>

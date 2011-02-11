@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<div style="width: 350px; margin: auto;"></div>
+
+<script src="geolocation.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+<script>
+
+function geo_success(position) {
+  var mapcanvas = document.createElement('div');
+  mapcanvas.id = 'mapcanvas';
+  mapcanvas.style.height = '180px';
+  mapcanvas.style.width = '350px';
+
+  var demo = document.querySelector('div');
+  demo.appendChild(mapcanvas);
+
+  var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  var myOptions = {
+    zoom: 15,
+    center: latlng,
+    mapTypeControl: false,
+    navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  var map = new google.maps.Map(mapcanvas, myOptions);
+
+  var marker = new google.maps.Marker({
+      position: latlng, 
+      map: map, 
+      title:"You are here!"
+  });
+}
+
+function getCoords() {
+    var demo = document.querySelector('div');
+    navigator.geolocation.getCurrentPosition(geo_success, function() {console.log("geo error")});
+}
+
+window.onload = getCoords;
+
+</script>
+

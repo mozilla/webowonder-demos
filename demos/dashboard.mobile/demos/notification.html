@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<p style="display: block; width: 65px; font-size: 100px; color: #666; margin: auto; margin-bottom: 50px;">...</p>
+
+
+<script>
+
+var p = document.querySelector("p");
+
+var notification = navigator.mozNotification.createNotification("Firefox is talking to you...", "IT'S TIME!!!!", null);
+
+
+setTimeout(function() {
+	var s = 9;
+
+	p.innerHTML = s;
+	var i = setInterval(function() {
+		s--;
+		p.innerHTML = s;
+		if (s == 0) {
+			clearInterval(i);
+			notification.show();
+		}
+	}, 1000);
+}, 2000);
+
+</script>

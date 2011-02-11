@@ -4,7 +4,6 @@ html, body { width: 400px; margin: auto; background-color: #000; color: white;}
 #menu > section > article > a, #menu > section > article > p { display: none; }
 
 
-
 #menu > section {
     position: relative;
 }
@@ -138,6 +137,7 @@ header p {
 #close img { width: 40px; height: 40px; }
 #content h1 { font-size: 28px; margin-top: 20px; margin-bottom: 20px; padding-left: 20px; margin-left: 20px;}
 #content p { font-size: 18px; }
+#demo {position: absolute; width: 350px; height: 200px; overflow: hidden; bottom: 0; left: 0; border: none;}
 
 /* Star */
 

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+<video src="media/enfants.webm" preload="auto" style="opacity: 0.3; display: block; width:300px; margin:auto;"></video>
+
+<script>
+var video = document.querySelector("video");
+video.addEventListener("canplaythrough", function() {
+	video.style.opacity = "1";
+	video.onclick = function() {
+		video.play();
+	}
+}, true);
+</script>
+
+

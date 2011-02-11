@@ -54,7 +54,7 @@
 
                 <h1 id="html5semantics">HTML5 Semantics</h1>
 
-                <article id="parser">
+                <article id="parser" class="demoinside">
                     <h1>HTML5 parser</h1>
                     <p>The HTML parser is one of the most complicated and sensitive pieces of a browser. It controls how your HTML source code is turned into web pages. The new parser is faster, complies with the HTML5 standard, and enables a lot of new functionality as well. <strong>This parser lets content embed SVG and MathML directly in the HTML markup.</strong></p>
                     <a href="https://developer.mozilla.org/en/HTML/HTML5/HTML5_Parser" title="documentation">learn more</a>
@@ -110,13 +110,13 @@
                 </svg>
                 <h1>Device Access</h1>
 
-                <article id="deviceorientation">
+                <article id="deviceorientation" class="demoinside">
                     <h1>Device Orientation</h1>
                     <p>The MozOrientation event provides a way to handle orientation information. This event is sent when the accelerometer detects a change to the orientation of the device. By receiving and processing the data reported by MozOrientation events, it's possible to interactively respond to rotation and elevation changes caused by the user moving the device.</p>
                     <a href="https://developer.mozilla.org/en/Detecting_device_orientation" title="documentation">learn more</a>
                 </article>
 
-                <article id="audiodataapi">
+                <article id="audiodataapi" class="demoinside">
                     <h1>Audio Data API</h1>
                     <p>The HTML5 specification introduces the &lt;audio&gt; and &lt;video&gt; media elements, and with them the opportunity to dramatically change the way we integrate media on the web. We present a new Mozilla extension to this API, which allows web developers to read and write raw audio data.</p>
                     <a href="https://developer.mozilla.org/en/Introducing_the_Audio_API_Extension" title="documentation">learn more</a>
@@ -128,23 +128,23 @@
                     <a href="https://developer.mozilla.org/en/DOM/Touch_events" title="documentation">learn more</a>
                 </article>
 
-                <article id="geolocationapi">
+                <article id="geolocationapi" class="demoinside">
                     <h1>Geolocation API</h1>
                     <p>The Geolocation API allows the user to provide their location to web applications if they so desire.  For privacy reasons, the user is asked to confirm permission to report location information.</p>
                     <a href="https://developer.mozilla.org/en/using_geolocation" title="documentation">learn more</a>
                 </article>
 
-                <article id="fileapi">
+                <article id="fileapi" class="demoinside">
                     <h1>File API</h1>
                     <p>The File API specifies the ability to asynchronously read a selected file into memory, and perform operations on the file data within the web application (for example, to display a thumbnail preview of an image, before it is uploaded, or to look for ID3 tags within an MP3 file, or to look for EXIF data in JPEG files, all on the client side).</p>
                     <a href="https://developer.mozilla.org/en/Using_files_from_web_applications" title="documentation">learn more</a>
                 </article>
 
 
-                <article id="notification">
+                <article id="notification" class="demoinside">
                     <h1>Notification</h1>
-                    <p>The File API specifies the ability to asynchronously read a selected file into memory, and perform operations on the file data within the web application (for example, to display a thumbnail preview of an image, before it is uploaded, or to look for ID3 tags within an MP3 file, or to look for EXIF data in JPEG files, all on the client side).</p>
-                    <a href="https://developer.mozilla.org/en/Using_files_from_web_applications" title="documentation">learn more</a>
+                    <p>Desktop notifications allow a web page to notify the user using system level services, such as Growl, in a clean, safe, and easy to use manner.</p>
+                    <a href="" title="documentation">learn more</a>
                 </article>
 
             </section>
@@ -207,7 +207,7 @@
                 </svg>
                 <h1>Multimedia</h1>
 
-                <article id="video">
+                <article id="video" class="demoinside">
                     <h1>video</h1>
                     <p>HTML5 defines a standard way to embed video in a web page, using a &lt;video&gt; element. The same way we can use images in web pages, we can now use videos. Videos can be styled with CSS and controlled via Javascript</p>
                     <a href="https://developer.mozilla.org/En/Using_audio_and_video_in_Firefox" title="documentation">learn more</a>
@@ -232,7 +232,7 @@
                 </svg>
                 <h1>3D, Graphics, Effects</h1>
 
-                <article id="canvas2d">
+                <article id="canvas2d" class="demoinside">
                     <h1>Canvas 2D</h1>
                     <p>Canvas is a HTML5 element which can be used to draw graphics via scripting (JavaScript). For example, it can be used to draw graphs, make photo compositions or even perform animations.</p>
                     <a href="https://developer.mozilla.org/en/HTML/Canvas" title="documentation">learn more</a>
@@ -472,6 +472,7 @@
             <div id="content"><button onclick="closeArticle();" id="close"><img src="close.svg"></button>
                 <h1></h1>
                 <p></p>
+		<iframe id="demo"></iframe>
             </div>
         </section>
 

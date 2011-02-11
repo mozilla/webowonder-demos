@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+        <meta name="viewport" content="width=400, user-scalable=0">
+
+        <title>HTML5 &amp; Friends</title>
+
+        <style>
+            * {margin: 0; padding: 0; font-weight: normal;}
+            html, body {
+                width: 400px;
+                margin: auto;
+                background-color: #000;
+            }
+            #menu {
+                width: 400px;
+            }
+
+            header {
+                background: url(HTML5_Logo.svg), #2A2A2A;
+                background-repeat: no-repeat;
+                background-size: 60px 60px;
+                background-position: 8px 20px;
+
+                position: relative;
+                color: white;
+                height: 90px;
+                border-bottom: 5px solid #A5151E;
+                width: 325px;
+                padding-left: 75px;
+                padding-top: 25px;
+            }
+
+            header > * {
+                font-weight: bold;
+            }
+
+            header p {
+                position: absolute;
+                bottom: 15px;
+                right: 15px;
+                font-size: 21px;
+            }
+
+            #menu > ul > li {
+                display: block;
+                width: 320px;
+                padding: 5px;
+                padding-left: 75px;
+
+                background-image: url(border-bottom.png);
+                background-position: bottom left;
+                background-repeat: no-repeat;
+                background-size: 100% 1px;
+                background-color: #000;
+
+                color: white;
+                position: relative;
+                overflow: hidden;
+            }
+
+            #menu > ul > li > h1,
+            #menu > ul > li > svg {
+                display: inline-block;
+                vertical-align: top;
+                height: 60px;
+            }
+
+            #menu > ul > li > h1 {
+                margin-top: 28px;
+                margin-left: 20px;
+                position: relative;
+                width: 100%;
+                font-size: 24px;
+            }
+            #menu > ul > li:after {
+                content: "";
+                display: block;
+                width: 4px; height: 80%;
+                position: absolute;
+                left: -4px;
+                top: 10px;
+                border-radius: 3px;
+                pointer-events: none;
+                -moz-transition-duration: 1s;
+            }
+
+            #menu > ul > .open:after {
+                top: 3%; height: 94%;
+            }
+
+            #menu > ul > li > h1:after {
+                content:  attr(countdemos);
+                position: absolute;
+                font-size: 15px;
+                right: 0px;
+                top: 17px;
+                color: #aaa;
+                -moz-transition-duration: 1s;
+            }
+            #menu > ul > .open > h1:before {
+                opacity: 0;
+            }
+
+            #menu > ul > li > h1:before {
+                content:  attr(countsections) " sections";
+                position: absolute;
+                font-size: 15px;
+                right: 0px;
+                top: 37px;
+                color: #aaa;
+                -moz-transition-duration: 1s;
+            }
+            #menu > ul > .open > h1:before {
+                opacity: 0;
+            }
+
+            #menu > ul > li > svg {
+                width: 25px; height: 25px;
+                margin-left: -55px;
+                margin-top: 30px;
+                fill: white;
+            }
+
+            article {
+                margin-left: -75px;
+                max-height: 0;
+                overflow: hidden;
+                -moz-transition-duration: 0.4s;
+            }
+            #menu > ul > li > article > h1 {
+                font-size: 24px;
+                height: 60px;
+                padding-top: 28px;
+                padding-left: 80px;
+                font-size: 20px;
+            }
+            #menu > ul > li > article > h1 {
+                border-top: 1px dashed #aaa;
+                position: relative;
+            }
+
+            #menu > ul > li > article > h1.selected {
+                background-color: rgba(229, 132, 1, 0.7);
+            }
+
+            #menu > ul > li > article {
+                position: relative;
+            }
+
+            #menu > ul > li > article:before {
+                content: "-";
+                width: 8px; height: 8px;
+                position: absolute;
+                top: 32px; left: 30px;
+                /*
+                border-radius: 50%;
+                background-color: white;
+                */
+            }
+
+            #content h1:after,
+            #menu > ul > li > article > h1:after {
+                content: "★";
+                font-size: 40px;
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                color: black;
+                text-shadow: 0 0 3px white;
+            }
+
+            #content .star:after,
+            #menu > ul > li > article > .star:after {
+                color: transparent;
+                text-shadow: 0 0 3px yellow;
+            }
+
+            #content h1 {
+                padding-left: 20px;
+                margin-left: 10px;
+            }
+            #content h1:after {
+                left: 10px;
+                top: 30px;
+            }
+
+            #menu > ul > li.open > article {
+                max-height: 80px;
+            }
+            #menu > ul > li > article > p {
+                display: none;
+            }
+            #menu > ul > li > article > a {
+                display: none;
+            }
+
+            #semantics:after {
+                background-color: #FF00CC;
+                box-shadow: 0 0 3px 5px #FF00CC;
+            }
+            #offline:after {
+                background-color: #6CDFEA;
+                box-shadow: 0 0 3px 5px #6CDFEA;
+            }
+            #device:after {
+                background-color: #FFFF00;
+                box-shadow: 0 0 3px 5px #FFFF00;
+            }
+            #connectivity:after {
+                background-color: #FF6600;
+                box-shadow: 0 0 3px 5px #FF6600;
+            }
+            #multimedia:after {
+                background-color: #FFFFFF;
+                box-shadow: 0 0 3px 5px #FFFFFF;
+            }
+            #graphics:after {
+                background-color: #1693A5;
+                box-shadow: 0 0 3px 5px #1693A5;
+            }
+            #performance:after {
+                background-color: #9F1524;
+                box-shadow: 0 0 3px 5px #9F1524;
+            }
+            #css3:after {
+                background-color: #FF3333;
+                box-shadow: 0 0 3px 5px #FF3333;
+            }
+            #stars:after {
+                background-color: yellow;
+                box-shadow: 0 0 3px 5px yellow;
+            }
+
+
+            #stars.empty {
+                display: none;
+            }
+
+        </style>
+
+    </head>
+    <body>
+        <header class="mozfont">
+            <h1>HTML5 &amp; Friends</h1>
+            <p>by Mozilla</p>
+        </header>
+
+
+        <section id="menu">
+            <ul>
+                <li id="stars"><svg viewBox="0.0 0.0 240.2 217.3"></svg><h1 id="hstar">Your favorites</h1>
+                <li id="semantics">
+                    <svg viewBox="0.0 0.0 240.2 217.3">
+                    <path id="semantics_logo" d="M130.2,0L68.5,19.9 202.2,63.2 202.2,148.5 113.1,177.3 37.9,153.0 37.9,69.4 110.6,92.9 172.3,73.0 38.4,29.6 0,42.1 0,180.6 113.1,217.2 240.2,176.1 240.2,35.5z"/>
+                    </svg>
+
+                    <h1 id="html5semantics">HTML5 Semantics</h1>
+
+
+                    <article class="demoinside">
+                        <h1 id="html5parser">HTML5 parser</h1>
+                        <p>The HTML parser is one of the most complicated and sensitive pieces of a browser. It controls how your HTML source code is turned into web pages. The new parser is faster, complies with the HTML5 standard, and enables a lot of new functionality as well. <strong>This parser lets content embed SVG and MathML directly in the HTML markup.</strong></p>
+                        <a href="https://developer.mozilla.org/en/HTML/HTML5/HTML5_Parser" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="html5semantics">semantics</h1>
+                        <p>Elements, attributes, and attribute values in HTML are defined (by the HTML specification) to have certain meanings (semantics). HTML5 brings more elements to improve the semantics of a document.</p>
+                        <a href="https://developer.mozilla.org/en/HTML/Element" title="documentation">learn more</a>
+                    </article>
+
+                    <article >
+                        <h1 id="forms">Forms</h1>
+                        <p>Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4.</p>
+                        <a href="https://developer.mozilla.org/en/HTML/HTML5/Forms_in_HTML5" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="contenteditable">Content Editable</h1>
+                        <p><strong>contenteditable</strong> is used to indicate whether or not an element is editable. An entire document can be set as editable, or just a subset.</p>
+                        <a href="https://developer.mozilla.org/en/rich-text_editing_in_mozilla" title="documentation">learn more</a>
+                    </article>
+
+
+                <li id="offline">
+                    <svg viewBox="0 0 294.1 256.3">
+                    <path id="offline_logo" d="M294.1,79.0H246.3C226.7,31.9,180.0,0,128.1,0C57.5,0,0,57.4,0,128.1 C0,198.8,57.5,256.3,128.1,256.3c51.9,0,98.5-31.8,118.2-79.0h47.7V79.0z M256.1,139.2H128.1 c-6.1,0-11.1-4.9-11.1-11.1c0-6.1,4.9-11.1,11.1-11.1h127.9V139.2z M128.1,218.3 c-49.7,0-90.1-40.4-90.1-90.1c0-49.7,40.4-90.1,90.1-90.1c30.8,0,59.1,16.0,75.5,41.0h-75.5 c-27.0,0-49.1,22.0-49.1,49.1c0,27.0,22.0,49.1,49.1,49.1h75.5 C187.3,202.3,159.0,218.3,128.1,218.3z"/>
+                    </svg>
+
+                    <h1 id="offlinestorage">Offline Storage</h1>
+
+
+                    <article class="demoinside">
+                        <h1 id="localstorage">localStorage</h1>
+                        <p><strong>localStorage</strong> is designed to provide a larger, securer, and easier-to-use alternative to storing information in cookies.</p>
+                        <a href="https://developer.mozilla.org/en/dom/storage#localStorage" title="documentation">learn more</a>
+                    </article>
+
+                    <article class="demoinside">
+                        <h1 id="indexeddb">IndexedDB</h1>
+                        <p>IndexedDB is an evolving web standard for the storage of significant amounts of structured data in the browser and for high performance searches on this data using indexes.</p>
+                        <a href="https://developer.mozilla.org/en/IndexedDB" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="applicationcache">Application Cache</h1>
+                        <p>When offline, a user’s browser can’t reach the server to get any files that might be needed. You can’t always count on the browser’s cache to include the needed resources because the user may have cleared the cache, for example. This is why you need to define explicitly which files must be stored so that all needed files and resources are available when the user goes offline: HTML, CSS, JavaScript files, and other resources like images and video.</p>
+                        <a href="https://developer.mozilla.org/en/Offline_resources_in_Firefox" title="documentation">learn more</a>
+                    </article>
+
+
+
+                <li id="device">
+                    <svg viewBox="0 0 247.2 233.1">
+                    <path id="device_logo" d="M179.2,50.1L229.3,0h-53.7l-52.0,52.0L71.5,0H17.8l50.1,50.1H0v182.9h35.7h38.7 h14.9l34.1-34.1l34.1,34.1h19.8h33.9h35.7V50.1H179.2z M123.5,145.1l-49.8,49.9h-35.7V88.1h171.1 v106.9h-35.7L123.5,145.1z"/>
+                    </svg>
+
+                    <h1 id="deviceaccess">Device Access</h1>
+
+                    <article >
+                        <h1 id="deviceorientation">Device Orientation</h1>
+                        <p>The MozOrientation event provides a way to handle orientation information. This event is sent when the accelerometer detects a change to the orientation of the device. By receiving and processing the data reported by MozOrientation events, it's possible to interactively respond to rotation and elevation changes caused by the user moving the device.</p>
+                        <a href="https://developer.mozilla.org/en/Detecting_device_orientation" title="documentation">learn more</a>
+                    </article>
+
+                    <article class="demoinside">
+                        <h1 id="audiodataapi">Audio Data API</h1>
+                        <p>The HTML5 specification introduces the &lt;audio&gt; and &lt;video&gt; media elements, and with them the opportunity to dramatically change the way we integrate media on the web. We present a new Mozilla extension to this API, which allows web developers to read and write raw audio data.</p>
+                        <a href="https://developer.mozilla.org/en/Introducing_the_Audio_API_Extension" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="multitouch">Multi-touch</h1>
+                        <p>With the Multitouch API, regular webpages are capable of using multitouch input, allowing web developers to create new interactive experiences for their websites.</p>
+                        <a href="https://developer.mozilla.org/en/DOM/Touch_events" title="documentation">learn more</a>
+                    </article>
+                    <article >
+                        <h1 id="geolocationapi">Geolocation API</h1>
+                        <p>The Geolocation API allows the user to provide their location to web applications if they so desire.  For privacy reasons, the user is asked to confirm permission to report location information.</p>
+                        <a href="https://developer.mozilla.org/en/using_geolocation" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="fileapi">File API</h1>
+                        <p>The File API specifies the ability to asynchronously read a selected file into memory, and perform operations on the file data within the web application (for example, to display a thumbnail preview of an image, before it is uploaded, or to look for ID3 tags within an MP3 file, or to look for EXIF data in JPEG files, all on the client side).</p>
+                        <a href="https://developer.mozilla.org/en/Using_files_from_web_applications" title="documentation">learn more</a>
+                    </article>
+
+
+                    <article>
+                        <h1 id="notification">Notification</h1>
+                        <p>The File API specifies the ability to asynchronously read a selected file into memory, and perform operations on the file data within the web application (for example, to display a thumbnail preview of an image, before it is uploaded, or to look for ID3 tags within an MP3 file, or to look for EXIF data in JPEG files, all on the client side).</p>
+                        <a href="https://developer.mozilla.org/en/Using_files_from_web_applications" title="documentation">learn more</a>
+                    </article>
+
+
+
+
+                <li id="connectivity">
+                    <svg viewBox="0 0 305.5 229.5">
+                    <path id="connectivy_logo" d="M229.5,172.5h37.9V81.5l-42.7-42.7l-26.8,26.8l31.6,31.6V172.5z M267.5,191.5 h-55.2h-77.0l-31.6-31.6l13.4-13.4l26.1,26.1h53.7l-52.9-53.0l13.5-13.5l52.9,52.9v-53.7 l-26.0-26.0l13.3-13.3L132.0,0L67.2,0.0V0L0,0.0l37.8,37.8v0.1h0.2l78.2-0.0l27.7,27.7 l-40.5,40.5l-27.7-27.7V56.9H37.8v37.2l65.6,65.6l-26.7,26.7l42.7,42.7h64.8h121.1v-0.0 L267.5,191.5z"/>
+                    </svg>
+
+                    <h1 id="hconnectivity">Connectivity</h1>
+
+                    <article>
+                        <h1 id="formdata">formData</h1>
+                        <p>XMLHttpRequest Level 2 (editor’s draft) adds support for the new FormData interface. FormData objects provide a way to easily construct a set of key/value pairs representing form fields and their values, which can then be easily sent using the XMLHttpRequest send() method in “multipart/form-data” format.</p>
+                        <a href="https://developer.mozilla.org/en/XMLHttpRequest/FormData" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="xhrlvl2"><abbr title="XMLHttpRequest">XHR</abbr> Level 2</h1>
+                        <p>XMLHttpRequest makes sending HTTP requests very easy. You simply create an instance of the object, open a URL, and send the request.  The HTTP status of the result, as well as the result's contents, are available in the request object when the transaction is completed.  <em>This new  Level brings interesting feature such as progress events and support for cross-site requests</em>.  </p>
+                        <a href="https://developer.mozilla.org/En/Using_XMLHttpRequest" title="documentation">learn more</a>
+                    </article>
+
+
+                    <article>
+                        <h1 id="xdomain">Cross-Domain <abbr title="XMLHttpRequest">XHR</abbr></h1>
+                        <p>Cross-site HTTP requests are HTTP requests for resources from a different domain than the domain of the resource making the request. For instance, a resource loaded from Domain A such as an HTML web page, makes a XMLHttpRequest for a resource on Domain B. This is by default forbidden by the browser. As Domain B, you can allow such request with the <code>Access-Control-Allow-Origin:</code> header.</p>
+                        <a href="https://developer.mozilla.org/En/HTTP_Access_Control" title="documentation">learn more</a>
+                    </article>
+
+
+
+                    <article>
+                        <h1 id="postmessage">postMessage</h1>
+                        <p> This is a method for safely enabling cross-origin communication. Normally, scripts on different pages are only allowed to access each other if and only if the pages which executed them are at locations with the same protocol, port number and host. <strong>postMessage</strong> provides a controlled mechanism to circumvent this restriction in a way which is secure when properly used.</p>
+                        <a href="https://developer.mozilla.org/en/DOM/window.postMessage" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="crossoriginresourcesharing">Cross-Origin Resource Sharing</h1>
+                        <p>Content Security Policy (CSP) is a set of easy to use tools that allow a web site owner to tell the browser where it should or should not load resources from. In particular it aims to prevent three different classes of common attacks we see on the web today: cross-site scripting, clickjacking and packet sniffing attacks.</p>
+                        <a href="https://developer.mozilla.org/en/Security/CSP" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="httpstricttransportsecurity">HTTP Strict Transport Security</h1>
+                        <p> This specification defines a mechanism enabling Web sites to declare themselves accessible only via secure connections, and/or for users to be able to direct their user agent(s) to interact with given sites only over secure connections.<br> </p>
+                        <a href="https://developer.mozilla.org/en/Security/HTTP_Strict_Transport_Security" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="xframeoptions">X-Frame-Options</h1>
+                        <p>Concerned about clickjacking or tired of sites wrapping your content with their ads? <br>X-FRAME-OPTIONS is a header value that is set by the webserver which instructs supported browsers on whether to allow a particular page to be framed by other pages.
+                        </p>
+                        <a href="https://developer.mozilla.org/en/The_X-FRAME-OPTIONS_response_header" title="documentation">learn more</a>
+                    </article>
+
+                <li id="multimedia">
+                    <svg viewBox="0.0 0.0 243.6 186.6">
+                    <path id="multimedia_logo" d="M243.4,0L189.7,0 151.7,37.9 205.4,37.9zM122.0,37.9L159.9,0 106.2,0 68.2,37.9zM205.5,148.6L37.9,148.6 37.9,38.3 76.3,0 22.5,0 0,22.5 0,186.6 243.5,186.6 243.5,37.9 205.5,37.9z"/>
+                    </svg>
+
+                    <h1 id="hmultimedia">Multimedia</h1>
+
+                    <article>
+                        <h1 id="video">&lt;video&gt;</h1>
+                        <p>HTML5 defines a standard way to embed video in a web page, using a &lt;video&gt; element. The same way we can use images in web pages, we can now use videos. Videos can be styled with CSS and controlled via Javascript</p>
+                        <a href="https://developer.mozilla.org/En/Using_audio_and_video_in_Firefox" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="opencodecs">Open Codecs</h1>
+                        <p>Mozilla is proud to support, and bring to web content, free and open video and audio codecs: <strong>Webm/VP8</strong>, <strong>OGG/Theora</strong> and <strong>Vorbis</strong>.</p>
+                        <a href="https://developer.mozilla.org/En/Media_formats_supported_by_the_audio_and_video_elements" title="documentation">learn more</a>
+                    </article>
+
+
+
+                    <article >
+                        <h1 id="audio">&lt;audio&gt;</h1>
+                        <p>The HTML 5 &lt;audio&gt; element offers the ability to easily embed audio files into HTML documents. Once you've embedded media into your HTML document using the new element, you can programmatically control them from your JavaScript code.</p>
+                        <a href="https://developer.mozilla.org/en/HTML/Element/audio" title="documentation">learn more</a>
+                    </article>
+
+
+                <li id="graphics">
+                    <svg viewBox="0.0 0.0 240.2 217.3">
+                    <path id="graphics_logo" d="M130.2,0L68.5,19.9 202.2,63.2 202.2,148.5 113.1,177.3 37.9,153.0 37.9,69.4 110.6,92.9 172.3,73.0 38.4,29.6 0,42.1 0,180.6 113.1,217.2 240.2,176.1 240.2,35.5z"/>
+                    </svg>
+
+                    <h1 id="treeDgraphicseffects">3D, Graphics, Effects</h1>
+
+                    <article>
+                        <h1 id="canvas2d">&lt;canvas&gt; 2D</h1>
+                        <p>Canvas is a HTML5 element which can be used to draw graphics via scripting (JavaScript). For example, it can be used to draw graphs, make photo compositions or even perform animations.</p>
+                        <a href="https://developer.mozilla.org/en/HTML/Canvas" title="documentation">learn more</a>
+                    </article>
+
+
+
+                    <article >
+                        <h1 id="webgl">WebGL</h1>
+                        <p><strong>Canvas 3D.</strong> WebGL brings 3D graphics to the Web by introducing an API that closely conforms to OpenGL ES 2.0 and can be used in HTML5 canvas elements.</p>
+                        <a href="https://developer.mozilla.org/en/WebGL" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="scalablevectorgraphics">Scalable Vector Graphics</h1>
+                        <p>SVG is an XML language which can be used to draw graphics.  It can be used to create an image either by specifying all the lines and shapes necessary, or by modifying existing raster images, or by a combination. The image and its components can also be transformed, composited, or filtered to change its appearance completely.</p> 
+                        <a href="https://developer.mozilla.org/En/SVG" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="foreignobject">foreignObject</h1>
+                        <p>The ‘foreignObject’ element allows for inclusion of a foreign namespace which has its graphical content drawn by a different user agent. The included foreign graphical content is subject to SVG transformations and compositing.</p>
+                    </article>
+
+                    <article>
+                        <h1 id="clippingmaskingandcompositing">Clipping, Masking and Compositing</h1>
+                        <p>Graphic elements, including text, paths, basic shapes and combinations of these, can be used as outlines to define both 'inside' and 'outside' regions that can be painted (with colors, gradients and patterns) independently. Fully opaque clipping paths and semi-transparent masks are composited together to calculate the color and opacity of every pixel of the final image, using simple alpha blending.</p>
+                    </article>
+
+                    <article>
+                        <h1 id="svgasanimg">SVG as an &lt;img&gt;</h1>
+                        <p><img src="imgs/lion.svg"></p>
+                        <a href="https://developer.mozilla.org/en/HTML/element/img#Supported_Image_Formats" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="svgasacssbackground">SVG as a CSS background</h1>
+                        <a href="https://developer.mozilla.org/en/CSS/background-image#Syntax" title="documentation">learn more</a>
+                    </article>
+
+
+
+                <li id="performance">
+                    <svg viewBox="-2 -2 278.28 278.31">
+                    <path id="performance_logo" d="M272.4,114.38L232.28,97.74l16.52-39.89c-4.22-5.90-8.78-11.48-13.80-16.56c-0.30-0.32-0.60-0.65-0.92-0.97  c-0.51-0.51-1.07-1-1.63-1.52c-4.91-4.82-10.31-9.19-16.00-13.29L176.56,42.01L159.93,1.90  c-14.45-2.44-29.03-2.50-43.14-0.35c-0.26,0.03-0.48,0.05-0.69,0.07c-0.61,0.09-1.20,0.22-1.75,0.35  L97.72,41.99L57.60,25.39c-11.98,8.55-22.39,18.83-30.89,30.44c-0.08,0.12-0.18,0.24-0.27,0.37  c-0.35,0.48-0.69,0.98-1.02,1.49l16.57,40.00L1.88,114.34c-2.40,14.45-2.48,28.99-0.35,43.09  c0.03,0.25,0.05,0.52,0.10,0.76c0.07,0.59,0.19,1.16,0.30,1.74l40.06,16.58l-16.57,39.99  c3.81,5.34,7.92,10.46,12.39,15.15c0.79,0.83,1.54,1.70,2.37,2.52c0.57,0.59,1.22,1.13,1.83,1.70  c4.82,4.69,10.13,8.94,15.7,12.93l39.97-16.56l16.58,40.05c0.59,0.12,1.22,0.23,1.82,0.37  c0.14-0.02,0.32,0.01,0.47,0.03c14.17,2.18,28.78,2.11,43.33-0.31l16.62-40.12l40.02,16.58  c0.52-0.31,1.03-0.66,1.52-1.03c0.15-0.09,0.30-0.22,0.47-0.35c11.51-8.46,21.78-18.82,30.32-30.77l-16.62-40.14  l40.06-16.58c0.10-0.57,0.23-1.18,0.34-1.80c0.02-0.18,0.02-0.37,0.05-0.55  C274.88,143.47,274.82,128.89,272.4,114.38z M239.98,144.63l-42.22,17.49l0.06,0.16l-0.14,0.05l17.50,42.20  c-3.26,3.80-6.81,7.32-10.63,10.63l-42.22-17.47l-0.05,0.14l-0.14-0.07l-17.48,42.2  c-4.99,0.37-9.97,0.35-15.02,0.02l-17.50-42.22l-0.12,0.05l-0.07-0.16l-42.35,17.55  c-0.44-0.37-0.93-0.70-1.37-1.11c-1.40-1.24-2.72-2.65-4.05-4.00c-1.33-1.33-2.72-2.61-3.99-4.02  c-0.37-0.40-0.71-0.92-1.09-1.37l17.52-42.35l-0.14-0.07l0.07-0.13l-42.23-17.49  c-0.33-5.04-0.36-10.05,0.03-15.02l42.18-17.47l-0.04-0.13l0.12-0.05L59.09,69.73  c3.31-3.81,6.84-7.37,10.62-10.62l42.22,17.47l0.05-0.12l0.12,0.05l17.50-42.22c5.04-0.35,10.04-0.35,15.03,0.02  l17.47,42.22l0.18,0.07l42.22-17.49c1.83,1.61,3.59,3.33,5.36,5.06c1.78,1.81,3.56,3.63,5.22,5.56l-17.47,42.20  l0.14,0.05l-0.06,0.16l42.21,17.47C240.34,134.60,240.35,139.61,239.98,144.63z M172.59,122.50l-0.06-0.12  l10.23-24.62c-1.87-2.21-3.97-4.26-6.19-6.23l-24.66,10.20l-0.03-0.06l-0.08,0.02l-10.20-24.64  c-2.91-0.23-5.83-0.23-8.77,0l-10.21,24.63l-0.07,0.00l-0.04,0.03l-24.65-10.17c-2.20,1.87-4.25,3.94-6.23,6.15  l10.23,24.67l-0.08,0.03l0.03,0.09l-24.73,10.26c-0.03,0.31-0.08,0.68-0.10,1.00  c-0.05,1.09-0.01,2.21-0.02,3.31c0,1.09-0.04,2.22,0.05,3.32c0,0.34,0.02,0.68,0.08,1.03l24.73,10.24l-0.00,0.11  l0.05,0.03l-10.19,24.65c1.88,2.20,3.98,4.25,6.21,6.15l24.63-10.20l0.02,0.10l0.09-0.03l10.21,24.65  c2.96,0.23,5.88,0.23,8.78,0l10.20-24.65l0.08,0.03l0.05-0.09l24.63,10.18c2.22-1.90,4.27-3.97,6.19-6.17  l-10.20-24.63l0.07-0.05l-0.03-0.09l24.63-10.20c0.10-1.48,0.12-3.00,0.14-4.45c0-1.44-0.02-2.89-0.12-4.30  L172.59,122.50z M137.15,153.76c-9.18,0-16.63-7.44-16.63-16.63c0-9.18,7.44-16.63,16.63-16.63s16.63,7.44,16.63,16.63  C153.78,146.31,146.33,153.76,137.15,153.76z"/>
+                    </svg>
+
+                    <h1 id="performanceintegration">Performance &amp; Integration</h1>
+
+                    <article>
+                        <h1 id="webworkers">Web Workers</h1>
+                        <p>Workers provide a simple means for web content to run scripts in background threads.  Once created, a worker can send messages to the spawning task by posting messages to an event handler specified by the creator.
+                        The worker thread can perform tasks without interfering with the user interface.  In addition, they can perform I/O using XMLHttpRequest.</p>
+                        <a href="https://developer.mozilla.org/En/Using_web_workers" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="asyncdefer">async &amp; defer</h1>
+                        <p>These are attributes of the &l;script&gt; element. Set async to tell the browser to, if possible, execute the script asynchronously. Set defer to tell the browser to execute the script after it has parsed the document.  </p>
+                        <a href="https://developer.mozilla.org/En/HTML/Element/Script" title="documentation">learn more</a>
+                    </article>
+
+
+                    <article>
+                        <h1 id="javascriptanimationscheduler">Javascript Animation Scheduler</h1>
+                        <p><strong>window.mozRequestAnimationFrame</strong> tells the browser that you wish to perform an animation. This requests that the browser schedule a repaint of the window for the next animation frame.</p>
+                        <a href="https://developer.mozilla.org/en/DOM/window.mozRequestAnimationFrame" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="javascripttypedarrays">JavaScript typed arrays</h1>
+                        <p>If you’re doing processing with JavaScript and you want to process low-level data, Firefox now supports native typed arrays in JavaScript. This can make a gigantic difference in how fast items are processed if you’re doing WebGL or image manipulation.</p>
+                        <a href="https://developer.mozilla.org/en/JavaScript_typed_arrays" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="historyapi">History API</h1>
+                        <p>The DOM  window object provides access to the browser's history through the window.history object. It exposes useful methods and properties that let you move back and forth through the user's history, as well as &mdash; starting with HTML5 &mdash; manipulate the contents of the history stack.</p>
+                        <a href="https://developer.mozilla.org/en/DOM/Manipulating_the_browser_history" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="nativejson">Native JSON</h1>
+                        <p>JSON (JavaScript Object Notation) is a data-interchange format, based on a subset of JavaScript syntax. It is useful when writing any kind of JavaScript-based application, including extensions.</p>
+                        <a href="https://developer.mozilla.org/En/Using_JSON_in_Firefox" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="protocolhandlers">Protocol handlers</h1>
+                        <p>Browsers need a way to deal with links that use protocols other than HTTP (for example, mailto:). They have traditionally used desktop programs such as a desktop e-mail client, to handle these protocols.  Web-based protocol handlers enable web-based applications ...</p>
+                        <a href="https://developer.mozilla.org/en/Web-based_protocol_handlers" title="documentation">learn more</a>
+                    </article>
+
+
+
+                <li id="css3">
+
+                    <svg viewBox="0 0 220.5 199.5">
+                    <path id="css3_logo" d="M32.8,0L25.4,37.0 176.0,37.0 171.3,60.9 20.6,60.9 13.3,97.9 163.9,97.9 155.5,140.1 94.8,160.2 42.2,140.1 45.8,121.8 8.8,121.8 0,166.2 87.0,199.5 187.3,166.2 200.6,99.4 203.3,86.0 220.4,0z"/>
+                    </svg>
+
+                    <h1 id="css3styling">CSS3 Styling</h1>
+
+                    <article>
+                        <h1 id="transform">Transform</h1>
+                        <p>The -moz-transform CSS property lets you modify the coordinate space of the CSS visual formatting model.  Using it, elements can be translated, rotated, scaled, and skewed as this text.</p>
+                        <a href="https://developer.mozilla.org/en/css/-moz-transform" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="transition">Transition</h1>
+                        <p>CSS transitions, part of the draft CSS3 specification, provide a way to animate changes to CSS properties, instead of having the changes take effect instantly. For example, if you change the color of an element from white to black, normally the change is instantaneous. With CSS transitions enabled, the change occurs over an interval of time you can specify, following an acceleration curve you can customize.</p>
+                        <a href="https://developer.mozilla.org/en/CSS/CSS_transitions" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="queryselector">QuerySelector</h1>
+                        <p>The Selectors API provides methods that make it quick and easy to retrieve Element nodes from the DOM by matching against a set of selectors.  This is much faster than past techniques, where it was necessary, for example, to use a loop in JavaScript code to locate the specific items you needed to find.</p>
+                        <a href="https://developer.mozilla.org/En/DOM/Document.querySelector" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="classlist">classList</h1>
+                        <p>The bridge between the document and its style is often based on the <em>class</em> attribute. Being able to manipulate this attribute in an efficient way is important.
+                        <strong>classList</strong> lets you toggle, add and remove classes from any element easily.</p>
+                        <a href="https://developer.mozilla.org/en/DOM/element.classList" title="documentation">learn more</a>
+                    </article>
+
+
+
+                    <article>
+                        <h1 id="mediaqueries">@media Queries</h1>
+                        <p>A media query consists of a media type and at least one expression that limits the style sheets' scope by using media features, such as width, height, and color.  Media queries let the presentation of content be tailored to a specific range of output devices without having to change the content itself.</p>
+                        <a href="https://developer.mozilla.org/En/CSS/Media_queries" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="structuralpseudoclasses">Structural pseudo-classes</h1>
+                        <p>Selectors introduces the concept of structural pseudo-classes to permit selection based on extra information that lies in the document tree but cannot be represented by other simple selectors or combinators.</p>
+                        <a href="https://developer.mozilla.org/En/CSS/%3anth-child" title="documentation">learn more</a>
+                    </article>
+
+
+                    <article>
+                        <h1 id="borderradius">Border Radius</h1>
+                        <p><strong>The border-radius CSS property</strong> can be used to give borders rounded corners. The radius applies also to the background even if the element has no border.</p>
+                        <a href="https://developer.mozilla.org/en/CSS/border-radius" title="documentation">learn more</a>
+                    </article>
+
+                    <article >
+                        <h1 id="borderimage">Border Image</h1>
+                        <p><strong>The border-image CSS property</strong> allows drawing an image on the borders of elements. This makes drawing complex looking widgets much simpler than it has been and removes the need for as many as nine boxes in some cases.</p>
+                        <a href="https://developer.mozilla.org/en/CSS/-moz-border-image" title="documentation">learn more</a>
+                    </article>
+
+
+                    <article >
+                        <h1 id="gradients">Gradients</h1>
+                        <p>Using CSS gradients in a background lets you display smooth transitions between two or more specified colors; this lets you avoid using images for these effects, thereby reducing download time and bandwidth usage. In addition, because the gradient is generated by the browser, objects with gradients look better when zoomed, and you can adjust your layout much more flexibly.</p>
+                        <a href="https://developer.mozilla.org/en/Using_gradients" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="multiplebackgrounds">Multiple Backgrounds</h1>
+                        <p>You can apply multiple backgrounds to elements. These are layered atop one another with the first background you provide on top and the last background displayed in the back.</p>
+                        <a href="https://developer.mozilla.org/en/Using_gradients" title="documentation">learn more</a>
+                    </article>
+
+                    <article >
+                        <h1 id="columns">Columns</h1>
+                        <p><strong>The column layout</strong>.<br> People have trouble reading text if lines are too long; if it takes too long for the eyes to move from the end of the one line to the beginning of the next, they lose track of which line they were on. Therefore, to make maximum use of a large screen, authors should have limited-width columns of text placed side by side, just as newspapers do.</p>
+                        <a href="https://developer.mozilla.org/en/CSS3_Columns" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="boxshadow">box-shadow</h1>
+                        <p><strong>The box-shadow CSS property</strong> allows casting a drop shadow from the outline of almost any element. It can define multiple shadow effects at once. </p>
+                        <a href="https://developer.mozilla.org/en/CSS/box-shadow" title="documentation">learn more</a>
+                    </article>
+
+
+                    <article >
+                        <h1 id="textshadow">Text Shadow</h1>
+                        <p>The text-shadow CSS property does what the name implies: It lets you create a slightly blurred, slightly moved copy of text, which ends up looking somewhat like a real-world shadow.
+                        The text-shadow property was first introduced in CSS2, but as it was improperly defined at the time, its support was dropped again in CSS2.1. The feature was re-introduced with CSS3.</p>
+                        <a href="https://developer.mozilla.org/fr/CSS/text-shadow" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="cssany">any()</h1>
+                        <p>CSS calc() values lets you compute a length value using an arithmetic expression. This means you can use it to define the sizes of divs, the values of margins, the widths of borders, and so forth.</p>
+                        <a href="https://developer.mozilla.org/en/CSS/%3A-moz-any" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="csscalc">calc()</h1>
+                        <p>CSS calc() values lets you compute a length value using an arithmetic expression. This means you can use it to define the sizes of divs, the values of margins, the widths of borders, and so forth.</p>
+                        <a href="https://developer.mozilla.org/en/CSS/-moz-calc" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="imagerect">image-rect</h1>
+                        <p>Use sprites as resources for your design. The new -moz-image-rect lets you use a sub-rectangle of an image as part of a background or background-image.</p>
+                        <a href="https://developer.mozilla.org/en/CSS/-moz-image-rect" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="mozelement">-moz-element</h1>
+                        <p><em>-moz-element</em> is an experimental extension to the CSS background-image property: the ability to draw arbitrary elements as backgrounds using <em>-moz-element(#elementID)</em>.</p>
+                        <a href="https://developer.mozilla.org/en/CSS/-moz-element" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="maskfilterclip-path">mask, filter, clip-path</h1>
+                        <p>SVG effects are extended to apply to CSS-formatted elements. In particular, it makes the 'filter', 'mask' and 'clip-path' CSS properties applicable to CSS-formatted elements (such as HTML elements).</p>
+                        <a href="https://developer.mozilla.org/En/Applying_SVG_effects_to_HTML_content" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="fontface">@font-face</h1>
+                        <p>@font-face allows authors to specify online fonts to display text on their web pages. By allowing authors to provide their own fonts, @font-face eliminates the need to depend on the limited number of fonts users have installed on their computers.</p>
+                        <a href="https://developer.mozilla.org/en/css/@font-face" title="documentation">learn more</a>
+                    </article>
+
+
+                    <article >
+                        <h1 id="fontfeaturesettings">font-feature-settings</h1>
+                        <p><em>Play with much more of the capabilities of TrueType</em>. It’s possible to take advantage of all kinds of font capabilities — kerning, ligatures, alternates, real small caps, and stylistic sets, to name just a few.</p>
+                        <a href="https://developer.mozilla.org/en/CSS/-moz-font-feature-settings" title="documentation">learn more</a>
+                    </article>
+
+                    <article>
+                        <h1 id="woff">WOFF</h1>
+                        <p>The Web Open Font Format (WOFF) has two main advantages over raw TrueType or OpenType fonts.  It is compressed, which means that you will typically see much smaller download sizes compared with raw TrueType or OpenType fonts.  It contains information that allows you to see where the font came from &mdash; without DRM or labeling for a specific domain &mdash; which means it has support from a large number of font creators and font foundries.  </p>
+                        <a href="https://developer.mozilla.org/en/About_WOFF" title="documentation">learn more</a>
+                    </article>
+
+            </ul>
+
+
+            <!-- List of demos
+            <li>Parser HTML5 and inline SVG
+            <li>New elements
+            <li>Canvas 2D
+            <li>Canvas 3D
+            <li>Video / WebM
+            <li>Audio
+            <li>Audio API
+            <li>Transforms &amp; Transitions
+            <li>Shadows, radius, gradients
+            <li>Fonts
+            <li>Workers
+            <li>Geoloc
+            <li>Orientation
+            <li>Notification
+            <li>Offline
+            <li>Animation (JS)
+            <li>SVG
+            <li>XHR + File API + ImgUR
+
+
+            <li>ECMAScript 5
+            -->
+        </section>
+
+
+        <style>
+
+            .showpopup { overflow: hidden; }
+            .showpopup #popup { display: block; }
+            #popup { display: none; position: fixed; top: 0px; width: 100%; left: 0px; height: 100%; background-color: rgba(0, 0, 0, 0.8); }
+            #content { width: 320px; height: 460px; margin-left: 20px; margin-top: 40px; border: 3px solid #ccc; border-radius: 30px; background-color: #404040; box-shadow: 0px 0px 10px black inset; position: relative; padding: 20px; color: white; }
+            #close { position: absolute; right: -20px; top: -20px; border: none; background: none; }
+            #close img { width: 40px; height: 40px; }
+            #content h1 { font-size: 28px; margin-top: 20px; margin-bottom: 20px; }
+            #content p { font-size: 18px; }
+        </style>
+
+        <section id="popup">
+            <div id="content"><button onclick="closePopup();" id="close"><img src="close.svg"></button>
+                <h1></h1>
+                <p></p>
+            </div>
+        </section>
+
+    </body>
+</html>
+
+<script>
+    // set sections
+    var li  = document.querySelectorAll("#menu > ul > li");
+    for (var i = 0; i < li.length; i++) {
+        var h = li[i].querySelector("h1");
+        var a = li[i].querySelectorAll("article");
+        h.setAttribute("countsections", a.length);
+        if (a.length == 0) {
+            h.parentNode.classList.add("empty");
+        } else {
+            h.parentNode.classList.remove("empty");
+        }
+        var d = li[i].querySelectorAll(".demoinside");
+        var str = "";
+        for (var j = 0; j < d.length; j++) {
+            str += ". ";
+        }
+        h.setAttribute("countdemos", str);
+    }
+
+    var stars = localStorage.getItem("stars");
+    if (!stars) {
+        stars = [];
+    } else {
+        stars = stars.split("|");
+    }
+
+    updateStars();
+    function updateStars() {
+        var oldstars = document.querySelectorAll(".star");
+        var starsfolder = document.querySelector("#stars");
+        var articles2remove = starsfolder.querySelectorAll("article");
+        for (var i = 0; i < articles2remove.length; i++) {
+            starsfolder.removeChild(articles2remove[i]);
+        }
+
+        for (var i = 0; i < oldstars.length; i++) {
+            oldstars[i].classList.remove("star");
+        }
+        for (var i = 0; i < stars.length; i++) {
+            var s = document.querySelector("#" + stars[i]);
+            if (s) {
+                s.classList.add("star");
+                var article = s.parentNode;
+                article = article.cloneNode(true);
+                var s = article.querySelector(".selected");
+                if (s) {
+                    s.classList.remove("selected");
+                }
+                starsfolder.appendChild(article);
+            }
+        }
+        var s = document.querySelector(".selected");
+        if (s) {
+            var contentH1 = document.querySelector("#content > h1");
+            if (stars.indexOf(s.id) != -1) {
+                contentH1.classList.add("star");
+            } else {
+                contentH1.classList.remove("star");
+            }
+        }
+        var h = document.querySelector("#hstar");
+        h.setAttribute("countsections", stars.length);
+
+        if (stars.length == 0) {
+            h.parentNode.classList.add("empty");
+        } else {
+            h.parentNode.classList.remove("empty");
+        }
+
+        localStorage.setItem("stars", stars.join("|"));
+    }
+
+    var h = document.querySelectorAll("#menu > ul > li > h1");
+    for (var i = 0; i < h.length; i++) {
+        (function(h) {
+            h.addEventListener("click", function() {
+                var current = document.querySelector(".open");
+                if (current && current != h.parentNode) {
+                    current.classList.remove("open");
+                }
+                h.parentNode.classList.toggle("open");
+            }, true);
+        })(h[i]);
+    }
+
+    var contentH1 = document.querySelector("#content > h1");
+    var contentP = document.querySelector("#content > p");
+
+    contentH1.addEventListener("click", function() {
+        var h = document.querySelector("#menu > ul > li > article > h1.selected");
+        toggleStar(h.id);
+    }, true);
+    function toggleStar(name) {
+        var idx = stars.indexOf(name);
+        if (idx > -1) {
+            stars.splice(idx, 1);
+        } else {
+            stars.push(name);
+        }
+        updateStars();
+    }
+
+    var h = document.querySelectorAll("#menu > ul > li > article > h1");
+    for (var i = 0; i < h.length; i++) {
+        (function(h) {
+            h.addEventListener("click", function() {
+                h.classList.add("selected");
+                p = h.parentNode.querySelector("p");
+
+                contentH1.innerHTML = h.innerHTML;
+                contentP.innerHTML = p.innerHTML;
+                contentH1.className = h.className;
+
+                document.body.classList.add("showpopup");
+            }, true);
+        })(h[i]);
+    }
+
+
+    function closePopup() {
+        document.body.classList.remove('showpopup');
+        var h = document.querySelector("#menu > ul > li > article > h1.selected");
+        if (!!h) {
+           h.classList.remove("selected");
+        }
+        var contentH1 = document.querySelector("#content > h1");
+        contentH1.classList.remove("star");
+    }
+</script>
+
+

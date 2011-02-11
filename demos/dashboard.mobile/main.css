@@ -3,6 +3,53 @@ html, body { width: 400px; margin: auto; background-color: #000; color: white;}
 #menu { width: 400px; overflow: hidden;}
 #menu > section > article > a, #menu > section > article > p { display: none; }
 
+
+
+#menu > section {
+    position: relative;
+}
+
+#menu > section:after {
+    content: attr(childrencount);
+    position: absolute;
+    top: 2px; right: 2px;
+    opacity: 0.2;
+    font-size: 64px;
+    -moz-transition-duration: 1s;
+
+}
+
+#menu > section {
+    background-image: url(border-bottom.png);
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    background-size: 100% 1px;
+    background-color: #000;
+}
+
+#menu > section {
+}
+
+#menu > section > article {
+    max-height: 0px;
+    overflow: hidden;
+    -moz-transition-duration: 0.7s;
+}
+
+/* Open */
+
+#menu > .open:after { opacity: 0; }
+#menu > .open > article { max-height: 70px; } 
+
+/* H1 */
+
+#menu > section > svg { fill: white; width: 26px; height: 26px; position: absolute; top: -moz-calc((70px - 26px) / 2); left: -moz-calc((70px - 26px) / 2); }
+#menu > section > h1 { display: inline-block; font-size: 20px; width: 100%; line-height: 70px; text-indent: 70px; }
+#menu > section > article > h1 { line-height: 69px; text-indent: 70px; font-size: 20px; border-top: 1px dashed #aaa; }
+#menu > section > article > h1:before { content: "- "; }
+
+/* Header */
+
 header {
     background: url(HTML5_Logo.svg), #2A2A2A;
     background-repeat: no-repeat;
@@ -28,68 +75,6 @@ header p {
     right: 15px;
     font-size: 21px;
 }
-
-#menu > section {
-    position: relative;
-}
-#menu > section > h1 {
-    display: inline-block;
-    font-size: 20px;
-    width: 100%;
-    line-height: 70px;
-    text-indent: 70px;
-}
-#menu > section:after {
-    content: attr(childrencount);
-    position: absolute;
-    top: 2px; right: 2px;
-    opacity: 0.2;
-    font-size: 64px;
-    -moz-transition-duration: 1s;
-
-}
-#menu > .open:after {
-    opacity: 0;
-}
-#menu > section {
-    background-image: url(border-bottom.png);
-    background-position: bottom left;
-    background-repeat: no-repeat;
-    background-size: 100% 1px;
-    background-color: #000;
-}
-#menu > section > svg {
-    fill: white;
-    width: 26px; height: 26px;
-    position: absolute;
-    top: -moz-calc((70px - 26px) / 2);
-    left: -moz-calc((70px - 26px) / 2);
-}
-
-#menu > section {
-}
-#menu > section > article {
-    max-height: 0px;
-    overflow: hidden;
-    -moz-transition-duration: 0.7s;
-}
-
-#menu > .open > article {
-    max-height: 70px;
-}
-
-#menu > section > article > h1 {
-    line-height: 69px;
-    text-indent: 70px;
-    font-size: 20px;
-    border-top: 1px dashed #aaa;
-}
-
-#menu > section > article > h1:before {
-    content: "- ";
-}
-
-
 /* Lights */
 
 
@@ -148,7 +133,7 @@ header p {
 .showpopup { overflow: hidden; }
 .showpopup #popup { display: block; }
 #popup { display: none; position: fixed; top: 0px; width: 100%; left: 0px; height: 100%; background-color: rgba(0, 0, 0, 0.8); }
-#content { width: 320px; height: 460px; margin-left: 20px; margin-top: 40px; border: 3px solid #ccc; border-radius: 30px; background-color: #404040; box-shadow: 0px 0px 10px black inset; position: relative; padding: 20px; color: white; }
+#content { width: 320px; height: 460px; margin: auto; margin-top: 40px; border: 3px solid #ccc; border-radius: 30px; background-color: #404040; box-shadow: 0px 0px 10px black inset; position: relative; padding: 20px; color: white; }
 #close { position: absolute; right: -20px; top: -20px; border: none; background: none; }
 #close img { width: 40px; height: 40px; }
 #content h1 { font-size: 28px; margin-top: 20px; margin-bottom: 20px; padding-left: 20px; margin-left: 20px;}
@@ -167,4 +152,5 @@ header p {
     text-shadow: 0 0 3px white;
 }
 #content h1:after { left: -30px; top: -13px; }
-#content .star:after, #menu > ul > li > article > .star:after { color: transparent; text-shadow: 0 0 3px yellow; }
+#content .star:after,
+#menu .star:after { color: transparent; text-shadow: 0 0 3px yellow; }

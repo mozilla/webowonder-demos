@@ -1,9 +1,55 @@
+var stars;
+
 window.onload = function() {
     makeMenuClickable();
     makeSubMenuClickable();
+    loadStars();
+    highlightStars();
     countArticles();
 }
 
+function loadStars() {
+    stars = localStorage.getItem("stars");
+    if (!stars) {
+    	stars = {};
+    } else {
+    	stars = JSON.parse(stars);
+    }
+}
+
+function saveStars() {
+    localStorage.setItem("stars", JSON.stringify(stars));
+}
+
+function highlightStars() {
+    var oldstars = document.querySelectorAll(".star");
+    var starsbag = document.getElementById("stars");
+    starsbag.querySelectorAll("article").forEach(function(c) {
+    	starsbag.removeChild(c);
+    });
+    oldstars.forEach(function(s) {
+        s.classList.remove("star");
+    });
+    for (var i in stars) {
+    	var e = document.querySelector("#" + i + " > h1");
+        e.classList.add("star");
+	starsbag.appendChild(e.parentNode.cloneNode(true));
+    }
+
+    var o = document.querySelector(".opened");
+    if (o && (o.id in stars)) {
+	document.querySelector("#content > h1").classList.add("star");
+    }
+    countArticles();
+}
+
+function addStar(name) {
+    stars[name] = true;
+}
+
+function removeStar(name) {
+    delete (stars[name]);
+}
 
 function countArticles() {
     var sections = document.querySelectorAll("#menu > section");
@@ -19,8 +65,10 @@ function toggleMenu(article) {
 
 function closeArticle() {
     document.body.classList.remove('showpopup');
+    document.querySelector(".opened").classList.remove("opened");
 }
 function openArticle(article) {
+    article.classList.add("opened");
 
     var contentH1 = document.querySelector("#content > h1");
     var contentP = document.querySelector("#content > p");
@@ -31,6 +79,16 @@ function openArticle(article) {
     contentH1.innerHTML = h.innerHTML;
     contentP.innerHTML = p.innerHTML;
     contentH1.className = h.className;
+
+    contentH1.onclick = function() {
+	if (article.id in stars) {
+		removeStar(article.id);
+	} else {
+		addStar(article.id);
+	}
+	highlightStars();
+	saveStars();
+    }
 
     document.body.classList.add('showpopup');
 }

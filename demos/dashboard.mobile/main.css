@@ -138,6 +138,9 @@ header p {
 #content h1 { font-size: 28px; margin-top: 20px; margin-bottom: 20px; padding-left: 20px; margin-left: 20px;}
 #content p { font-size: 18px; }
 #demo {position: absolute; width: 350px; height: 200px; overflow: hidden; bottom: 0; left: 0; border: none;}
+.webgl #demo {
+	height: 300px;
+}
 
 /* Star */
 

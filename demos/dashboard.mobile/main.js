@@ -73,6 +73,8 @@ function closeArticle() {
 function openArticle(article) {
     article.classList.add("opened");
 
+    var content = document.querySelector("#content");
+    content.className = article.id;
     var contentH1 = document.querySelector("#content > h1");
     var contentP = document.querySelector("#content > p");
 

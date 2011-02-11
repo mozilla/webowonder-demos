@@ -94,7 +94,7 @@
                 content:  attr(countdemos);
                 position: absolute;
                 font-size: 15px;
-                right: 30px;
+                right: 0px;
                 top: 17px;
                 color: #aaa;
                 -moz-transition-duration: 1s;
@@ -107,7 +107,7 @@
                 content:  attr(countsections) " sections";
                 position: absolute;
                 font-size: 15px;
-                right: 30px;
+                right: 0px;
                 top: 37px;
                 color: #aaa;
                 -moz-transition-duration: 1s;
@@ -186,7 +186,6 @@
                 top: 30px;
             }
 
-
             #menu > ul > li.open > article {
                 max-height: 80px;
             }
@@ -209,7 +208,7 @@
                 background-color: #FFFF00;
                 box-shadow: 0 0 3px 5px #FFFF00;
             }
-            #connectivy:after {
+            #connectivity:after {
                 background-color: #FF6600;
                 box-shadow: 0 0 3px 5px #FF6600;
             }
@@ -229,6 +228,15 @@
                 background-color: #FF3333;
                 box-shadow: 0 0 3px 5px #FF3333;
             }
+            #stars:after {
+                background-color: yellow;
+                box-shadow: 0 0 3px 5px yellow;
+            }
+
+
+            #stars.empty {
+                display: none;
+            }
 
         </style>
 
@@ -242,41 +250,7 @@
 
         <section id="menu">
             <ul>
-                <li id="star">
-                    <svg viewBox="0.0 0.0 240.2 217.3">
-                    <path id="semantics_logo" d="M130.2,0L68.5,19.9 202.2,63.2 202.2,148.5 113.1,177.3 37.9,153.0 37.9,69.4 110.6,92.9 172.3,73.0 38.4,29.6 0,42.1 0,180.6 113.1,217.2 240.2,176.1 240.2,35.5z"/>
-                    </svg>
-
-                    <h1 id="html5semantics">HTML5 Semantics</h1>
-
-
-                    <article class="demoinside">
-                        <h1 id="html5parser">HTML5 parser</h1>
-                        <p>The HTML parser is one of the most complicated and sensitive pieces of a browser. It controls how your HTML source code is turned into web pages. The new parser is faster, complies with the HTML5 standard, and enables a lot of new functionality as well. <strong>This parser lets content embed SVG and MathML directly in the HTML markup.</strong></p>
-                        <a href="https://developer.mozilla.org/en/HTML/HTML5/HTML5_Parser" title="documentation">learn more</a>
-                    </article>
-
-                    <article >
-                        <h1 id="html5semantics">semantics</h1>
-                        <p>Elements, attributes, and attribute values in HTML are defined (by the HTML specification) to have certain meanings (semantics). HTML5 brings more elements to improve the semantics of a document.</p>
-                        <a href="https://developer.mozilla.org/en/HTML/Element" title="documentation">learn more</a>
-                    </article>
-
-                    <article >
-                        <h1 id="forms">Forms</h1>
-                        <p>Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4.</p>
-                        <a href="https://developer.mozilla.org/en/HTML/HTML5/Forms_in_HTML5" title="documentation">learn more</a>
-                    </article>
-
-                    <article>
-                        <h1 id="contenteditable">Content Editable</h1>
-                        <p><strong>contenteditable</strong> is used to indicate whether or not an element is editable. An entire document can be set as editable, or just a subset.</p>
-                        <a href="https://developer.mozilla.org/en/rich-text_editing_in_mozilla" title="documentation">learn more</a>
-                    </article>
-
-
-
-
+                <li id="stars"><svg viewBox="0.0 0.0 240.2 217.3"></svg><h1 id="hstar">Your favorites</h1>
                 <li id="semantics">
                     <svg viewBox="0.0 0.0 240.2 217.3">
                     <path id="semantics_logo" d="M130.2,0L68.5,19.9 202.2,63.2 202.2,148.5 113.1,177.3 37.9,153.0 37.9,69.4 110.6,92.9 172.3,73.0 38.4,29.6 0,42.1 0,180.6 113.1,217.2 240.2,176.1 240.2,35.5z"/>
@@ -291,7 +265,7 @@
                         <a href="https://developer.mozilla.org/en/HTML/HTML5/HTML5_Parser" title="documentation">learn more</a>
                     </article>
 
-                    <article >
+                    <article>
                         <h1 id="html5semantics">semantics</h1>
                         <p>Elements, attributes, and attribute values in HTML are defined (by the HTML specification) to have certain meanings (semantics). HTML5 brings more elements to improve the semantics of a document.</p>
                         <a href="https://developer.mozilla.org/en/HTML/Element" title="documentation">learn more</a>
@@ -318,13 +292,13 @@
                     <h1 id="offlinestorage">Offline Storage</h1>
 
 
-                    <article>
+                    <article class="demoinside">
                         <h1 id="localstorage">localStorage</h1>
                         <p><strong>localStorage</strong> is designed to provide a larger, securer, and easier-to-use alternative to storing information in cookies.</p>
                         <a href="https://developer.mozilla.org/en/dom/storage#localStorage" title="documentation">learn more</a>
                     </article>
 
-                    <article>
+                    <article class="demoinside">
                         <h1 id="indexeddb">IndexedDB</h1>
                         <p>IndexedDB is an evolving web standard for the storage of significant amounts of structured data in the browser and for high performance searches on this data using indexes.</p>
                         <a href="https://developer.mozilla.org/en/IndexedDB" title="documentation">learn more</a>
@@ -384,12 +358,12 @@
 
 
 
-                <li id="connectivy">
+                <li id="connectivity">
                     <svg viewBox="0 0 305.5 229.5">
                     <path id="connectivy_logo" d="M229.5,172.5h37.9V81.5l-42.7-42.7l-26.8,26.8l31.6,31.6V172.5z M267.5,191.5 h-55.2h-77.0l-31.6-31.6l13.4-13.4l26.1,26.1h53.7l-52.9-53.0l13.5-13.5l52.9,52.9v-53.7 l-26.0-26.0l13.3-13.3L132.0,0L67.2,0.0V0L0,0.0l37.8,37.8v0.1h0.2l78.2-0.0l27.7,27.7 l-40.5,40.5l-27.7-27.7V56.9H37.8v37.2l65.6,65.6l-26.7,26.7l42.7,42.7h64.8h121.1v-0.0 L267.5,191.5z"/>
                     </svg>
 
-                    <h1 id="connectivity">Connectivity</h1>
+                    <h1 id="hconnectivity">Connectivity</h1>
 
                     <article>
                         <h1 id="formdata">formData</h1>
@@ -438,12 +412,11 @@
                     </article>
 
                 <li id="multimedia">
-
                     <svg viewBox="0.0 0.0 243.6 186.6">
                     <path id="multimedia_logo" d="M243.4,0L189.7,0 151.7,37.9 205.4,37.9zM122.0,37.9L159.9,0 106.2,0 68.2,37.9zM205.5,148.6L37.9,148.6 37.9,38.3 76.3,0 22.5,0 0,22.5 0,186.6 243.5,186.6 243.5,37.9 205.5,37.9z"/>
                     </svg>
 
-                    <h1 id="multimedia">Multimedia</h1>
+                    <h1 id="hmultimedia">Multimedia</h1>
 
                     <article>
                         <h1 id="video">&lt;video&gt;</h1>
@@ -471,7 +444,7 @@
                     <path id="graphics_logo" d="M130.2,0L68.5,19.9 202.2,63.2 202.2,148.5 113.1,177.3 37.9,153.0 37.9,69.4 110.6,92.9 172.3,73.0 38.4,29.6 0,42.1 0,180.6 113.1,217.2 240.2,176.1 240.2,35.5z"/>
                     </svg>
 
-                    <h1 id="3dgraphicseffects">3D, Graphics, Effects</h1>
+                    <h1 id="treeDgraphicseffects">3D, Graphics, Effects</h1>
 
                     <article>
                         <h1 id="canvas2d">&lt;canvas&gt; 2D</h1>
@@ -711,8 +684,6 @@
                         <a href="https://developer.mozilla.org/en/About_WOFF" title="documentation">learn more</a>
                     </article>
 
-
-
             </ul>
 
 
@@ -744,56 +715,14 @@
 
         <style>
 
-            .showpopup {
-                overflow: hidden;
-            }
-            .showpopup #popup {
-                display: block;
-            }
-            #popup {
-                display: none;
-                position: fixed;
-                top: 0px;
-                width: 100%;
-                left: 0px;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.8);
-            }
-
-            #content {
-                width: 320px;
-                height: 460px;
-                margin-left: 20px;
-                margin-top: 40px;
-                border: 3px solid #ccc;
-                border-radius: 30px;
-                background-color: #404040;
-                box-shadow: 0px 0px 10px black inset;
-                position: relative;
-                padding: 20px;
-                color: white;
-            }
-
-            #close {
-                position: absolute;
-                right: -20px;
-                top: -20px;
-                border: none;
-                background: none;
-            }
-            #close img {
-                width: 40px;
-                height: 40px;
-            }
-
-            #content h1 {
-                font-size: 28px;
-                margin-top: 20px;
-                margin-bottom: 20px;
-            }
-            #content p {
-                font-size: 18px;
-            }
+            .showpopup { overflow: hidden; }
+            .showpopup #popup { display: block; }
+            #popup { display: none; position: fixed; top: 0px; width: 100%; left: 0px; height: 100%; background-color: rgba(0, 0, 0, 0.8); }
+            #content { width: 320px; height: 460px; margin-left: 20px; margin-top: 40px; border: 3px solid #ccc; border-radius: 30px; background-color: #404040; box-shadow: 0px 0px 10px black inset; position: relative; padding: 20px; color: white; }
+            #close { position: absolute; right: -20px; top: -20px; border: none; background: none; }
+            #close img { width: 40px; height: 40px; }
+            #content h1 { font-size: 28px; margin-top: 20px; margin-bottom: 20px; }
+            #content p { font-size: 18px; }
         </style>
 
         <section id="popup">
@@ -806,22 +735,22 @@
     </body>
 </html>
 
-<!-- TypeKit -->
-<script type="text/javascript" src="http://use.typekit.com/tqa3epk.js"></script>
-<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-
 <script>
-    return;
     // set sections
     var li  = document.querySelectorAll("#menu > ul > li");
     for (var i = 0; i < li.length; i++) {
         var h = li[i].querySelector("h1");
         var a = li[i].querySelectorAll("article");
         h.setAttribute("countsections", a.length);
+        if (a.length == 0) {
+            h.parentNode.classList.add("empty");
+        } else {
+            h.parentNode.classList.remove("empty");
+        }
         var d = li[i].querySelectorAll(".demoinside");
         var str = "";
-        for (var i = 0; i < d.length; i++) {
-            str += "⚙ ";
+        for (var j = 0; j < d.length; j++) {
+            str += ". ";
         }
         h.setAttribute("countdemos", str);
     }
@@ -836,6 +765,12 @@
     updateStars();
     function updateStars() {
         var oldstars = document.querySelectorAll(".star");
+        var starsfolder = document.querySelector("#stars");
+        var articles2remove = starsfolder.querySelectorAll("article");
+        for (var i = 0; i < articles2remove.length; i++) {
+            starsfolder.removeChild(articles2remove[i]);
+        }
+
         for (var i = 0; i < oldstars.length; i++) {
             oldstars[i].classList.remove("star");
         }
@@ -843,6 +778,13 @@
             var s = document.querySelector("#" + stars[i]);
             if (s) {
                 s.classList.add("star");
+                var article = s.parentNode;
+                article = article.cloneNode(true);
+                var s = article.querySelector(".selected");
+                if (s) {
+                    s.classList.remove("selected");
+                }
+                starsfolder.appendChild(article);
             }
         }
         var s = document.querySelector(".selected");
@@ -854,6 +796,15 @@
                 contentH1.classList.remove("star");
             }
         }
+        var h = document.querySelector("#hstar");
+        h.setAttribute("countsections", stars.length);
+
+        if (stars.length == 0) {
+            h.parentNode.classList.add("empty");
+        } else {
+            h.parentNode.classList.remove("empty");
+        }
+
         localStorage.setItem("stars", stars.join("|"));
     }
 
@@ -896,6 +847,7 @@
 
                 contentH1.innerHTML = h.innerHTML;
                 contentP.innerHTML = p.innerHTML;
+                contentH1.className = h.className;
 
                 document.body.classList.add("showpopup");
             }, true);
@@ -906,7 +858,9 @@
     function closePopup() {
         document.body.classList.remove('showpopup');
         var h = document.querySelector("#menu > ul > li > article > h1.selected");
-        h.classList.remove("selected");
+        if (!!h) {
+           h.classList.remove("selected");
+        }
         var contentH1 = document.querySelector("#content > h1");
         contentH1.classList.remove("star");
     }

@@ -1,0 +1,170 @@
+* {margin: 0; padding: 0; font-weight: normal;}
+html, body { width: 400px; margin: auto; background-color: #000; color: white;}
+#menu { width: 400px; overflow: hidden;}
+#menu > section > article > a, #menu > section > article > p { display: none; }
+
+header {
+    background: url(HTML5_Logo.svg), #2A2A2A;
+    background-repeat: no-repeat;
+    background-size: 60px 60px;
+    background-position: 8px 20px;
+
+    position: relative;
+    color: white;
+    height: 90px;
+    border-bottom: 5px solid #A5151E;
+    width: 325px;
+    padding-left: 75px;
+    padding-top: 25px;
+}
+
+header > * {
+    font-weight: bold;
+}
+
+header p {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    font-size: 21px;
+}
+
+#menu > section {
+    position: relative;
+}
+#menu > section > h1 {
+    display: inline-block;
+    font-size: 20px;
+    width: 100%;
+    line-height: 70px;
+    text-indent: 70px;
+}
+#menu > section:after {
+    content: attr(childrencount);
+    position: absolute;
+    top: 2px; right: 2px;
+    opacity: 0.2;
+    font-size: 64px;
+    -moz-transition-duration: 1s;
+
+}
+#menu > .open:after {
+    opacity: 0;
+}
+#menu > section {
+    background-image: url(border-bottom.png);
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    background-size: 100% 1px;
+    background-color: #000;
+}
+#menu > section > svg {
+    fill: white;
+    width: 26px; height: 26px;
+    position: absolute;
+    top: -moz-calc((70px - 26px) / 2);
+    left: -moz-calc((70px - 26px) / 2);
+}
+
+#menu > section {
+}
+#menu > section > article {
+    max-height: 0px;
+    overflow: hidden;
+    -moz-transition-duration: 0.7s;
+}
+
+#menu > .open > article {
+    max-height: 70px;
+}
+
+#menu > section > article > h1 {
+    line-height: 69px;
+    text-indent: 70px;
+    font-size: 20px;
+    border-top: 1px dashed #aaa;
+}
+
+#menu > section > article > h1:before {
+    content: "- ";
+}
+
+
+/* Lights */
+
+
+#menu > section:before {
+    content: "";
+    display: block;
+    width: 4px; height: -moz-calc(100% - 20px);
+    position: absolute;
+    left: -4px;
+    top: 10px;
+    border-radius: 3px;
+    pointer-events: none;
+    -moz-transition-duration: 1s;
+}
+
+#semantics:before {
+    background-color: #FF00CC;
+    box-shadow: 0 0 3px 5px #FF00CC;
+}
+#offline:before {
+    background-color: #6CDFEA;
+    box-shadow: 0 0 3px 5px #6CDFEA;
+}
+#deviceaccess:before {
+    background-color: #FFFF00;
+    box-shadow: 0 0 3px 5px #FFFF00;
+}
+#connectivity:before {
+    background-color: #FF6600;
+    box-shadow: 0 0 3px 5px #FF6600;
+}
+#multimedia:before {
+    background-color: #FFFFFF;
+    box-shadow: 0 0 3px 5px #FFFFFF;
+}
+#graphics:before {
+    background-color: #1693A5;
+    box-shadow: 0 0 3px 5px #1693A5;
+}
+#performance:before {
+    background-color: #9F1524;
+    box-shadow: 0 0 3px 5px #9F1524;
+}
+#css3:before {
+    background-color: #FF3333;
+    box-shadow: 0 0 3px 5px #FF3333;
+}
+#stars:before {
+    background-color: yellow;
+    box-shadow: 0 0 3px 5px yellow;
+}
+
+
+/* Popup */
+
+.showpopup { overflow: hidden; }
+.showpopup #popup { display: block; }
+#popup { display: none; position: fixed; top: 0px; width: 100%; left: 0px; height: 100%; background-color: rgba(0, 0, 0, 0.8); }
+#content { width: 320px; height: 460px; margin-left: 20px; margin-top: 40px; border: 3px solid #ccc; border-radius: 30px; background-color: #404040; box-shadow: 0px 0px 10px black inset; position: relative; padding: 20px; color: white; }
+#close { position: absolute; right: -20px; top: -20px; border: none; background: none; }
+#close img { width: 40px; height: 40px; }
+#content h1 { font-size: 28px; margin-top: 20px; margin-bottom: 20px; padding-left: 20px; margin-left: 20px;}
+#content p { font-size: 18px; }
+
+/* Star */
+
+#content h1, #menu > section > article > h1 { position: relative; }
+#content h1:after, #menu > section > article > h1:after {
+    content: "★";
+    font-size: 40px;
+    position: absolute;
+    right: 10px;
+    top: -3px;
+    color: black;
+    text-shadow: 0 0 3px white;
+}
+#content h1:after { left: -30px; top: -13px; }
+#content .star:after, #menu > ul > li > article > .star:after { color: transparent; text-shadow: 0 0 3px yellow; }

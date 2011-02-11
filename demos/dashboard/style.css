@@ -76,6 +76,7 @@ html { box-shadow: inset 0px 0px 20px black; }
     position: absolute;
     top: 400px;
     left: 50%;
+    margin-left: -120px;
     background-color: white;
     border: 5px solid #28C2DA;
     z-index: 42;

@@ -155,9 +155,14 @@ BLABLA:
             #page {
                 background: #ddd;
                 border: 10px solid black;
+
                 -moz-border-radius-topleft: 150px;
+
                 -moz-transition-property: border-width;
                 -moz-transition-duration: 1.5s;
+                -webkit-transition-property: border-width;
+                -webkit-transition-duration: 1.5s;
+
                 margin: auto;
                 margin-top: 50px;
                 width: 1030px;
@@ -175,6 +180,7 @@ BLABLA:
                 color: black;
                 padding: 5px;
                 -moz-transition-duration: 1s;
+                -webkit-transition-duration: 1s;
             }
 
             /* Wellcome screen */
@@ -189,26 +195,32 @@ BLABLA:
 
             body.intro #logo {
                 -moz-transform: translate(0px, -250px);
+                -webkit-transform: translate(0px, -250px);
             }
 
             body.intro #robot1 {
                 -moz-transform: translate(0px, 2000px);
+                -webkit-transform: translate(0px, 2000px);
             }
 
             body.intro #robot2 {
                 -moz-transform: translate(0px, -500px);
+                -webkit-transform: translate(0px, -500px);
             }
 
             body.intro #trailer {
                 -moz-transform: translate(2000px, 0px);
+                -webkit-transform: translate(2000px, 0px);
             }
 
             body.intro #bubble1 {
                 -moz-transform: translate(0px, 2000px);
+                -webkit-transform: translate(0px, 2000px);
             }
 
             body.intro #bubble2 {
                 -moz-transform: translate(0px, -600px);
+                -webkit-transform: translate(0px, -600px);
             } 
 
             body.videoselected #trailer {
@@ -219,21 +231,27 @@ BLABLA:
             body.videoselected #bubble2 {
                 background-color: #999;
                 -moz-transform: scale(0.7);
+                -webkit-transform: scale(0.7);
             }
 
             body.selectingvideo #bubble1 {
                 -moz-transform: translate(0px, -180px) scale(0.9) rotate(70deg);
+                -webkit-transform: translate(0px, -180px) scale(0.9) rotate(70deg);
             }
             body.selectingvideo #bubble2 {
                 -moz-transform: translate(0px, 180px) rotate(0deg);
+                -webkit-transform: translate(0px, 180px) rotate(0deg);
             }
             body.selectingvideo #trailer {
                 -moz-transform: scale(0.9, 0.9);
+                -webkit-transform: scale(0.9, 0.9);
             }
 
 
             .svgbutton path {pointer-events: none}
             .svgbutton {
+                -webkit-transition-property: opacity;
+                -webkit-transition-duration: 0.5s;
                 -moz-transition-property: opacity;
                 -moz-transition-duration: 0.5s;
                 opacity: 0.2;
@@ -255,6 +273,7 @@ BLABLA:
                 left: 250px;
                 font-size: 30px;
                 -moz-transition-duration: 0.2s;
+                -webkit-transition-duration: 0.2s;
                 text-align: center;
             }
 
@@ -263,6 +282,8 @@ BLABLA:
                 left: 400px;
                 -moz-transition-delay: 2s;
                 -moz-transition-duration: 1s;
+                -webkit-transition-delay: 2s;
+                -webkit-transition-duration: 1s;
             }
 
             #robot1 {
@@ -270,12 +291,15 @@ BLABLA:
                 left: 10px;
                 -moz-transition-delay: 1s;
                 -moz-transition-duration: 1s;
+                -webkit-transition-delay: 1s;
+                -webkit-transition-duration: 1s;
             }
 
             #robot2 {
                 top: 10px;
                 left: 10px;
                 -moz-transition-duration: 1s;
+                -webkit-transition-duration: 1s;
             }
 
             #trailer > video {
@@ -291,6 +315,7 @@ BLABLA:
                 border: 10px solid black;
                 background-color: black;
                 -moz-transition-duration: 1s;
+                -webkit-transition-duration: 1s;
             }
 
             #trailer svg {
@@ -329,6 +354,7 @@ BLABLA:
             .svginside > * {
                 position: absolute;
             }
+            /*
             #shadow {
                 position: absolute;
                 top: 0px;
@@ -344,11 +370,14 @@ BLABLA:
             body.fullpage #shadow {
                 opacity: 1;
             }
+            */
 
             #license {
                 position: absolute;
                 -moz-transform: rotate(90deg);
                 -moz-transform-origin: top left;
+                -webkit-transform: rotate(90deg);
+                -webkit-transform-origin: top left;
                 background-color: black;
                 border: 10px solid black;
                 color: white!important;
@@ -427,8 +456,7 @@ BLABLA:
                 </clipPath>
                 <use xlink:href="#shape4" fill="transparent" stroke="black" stroke-width="20px"/>
                 </svg>
-                <video src="http://videos.mozilla.org/serv/mozhacks/demos/resources/londonproject/fight.ogv" poster="robot2.jpg" autobuffer preload="auto"
-                onended="this.play()" style="clip-path: url(#clip4);"></video>
+                <video src="http://videos.mozilla.org/serv/mozhacks/demos/resources/londonproject/fight.ogv" poster="robot2.jpg" autobuffer preload="auto" style="clip-path: url(#clip4);"></video>
                 <svg width="300px" height="300px">
                 <g transform="scale(2) translate(-21 -21)" id="miniplayer" class="svgbutton">
                 <circle stroke="black" fill="transparent" stroke-width="10" cx="96" cy="96" r="30" onclick="toggleminivideo();"/>

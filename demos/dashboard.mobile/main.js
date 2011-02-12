@@ -3,9 +3,29 @@ var stars;
 window.onload = function() {
     loadStars();
     highlightStars();
-    countArticles();
     makeMenuClickable();
-    makeSubMenuClickable();
+    initRandomAnimations();
+}
+
+function initRandomAnimations() {
+	var s = 2000 + ~~(Math.random() * 5000);
+	setTimeout(randomAnimation, s);
+}
+
+function randomAnimation() {
+	var sections = document.querySelectorAll("#menu > section");
+
+	var i;
+	do {
+		i = ~~(Math.random() * sections.length);
+	} while(!sections[i] || sections[i].classList.contains("open"));
+
+	var s = sections[i];
+	s.classList.add("fireme");
+	setTimeout(function() {
+		s.classList.remove("fireme");
+		setTimeout(randomAnimation, 1000 + ~~(Math.random() * 5000));
+	}, 1000);
 }
 
 function loadStars() {
@@ -55,13 +75,14 @@ function removeStar(name) {
 function countArticles() {
     var sections = document.querySelectorAll("#menu > section");
     sections.forEach(function(s) {
-        s.setAttribute("childrencount", s.querySelectorAll("article").length);
+    	var h1 = s.querySelector("h1");
+        h1.setAttribute("childrencount", s.querySelectorAll("article").length);
+        h1.setAttribute("demoscount", s.querySelectorAll(".demoinside").length);
     });
-
 }
 
-function toggleMenu(article) {
-    article.classList.toggle("open");
+function toggleMenu(section) {
+    section.classList.toggle("open");
 }
 
 function closeArticle() {

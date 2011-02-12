@@ -3,19 +3,17 @@ html, body { width: 400px; margin: auto; background-color: #000; color: white;}
 #menu { width: 400px; overflow: hidden;}
 #menu > section > article > a, #menu > section > article > p { display: none; }
 
-
 #menu > section {
     position: relative;
 }
 
-#menu > section:after {
+#menu > section > h1:after {
     content: attr(childrencount);
     position: absolute;
     top: 2px; right: 2px;
     opacity: 0.2;
     font-size: 64px;
     -moz-transition-duration: 1s;
-
 }
 
 #menu > section {
@@ -35,15 +33,26 @@ html, body { width: 400px; margin: auto; background-color: #000; color: white;}
     -moz-transition-duration: 0.7s;
 }
 
+.demoinside > h1 {
+	position: relative;
+}
+.demoinside > h1:after {
+	content: "demo";
+	position: absolute;
+        opacity: 0.4;
+	right: 60px;
+	top: 0px;
+}
+
 /* Open */
 
-#menu > .open:after { opacity: 0; }
+#menu > .open > h1:after { opacity: 0; }
 #menu > .open > article { max-height: 70px; } 
 
 /* H1 */
 
 #menu > section > svg { fill: white; width: 26px; height: 26px; position: absolute; top: -moz-calc((70px - 26px) / 2); left: -moz-calc((70px - 26px) / 2); }
-#menu > section > h1 { display: inline-block; font-size: 20px; width: 100%; line-height: 70px; text-indent: 70px; }
+#menu > section > h1 { display: inline-block; font-size: 20px; width: 100%; line-height: 70px; text-indent: 70px; position: relative;}
 #menu > section > article > h1 { line-height: 69px; text-indent: 70px; font-size: 20px; border-top: 1px dashed #aaa; }
 #menu > section > article > h1:before { content: "- "; }
 
@@ -77,6 +86,7 @@ header p {
 /* Lights */
 
 
+#menu > section:after,
 #menu > section:before {
     content: "";
     display: block;
@@ -88,39 +98,59 @@ header p {
     pointer-events: none;
     -moz-transition-duration: 1s;
 }
+#menu > section:after {
+    opacity: 0.3;
+    -moz-transition-duration: 0s;
+}
+#menu > .fireme:after {
+    -moz-transition-duration: 1s;
+    visibility: visible;
+    width: 100%;
+    left: 400px;
+    opacity: 0;
+}
 
+#semantics:after,
 #semantics:before {
     background-color: #FF00CC;
     box-shadow: 0 0 3px 5px #FF00CC;
 }
+#offline:after,
 #offline:before {
     background-color: #6CDFEA;
     box-shadow: 0 0 3px 5px #6CDFEA;
 }
+#deviceaccess:after,
 #deviceaccess:before {
-    background-color: #FFFF00;
-    box-shadow: 0 0 3px 5px #FFFF00;
+    background-color: #7FFF24;
+    box-shadow: 0 0 3px 5px #7FFF24;
 }
+#connectivity:after,
 #connectivity:before {
     background-color: #FF6600;
     box-shadow: 0 0 3px 5px #FF6600;
 }
+#multimedia:after,
 #multimedia:before {
     background-color: #FFFFFF;
     box-shadow: 0 0 3px 5px #FFFFFF;
 }
+#graphics:after,
 #graphics:before {
     background-color: #1693A5;
     box-shadow: 0 0 3px 5px #1693A5;
 }
+#performance:after,
 #performance:before {
-    background-color: #9F1524;
-    box-shadow: 0 0 3px 5px #9F1524;
+    background-color: #790F5B;
+    box-shadow: 0 0 3px 5px #790F5B;
 }
+#css3:after,
 #css3:before {
     background-color: #FF3333;
     box-shadow: 0 0 3px 5px #FF3333;
 }
+#stars:after,
 #stars:before {
     background-color: yellow;
     box-shadow: 0 0 3px 5px yellow;
@@ -132,20 +162,18 @@ header p {
 .showpopup { overflow: hidden; }
 .showpopup #popup { display: block; }
 #popup { display: none; position: fixed; top: 0px; width: 100%; left: 0px; height: 100%; background-color: rgba(0, 0, 0, 0.8); }
-#content { width: 320px; height: 460px; margin: auto; margin-top: 40px; border: 3px solid #ccc; border-radius: 30px; background-color: #404040; box-shadow: 0px 0px 10px black inset; position: relative; padding: 20px; color: white; }
+#content { width: 320px; height: 475px; margin: auto; margin-top: 40px; border: 3px solid #ccc; border-radius: 30px; background-color: #404040; box-shadow: 0px 0px 10px black inset; position: relative; padding: 20px; color: white; }
 #close { position: absolute; right: -20px; top: -20px; border: none; background: none; }
 #close img { width: 40px; height: 40px; }
 #content h1 { font-size: 28px; margin-top: 20px; margin-bottom: 20px; padding-left: 20px; margin-left: 20px;}
 #content p { font-size: 18px; }
-#demo {position: absolute; width: 350px; height: 200px; overflow: hidden; bottom: 0; left: 0; border: none;}
-.webgl #demo {
-	height: 300px;
-}
+#demo {position: absolute; width: 350px; height: 200px; overflow: hidden; bottom: 10px; left: 0; border: none;}
+.webgl #demo { height: 300px; }
 
 /* Star */
 
 #content h1, #menu > section > article > h1 { position: relative; }
-#content h1:after, #menu > section > article > h1:after {
+#content h1:after, #menu > section > article > h1:before {
     content: "★";
     font-size: 40px;
     position: absolute;
@@ -156,4 +184,4 @@ header p {
 }
 #content h1:after { left: -30px; top: -13px; }
 #content .star:after,
-#menu .star:after { color: transparent; text-shadow: 0 0 3px yellow; }
+#menu .star:before { color: transparent; text-shadow: 0 0 3px yellow; }

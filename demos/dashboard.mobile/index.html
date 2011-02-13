@@ -1,41 +1,14 @@
 <!DOCTYPE html>
-<!-- Big Number for number of sections AND demos -->
-<!-- paysage -->
-<!-- perf 10 in Favorites (shadow???) -->
-<!-- manifest -->
-<!-- review header (geoffrey) -->
 
-<!-- List of demos
-<li>Parser HTML5 and inline SVG
-<li>New elements
-<li>Canvas 2D
-<li>Canvas 3D
-<li>Video / WebM
-<li>Audio
-<li>Audio API
-<li>Transforms &amp; Transitions
-<li>Shadows, radius, gradients
-<li>Fonts
-<li>Workers
-<li>Geoloc
-<li>Orientation
-<li>Notification
-<li>Offline
-<li>Animation (JS)
-<li>SVG
-<li>XHR + File API + ImgUR
-
-
-<li>ECMAScript 5
--->
 <html>
     <head>
-        <meta charset="utf8"/>
-        <meta name="viewport" content="width=400, user-scalable=0"/>
+        <meta charset="utf8">
+        <meta name="viewport" content="width=400, user-scalable=0">
 
-        <link href="main.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link href="main.css" rel="stylesheet">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
         <script src="main.js"></script>
+        <!--script src="offline.js"></script-->
 
         <title>HTML5 &amp; Friends</title>
     </head>
@@ -50,9 +23,9 @@
 
         <section id="menu">
             <section id="stars">
-		<svg viewBox="2 2 60 60">
-<path fill="none" stroke="white" stroke-width="6" d="M 46.296296,51.906272 L 31.916351,42.474649 L 17.502712,51.8547 L 22.029072,35.264028 L 8.654054,24.454438 L 25.831443,23.632463 L 31.978866,7.5717174 L 38.068716,23.65438 L 55.243051,24.537884 L 41.829396,35.299492 L 46.296296,51.906272 z ">
-		</svg>
+                <svg viewBox="2 2 60 60">
+                <path fill="none" stroke="white" stroke-width="6" d="M 46.296296,51.906272 L 31.916351,42.474649 L 17.502712,51.8547 L 22.029072,35.264028 L 8.654054,24.454438 L 25.831443,23.632463 L 31.978866,7.5717174 L 38.068716,23.65438 L 55.243051,24.537884 L 41.829396,35.299492 L 46.296296,51.906272 z ">
+                </svg>
                 <h1>Your favorites</h1>
             </section>
 
@@ -480,7 +453,7 @@
             <div id="content"><button onclick="closeArticle();" id="close"><img src="close.svg"></button>
                 <h1></h1>
                 <p></p>
-		<iframe id="demo"></iframe>
+                <iframe src="about:blank" id="demo"></iframe>
             </div>
         </section>
 

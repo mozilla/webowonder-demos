@@ -1,3 +1,4 @@
+
 * {margin: 0; padding: 0; font-weight: normal;}
 html, body { width: 400px; margin: auto; background-color: #000; color: white;}
 #menu { width: 400px; overflow: hidden;}
@@ -34,14 +35,14 @@ html, body { width: 400px; margin: auto; background-color: #000; color: white;}
 }
 
 .demoinside > h1 {
-	position: relative;
+    position: relative;
 }
 .demoinside > h1:after {
-	content: "demo";
-	position: absolute;
-        opacity: 0.4;
-	right: 60px;
-	top: 0px;
+    content: "demo";
+    position: absolute;
+    opacity: 0.4;
+    right: 60px;
+    top: 0px;
 }
 
 /* Open */
@@ -86,7 +87,7 @@ header p {
 /* Lights */
 
 
-#menu > section:after,
+/*#menu > section:after,*/
 #menu > section:before {
     content: "";
     display: block;
@@ -98,6 +99,8 @@ header p {
     pointer-events: none;
     -moz-transition-duration: 1s;
 }
+
+/*
 #menu > section:after {
     opacity: 0.3;
     -moz-transition-duration: 0s;
@@ -109,48 +112,49 @@ header p {
     left: 400px;
     opacity: 0;
 }
+*/
 
-#semantics:after,
+/*#semantics:after,*/
 #semantics:before {
     background-color: #FF00CC;
     box-shadow: 0 0 3px 5px #FF00CC;
 }
-#offline:after,
+/*#offline:after,*/
 #offline:before {
     background-color: #6CDFEA;
     box-shadow: 0 0 3px 5px #6CDFEA;
 }
-#deviceaccess:after,
+/*#deviceaccess:after,*/
 #deviceaccess:before {
     background-color: #7FFF24;
     box-shadow: 0 0 3px 5px #7FFF24;
 }
-#connectivity:after,
+/*#connectivity:after,*/
 #connectivity:before {
     background-color: #FF6600;
     box-shadow: 0 0 3px 5px #FF6600;
 }
-#multimedia:after,
+/*#multimedia:after,*/
 #multimedia:before {
     background-color: #FFFFFF;
     box-shadow: 0 0 3px 5px #FFFFFF;
 }
-#graphics:after,
+/*#graphics:after,*/
 #graphics:before {
     background-color: #1693A5;
     box-shadow: 0 0 3px 5px #1693A5;
 }
-#performance:after,
+/*#performance:after,*/
 #performance:before {
     background-color: #790F5B;
     box-shadow: 0 0 3px 5px #790F5B;
 }
-#css3:after,
+/*#css3:after,*/
 #css3:before {
     background-color: #FF3333;
     box-shadow: 0 0 3px 5px #FF3333;
 }
-#stars:after,
+/*#stars:after,*/
 #stars:before {
     background-color: yellow;
     box-shadow: 0 0 3px 5px yellow;
@@ -162,13 +166,37 @@ header p {
 .showpopup { overflow: hidden; }
 .showpopup #popup { display: block; }
 #popup { display: none; position: fixed; top: 0px; width: 100%; left: 0px; height: 100%; background-color: rgba(0, 0, 0, 0.8); }
-#content { width: 320px; height: 475px; margin: auto; margin-top: 40px; border: 3px solid #ccc; border-radius: 30px; background-color: #404040; box-shadow: 0px 0px 10px black inset; position: relative; padding: 20px; color: white; }
+#content { width: 320px; height: 475px; margin: auto; margin-top: 40px; border: 3px solid #ccc; border-radius: 30px; background-color: #222; box-shadow: 0px 0px 10px black inset; position: relative; padding: 20px; color: white; }
 #close { position: absolute; right: -20px; top: -20px; border: none; background: none; }
 #close img { width: 40px; height: 40px; }
 #content h1 { font-size: 28px; margin-top: 20px; margin-bottom: 20px; padding-left: 20px; margin-left: 20px;}
 #content p { font-size: 18px; }
 #demo {position: absolute; width: 350px; height: 200px; overflow: hidden; bottom: 10px; left: 0; border: none;}
 .webgl #demo { height: 300px; }
+
+@media all and (orientation: landscape) {
+    #content {
+        width: 400px;
+        height: 300px;
+        margin: 0; margin-top: 0;
+        position: fixed;
+        top: 0; left: 0;
+        border: none;
+        border-radius: 0;
+        background-color: #000;
+        box-shadow: none;
+        padding: 0;
+        color: white;
+    }
+    #close, #content > p, #content > h1 {
+        display: none;
+    }
+    #demo {
+        top: 0;
+        margin-top: 25px;
+        margin-left: 25px;
+    }
+}
 
 /* Star */
 
@@ -179,9 +207,8 @@ header p {
     position: absolute;
     right: 10px;
     top: -3px;
-    color: black;
-    text-shadow: 0 0 3px white;
+    color: #444;
 }
 #content h1:after { left: -30px; top: -13px; }
 #content .star:after,
-#menu .star:before { color: transparent; text-shadow: 0 0 3px yellow; }
+#menu .star:before { color: #B1A600;}

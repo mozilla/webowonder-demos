@@ -1,0 +1,39 @@
+CACHE MANIFEST
+# Version 8.0
+./border-bottom.png
+./demos/parser.html
+./demos/throbber.gif
+./demos/video.html
+./demos/overlay.png
+./demos/audio_scripts/processing.js
+./demos/audio_scripts/dsp.js
+./demos/audio_scripts/main.js
+./demos/audio_scripts/beatdetektor.js
+./demos/audio_scripts/anim.pde
+./demos/geolocationapi.html
+./demos/canvas2d.html
+./demos/fileapi.html
+./demos/deviceorientation.html
+./demos/webgl.html
+./demos/placeholder.png
+./demos/fonts/MarketingScript.ttf
+./demos/fonts/MEgalopolisExtra.woff
+./demos/fonts/BebasNeue.otf
+./demos/fonts/ubuntu.ttf
+./demos/audiodataapi.html
+./demos/fontface.html
+./demos/notification.html
+./demos/webgl_assets/texture.jpg
+./demos/webgl_assets/glUtils.js
+./demos/webgl_assets/sylvester.js
+./demos/webgl_assets/Teapot.json
+./demos/webgl_assets/gldemo.js
+# ./demos/media/track.ogg
+# ./demos/media/enfants.webm
+./index.html
+./favicon.ico
+./close.svg
+./HTML5_Logo.svg
+./offline.js
+./main.css
+./main.js

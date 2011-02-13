@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+        <meta name="viewport" content="width=400, user-scalable=0">
+        <title></title>
+        <script></script>
+        <style>HTML5 &amp; Friends: help</style>
+    </head>
+    <body>
+        <h1>HTML5 &amp; Friends - instructions</h1>
+
+        <h2>Install the latest nightly</h2>
+        This demo works better in Fennec nightlies >= 02/12.
+        <a href="http://ftp.mozilla.org/pub/mozilla.org/mobile/nightly/latest-mozilla-central-android-r7/">Download latest nightly build</a>.
+        <h2>Link to the demo</h2>
+        <p><strong>DON'T SHARE THIS LINK:</strong> This demo is available at this address only for the MWC. It will be pushed online later for the release of Firefox 4 Mobile.</p>
+        <p><a href="http://paulrouget.com/2big/MWC/dashboard/">http://paulrouget.com/2big/MWC/dashboard/</a></p>
+        <p>Instructions can be found here: <a href="http://paulrouget.com/2big/MWC/dashboard/help.html">http://paulrouget.com/2big/MWC/dashboard/help.html</a>.</p>
+
+        <h2>Demo workflow</h2>
+        <p>This demo is a list of the new modern Web features: "HTML5 &amp; Friends".</p>
+        <ul>
+            <li><p>The first view is a list of different categories, matching w3c.org list, including w3c logos.</p>
+            <li><p>Click on a category, you'll see the list of the features.</p>
+            <li><p>Click on a feature, you'll see a popup with a short description of the feature, and, for some features, a demo.</p>
+            <li><p>Click on the close button or press back, the popup will close.</p>
+        </ul>
+
+        <h2>Favorites</h2>
+        <p>To mark a feature as "favorite", once the popup is displayed, click on the title.
+        Click again to remove it.</p>
+        <p>This feature will be available in the "Your favorites" for quick access.</p>
+
+        <h2>The 10 demos.</h2>
+        So far, 10 sub-demos have been implemented.
+        <h3>HTML5 Semantics → HTML5 parser</h3>
+        shows that the new HTML5 parser allows inline SVG &amp; MathML
+        <h3>Device Access → Device Orientation</h3>
+        move your phone to transform the HTML5 logo orientation
+        <h3>Device Access → Audio Data API</h3>
+        <em>(can take time to load, a music is downloaded)</em><br>
+        Click on the image to play the music and see the beat detection &amp; FFT being
+        computed live.
+        <h3>Device Access → Geolocatoin API</h3>
+        <em>Make sure to test the demo first, not sure coords are available where you are</em>
+        Click on "Share", see the google map.
+        <h3>Device Access → File API</h3>
+        So this one is tricky and really need to be understood:
+        <p>
+        This demo shows more than just the File API.
+        <ul>
+            <li>Click on the placeholder
+            <li>Select a picture (some phones allow you to take a picture)
+            <li>Once clicked, you will maybe have to wait a couple of seconds. This is because Firefox reads the file. So don't select a huge file.
+            <li>The file is rendered in a &lt;canvas> element
+            <li>Click on the picture
+            <li>With Javascript and Canvas, we apply a Sepia filter (a nice Black&amp;White filer)
+            <li>Click again, the picture is automaticaly uploaded to IMGUR.COM. Here, we see 3 interesting
+                things:
+                <ul>
+                    <li>XMLHttpRequest Level 2 (upload feedback)
+                    <li>FormData (super simple way to send data)
+                    <li><strong>Cross-Domain XMLHttpRequest</strong> (from paulrouget.com to IMGUR.COM)
+                </ul>
+            <li>Click again, a new tab is opened. See the image hosted on imgur.com
+        </ul>
+        </p>
+
+        <h3>Device Access → Notification API</h3>
+        After the countdown, see a message in the Android statusbar.<br>
+        <strong>TIP: </strong> run this demo 5 times (and click on "Allow"), Fennec won't ask again.
+
+        <h3>Multimedia → Video</h3>
+        Play a video. There is no sound.
+
+        <h3>3D, Graphics, Effect → Canvas 2D</h3>
+        A nice little 2D animation.
+
+        <h3>3D, Graphics, Effect → WebGL</h3>
+        A 3D animation. Move your phone to accelerate the rotation.
+
+        <h3>CSS3 Styling → font-face</h3>
+        Just some fonts.
+
+        <h2>Tips</h2>
+
+        <p>Test all the demos before showing them to anybody</p>
+        <p>Make the demos you want to show as favorite.</p>
+        <p>You can show a demo in a "fullscreen" mode. To do so, select the demo to show
+        and turn your phone in landscape mode. It can be a bit buggy, if you don't see
+        the demo, just move a bit the page, it will appear.</p>
+
+        <h2>What's the demo show?</h2>
+        Beside the sub-demos, the demo itself include intesting features:
+        <ul>
+            <li>CSS3 everywhere (shiny colors, shadow, favorite mechanism)
+            <li>CSS3 Transition (when you open a menu)
+            <li>localStorage to save the favorites
+            <li>History API to close a demo when you press back
+            <li>HTML5 parser: the categories logo are actually inline SVG
+            <li>MediaQuery for the fullscreen mode
+        </ul>
+    </body>
+</html>
+

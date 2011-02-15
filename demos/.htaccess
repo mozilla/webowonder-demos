@@ -23,7 +23,7 @@ AddType application/octet-stream       safariextz
   AddOutputFilterByType DEFLATE text/javascript application/javascript application/x-javascript 
   AddOutputFilterByType DEFLATE text/xml application/xml text/x-component
 </IfModule>
-
+<IfModule mod_deflate.c>
 # webfonts and svg:
   <FilesMatch "\.(ttf|otf|eot|svg)$" >
     SetOutputFilter DEFLATE

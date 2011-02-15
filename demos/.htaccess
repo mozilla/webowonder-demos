@@ -91,9 +91,9 @@ AddType application/octet-stream       safariextz
   ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
     
 # css and javascript
-  ExpiresByType text/css                  "access plus 1 week"
-  ExpiresByType application/javascript    "access plus 1 week"
-  ExpiresByType text/javascript           "access plus 1 week"
+  ExpiresByType text/css                  "access plus 15 minutes"
+  ExpiresByType application/javascript    "access plus 15 minutes"
+  ExpiresByType text/javascript           "access plus 15 minutes"
   <IfModule mod_headers.c>
     Header append Cache-Control "public"
   </IfModule>
@@ -108,4 +108,3 @@ AddDefaultCharset utf-8
 
 # force utf-8 for a number of file formats
 AddCharset utf-8 .html .css .js .xml .json .rss
-

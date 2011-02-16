@@ -156,7 +156,8 @@ function initEditor() {
         e.preventDefault();
         poster.classList.remove("dragging");
         if (e.dataTransfer.files.length < 1) {
-            // document.getElementById("filepicker").click();
+            var url = e.dataTransfer.getData("URL");
+            if (url) loadImage(url);
             return;
         }
         var file = e.dataTransfer.files[0];
@@ -251,12 +252,18 @@ function stoploading() {
 
 function getARandomImage() {
     var idx = Math.floor((Math.random() * 12)) + 1;
+    var url =  "pictures/" + idx + ".jpg";
+    loadImage(url);
+}
 
+function loadImage(url) {
     var placeholder = document.getElementById("placeholder");
     loading("loading");
     setTimeout(function() {
-        var url =  "pictures/" + idx + ".jpg";
         placeholder.src = url;
+        placeholder.onerror = function() {
+            stoploading();
+        }
         placeholder.onload = function() {
             addFrame(placeholder);
 

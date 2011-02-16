@@ -17,29 +17,13 @@ AddType application/x-chrome-extension crx
 AddType application/x-xpinstall        xpi
 AddType application/octet-stream       safariextz
 
-<IfModule mod_deflate.c>
-<IfModule mod_setenvif.c>
-  <IfModule mod_headers.c>
-    SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s,?\s(gzip|deflate)?|X{4,13}|~{4,13}|-{4,13})$ HAVE_Accept-Encoding
-    RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
-  </IfModule>
-</IfModule>
-# html, txt, css, js, json, xml, htc:
-<IfModule filter_module>
-  FilterDeclare   COMPRESS
-  FilterProvider  COMPRESS  DEFLATE resp=Content-Type /text/(html|css|javascript|plain|x(ml|-component))/
-  FilterProvider  COMPRESS  DEFLATE resp=Content-Type /application/(javascript|json|xml|x-javascript)/
-  FilterChain     COMPRESS
-  FilterProtocol  COMPRESS  change=yes;byteranges=no
-</IfModule>
-
 <IfModule !mod_filter.c>
   # Legacy versions of Apache
   AddOutputFilterByType DEFLATE text/html text/plain text/css application/json
   AddOutputFilterByType DEFLATE text/javascript application/javascript application/x-javascript 
   AddOutputFilterByType DEFLATE text/xml application/xml text/x-component
 </IfModule>
-
+<IfModule mod_deflate.c>
 # webfonts and svg:
   <FilesMatch "\.(ttf|otf|eot|svg)$" >
     SetOutputFilter DEFLATE
@@ -91,9 +75,9 @@ AddType application/octet-stream       safariextz
   ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
     
 # css and javascript
-  ExpiresByType text/css                  "access plus 1 week"
-  ExpiresByType application/javascript    "access plus 1 week"
-  ExpiresByType text/javascript           "access plus 1 week"
+  ExpiresByType text/css                  "access plus 15 minutes"
+  ExpiresByType application/javascript    "access plus 15 minutes"
+  ExpiresByType text/javascript           "access plus 15 minutes"
   <IfModule mod_headers.c>
     Header append Cache-Control "public"
   </IfModule>
@@ -108,4 +92,3 @@ AddDefaultCharset utf-8
 
 # force utf-8 for a number of file formats
 AddCharset utf-8 .html .css .js .xml .json .rss
-

@@ -12,7 +12,6 @@
 
     </head>
     <body class="loading">
-
         <a href="http://github.com/paulrouget/dashboard/"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://assets2.github.com/img/bec6c51521dcc8148146135149fe06a9cc737577?repo=&url=http%3A%2F%2Fs3.amazonaws.com%2Fgithub%2Fribbons%2Fforkme_left_darkblue_121621.png&path=" alt="Fork me on GitHub"></a>
 
 
@@ -128,7 +127,7 @@
                             <video preload="auto" width="160" src="media/enfants.webm" onmouseover="this.play()" onmouseout="this.pause()"></video>
                         </div>
                         <p>
-                        HTML5 defines a standard way to embed video in a web page, using a &lt;video&gt; element. The same way we can use images in web pages, we can now use videos. Videos can be styled with CSS and controlled via Javascript</p>
+                        HTML5 defines a standard way to embed video in a web page, using a &lt;video&gt; element. The same way we can use images in web pages, we can now use videos. Videos can be styled with CSS and controlled via Javascript.</p>
                         <a href="https://developer.mozilla.org/En/Using_audio_and_video_in_Firefox" title="documentation">learn more</a>
                     </article>
 
@@ -444,7 +443,7 @@
                     <article class="xxxie">
                         <h1>Strict Mode</h1>
                         <p>Javascript Strict Mode is a way to opt in to a restricted variant of JavaScript. Strict mode has different semantics from normal code.
-                       It eliminates some JavaScript pitfalls that didn’t cause errors by changing them to produce errors. And it fixes mistakes that make it difficult for JavaScript engines to perform optimizations </p>
+                       It eliminates some JavaScript pitfalls that didn’t cause errors by changing them to produce errors. And it fixes mistakes that make it difficult for JavaScript engines to perform optimizations.</p>
                         <a href="http://hacks.mozilla.org/2011/01/ecmascript-5-strict-mode-in-firefox-4/" title="documentation">learn more</a>
                     </article>
 
@@ -499,7 +498,7 @@
 
                     <article class="xxxie">
                         <h1>async &amp; defer</h1>
-                        <p>These are attributes of the &l;script&gt; element. Set async to tell the browser to, if possible, execute the script asynchronously. Set defer to tell the browser to execute the script after it has parsed the document.  </p>
+                        <p>These are attributes of the &lt;script&gt; element. Set async to tell the browser to, if possible, execute the script asynchronously. Set defer to tell the browser to execute the script after it has parsed the document.  </p>
                         <a href="https://developer.mozilla.org/En/HTML/Element/Script" title="documentation">learn more</a>
                     </article>
 
@@ -550,9 +549,10 @@
                         <h1>Protocol handlers</h1>
 
                         <p>Browsers need a way to deal with links that use protocols other
-than HTTP (for example, mailto:). They have traditionally used desktop
-programs such as a desktop e-mail client, to handle these protocols.
-Web-based protocol handlers enable web-based applications ...</p>
+                        than HTTP (for example, mailto:). They have traditionally used desktop
+                        programs such as a desktop e-mail client, to handle these protocols.
+                        Web-based protocol handlers allow web-based applications to participate in the process too.
+                        </p>
 
                         <a href="https://developer.mozilla.org/en/Web-based_protocol_handlers" title="documentation">learn more</a>
                     </article>
@@ -577,13 +577,14 @@ Web-based protocol handlers enable web-based applications ...</p>
 
                     <article class="xxxie">
                         <h1>Application Cache</h1>
-                        <p>When offline, a user’s browser can’t reach the server to get any files that might be needed. You can’t always count on the browser’s cache to include the needed resources because the user may have cleared the cache, for example. This is why you need to define explicitly which files must be stored so that all needed files and resources are available when the user goes offline: HTML, CSS, JavaScript files, and other resources like images and video.</p>
+                        <p>When offline, you can’t always count on the browser’s cache. You need to define explicitly which files must be stored so that all needed files and resources are available when the user goes offline: HTML, CSS, JavaScript files, and other resources like images and video.</p>
                         <a href="https://developer.mozilla.org/en/Offline_resources_in_Firefox" title="documentation">learn more</a>
                     </article>
 
                     <article class="experimental xxxie">
                         <h1>Javascript Animation Scheduler</h1>
-                        <p><strong>window.mozRequestAnimationFrame</strong> tells the browser that you wish to perform an animation. This requests that the browser schedule a repaint of the window for the next animation frame.</p>
+                        <p><strong>window.mozRequestAnimationFrame</strong> tells the browser that you wish to perform an animation.
+                        This requests that the browser schedule a repaint of the window for the next animation frame.</p>
                         <a href="https://developer.mozilla.org/en/DOM/window.mozRequestAnimationFrame" title="documentation">learn more</a>
                     </article>
 
@@ -668,7 +669,7 @@ Web-based protocol handlers enable web-based applications ...</p>
 
                     <article>
                         <h1>Javascript engine</h1>
-                        <p>Firefox's Javascript Engine is named "SpiderMonkey". To compete with platform-native application, JavaScript execution speed is crucial. SpiderMonkey brings two different optimisations
+                        <p>Firefox's Javascript Engine is named "SpiderMonkey". To compete with platform-native application, JavaScript execution speed is crucial. SpiderMonkey brings two different optimizations:
                         <ul><li><strong>TraceMonkey</strong></li><li><strong>JaëgerMonkey</strong></li></ul></p>
 
                         <a href="https://developer.mozilla.org/en/spidermonkey" title="documentation">learn more</a>
@@ -676,13 +677,13 @@ Web-based protocol handlers enable web-based applications ...</p>
 
                     <article>
                         <h1>TraceMonkey</h1>
-                        <p>TraceMonkey adds native‐code compilation to Mozilla’s JavaScript engine (known as “SpiderMonkey”). It is based on a technique developed at UC Irvine called “trace trees”. The net result is a massive speed increase in Web‐page content</p>
+                        <p>TraceMonkey adds native‐code compilation to Mozilla’s JavaScript engine. It is based on a technique developed at University of California, Irvine called “trace trees”. The net result is a massive speed increase in Web‐page content.</p>
                         <a href="https://hacks.mozilla.org/2009/07/tracemonkey-overview/" title="documentation">learn more</a>
                     </article>
 
                     <article>
                         <h1>Jägermonkey</h1>
-                        <p>JaëgerMonkey is a new method JIT for SpiderMonkey. The goal is to get reliable baseline performance on the order of other JS JIT systems. Jägermonkey will be a baseline whole-method JIT that doesn't necessarily do many traditional compiler optimizations. Instead, it does dynamic-language-JIT-oriented optimizations like PICs and specialization of constant operands.</p>
+                        <p>JaëgerMonkey is a new method <abbr title="just-in-time compiler">JIT</abbr> for SpiderMonkey. The goal is to get reliable baseline performance on the order of other JS <abbr title="just-in-time compiler">JIT</abbr> systems. Jägermonkey will be a baseline whole-method <abbr title="just-in-time compiler">JIT</abbr> that doesn't necessarily do many traditional compiler optimizations. Instead, it does dynamic-language-JIT-oriented optimizations like PICs and specialization of constant operands.</p>
                         <a href="https://hacks.mozilla.org/2010/03/improving-javascript-performance-with-jagermonkey/" title="documentation">learn more</a>
                     </article>
 
@@ -700,7 +701,7 @@ Web-based protocol handlers enable web-based applications ...</p>
                         In previous releases, to paint a web page that used a plug-in, Firefox
                         had to ask the plug-in for the data to paint. If a plug-in was slow or
                         was hung, it would make the browser feel slow. Now Firefox can get
-                        that data asynchronously, ...
+                        that data asynchronously.
                         </p>
                         <a href="http://benjamin.smedbergs.us/blog/2010-11-18/asynchronous-plugin-layer-painting/" title="documentation">learn more</a>
                     </article>

@@ -156,7 +156,7 @@ function initEditor() {
         e.preventDefault();
         poster.classList.remove("dragging");
         if (e.dataTransfer.files.length < 1) {
-            document.getElementById("filepicker").click();
+            // document.getElementById("filepicker").click();
             return;
         }
         var file = e.dataTransfer.files[0];

@@ -418,7 +418,206 @@
 
 
 
-		
+
+
+
+
+/* ----- IE ------------------------------------------------------------------------------------------------- */
+
+
+/*T*/.out .letter:nth-child( 1) { -ms-transform: translate(-248px, -196px) rotate(-30deg); }
+/*h*/.out .letter:nth-child( 2) { -ms-transform: translate(-211px, -217px) rotate(-25deg); }
+/*e*/.out .letter:nth-child( 3) { -ms-transform: translate(-173px, -234px) rotate(-20deg); }
+/*L*/.out .letter:nth-child( 5) { -ms-transform: translate(-118px, -253px) rotate(-15deg); }
+/*e*/.out .letter:nth-child( 6) { -ms-transform: translate(-83px, -261px) rotate(-5deg); }
+/*t*/.out .letter:nth-child( 7) { -ms-transform: translate(-43px, -263px) rotate(0deg); }
+/*t*/.out .letter:nth-child( 8) { -ms-transform: translate(-22px, -263px) rotate(0deg); }
+/*e*/.out .letter:nth-child( 9) { -ms-transform: translate(4px, -262px) rotate(5deg); }
+/*r*/.out .letter:nth-child(10) { -ms-transform: translate(43px, -256px) rotate(10deg); }
+/*-*/.out .letter:nth-child(11) { -ms-transform: translate(61px, -243px) rotate(15deg); }
+/*H*/.out .letter:nth-child(12) { -ms-transform: translate(-143px, -154px) rotate(-25deg); }
+/*E*/.out .letter:nth-child(13) { -ms-transform: translate(-101px, -169px) rotate(-15deg); }
+/*A*/.out .letter:nth-child(14) { -ms-transform: translate(-63px, -176px) rotate(-5deg); }
+/*d*/.out .letter:nth-child(15) { -ms-transform: translate(-27px, -177px) rotate(0deg); }
+/*S*/.out .letter:nth-child(16) { -ms-transform: translate(11px, -152px) rotate(5deg); }
+
+
+
+
+/* mister heads */
+
+/* Tom Hanks */
+.mr1 .letter:nth-child( 1) { -ms-transform: translate(-64px,  -64px) rotate(10deg); }
+.mr1 .letter:nth-child( 2) { -ms-transform: translate(-83px, -117px) rotate(235deg); }
+.mr1 .letter:nth-child( 3) { -ms-transform: translate(-74px,  -76px) rotate(-125deg); }                                                  
+.mr1 .letter:nth-child( 5) { -ms-transform: translate(-29px, -183px) rotate(-20deg); }
+.mr1 .letter:nth-child( 6) { -ms-transform: translate(-70px, -153px) rotate(-25deg); }
+.mr1 .letter:nth-child( 7) { -ms-transform: translate(-20px,  -93px) rotate(-25deg); }
+.mr1 .letter:nth-child( 8) { -ms-transform: translate(-10px, -125px) rotate(-10deg); }
+.mr1 .letter:nth-child( 9) { -ms-transform: translate(-35px, -150px) rotate(-15deg); }
+.mr1 .letter:nth-child(10) { -ms-transform: translate(-45px,  -57px) rotate(15deg); }
+.mr1 .letter:nth-child(11) { -ms-transform: translate(-5px, -175px) rotate(-20deg); }
+.mr1 .letter:nth-child(12) { -ms-transform: translate(-65px, -169px) rotate(80deg); }
+.mr1 .letter:nth-child(13) { -ms-transform: translate(-50px, -178px) rotate(-20deg); }
+.mr1 .letter:nth-child(14) { -ms-transform: translate(-30px, -115px) rotate(-20deg); }
+.mr1 .letter:nth-child(15) { -ms-transform: translate(-68px, -110px) rotate(-100deg); }
+.mr1 .letter:nth-child(16) { -ms-transform: translate(-34px,  -80px) rotate(5deg); }
+
+/* Dean */
+.mr2 .letter:nth-child( 1) { -ms-transform: translate(-55px,  -86px) rotate(75deg); }
+.mr2 .letter:nth-child( 2) { -ms-transform: translate(-18px, -135px) rotate(45deg); }
+.mr2 .letter:nth-child( 3) { -ms-transform: translate(-96px, -160px) rotate(-65deg); }                                                   
+.mr2 .letter:nth-child( 5) { -ms-transform: translate(-67px,  -58px) rotate(-170deg); }
+.mr2 .letter:nth-child( 6) { -ms-transform: translate(-49px, -166px) rotate(75deg); }
+.mr2 .letter:nth-child( 7) { -ms-transform: translate(-65px, -103px) rotate(60deg); }
+.mr2 .letter:nth-child( 8) { -ms-transform: translate(-20px, -112px) rotate(-15deg); }
+.mr2 .letter:nth-child( 9) { -ms-transform: translate(-97px, -104px) rotate(-125deg); }
+.mr2 .letter:nth-child(10) { -ms-transform: translate(-14px,  -75px) rotate(0deg); }
+.mr2 .letter:nth-child(11) { -ms-transform: translate(6px,  -90px) rotate(15deg); }
+.mr2 .letter:nth-child(12) { -ms-transform: translate(-59px,  -72px) rotate(-120deg); }
+.mr2 .letter:nth-child(13) { -ms-transform: translate(-53px, -123px) rotate(0deg); }
+.mr2 .letter:nth-child(14) { -ms-transform: translate(-32px, -126px) rotate(-15deg); }
+.mr2 .letter:nth-child(15) { -ms-transform: translate(-83px, -145px) rotate(-75deg); }
+.mr2 .letter:nth-child(16) { -ms-transform: translate(-33px, -164px) rotate(15deg); }
+
+/* Jonny Depp */
+.mr3 .letter:nth-child( 1) { -ms-transform: translate(-62px,  -62px) rotate(10deg); }
+.mr3 .letter:nth-child( 2) { -ms-transform: translate(-35px, -105px) rotate(150deg); }
+.mr3 .letter:nth-child( 3) { -ms-transform: translate(-78px, -164px) rotate(-25deg); }                                                  
+.mr3 .letter:nth-child( 5) { -ms-transform: translate(-45px, -188px) rotate(-15deg); }
+.mr3 .letter:nth-child( 6) { -ms-transform: translate(-73px, -144px) rotate(0deg); }
+.mr3 .letter:nth-child( 7) { -ms-transform: translate(-26px, -133px) rotate(-135deg); }
+.mr3 .letter:nth-child( 8) { -ms-transform: translate(-33px,  -93px) rotate(0deg); }
+.mr3 .letter:nth-child( 9) { -ms-transform: translate(-77px, -135px) rotate(30deg); }
+.mr3 .letter:nth-child(10) { -ms-transform: translate(-18px, -103px) rotate(90deg); }
+.mr3 .letter:nth-child(11) { -ms-transform: translate(-96px, -168px) rotate(-10deg); }
+.mr3 .letter:nth-child(12) { -ms-transform: translate(-75px, -191px) rotate(-190deg); }
+.mr3 .letter:nth-child(13) { -ms-transform: translate(-57px, -115px) rotate(-20deg); }
+.mr3 .letter:nth-child(14) { -ms-transform: translate(-52px,  -66px) rotate(-200deg); }
+.mr3 .letter:nth-child(15) { -ms-transform: translate(-61px, -143px) rotate(265deg); }
+.mr3 .letter:nth-child(16) { -ms-transform: translate(-75px, -116px) rotate(-345deg); }
+
+/* Julius Cesar */
+.mr4 .letter:nth-child( 1) { -ms-transform: translate(-56px,  -60px) rotate(10deg); }
+.mr4 .letter:nth-child( 2) { -ms-transform: translate(-19px, -116px) rotate(350deg); }
+.mr4 .letter:nth-child( 3) { -ms-transform: translate(-87px, -145px) rotate(-95deg); }                                                  
+.mr4 .letter:nth-child( 5) { -ms-transform: translate(-53px, -101px) rotate(15deg); }
+.mr4 .letter:nth-child( 6) { -ms-transform: translate(-59px, -179px) rotate(-25deg); }
+.mr4 .letter:nth-child( 7) { -ms-transform: translate(-11px,  -81px) rotate(55deg); }
+.mr4 .letter:nth-child( 8) { -ms-transform: translate(-12px, -135px) rotate(-10deg); }
+.mr4 .letter:nth-child( 9) { -ms-transform: translate(-88px, -121px) rotate(-95deg); }
+.mr4 .letter:nth-child(10) { -ms-transform: translate(-11px,  -70px) rotate(20deg); }
+.mr4 .letter:nth-child(11) { -ms-transform: translate(-59px,  -84px) rotate(-30deg); }
+.mr4 .letter:nth-child(12) { -ms-transform: translate(-44px, -118px) rotate(-55deg); }
+.mr4 .letter:nth-child(13) { -ms-transform: translate(-38px, -155px) rotate(0deg); }
+.mr4 .letter:nth-child(14) { -ms-transform: translate(-58px,  -79px) rotate(185deg); }
+.mr4 .letter:nth-child(15) { -ms-transform: translate(-63px, -155px) rotate(-120deg); }
+.mr4 .letter:nth-child(16) { -ms-transform: translate(-31px, -167px) rotate(15deg); }
+
+/* Opa */
+.mr5 .letter:nth-child( 1) { -ms-transform: translate(-70px, -146px) rotate(-225deg); }
+.mr5 .letter:nth-child( 2) { -ms-transform: translate(-20px,  -82px) rotate(95deg); }
+.mr5 .letter:nth-child( 3) { -ms-transform: translate(-99px, -131px) rotate(280deg); }                                                  
+.mr5 .letter:nth-child( 5) { -ms-transform: translate(-81px, -110px) rotate(-15deg); }
+.mr5 .letter:nth-child( 6) { -ms-transform: translate(-54px, -174px) rotate(-10deg); }
+.mr5 .letter:nth-child( 7) { -ms-transform: translate(-11px, -139px) rotate(155deg); }
+.mr5 .letter:nth-child( 8) { -ms-transform: translate(-49px,  -62px) rotate(-30deg); }
+.mr5 .letter:nth-child( 9) { -ms-transform: translate(-42px, -154px) rotate(175deg); }
+.mr5 .letter:nth-child(10) { -ms-transform: translate(-52px,  -58px) rotate(0deg); }
+.mr5 .letter:nth-child(11) { -ms-transform: translate(-7px,  -81px) rotate(35deg); }
+.mr5 .letter:nth-child(12) { -ms-transform: translate(-54px, -129px) rotate(65deg); }
+.mr5 .letter:nth-child(13) { -ms-transform: translate(-18px, -123px) rotate(-65deg); }
+.mr5 .letter:nth-child(14) { -ms-transform: translate(-20px, -117px) rotate(-125deg); }
+.mr5 .letter:nth-child(15) { -ms-transform: translate(-79px,  -99px) rotate(-115deg); }
+.mr5 .letter:nth-child(16) { -ms-transform: translate(-35px,  -80px) rotate(25deg); }
+
+
+/* mɨz heads */
+
+/* Chop Sticks */
+.ms1 .letter:nth-child( 1) { -ms-transform: translate(25px, -120px) rotate(60deg); }
+.ms1 .letter:nth-child( 2) { -ms-transform: translate(-1px,  -71px) rotate(65deg); }
+.ms1 .letter:nth-child( 3) { -ms-transform: translate(-13px, -178px) rotate(25deg); }                                                 
+.ms1 .letter:nth-child( 5) { -ms-transform: translate(4px, -170px) rotate(-80deg); }
+.ms1 .letter:nth-child( 6) { -ms-transform: translate(35px, -133px) rotate(150deg); }
+.ms1 .letter:nth-child( 7) { -ms-transform: translate(-36px, -126px) rotate(-10deg); }
+.ms1 .letter:nth-child( 8) { -ms-transform: translate(-33px,  -73px) rotate(-40deg); }
+.ms1 .letter:nth-child( 9) { -ms-transform: translate(13px, -170px) rotate(80deg); }
+.ms1 .letter:nth-child(10) { -ms-transform: translate(-35px,  -84px) rotate(-180deg); }
+.ms1 .letter:nth-child(11) { -ms-transform: translate(39px, -174px) rotate(-50deg); }
+.ms1 .letter:nth-child(12) { -ms-transform: translate(-6px, -114px) rotate(110deg); }
+.ms1 .letter:nth-child(13) { -ms-transform: translate(1px, -123px) rotate(15deg); }
+.ms1 .letter:nth-child(14) { -ms-transform: translate(-38px, -102px) rotate(35deg); }
+.ms1 .letter:nth-child(15) { -ms-transform: translate(-32px, -140px) rotate(195deg); }
+.ms1 .letter:nth-child(16) { -ms-transform: translate(19px, -102px) rotate(85deg); }
+
+/* Hat girl */
+.ms2 .letter:nth-child( 1) { -ms-transform: translate(-39px, -133px) rotate(10deg); }
+.ms2 .letter:nth-child( 2) { -ms-transform: translate(-41px, -119px) rotate(-65deg); }
+.ms2 .letter:nth-child( 3) { -ms-transform: translate(6px, -154px) rotate(120deg); }                                                 
+.ms2 .letter:nth-child( 5) { -ms-transform: translate(-50px, -141px) rotate(-195deg); }
+.ms2 .letter:nth-child( 6) { -ms-transform: translate(3px,  -76px) rotate(135deg); }
+.ms2 .letter:nth-child( 7) { -ms-transform: translate(-39px,  -83px) rotate(-175deg); }
+.ms2 .letter:nth-child( 8) { -ms-transform: translate(-35px, -131px) rotate(-10deg); }
+.ms2 .letter:nth-child( 9) { -ms-transform: translate(-16px, -111px) rotate(-140deg); }
+.ms2 .letter:nth-child(10) { -ms-transform: translate(-21px,  -62px) rotate(70deg); }
+.ms2 .letter:nth-child(11) { -ms-transform: translate(-47px, -177px) rotate(-35deg); }
+.ms2 .letter:nth-child(12) { -ms-transform: translate(-14px, -145px) rotate(-105deg); }
+.ms2 .letter:nth-child(13) { -ms-transform: translate(-13px, -133px) rotate(-195deg); }
+.ms2 .letter:nth-child(14) { -ms-transform: translate(-40px, -107px) rotate(30deg); }
+.ms2 .letter:nth-child(15) { -ms-transform: translate(-27px, -169px) rotate(-70deg); }
+.ms2 .letter:nth-child(16) { -ms-transform: translate(-18px,  -80px) rotate(-90deg); }
+
+/* Nurse */
+.ms3 .letter:nth-child( 1) { -ms-transform: translate(-12px, -139px) rotate(-25deg); }
+.ms3 .letter:nth-child( 2) { -ms-transform: translate(-16px,  -48px) rotate(180deg); }
+.ms3 .letter:nth-child( 3) { -ms-transform: translate(-52px, -153px) rotate(-60deg); }                                                
+.ms3 .letter:nth-child( 5) { -ms-transform: translate(-45px,  -59px) rotate(-130deg); }
+.ms3 .letter:nth-child( 6) { -ms-transform: translate(-24px, -168px) rotate(-20deg); }
+.ms3 .letter:nth-child( 7) { -ms-transform: translate(-42px,  -58px) rotate(-175deg); }
+.ms3 .letter:nth-child( 8) { -ms-transform: translate(-55px,  -99px) rotate(-15deg); }
+.ms3 .letter:nth-child( 9) { -ms-transform: translate(-12px,  -87px) rotate(-85deg); }
+.ms3 .letter:nth-child(10) { -ms-transform: translate(-47px,  -69px) rotate(-55deg); }
+.ms3 .letter:nth-child(11) { -ms-transform: translate(36px, -160px) rotate(-25deg); }
+.ms3 .letter:nth-child(12) { -ms-transform: translate(-58px,  -93px) rotate(-65deg); }
+.ms3 .letter:nth-child(13) { -ms-transform: translate(-8px, -115px) rotate(75deg); }
+.ms3 .letter:nth-child(14) { -ms-transform: translate(-6px, -170px) rotate(-150deg); }
+.ms3 .letter:nth-child(15) { -ms-transform: translate(-63px, -115px) rotate(-115deg); }
+.ms3 .letter:nth-child(16) { -ms-transform: translate(7px, -128px) rotate(65deg); }
+
+/* Hat Lady */
+.ms4 .letter:nth-child( 1) { -ms-transform: translate(-13px, -154px) rotate(-75deg); }
+.ms4 .letter:nth-child( 2) { -ms-transform: translate(-28px,  -69px) rotate(10deg); }
+.ms4 .letter:nth-child( 3) { -ms-transform: translate(22px, -120px) rotate(-125deg); }                                                
+.ms4 .letter:nth-child( 5) { -ms-transform: translate(-38px, -103px) rotate(35deg); }
+.ms4 .letter:nth-child( 6) { -ms-transform: translate(11px, -114px) rotate(-100deg); }
+.ms4 .letter:nth-child( 7) { -ms-transform: translate(-36px,  -79px) rotate(195deg); }
+.ms4 .letter:nth-child( 8) { -ms-transform: translate(35px,  -84px) rotate(50deg); }
+.ms4 .letter:nth-child( 9) { -ms-transform: translate(-12px, -105px) rotate(-75deg); }
+.ms4 .letter:nth-child(10) { -ms-transform: translate(-15px,  -55px) rotate(-20deg); }
+.ms4 .letter:nth-child(11) { -ms-transform: translate(-38px, -165px) rotate(-125deg); }
+.ms4 .letter:nth-child(12) { -ms-transform: translate(-40px, -120px) rotate(-20deg); }
+.ms4 .letter:nth-child(13) { -ms-transform: translate(-1px,  -68px) rotate(-175deg); }
+.ms4 .letter:nth-child(14) { -ms-transform: translate(-50px, -142px) rotate(70deg); }
+.ms4 .letter:nth-child(15) { -ms-transform: translate(-14px, -151px) rotate(-35deg); }
+.ms4 .letter:nth-child(16) { -ms-transform: translate(13px, -132px) rotate(-125deg); }
+
+/* Oma */
+.ms5 .letter:nth-child( 1) { -ms-transform: translate(12px, -140px) rotate(50deg); }
+.ms5 .letter:nth-child( 2) { -ms-transform: translate(-24px,  -58px) rotate(50deg); }
+.ms5 .letter:nth-child( 3) { -ms-transform: translate(-15px, -156px) rotate(50deg); }                                                
+.ms5 .letter:nth-child( 5) { -ms-transform: translate(-43px, -104px) rotate(-15deg); }
+.ms5 .letter:nth-child( 6) { -ms-transform: translate(16px, -113px) rotate(-40deg); }
+.ms5 .letter:nth-child( 7) { -ms-transform: translate(-46px,  -87px) rotate(210deg); }
+.ms5 .letter:nth-child( 8) { -ms-transform: translate(-27px, -129px) rotate(10deg); }
+.ms5 .letter:nth-child( 9) { -ms-transform: translate(27px, -132px) rotate(-300deg); }
+.ms5 .letter:nth-child(10) { -ms-transform: translate(-45px,  -69px) rotate(-145deg); }
+.ms5 .letter:nth-child(11) { -ms-transform: translate(-51px, -113px) rotate(-220deg); }
+.ms5 .letter:nth-child(12) { -ms-transform: translate(-22px,  -93px) rotate(50deg); }
+.ms5 .letter:nth-child(13) { -ms-transform: translate(11px, -107px) rotate(50deg); }
+.ms5 .letter:nth-child(14) { -ms-transform: translate(-47px,  -68px) rotate(-150deg); }
+.ms5 .letter:nth-child(15) { -ms-transform: translate(-20px, -153px) rotate(-95deg); }
+.ms5 .letter:nth-child(16) { -ms-transform: translate(23px, -159px) rotate(50deg); }		
 		
 		
 
@@ -823,5 +1022,5 @@
 .ms5 .letter:nth-child(16) { transform: translate(  23px, -159px) rotate(  50deg); }
 
 
-
-		
+/* Hello End */
+	

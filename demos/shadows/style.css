@@ -1,9 +1,7 @@
 
 /* The Letter-Heads by simurai */
 
-@import url(http://fonts.googleapis.com/css?family=Coda:800);
-@import url(http://fonts.googleapis.com/css?family=Cabin:bold);
-
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:bold);
 
 html {
 	background-color: #000;
@@ -23,8 +21,8 @@ a {
 }
 
 .font1 { font-family: "Helvetica Neue", Helvetica, sans-serif; }
-.font2 { font-family: "Coda", sans-serif; }
-.font3 { font-family: "Cabin", sans-serif; }	/* just a backup, will be replaced by typekit  */
+.font2 { font-family: "Ubuntu", sans-serif; }
+.font3 { font-family: "Lucida Grande", Lucida, Verdana, sans-serif; } /* will be replaced by typekit  */	
 
 
 
@@ -37,10 +35,11 @@ a {
 	top: 50%;
 	left: 50%;
 	
-	-moz-transition: 	   -moz-transform 2s cubic-bezier(.5, 0, 0, 1);
+	   -moz-transition:    -moz-transform 2s cubic-bezier(.5, 0, 0, 1);
 	-webkit-transition: -webkit-transform 2s cubic-bezier(.5, 0, 0, 1);
-	-o-transition: 			 -o-transform 2s cubic-bezier(.5, 0, 0, 1);
-	transition: 				transform 2s cubic-bezier(.5, 0, 0, 1);
+		-ms-transition: 	-ms-transform 2s cubic-bezier(.5, 0, 0, 1);
+		 -o-transition: 	 -o-transform 2s cubic-bezier(.5, 0, 0, 1);
+			transition: 		transform 2s cubic-bezier(.5, 0, 0, 1);
 	
 }
 
@@ -52,10 +51,11 @@ a {
 	z-index: 11;
 	position: absolute;
 	
-	-moz-transition: 	opacity 2s cubic-bezier(.8, 0, 0, 1);
+	   -moz-transition: opacity 2s cubic-bezier(.8, 0, 0, 1);
 	-webkit-transition: opacity 2s cubic-bezier(.8, 0, 0, 1);
-	-o-transition: 		opacity 2s cubic-bezier(.8, 0, 0, 1);
-	transition: 		opacity 2s cubic-bezier(.8, 0, 0, 1);
+		-ms-transition: opacity 2s cubic-bezier(.8, 0, 0, 1);
+		 -o-transition: opacity 2s cubic-bezier(.8, 0, 0, 1);
+			transition: opacity 2s cubic-bezier(.8, 0, 0, 1);
 }
 .out #back {
 	opacity: 0;
@@ -71,10 +71,11 @@ a {
 	line-height: 1em;
 	font-weight: bold;
 	
-	-moz-transition: 		-moz-transform 3s cubic-bezier(.3, 0, 0, 1);
+	   -moz-transition: 	-moz-transform 3s cubic-bezier(.3, 0, 0, 1);
 	-webkit-transition:  -webkit-transform 3s cubic-bezier(.3, 0, 0, 1);
-	-o-transition:  		  -o-transform 3s cubic-bezier(.3, 0, 0, 1);
-	transition:  				 transform 3s cubic-bezier(.3, 0, 0, 1);
+		-ms-transition: 	 -ms-transform 3s cubic-bezier(.3, 0, 0, 1);
+		 -o-transition: 	  -o-transform 3s cubic-bezier(.3, 0, 0, 1);
+			transition: 		 transform 3s cubic-bezier(.3, 0, 0, 1);
 }
 #front .letter {
 	color: #dbd9ba;
@@ -95,16 +96,18 @@ a {
 	pointer-events: none;
 }
 .mr {
-	-moz-transform: 	translate(-260px, 150px);
+	   -moz-transform:  translate(-260px, 150px);
 	-webkit-transform: 	translate(-260px, 150px);
-	-o-transform: 		translate(-260px, 150px);
-	transform: 			translate(-260px, 150px);
+		-ms-transform:  translate(-260px, 150px);
+		 -o-transform:  translate(-260px, 150px);
+			transform:  translate(-260px, 150px);
 }
 .ms {
-	-moz-transform: 	translate(280px, -50px);
+	   -moz-transform:  translate(280px, -50px);
 	-webkit-transform: 	translate(280px, -50px);
-	-o-transform: 		translate(280px, -50px);
-	transform: 			translate(280px, -50px);
+		-ms-transform:  translate(280px, -50px);
+		 -o-transform:  translate(280px, -50px);
+			transform:  translate(280px, -50px);
 }
 
 #mr, #ms {
@@ -129,10 +132,35 @@ a {
 }
 #mr:active, #ms:active {
 	opacity: .6;
-	-moz-transform: 	translateY(1px);
+	   -moz-transform:  translateY(1px);
 	-webkit-transform: 	translateY(1px);
-	-o-transform: 		translateY(1px);
-	transform: 			translateY(1px);
+		-ms-transform:  translateY(1px);
+		 -o-transform:  translateY(1px);
+			transform:  translateY(1px);
+}
+
+
+/* hints */
+
+#mr .hint {
+	margin: 120px 0 0 10px;
+}
+#ms .hint {
+	margin: 120px 0 0 20px;
+}
+#mr .hint, #ms .hint {
+	   -moz-transition: 	-moz-transform .25s cubic-bezier(.3, 0, 0, 1);
+	-webkit-transition:  -webkit-transform .25s cubic-bezier(.3, 0, 0, 1);
+		-ms-transition: 	 -ms-transform .25s cubic-bezier(.3, 0, 0, 1);
+		 -o-transition: 	  -o-transform .25s cubic-bezier(.3, 0, 0, 1);
+			transition: 		 transform .25s cubic-bezier(.3, 0, 0, 1);
+}
+#mr:hover .hint, #ms:hover .hint {
+	   -moz-transform:  translateY(-1px) scale(1.05);
+	-webkit-transform: 	translateY(-1px) scale(1.05);
+		-ms-transform:  translateY(-1px) scale(1.05);
+		 -o-transform:  translateY(-1px) scale(1.05);
+			transform:  translateY(-1px) scale(1.05);
 }
 
 
@@ -172,6 +200,19 @@ a {
 #leds-ms li:nth-child(4) { -webkit-transform: translate( 116px,340px );}
 #leds-ms li:nth-child(5) { -webkit-transform: translate( 116px,320px );} 
 
+/* ms */
+#leds-mr li:nth-child(1) { -ms-transform: translate(145px,305px );} 
+#leds-mr li:nth-child(2) { -ms-transform: translate(155px,309px );} 
+#leds-mr li:nth-child(3) { -ms-transform: translate(165px,313px );}
+#leds-mr li:nth-child(4) { -ms-transform: translate(175px,318px );}
+#leds-mr li:nth-child(5) { -ms-transform: translate(185px,322px );}
+                            
+#leds-ms li:nth-child(1) { -ms-transform: translate(79px,304px );}
+#leds-ms li:nth-child(2) { -ms-transform: translate(76px,324px );} 
+#leds-ms li:nth-child(3) { -ms-transform: translate(88px,328px );}
+#leds-ms li:nth-child(4) { -ms-transform: translate(116px,340px );}
+#leds-ms li:nth-child(5) { -ms-transform: translate(116px,320px );}
+
 /* o */
 #leds-mr li:nth-child(1) { -o-transform: translate(145px,305px );} 
 #leds-mr li:nth-child(2) { -o-transform: translate(155px,309px );} 
@@ -207,24 +248,27 @@ a {
 	border-radius: 4px;
 	background-color: hsl(50,20%,70%);
 	
-	-moz-box-shadow: 	inset rgba(0,0,0,.6) 0 0 2px 1px;
+	   -moz-box-shadow: inset rgba(0,0,0,.6) 0 0 2px 1px;
 	-webkit-box-shadow: inset rgba(0,0,0,.6) 0 0 2px 1px;
-	-o-box-shadow: 		inset rgba(0,0,0,.6) 0 0 2px 1px;
-	box-shadow: 		inset rgba(0,0,0,.6) 0 0 2px 1px;
+	    -ms-box-shadow: inset rgba(0,0,0,.6) 0 0 2px 1px;
+		 -o-box-shadow: inset rgba(0,0,0,.6) 0 0 2px 1px;
+			box-shadow: inset rgba(0,0,0,.6) 0 0 2px 1px;
 }
 
 .leds li.active .led {
 	background-color: 	hsl(50,70%,90%);
 	
-	-moz-box-shadow: 	inset rgba(0,0,0,.4) 0 0 2px 1px, hsla(50,20%,80%,.9) 0 0 8px 2px;
+	   -moz-box-shadow: inset rgba(0,0,0,.4) 0 0 2px 1px, hsla(50,20%,80%,.9) 0 0 8px 2px;
 	-webkit-box-shadow: inset rgba(0,0,0,.4) 0 0 2px 1px, hsla(50,20%,80%,.9) 0 0 8px 2px;
-	-o-box-shadow: 		inset rgba(0,0,0,.4) 0 0 2px 1px, hsla(50,20%,80%,.9) 0 0 8px 2px;
-	box-shadow: 		inset rgba(0,0,0,.4) 0 0 2px 1px, hsla(50,20%,80%,.9) 0 0 8px 2px;
+	    -ms-box-shadow: inset rgba(0,0,0,.4) 0 0 2px 1px, hsla(50,20%,80%,.9) 0 0 8px 2px;
+		 -o-box-shadow: inset rgba(0,0,0,.4) 0 0 2px 1px, hsla(50,20%,80%,.9) 0 0 8px 2px;
+			box-shadow: inset rgba(0,0,0,.4) 0 0 2px 1px, hsla(50,20%,80%,.9) 0 0 8px 2px;
 	
-	-moz-transition: 	background-color .5s ease-in-out;
+	   -moz-transition: background-color .5s ease-in-out;
 	-webkit-transition: background-color .5s ease-in-out;
-	-o-transition: 		background-color .5s ease-in-out;
-	transition: 		background-color .5s ease-in-out;
+		-ms-transition: background-color .5s ease-in-out;
+		 -o-transition: background-color .5s ease-in-out;
+			transition: background-color .5s ease-in-out;
 }
 
 
@@ -246,20 +290,23 @@ a {
 	font-size: 28px;
 	background-color: #000;
 	
-	-moz-box-sizing: 	border-box;
+	   -moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	-o-box-sizing: 		border-box;
-	box-sizing: 		border-box;
+	    -ms-box-sizing: border-box;
+		 -o-box-sizing: border-box;
+			box-sizing: border-box;
 	
-	-moz-box-shadow: 	rgba(200,200,255,.2) 0 1px 3px;
+	   -moz-box-shadow: rgba(200,200,255,.2) 0 1px 3px;
 	-webkit-box-shadow: rgba(200,200,255,.2) 0 1px 3px;
-	-o-box-shadow: 		rgba(200,200,255,.2) 0 1px 3px;
-	box-shadow: 		rgba(200,200,255,.2) 0 1px 3px;
+	    -ms-box-shadow: rgba(200,200,255,.2) 0 1px 3px;
+		 -o-box-shadow: rgba(200,200,255,.2) 0 1px 3px;
+			box-shadow: rgba(200,200,255,.2) 0 1px 3px;
 	
-	-moz-transform: 	translate(-50px, -50px) rotate(-25deg);
+	   -moz-transform:  translate(-50px, -50px) rotate(-25deg);
 	-webkit-transform: 	translate(-50px, -50px) rotate(-25deg);
-	-o-transform: 		translate(-50px, -50px) rotate(-25deg);
-	transform: 			translate(-50px, -50px) rotate(-25deg);
+		-ms-transform:  translate(-50px, -50px) rotate(-25deg);
+		 -o-transform:  translate(-50px, -50px) rotate(-25deg);
+			transform:  translate(-50px, -50px) rotate(-25deg);
 }
 
 #fonts button {
@@ -270,20 +317,23 @@ a {
 	height: 100%;
 	background-color: #191919;
 	
-	background: -moz-radial-gradient(50% 50% 0deg, circle cover, #222, #111);
+	background:    -moz-radial-gradient(50% 50% 0deg, circle cover, #222, #111);
 	background: -webkit-gradient(radial, 50 50, 100, 50 50, 0, from(#111), to(#222));
-	background: -o-radial-gradient(50% 50% 0deg, circle cover, #222, #111);
-	background: radial-gradient(50% 50% 0deg, circle cover, #222, #111);
+	background: 	-ms-radial-gradient(50% 50% 0deg, circle cover, #222, #111);
+	background: 	 -o-radial-gradient(50% 50% 0deg, circle cover, #222, #111);
+	background: 		radial-gradient(50% 50% 0deg, circle cover, #222, #111);
 	
-	-moz-box-shadow: 	inset rgba(200,200,255,.12) 0 -2px 10px 1px;
+	   -moz-box-shadow: inset rgba(200,200,255,.12) 0 -2px 10px 1px;
 	-webkit-box-shadow: inset rgba(200,200,255,.12) 0 -2px 10px 1px;
-	-o-box-shadow: 		inset rgba(200,200,255,.12) 0 -2px 10px 1px;
-	box-shadow: 		inset rgba(200,200,255,.12) 0 -2px 10px 1px;
+	    -ms-box-shadow: inset rgba(200,200,255,.12) 0 -2px 10px 1px;
+		 -o-box-shadow: inset rgba(200,200,255,.12) 0 -2px 10px 1px;
+			box-shadow: inset rgba(200,200,255,.12) 0 -2px 10px 1px;
 	
-	-moz-transition: 	   -moz-transform .1s ease-out;
+	   -moz-transition:    -moz-transform .1s ease-out;
 	-webkit-transition: -webkit-transform .1s ease-out;
-	-o-transition: 			 -o-transform .1s ease-out;
-	transition: 				transform .1s ease-out;
+		-ms-transition: 	-ms-transform .1s ease-out;
+		 -o-transition: 	 -o-transform .1s ease-out;
+			transition: 		transform .1s ease-out;
 }
 #fonts button span {
 	position: relative;
@@ -295,7 +345,7 @@ a {
 	text-transform: uppercase;
 	line-height: 60px;
 	
-	pointer-events: none; /* Fixed: z-fiting? bug */
+	pointer-events: none; /* Fixed: z-fiting? */
 }
 #fonts button span.active {
 	color: #acaa92;	
@@ -308,20 +358,23 @@ a {
 #fonts button:active {
 	opacity: .75;
 	
-	-moz-box-shadow: 	inset rgba(0,0,0,.54) 0 3px 10px;	
+	   -moz-box-shadow: inset rgba(0,0,0,.5) 0 3px 10px;	
 	-webkit-box-shadow: inset rgba(0,0,0,.5) 0 3px 10px;
-	-o-box-shadow: 		inset rgba(0,0,0,.5) 0 3px 10px;
-	box-shadow: 		inset rgba(0,0,0,.5) 0 3px 10px;
+	    -ms-box-shadow: inset rgba(0,0,0,.5) 0 3px 10px;
+		 -o-box-shadow: inset rgba(0,0,0,.5) 0 3px 10px;
+			box-shadow: inset rgba(0,0,0,.5) 0 3px 10px;
 	
-	-moz-transform: 	scale(.9);
+	   -moz-transform:  scale(.9);
 	-webkit-transform:  scale(.9);
-	-o-transform:  		scale(.9);
-	transform:  		scale(.9);
+		-ms-transform:  scale(.9);
+		 -o-transform:  scale(.9);
+			transform:  scale(.9);
 	
-	-moz-transition: 	   -moz-transform .15s ease-out;
+	   -moz-transition:    -moz-transform .15s ease-out;
 	-webkit-transition: -webkit-transform .15s ease-out;
-	-o-transition: 			 -o-transform .15s ease-out;
-	transition: 				transform .15s ease-out;
+		-ms-transition: 	-ms-transform .15s ease-out;
+		 -o-transition: 	 -o-transform .15s ease-out;
+			transition: 		transform .15s ease-out;
 }
 
 
@@ -343,10 +396,11 @@ a {
 		
 	background-color: #000;
 	
-	-moz-box-shadow: 	rgba(200,200,255,.2) 0 1px 3px;
+	   -moz-box-shadow: rgba(200,200,255,.2) 0 1px 3px;
 	-webkit-box-shadow: rgba(200,200,255,.2) 0 1px 3px;
-	-o-box-shadow: 		rgba(200,200,255,.2) 0 1px 3px;
-	box-shadow: 		rgba(200,200,255,.2) 0 1px 3px;
+	    -ms-box-shadow: rgba(200,200,255,.2) 0 1px 3px;
+		 -o-box-shadow: rgba(200,200,255,.2) 0 1px 3px;
+			box-shadow: rgba(200,200,255,.2) 0 1px 3px;
 	
 }
 #tweet-btn {
@@ -354,36 +408,40 @@ a {
 	width: 100px;
 	height: 100px;
 	background-image: url(tweet.png);
-	opacity: .16;
+	opacity: .2;
 	
 	text-indent: -9999px;
 	overflow: hidden;
 
-	-moz-transform: 	scale(.9) rotate(5deg);
+	   -moz-transform:  scale(.9) rotate(5deg);
 	-webkit-transform: 	scale(.9) rotate(5deg);
-	-o-transform: 		scale(.9) rotate(5deg);
-	transform: 			scale(.9) rotate(5deg);
+		-ms-transform:  scale(.9) rotate(5deg);
+		 -o-transform:  scale(.9) rotate(5deg);
+			transform:  scale(.9) rotate(5deg);
 
-	-moz-transition: 	all .1s ease-out;
+	   -moz-transition: all .1s ease-out;
 	-webkit-transition: all .1s ease-out;
-	-o-transition: 		all .1s ease-out;
-	transition: 		all .1s ease-out;
+		-ms-transition: all .1s ease-out;
+		 -o-transition: all .1s ease-out;
+			transition: all .1s ease-out;
 }
 #tweet-btn:hover {
 	opacity: 1;
 	
-	-moz-transform: 	scale(1) translateY(5px);
+	   -moz-transform:  scale(1) translateY(5px);
 	-webkit-transform: 	scale(1) translateY(5px);
-	-o-transform: 		scale(1) translateY(5px);
-	transform: 			scale(1) translateY(5px);
+		-ms-transform:  scale(1) translateY(5px);
+		 -o-transform:  scale(1) translateY(5px);
+			transform:  scale(1) translateY(5px);
 }
 #tweet-btn:active {
 	opacity: .8;
 	
-	-moz-transform: 	scale(.95) translateY(5px);
+	   -moz-transform: 	scale(.95) translateY(5px);
 	-webkit-transform: 	scale(.95) translateY(5px);
-	-o-transform: 		scale(.95) translateY(5px);
-	transform: 			scale(.95) translateY(5px);
+		-ms-transform: 	scale(.95) translateY(5px);
+		 -o-transform: 	scale(.95) translateY(5px);
+			transform: 	scale(.95) translateY(5px);
 }
 
 

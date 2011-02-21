@@ -11,6 +11,9 @@ var timer;				// autoplay timer
 var count = 0;			// autoplay countdown
 var skip = false;		// skip is used to delay the auto-play on user interaction
 
+var mr_hint = true;		// click me hint
+var ms_hint = true;		// click me hint
+
 var currentFont = 1;
 var currentHead = Math.floor(Math.random()*5);
 
@@ -43,13 +46,13 @@ $(document).ready(function() {
 			// front
 			var frontTransform =   'translate('+ Math.floor( diffX /-40 ) +'px, '+ Math.floor( diffY /-100 ) +'px   )';
 			var wbk_frontTransform = 'translate3d('+ Math.floor( diffX /-40 ) +'px, '+ Math.floor( diffY /-100 ) +'px, 0)';
-			$("#front").css( {"-moz-transform": frontTransform, "-webkit-transform": wbk_frontTransform, "-o-transform": frontTransform, "transform": frontTransform } );
+			$("#front").css( {"-moz-transform": frontTransform, "-webkit-transform": wbk_frontTransform, "-ms-transform": frontTransform, "-o-transform": frontTransform, "transform": frontTransform } );
 			
 			
 			// back
 			var backTransform =   'translate('+ Math.floor( diffX /8 ) +'px, '+ Math.floor( diffY /30 ) +'px   ) scaleX('+ scale +')';
 			var wbk_backTransform = 'translate3d('+ Math.floor( diffX /8 ) +'px, '+ Math.floor( diffY /30 ) +'px, 0) scaleX('+ scale +')';
-			$("#back").css( {"-moz-transform": backTransform, "-webkit-transform": wbk_backTransform, "-o-transform": backTransform, "transform": backTransform } );
+			$("#back").css( {"-moz-transform": backTransform, "-webkit-transform": wbk_backTransform, "-ms-transform": backTransform, "-o-transform": backTransform, "transform": backTransform } );
 		
 		}
 		
@@ -57,7 +60,7 @@ $(document).ready(function() {
 		// bg
 		var bgTransform =   'translate('+ Math.floor( (docW/2-500) + (diffX/-3) ) +'px, '+ Math.floor( (docH/2-500) + (diffY/-6) ) +'px)   ';	
 		var wbk_bgTransform = 'translate3d('+ Math.floor( (docW/2-500) + (diffX/-3) ) +'px, '+ Math.floor( (docH/2-500) + (diffY/-6) ) +'px, 0)';
-		$("#bg").css( { "-moz-transform": bgTransform, "-webkit-transform": wbk_bgTransform, "-o-transform": bgTransform, "transform": bgTransform } );
+		$("#bg").css( { "-moz-transform": bgTransform, "-webkit-transform": wbk_bgTransform, "-ms-transform": bgTransform, "-o-transform": bgTransform, "transform": bgTransform } );
 		
 		
     });
@@ -149,6 +152,10 @@ $(document).ready(function() {
 		// frame clicks
 				
 		$('#mr').click(function() {
+			if( mr_hint ) {
+				$('#mr .hint').fadeOut(500);
+				mr_hint = false;
+			}
 			if(state == "ms") {
 				currentHead = Math.floor(Math.random()*5);
 				playAudio("audio_gender_rl");
@@ -164,6 +171,10 @@ $(document).ready(function() {
 		
 		
 		$('#ms').click(function() {
+			if( ms_hint ) {
+				$('#ms .hint').fadeOut(500);
+				ms_hint = false;
+			}
 			if(state == "mr") {
 				currentHead = Math.floor(Math.random()*5);
 				playAudio("audio_gender_lr");
@@ -249,31 +260,6 @@ $(document).ready(function() {
 		
 
 });
-
-
-
-
-/*
-
-Protocol:
-
-<- is sent by the demo to the gallery. You can send these.
--> is sent by the gallery to the demo. You should handle these.
-
-<- "loaded"			Demo has loaded enough to show the iframe to the user
--> "start_demo"		The gallery has shown your demo, start running 
-<- "show_exit_ui"	User may want to exit 
-<- "hide_exit_ui"	Cancels show_exit_ui (optional)
-<- "exiting"		The demo is over and is exiting (optional), most demos will run forever
--> "stop_demo"		Gallery has hidden your iframe, stop running, free up all resources and cleanup
-<- "finished_exit"	Demo finished unloading
-
-ex:
-window.parent.postMessage('loaded', targetOrigin);
-window.parent.postMessage('show_exit_ui', targetOrigin);
-
-*/
-
 
 
 

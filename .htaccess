@@ -6,4 +6,12 @@
 # includes directories used by version control systems such as Subversion or Git.
 <IfModule mod_rewrite.c>
   RewriteRule "(^|/)\." - [F]
+
+  # Mitigate file hosting Bug#635398
+  RewriteEngine on
+  RewriteCond %{HTTP_REFERER} !^https?://webofwonder.allizom.org [NC] [OR]
+  RewriteCond %{HTTP_REFERER} !^https?://developer-stage9.mozilla.org [NC] [OR]
+  RewriteCond %{HTTP_REFERER} !^https?://mozillademos.allizom.org [NC]
+  RewriteRule . - [F]
 </IfModule>
+

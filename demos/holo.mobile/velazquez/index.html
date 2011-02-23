@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+        <meta name="viewport" content="width=420">
+        <title></title>
+        <script>
+            var s, e = {x: 0, z:0};
+
+            window.onload = function() {
+                window.addEventListener("MozOrientation", move, true);
+                s = document.getElementById("world").style;
+                draw();
+            }
+            function move(evt) {
+                e = evt;
+            }
+
+            function draw() {
+                var x = (e.x + 0.3) * 2;
+                var y =  0;//(e.z - 0.4) * -2;
+                s.backgroundPosition = (-30 - x * 30) + "px 20px, " + (-x * 50) + "px " + (10 - y * 20) + "px, " + (230 - x * 65) + "px " + (25 - y * 30) + "px, " + -(115 + x * 105)  + "px " + (-(y + 1) * 40) + "px, 100% " + (-(y + 1) * 40) + "px, bottom left";
+                s.backgroundSize = "482px 474px, 410px 474px, 156px 455px, 385px 495px,  " + (130 + x * 105) + "px 495px, 400px 133px";
+                setTimeout(draw, 60);
+            }
+        </script>
+        <style>
+            body {width: 400px; background-color: black;}
+            body:after {
+                content: "↻ Please turn your device";
+                color: white;
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+            #world, #label { display: none; }
+
+            @media all and (orientation: portrait), (min-width: 600px) {
+                body, html {padding: 0px; margin: 0px;}
+                body:after {display: none;}
+                body {background-color: white;}
+                #world {
+                    display: block;
+                    width: 400px;
+                    height: 455px;
+                    margin: 10px;
+                    background-repeat: no-repeat;
+                    background-image: url(layer1.png), url(layer2.png), url(layer3.png), url(back.jpg), url(wall.jpg), url(floor.jpg);
+                }
+                #label {
+                    display: block;
+                    text-align: center;
+                    font-size: 20px;
+                }
+                h1 { margin-bottom: 0px; }
+                h2 { margin-top: 0px;}
+                a {
+                    color: black;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="world"></div>
+        <div id="label">
+            <h1>Las Meninas</h1>
+            <h2>Vélazquez</h2>
+            <a href="credits.html">credits</a>
+        </div>
+    </body>
+</html>
+

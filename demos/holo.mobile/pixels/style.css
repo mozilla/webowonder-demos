@@ -1,0 +1,127 @@
+* {
+    padding: 0px; margin: 0px;
+    image-rendering:  optimizeSpeed;
+}
+
+
+html { background-color: black; }
+body {
+    text-align: center;
+    overflow: hidden;
+    height: 440px; width: 800px;
+    margin: auto;
+    position: relative;
+    color: white;
+}
+
+@media all and (orientation: portrait) {
+    body { padding-top: 320px;}
+}
+
+#scene {
+    display: inline-block;
+    height: 100%; width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+div { background-size: 100% 100%; overflow: hidden;}
+
+#row1 {height: 15%}
+#row2 {height: 70%}
+#row3 {height: 15%}
+
+.d1, .d2, .d3 {height: 100%; display: inline-block;}
+
+.d1 {width: 15%}
+.d2 {width: 70%}
+.d3 {width: 15%}
+
+/* 317 x 321 */
+/* 66 */
+/* 634 x 321 */
+
+#row1 .d1 { background-image: -moz-image-rect(url(g/texture.jpg), 0, 317, 63, 0); }
+#row1 .d2 { background-image: -moz-image-rect(url(g/texture.jpg), 0, 951, 63, 317); }
+#row1 .d3 { background-image: -moz-image-rect(url(g/texture.jpg), 0, 1268, 63, 951); }
+
+#row2 .d1 { background-image: -moz-image-rect(url(g/texture.jpg), 63, 317, 376, 0); }
+#row2 .d2 { background-image: -moz-image-rect(url(g/texture.jpg), 63, 951, 376, 317); }
+#row2 .d3 { background-image: -moz-image-rect(url(g/texture.jpg), 63, 1268, 376, 951); }
+
+#row3 .d1 { background-image: -moz-image-rect(url(g/texture.jpg), 376, 317, 439, 0); }
+#row3 .d2 { background-image: -moz-image-rect(url(g/texture.jpg), 376, 951, 439, 317); }
+#row3 .d3 { background-image: -moz-image-rect(url(g/texture.jpg), 376, 1268, 439, 951); }
+
+
+
+#layers {
+    top: 0px; left: 0px;
+    width: 100%; height: 100%;
+    position: absolute;
+}
+
+#layers > div {
+    position: absolute;
+    top: 0px; left: 0px;
+    width: 100%; height: 100%; -moz-transform-origin: top left;
+}
+
+#layers > div > * {
+    position: absolute;
+}
+
+
+.loading #scene {
+    visibility: hidden;
+}
+
+#credits { color: white; }
+#intro {
+    display: none;
+    font-size: 40px;
+    margin-top: 40px;
+}
+#intro img {
+    margin-top: 30px;
+}
+.loading #intro {
+    display: block;
+}
+
+body:before {
+    display: block;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    position: absolute;
+    font-size: 40px;
+    padding-top: 150px;
+}
+
+img {
+    image-rendering:  optimizeSpeed;
+}
+
+.no3D .d1 {width: 0%}
+.no3D .d2 {width: 100%}
+.no3D .d3 {width: 0%}
+
+.no3D #row1 {height: 0%}
+.no3D #row2 {height: 100%}
+.no3D #row3 {height: 0%}
+
+marquee {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 24px;
+}
+
+.cssisawesome {
+    font-size: 50px;
+    font-weight: bold;
+    text-shadow: 0px 0px 5px black;
+    width: 100%;
+    text-align: center;
+    left: 0%;
+}

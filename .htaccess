@@ -1,9 +1,29 @@
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-</IfModule>
-
 # Block access to "hidden" directories whose names begin with a period. This
 # includes directories used by version control systems such as Subversion or Git.
 <IfModule mod_rewrite.c>
+  RewriteEngine On
   RewriteRule "(^|/)\." - [F]
+
+
+  <FilesMatch "(?!\.html?)$" >
+    # Mitigate file hosting Bug#635398
+    RewriteEngine on
+    # Prod
+    RewriteCond %{HTTP_REFERER} !^https?://demos.mozilla.org [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://developer.mozilla.org [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://mozillademos.org [NC]
+
+    # Stage
+    RewriteCond %{HTTP_REFERER} !^https?://webofwonder.allizom.org [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://developer-stage9.mozilla.org [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://mozillademos.allizom.org [NC]
+
+    # Direct Access
+    RewriteCond %{HTTP_REFERER} !^$ [NC] 
+
+    RewriteRule . - [F]
+    <IfModule mod_headers.c>
+      Header set Vary Referer
+    </IfModule>
+  </FilesMatch>
 </IfModule>

@@ -671,8 +671,10 @@
                   'http://platform.twitter.com/widgets/tweet_button.html?via=mozhacks&count=horizontal&lang=en'
                   + '&url=' + encodeURIComponent(document.location.toString())
                 ) + '&text='+encodeURIComponent('Ran into a ditch after amassing '+points+' points in #Runfield');
-                if (tweeter.src != src)
-                  tweeter.src = src;
+                if (tweeter.currentSrc != src) {
+                  tweeter.currentSrc = src;
+                  tweeter.contentWindow.location.replace(src);
+                }
                 tweeter.style.display = a == 1 ? 'inline' : 'none';
               } else {
                 tweeter.style.display = 'none';

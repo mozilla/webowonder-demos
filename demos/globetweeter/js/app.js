@@ -25,16 +25,18 @@
 var FakeTweets;
 var Socket;
 var LastTweetReceived;
+var ConnectionTimeoutCheck = 10;
+
 function startNetwork() {
     try {
         var checkNetwork = function() {
             if (FakeTweets === undefined) {
                 var now = new Date();
                 var elapsed = (now.getTime()-LastTweetReceived.getTime())/1000.0;
-                if (elapsed > 5.0) {
+                if (elapsed > ConnectionTimeoutCheck) {
                     osg.log("no tweet received from 5 seconds, restart connection");
                     startNetwork();
-                    setTimeout(checkNetwork, 5000);
+                    setTimeout(checkNetwork, ConnectionTimeoutCheck*1000);
                 }
             }
         };

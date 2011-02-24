@@ -263,6 +263,20 @@
       }
 
       var canvas = document.getElementById('cubicvr-canvas');
+
+      positionWarning();
+      document.getElementById('seizure-warning').style.visibility = 'visible';
+      setTimeout(function() {
+        document.getElementById('seizure-warning-continue').style.visibility = 'visible';
+      }, 2000);
+      function onWarningClick(e) {
+        document.getElementById('seizure-warning').style.display = 'none';
+        document.getElementById('seizure-warning-continue').removeEventListener('click', onWarningClick,  false);
+        canvas.style.visibility = 'visible';
+        canvas.addEventListener('click', startDemo, false);
+      } //onWarningClick
+      document.getElementById('seizure-warning-continue').addEventListener('click', onWarningClick, false);
+
 		  var gl = initGL(canvas);
       var video = document.getElementById('intro-sleep');
 
@@ -282,19 +296,31 @@
         intro.stop();
         sequencer.start();
       }
-      canvas.addEventListener('click', startDemo, false);
 
       intro.start(canvas, gl, video);
       intro.resize();
       postMessage('loaded');
       initialized = true;
-		}
+      canvas.style.visibility = 'hidden';
+    }
 
     window.addEventListener('DOMContentLoaded', function() { init(); }, false);
     window.addEventListener('message', function(e) { handleMessage(e); }, false);
     window.addEventListener('resize',  function()  { setSize(); }, false);
 
+    window.addEventListener('resize', positionWarning, false);
+
   })(window);
+
+  function positionWarning(e) {
+    var warning = document.getElementById('seizure-warning');
+    var t = (window.innerHeight/2 - warning.offsetHeight/2) + "px";
+    warning.style.top = t;
+  }; //positionWarning
+
+  function removeWarning(e) {
+  }; //removeWarning
+
 	</script>
 
     <div id="audio-controls">
@@ -547,5 +573,10 @@
     </script>
 
 
+    <div id="seizure-warning">
+      <b>Warning:</b> The following demo contains flashing lights and patterns.<br />
+      Please consider this before viewing if you are sensitive to these visual effects.<br /><br />
+      <a class="seizure-warning-continue" id="seizure-warning-continue">CONTINUE</a>
+    </div>
   </body>
 </html>

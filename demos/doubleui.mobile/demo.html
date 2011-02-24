@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf8">
         <title>Search Your Tag</title>
-        <meta name="viewport" content="width=400; user-scalable=no;">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
         <script>
 
             function empty(elt) {
@@ -20,6 +20,7 @@
                     var bag = document.createElement("div");
                     var titleElt = document.createElement("p");
                     var title = o.items[i].title;
+                    var link = o.items[i].link;
                     if (title.match(/\.jpg/i)) title = "";
                     titleElt.className = "title";
                     titleElt.appendChild(document.createTextNode(title));
@@ -37,13 +38,16 @@
                         var imgSize = e.target.width * (120 / e.target.height) + 24;
                         flickrsize += imgSize + 30;
                         div.style.width = flickrsize + "px";
-                        e.target.parentNode.style.width = imgSize + "px";
-                        e.target.parentNode.style.display = "inline-block";
+                        e.target.parentNode.parentNode.style.width = imgSize + "px";
+                        e.target.parentNode.parentNode.style.display = "inline-block";
                     }
 
+                    var a = document.createElement("a");
+                    a.href = link;
+                    a.appendChild(img);
 
                     div.appendChild(bag);
-                    bag.appendChild(img);
+                    bag.appendChild(a);
                     bag.appendChild(titleElt);
                     bag.appendChild(author)
                 }
@@ -86,7 +90,7 @@
                 document.querySelector("body > h1").appendChild(document.createTextNode("#" + tag));
                 tag = encodeURIComponent(tag);
                 var flickr_url = "http://api.flickr.com/services/feeds/photos_public.gne?tags=" + tag + "&lang=en-us&format=json&jsoncallback=flickrCallback&" + Math.random();
-                var twitter_count = 100;
+                var twitter_count = 40;
                 var twitter_url = "http://search.twitter.com/search.json?q=" + tag + "&rpp=" + twitter_count + "&callback=twitterCallback&" + Math.random();
                 var s = document.createElement("script"); s.src = twitter_url;
                 document.querySelector("head").appendChild(s);
@@ -96,56 +100,50 @@
             }
         </script>
         <style>
-            html, body {padding: 0px; margin: 0px; max-width: 400px;}
+            html, body {padding: 0px; margin: 0px;}
 
             body > h1 {
                 font-family: Arial;
                 color: #aaa;
-                position: fixed;
+                position: absolute;
                 top: 0px;
                 left: 0px;
-                width: 100%;
                 background-image: -moz-linear-gradient(top, #151820, #2B2F36);
                 width: 100%;
-                height: 30px;
                 margin: 0;
                 z-index: 1000;
-                padding: 20px;
+                text-indent: 20px;
+                line-height: 70px;
             }
 
             #frontpage {display: none}
-            #frontpage {width: 400px; margin: auto; margin-top: 50px;}
+            #frontpage {width: 100%; margin: auto; margin-top: 50px;}
             #frontpage h1 {
                 margin-left: 50px;
                 display: inline;
             }
             #frontpage #description {
                 display: block;
-                width: 185px;
+                width: 50%;
                 font-family: Arial;
                 text-align: right;
                 border-right: 2px solid black;
                 padding: 10px;
             }
-            #frontpage img {
-                display: block;
-                width: 96px;
-                margin: auto;
-            }
             #frontpage #form {
                 text-align: center;
                 display: block;
-                width: 400px;
+                width: 100%;
                 margin: auto;
             }
             #frontpage button,
             #frontpage input {
-                font-size: 50px;
+                font-size: 30px;
                 border: 1px solid black;
             }
             #frontpage input {
                 padding: 10px;
-                width: 250px;
+                width: 50%;
                 border-radius: 10px 0px 0px 10px;
                 text-align: center;
             }
@@ -176,12 +174,8 @@
                     max-height: 0px;
                     overflow: hidden;
                 }
-                .landscape {
-                    visibility: visible;
-                }
-                h1 {
-                    display: none;
-                }
+                .landscape { visibility: visible; }
+                h1 { display: none; }
             }
 
             .computing #twitter, .computing #flickr { display: none; }
@@ -197,8 +191,8 @@
             #twitter * { margin: 0px; padding: 0px;}
             body:not(.frontpage)  #twitter ul:before {
                 content: "searching...";
-                text-align: center; display: block; width: 400px; margin-top: 200px; position: absolute; z-index: -1;}
-            #twitter ul {list-style-type: none; width: 400px; margin: auto;}
+                text-align: center; display: block; width: 100%; margin-top: 200px; position: absolute; z-index: -1;}
+            #twitter ul {list-style-type: none; width: 100%; margin: auto;}
             #twitter li {border-top: 1px solid #E2E5E7; font-family: Arial; padding: 10px; height: 90px; overflow: hidden;}
             #twitter li {background: -moz-linear-gradient(top, #F7F9FB,  #F2F5F7);}
             #twitter img {width: 50px; border: 1px solid #F2F5F7; margin: 20px 10px 20px 0px; position: relative;}
@@ -217,7 +211,7 @@
             }
             */
             #twitter .user {font-size: 16px; display: inline; font-weight: bold;}
-            #twitter .text {margin-top: 0px; font-size: 16px; color: #000; text-shadow: 0px 1px 0px #e5e5ee; line-height: 18px;}
+            #twitter .text {margin-top: 0px; font-size: 14px; color: #000; text-shadow: 0px 1px 0px #e5e5ee; line-height: 16px;}
 
         </style>
     </head>

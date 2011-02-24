@@ -25,6 +25,15 @@
 var osgViewer = {};
 
 osgViewer.Viewer = function(canvas) {
+    gl = WebGLUtils.setupWebGL(canvas, {antialias : true} );
+    if (gl) {
+        osg.init();
+        this.canvas = canvas;
+        this.frameRate = 60.0;
+        osgUtil.UpdateVisitor = osg.UpdateVisitor;
+        osgUtil.CullVisitor = osg.CullVisitorNew;
+    }
+    return;
     try {
         gl = canvas.getContext("experimental-webgl", {alpha: true, antialias : true });
         osg.init();
@@ -134,7 +143,7 @@ osgViewer.Viewer.prototype = {
 
     },
 
-    run: function() {
+    runOld: function() {
         if (this.scene === undefined) {
             this.scene = new osg.Node();
         }
@@ -146,6 +155,22 @@ osgViewer.Viewer.prototype = {
         var t = Math.floor(1.0/this.frameRate*1000.0);
         osg.log("run loop at " + this.frameRate + " fps");
         setInterval( call , t);
+    }, 
+
+    run: function() {
+        if (this.scene === undefined) {
+            this.scene = new osg.Node();
+        }
+        this.view.addChild(this.scene);
+        var that = this;
+        var render = function() {
+            window.requestAnimationFrame(render, this.canvas);
+            that.frame();
+        };
+        //var t = Math.floor(1.0/this.frameRate*1000.0);
+        //osg.log("run loop at " + this.frameRate + " fps");
+        render();
+        //setInterval( call , t);
     }, 
 
     getManipulator: function() { return this.manipulator; },

@@ -40,7 +40,7 @@
             #tv { display: none;}
             .csssgveffectavailable #tv {display: block; position: relative; margin-top: -340px; left: 0px; height: 340px; background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 30px, rgba(0, 0, 0, 0.4) 130px, rgba(0, 0, 0, 0.4) 180px, rgba(0, 0, 0, 0) 255px); background-color: #4C565D; mask: url(#shape); }
             .loading * { pointer-events: none!important; }
-            #loader { background-image: url(imgs/throbber.gif); background-repeat: no-repeat; background-position: center center; position: absolute; top: 0; left: 50%; background-color: rgba(0, 0, 0, 0.5); width: 600px; height: 340px; display: none; margin-left: -300px; }
+            #loader { color: white; background-image: url(imgs/throbber.gif); background-repeat: no-repeat; background-position: center center; position: absolute; top: 0; left: 50%; background-color: rgba(0, 0, 0, 0.5); width: 600px; height: 240px; display: none; margin-left: -300px; text-align: center; padding-top: 100px;font-family: merge;}
             .loading #loader { display: block; }
             #menu { position: fixed; top: 120px; left: 50%; margin: 0; padding: 0; list-style-type: none; margin-left: 320px; color: #d9dadc; font-family: merge; font-size: 20px; }
             li { margin: 0; padding: 0; opacity: 0.5; cursor: pointer; pointer-events: auto; }
@@ -64,7 +64,9 @@
         </div>
         <section id="playerbox">
             <canvas id="player" width="600" height="340"></canvas>
-            <div id="loader"></div>
+            <div id="loader">
+                Loading video. Please wait.
+            </div>
             <div id="tv"></div>
         </section>
         <ul id="menu">
@@ -78,5 +80,6 @@
             <p>Design by <a href="http://graphism.fr/">Geoffrey Dorne.</a> - </p>
             <p><em>Cannes Beach</em> music by <a href="http://ccmixter.org/files/grapes/16626">Grapes</a></p>
         </div>
+        <script src="../../shared/mozilla-badge.js" defer></script>
     </body>
 </html>

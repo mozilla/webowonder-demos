@@ -122,6 +122,26 @@ body{
   background:#000;
 }
 
+#seizure-warning {
+  font-size: 120%;
+  position: absolute;
+  text-align: center;
+  margin: auto;
+  width: 100%;
+  visibility: hidden;
+}
+
+.seizure-warning-continue {
+  font-size: 150%;
+  font-weight: bold;
+  visibility: hidden;
+}
+
+.seizure-warning-continue:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 audio{
   position:absolute;
   left:339px;

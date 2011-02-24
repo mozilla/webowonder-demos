@@ -77,13 +77,14 @@ window.addEventListener("load", function() {
         }
         this.view.addChild(this.scene);
         var that = this;
-        var call = function() { 
+        var render = function() { 
             if (DemoState.running) {
+                window.requestAnimationFrame(render, that.canvas);
                 that.frame();
             } else {
             }
         };
-        setInterval( call , Math.floor(1.0/60.0*1000.0));
+        render();
     };
 
     //  viewer.setScene(createScene());

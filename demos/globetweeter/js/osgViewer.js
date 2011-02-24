@@ -131,7 +131,7 @@ osgViewer.Viewer.prototype = {
         var endFrameTime = (new Date()).getTime();
 
         frameTime = endFrameTime - frameTime;
-        if (this.numberFrame % 60 === 0.0) {
+        if (false && this.numberFrame % 60 === 0.0) {
             /* Run a test. */
             var nd = endFrameTime;
             var diff = nd - this.statsStartTime;

@@ -283,6 +283,7 @@
         intro.stop();
         sequencer.start();
       }
+      canvas.addEventListener('click', startDemo, false);
 
       intro.start(canvas, gl, video);
       intro.resize();
@@ -572,7 +573,6 @@
         document.getElementById('seizure-warning').style.display = 'none';
         document.getElementById('seizure-warning-continue').removeEventListener('click', onWarningClick,  false);
         canvas.style.visibility = 'visible';
-        canvas.addEventListener('click', startDemo, false);
         window.removeEventListener('resize', positionWarning, false);
       } //onWarningClick
       document.getElementById('seizure-warning-continue').addEventListener('click', onWarningClick, false);

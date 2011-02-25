@@ -7391,8 +7391,13 @@ function cubicvr_loadColladaWorker(meshUrl, prefix, callback, deferred_bin) {
             var stored_tex = Texture_ref[dt.img_path];
 
             if (stored_tex === undefined) {
-              var t = new Texture(dt.img_path, dt.filter_type, deferred_bin, meshUrl);
-              new_mat.textures[j] = t;
+              if (dt.img_path.length > prefix.length + 1) {
+                var t = new Texture(dt.img_path, dt.filter_type, deferred_bin, meshUrl);
+                new_mat.textures[j] = t;
+              }
+              else {
+                new_mat.textures[j] = 0;
+              } //if
             }
             else {
               new_mat.textures[j] = Textures_obj[stored_tex];
@@ -7458,20 +7463,17 @@ function cubicvr_loadColladaWorker(meshUrl, prefix, callback, deferred_bin) {
         } //if
       } //reassembleMotion
 
+      var new_scene = new Scene();
+
       for (var i=0, maxI=scene.sceneObjects.length; i<maxI; ++i) {
         var so = scene.sceneObjects[i];
+        if (so.parent === 'REPLACE_ME') {
+          continue;
+        } //if
    
-        if (so.obj !== null) {
-          
-        } //if
-
-        if (so.reassembled === undefined) {
-          reassembleMotion(so);
-          so.reassembled = true;
-        } //if
-
         function createSceneObject(scene_obj) {
           var sceneObject = new SceneObject();
+          reassembleMotion(scene_obj);
           copyObjectFromJSON(scene_obj, sceneObject);
           if (scene_obj.obj !== null) {
             var stored_mesh = meshes_map[scene_obj.obj.id];
@@ -7523,15 +7525,18 @@ function cubicvr_loadColladaWorker(meshUrl, prefix, callback, deferred_bin) {
             for (var j=0, maxJ=scene_obj.children.length; j<maxJ; ++j) {
               var child = createSceneObject(scene_obj.children[j]);
               sceneObject.bindChild(child);
+              new_scene.bindSceneObject(child);
             } //for
           } //if
         } //createChildren
 
-        scene.sceneObjects[i] = createSceneObject(so);
+        var new_so = createSceneObject(so);
+        if (so.parent !== 'REPLACE_ME') {
+          new_scene.bindSceneObject(new_so);
+        } //if
 
       } //for i
 
-      var new_scene = new Scene();
       // place parsed scene elements into new scene (since parse scene has no prototype)
       var camera = new_scene.camera;
       var camera_transform = camera.transform;
@@ -7541,18 +7546,6 @@ function cubicvr_loadColladaWorker(meshUrl, prefix, callback, deferred_bin) {
       new_scene.camera = camera;
       new_scene.camera.transform = camera_transform;
       new_scene.camera.frustum = new Frustum();
-
-      for (var i=0, maxI=scene.sceneObjects.length; i<maxI; ++i) {
-        var o = scene.sceneObjects[i];
-        new_scene.bindSceneObject(o);
-        try {
-          o.getAABB();
-        }
-        catch(e) {
-          //console.log(o);
-        } //try
-        
-      } //for
 
       for (var i=0, maxI=scene.lights.length; i<maxI; ++i) {
         var l = new Light();

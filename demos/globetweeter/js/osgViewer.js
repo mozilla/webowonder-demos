@@ -164,7 +164,7 @@ osgViewer.Viewer.prototype = {
         this.view.addChild(this.scene);
         var that = this;
         var render = function() {
-            window.requestAnimationFrame(render, this.canvas);
+            window.requestAnimationFrame(render, that.canvas);
             that.frame();
         };
         //var t = Math.floor(1.0/this.frameRate*1000.0);

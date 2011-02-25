@@ -34,7 +34,7 @@ function startNetwork() {
                 var now = new Date();
                 var elapsed = (now.getTime()-LastTweetReceived.getTime())/1000.0;
                 if (elapsed > ConnectionTimeoutCheck) {
-                    osg.log("no tweet received from 5 seconds, restart connection");
+                    osg.log("no tweet received from " + ConnectionTimeoutCheck +" seconds, restart connection");
                     startNetwork();
                     setTimeout(checkNetwork, ConnectionTimeoutCheck*1000);
                 }

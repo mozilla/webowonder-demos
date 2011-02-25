@@ -517,10 +517,6 @@ function getOrCreateTweetNode(matrix, img)
         displayTweetPictureToCanvas(img, texture);
     }
     node.name = img.src;
-    // recycle image
-    if (img !== undefined) {
-        RecycleImages.push(img);
-    }
 
     node.setNodeMask(~0);
     node.getChildren()[0].getStateSet().setTextureAttributeAndMode(0, texture);
@@ -983,7 +979,7 @@ function createScene()
                 lat += (Math.random()*2.0 - 1.0)*scale;
                 lng += (Math.random()*2.0 - 1.0)*scale;
 
-                var img = getOrCreateNewImage();
+                var img = new Image();
                 img.onload = function() {
                     //osg.log(location);
                     //displayHtmlTweetContent(img,tweet);

@@ -1,6 +1,12 @@
 window.addEventListener("load", function() {
     var a = document.createElement("a");
-    a.href = "https://demos.mozilla.org/";
+    if (window.location && location.host && 
+        "mozillademos.allizom.org" == location.host) {
+        a.href = "http://webofwonder.allizom.org/";
+    } else {
+        a.href = "https://demos.mozilla.org/";
+    }
+
     a.id = "gobackbutton";
     var i = document.createElement("img");
      a.appendChild(i);

@@ -848,7 +848,8 @@
 								setLoadingBanner("Loading sky..");
 								setLoadingBar(5);								
                 setTimeout(initSequencer,100);
-            }
+
+           }
 
 
             var audio;
@@ -1324,6 +1325,30 @@
   				  z-index:2000;
 /*          background: url(http://mozcom-cdn.mozilla.net/img/tignish/firefox/background-firefox-3.jpg) repeat-x;*/
           }
+
+          #seizure-warning {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            color: #fff;
+            width: 100%;
+            text-align: center;
+            z-index: 20000;
+          }
+
+          .seizure-warning-continue {
+            color: #fff;
+            visibility: hidden;
+          }
+
+          .seizure-warning-continue:hover {
+            text-decoration: underline;
+            cursor: pointer;
+          }
+
+          #loadingScreen {
+            visibility: hidden;
+          }
           
   				.moz {
   				  background: url('loader-ship.png') 50% 20% no-repeat;
@@ -1597,7 +1622,7 @@
           </div>
         </div>
       </div>
-      <script type='text/javascript'>
+     <script type='text/javascript'>
         var target_aspect = 9.0 / 18.0;
         canvas_w = window.innerWidth;
         canvas_h = parseInt(window.innerWidth * target_aspect);
@@ -1626,6 +1651,33 @@
       <canvas width="128" height="128" id='viz1Canvas' data-processing-sources="viz_tex1.pde" style='display:none'></canvas>
       <canvas width="128" height="128" data-src="viz_tex2.pde" id='viz2Canvas' style='display:none; position:absolute; top:300px; left:0px; z-index:1000;' origin-clean='true'></canvas>
       <canvas data-processing-sources="flickr1.pjs" style="display:none; position:absolute; top:0px; left:0px; z-index:1000" id="flickrCanvas" width="256" height="256"></canvas>
-      <script src="../../shared/mozilla-badge.js" defer></script>
+      <div id="seizure-warning">
+        <b>Warning:</b> The following demo contains flashing lights and patterns.<br />
+        Please consider this before viewing if you are sensitive to these visual effects.<br /><br />
+        <a class="seizure-warning-continue" id="seizure-warning-continue">CONTINUE</a>
+      </div>
+      <script type='text/javascript'>
+        function positionWarning(e) {
+          var warning = document.getElementById('seizure-warning');
+          var t = window.innerHeight/2 - warning.offsetHeight/2;
+          warning.style.top = t + "px";
+          console.log(t);
+        } //positionWarning
+
+        window.addEventListener('resize', positionWarning, false);
+        setTimeout(function() {
+          document.getElementById('seizure-warning-continue').style.visibility = 'visible';
+          function onWarningClick(e) {
+            document.getElementById('seizure-warning').style.display = 'none';
+            document.getElementById('seizure-warning-continue').removeEventListener('click', onWarningClick, false);
+            document.getElementById('loadingScreen').style.visibility = 'visible';
+            window.removeEventListener('resize', positionWarning, false);
+          } //onWarningClick
+          document.getElementById('seizure-warning-continue').addEventListener('click', onWarningClick, false);
+        }, 2000);
+
+        positionWarning();
+     </script>
+     <script src="../../shared/mozilla-badge.js" defer></script>
     </body>
 </html>

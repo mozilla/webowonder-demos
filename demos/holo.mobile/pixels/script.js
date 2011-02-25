@@ -46,9 +46,13 @@ window.onload = function() {
 
     setTimeout(function() {
         document.body.classList.remove("loading");
+
+        setTimeout(function() {
+          start3D();
+        }, 2000)
+
     }, 4000);
 
-    window.onclick = start3D;
 }
 
 var initialized = false;

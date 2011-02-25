@@ -264,19 +264,6 @@
 
       var canvas = document.getElementById('cubicvr-canvas');
 
-      positionWarning();
-      document.getElementById('seizure-warning').style.visibility = 'visible';
-      setTimeout(function() {
-        document.getElementById('seizure-warning-continue').style.visibility = 'visible';
-      }, 500);
-      function onWarningClick(e) {
-        document.getElementById('seizure-warning').style.display = 'none';
-        document.getElementById('seizure-warning-continue').removeEventListener('click', onWarningClick,  false);
-        canvas.style.visibility = 'visible';
-        canvas.addEventListener('click', startDemo, false);
-      } //onWarningClick
-      document.getElementById('seizure-warning-continue').addEventListener('click', onWarningClick, false);
-
 		  var gl = initGL(canvas);
       var video = document.getElementById('intro-sleep');
 
@@ -308,18 +295,7 @@
     window.addEventListener('message', function(e) { handleMessage(e); }, false);
     window.addEventListener('resize',  function()  { setSize(); }, false);
 
-    window.addEventListener('resize', positionWarning, false);
-
   })(window);
-
-  function positionWarning(e) {
-    var warning = document.getElementById('seizure-warning');
-    var t = (window.innerHeight/2 - warning.offsetHeight/2) + "px";
-    warning.style.top = t;
-  }; //positionWarning
-
-  function removeWarning(e) {
-  }; //removeWarning
 
 	</script>
 
@@ -578,6 +554,29 @@
       Please consider this before viewing if you are sensitive to these visual effects.<br /><br />
       <a class="seizure-warning-continue" id="seizure-warning-continue">CONTINUE</a>
     </div>
+    <script type="text/javascript">
+      function positionWarning(e) {
+        var warning = document.getElementById('seizure-warning');
+        var t = (window.innerHeight/2 - warning.offsetHeight/2) + "px";
+        warning.style.top = t;
+      }; //positionWarning
+      window.addEventListener('resize', positionWarning, false);
+
+      positionWarning();
+      document.getElementById('seizure-warning').style.visibility = 'visible';
+      setTimeout(function() {
+        document.getElementById('seizure-warning-continue').style.visibility = 'visible';
+      }, 2000);
+      function onWarningClick(e) {
+        var canvas = document.getElementById('cubicvr-canvas');
+        document.getElementById('seizure-warning').style.display = 'none';
+        document.getElementById('seizure-warning-continue').removeEventListener('click', onWarningClick,  false);
+        canvas.style.visibility = 'visible';
+        canvas.addEventListener('click', startDemo, false);
+        window.removeEventListener('resize', positionWarning, false);
+      } //onWarningClick
+      document.getElementById('seizure-warning-continue').addEventListener('click', onWarningClick, false);
+    </script>
     <script src="../../shared/mozilla-badge.js" defer></script>
   </body>
 </html>

@@ -268,7 +268,7 @@
       document.getElementById('seizure-warning').style.visibility = 'visible';
       setTimeout(function() {
         document.getElementById('seizure-warning-continue').style.visibility = 'visible';
-      }, 2000);
+      }, 500);
       function onWarningClick(e) {
         document.getElementById('seizure-warning').style.display = 'none';
         document.getElementById('seizure-warning-continue').removeEventListener('click', onWarningClick,  false);

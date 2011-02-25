@@ -2501,6 +2501,7 @@
               globals.video.pause();
             } //if
             window.removeEventListener('MozBeforePaint', demoAnimationFunc, false);
+            window.addEventListener('resize', demoAnimationFunc, false);
           } else {
             bpause.style.visibility = 'hidden';
             bplay.style.visibility = 'visible';
@@ -2509,6 +2510,7 @@
               globals.video.play();
             } //if
             window.addEventListener('MozBeforePaint', demoAnimationFunc, false);
+            window.removeEventListener('resize', demoAnimationFunc, false);
             window.mozRequestAnimationFrame();
           } //if
         }, false);

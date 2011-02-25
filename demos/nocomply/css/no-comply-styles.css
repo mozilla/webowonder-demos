@@ -307,3 +307,6 @@ div.creditRoll { position:absolute; top:0px; left:0px; text-align:center; font-s
 .creditRoll div.spacer3 { margin-top:8%; margin-bottom:0px; margin-left:0px; margin-right:0px; padding:0px; width:100%; }
 .creditRoll span.subtext { font-size:18px; font-weight:normal; font-style: italic; color:lightgrey; }
 .creditRoll span.titletext { font-size:24px; font-weight:bold; }
+
+/* Mozilla Badge position override */
+a#gobackbutton, a#gobackbutton:hover { top: 30px; }

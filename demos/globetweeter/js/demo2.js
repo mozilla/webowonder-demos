@@ -196,7 +196,7 @@ function getCountryShader()
 }
 
 
-function getHeightShader()
+function getHeightShaderVolume()
 {
     var vertexshader = [
         "",
@@ -234,6 +234,75 @@ function getHeightShader()
         "varying float height;",
         "void main(void) {",
         "gl_FragColor = fragColor * height;",
+        "}",
+        ""
+    ].join('\n');
+
+    var program = osg.Program.create(
+        osg.Shader.create(gl.VERTEX_SHADER, vertexshader),
+        osg.Shader.create(gl.FRAGMENT_SHADER, fragmentshader));
+    var stateset = new osg.StateSet();
+    var uniform = osg.Uniform.createFloat4(HeightColor,"fragColor");
+    var scale = osg.Uniform.createFloat1(scale,"scale");
+    var uniformTexture = osg.Uniform.createInt1(0, "Texture0");
+    stateset.setAttributeAndMode(program);
+    stateset.setAttributeAndMode(new osg.LineWidth(1.0));
+    stateset.addUniform(uniform);
+    stateset.addUniform(uniformTexture);
+    stateset.addUniform(scale);
+
+    jQuery("#height").val(num2hex(HeightColor));
+    jQuery("#height").change(function(data) {
+        var val = jQuery("#height").val();
+        var newval = hex2num(val);
+        osg.log("height color changed to " + newval);
+        uniform.set(newval);
+    });
+    
+    return stateset;
+}
+
+
+function getHeightShaderFlat()
+{
+    var vertexshader = [
+        "",
+        "#ifdef GL_ES",
+        "precision highp float;",
+        "#endif",
+        "attribute vec3 Vertex;",
+        "attribute vec3 TexCoord0;",
+        "uniform mat4 ModelViewMatrix;",
+        "uniform mat4 ProjectionMatrix;",
+        "uniform mat4 NormalMatrix;",
+        "varying float dotComputed;",
+        "varying vec2 TexCoordFragment;",
+        "void main(void) {",
+        "  TexCoordFragment = TexCoord0.xy;",
+        "  vec3 normal = normalize(Vertex);",
+        "  vec3 normalTransformed = vec3(NormalMatrix * vec4(normal,0.0));",
+        "  dotComputed = max(0.0, dot(normalTransformed, vec3(0,0,1)));",
+        "  if (dotComputed > 0.001) {",
+        "     dotComputed = 1.0;",
+        "  }",
+        "  gl_Position = ProjectionMatrix * ModelViewMatrix * vec4(Vertex, 1);",
+        "}",
+        ""
+    ].join('\n');
+
+    var fragmentshader = [
+        "",
+        "#ifdef GL_ES",
+        "precision highp float;",
+        "#endif",
+        "uniform sampler2D Texture0;",
+        "uniform vec4 fragColor;",
+        "uniform float scale;",
+        "varying float dotComputed;",
+        "varying vec2 TexCoordFragment;",
+        "void main(void) {",
+        "  vec4 color = texture2D( Texture0, TexCoordFragment.xy);",
+        "gl_FragColor = fragColor * min(2.0*dotComputed * color.x, 0.999999);",
         "}",
         ""
     ].join('\n');
@@ -692,12 +761,12 @@ function displayHtmlTweetContent(tweet)
 
 function createScene()
 {
+    var getHeightShader = getHeightShaderVolume;
     var numTexturesAvailableInVertexShader = gl.getParameter(gl.MAX_VERTEX_TEXTURE_IMAGE_UNITS);
     osg.log("Nb Texture Unit in vertex shader " + numTexturesAvailableInVertexShader);
-
     if (numTexturesAvailableInVertexShader < 1) {
-        osg.log("Wave disabled because your OpenGL implementation has " + numTexturesAvailableInVertexShader + " vertex texture units and wave option require at least 1");
-        DisableWave = true;
+        osg.log("VolumeWave disabled because your OpenGL implementation has " + numTexturesAvailableInVertexShader + " vertex texture units and wave option require at least 1");
+        getHeightShader = getHeightShaderFlat;
     }
 
     jQuery("#background").val(num2hex([0,0,0,0]));

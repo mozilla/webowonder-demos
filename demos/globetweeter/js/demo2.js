@@ -692,6 +692,14 @@ function displayHtmlTweetContent(tweet)
 
 function createScene()
 {
+    var numTexturesAvailableInVertexShader = gl.getParameter(gl.MAX_VERTEX_TEXTURE_IMAGE_UNITS);
+    osg.log("Nb Texture Unit in vertex shader " + numTexturesAvailableInVertexShader);
+
+    if (numTexturesAvailableInVertexShader < 1) {
+        osg.log("Wave disabled because your OpenGL implementation has " + numTexturesAvailableInVertexShader + " vertex texture units and wave option require at least 1");
+        DisableWave = true;
+    }
+
     jQuery("#background").val(num2hex([0,0,0,0]));
     jQuery("#background").change(function(data) {
         var val = jQuery("#background").val();
@@ -712,8 +720,6 @@ function createScene()
     var country = osg.ParseSceneGraph(getCountry());
     var coast = osg.ParseSceneGraph(getCoast());
 
-    var height = osg.ParseSceneGraph(getHeight());
-
     world.setStateSet(getWorldShader());
     world.setNodeMask(2);
     world.getOrCreateStateSet().setAttributeAndMode(new osg.CullFace('FRONT'));
@@ -726,17 +732,22 @@ function createScene()
     country.addChild(coast);
 
 
-    var heightStateSet = getHeightShader();
-    height.setStateSet(heightStateSet);
-    var heightTexture = new osg.Texture();
-    heightStateSet.setTextureAttributeAndMode(0, heightTexture);
-    var heightUpdateCallback = new UpdateHeightMap();
-    heightUpdateCallback.setUniformScale(heightStateSet.getUniformMap()['scale']);
-    heightUpdateCallback.setTexture(heightTexture);
-    height.setUpdateCallback(heightUpdateCallback);
-    heightStateSet.setAttributeAndMode(new osg.BlendFunc('ONE', 'ONE_MINUS_SRC_ALPHA'));
-    heightStateSet.setAttributeAndMode(new osg.Depth('DISABLE'));
+    if (!DisableWave) {
+        var height = osg.ParseSceneGraph(getHeight());
 
+        var heightStateSet = getHeightShader();
+        height.setStateSet(heightStateSet);
+        var heightTexture = new osg.Texture();
+        heightStateSet.setTextureAttributeAndMode(0, heightTexture);
+        var heightUpdateCallback = new UpdateHeightMap();
+        heightUpdateCallback.setUniformScale(heightStateSet.getUniformMap()['scale']);
+        heightUpdateCallback.setTexture(heightTexture);
+        height.setUpdateCallback(heightUpdateCallback);
+        heightStateSet.setAttributeAndMode(new osg.BlendFunc('ONE', 'ONE_MINUS_SRC_ALPHA'));
+        heightStateSet.setAttributeAndMode(new osg.Depth('DISABLE'));
+
+        scene.addChild(height);
+    }
 
     var frontTweets = new osg.Node();
 
@@ -745,8 +756,7 @@ function createScene()
     scene.addChild(world);
     scene.addChild(world1);
     scene.addChild(country);
-    scene.addChild(height);
-//    scene.addChild(frontTweets);
+
 
 
     world.getOrCreateStateSet().setAttributeAndMode(new osg.BlendFunc('ONE', 'ONE_MINUS_SRC_ALPHA'));
@@ -1057,7 +1067,9 @@ function createScene()
 
     Viewer.manipulator.update(-2.0, 0);
 
-    WaveGenerator = new Wave();
+    if (!DisableWave) {
+        WaveGenerator = new Wave();
+    }
 
     scene.addChild(frontTweets);
 

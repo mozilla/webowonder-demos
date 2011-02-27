@@ -767,7 +767,6 @@ function createScene()
     if (numTexturesAvailableInVertexShader < 1) {
         osg.log("VolumeWave disabled because your OpenGL implementation has " + numTexturesAvailableInVertexShader + " vertex texture units and wave option require at least 1");
         getHeightShader = getHeightShaderFlat;
-        HeightColor = [1.0,0,0,1.0];
     }
 
     jQuery("#background").val(num2hex([0,0,0,0]));

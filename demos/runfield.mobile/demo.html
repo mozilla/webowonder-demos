@@ -136,26 +136,29 @@
         var h = maxH || ih;
         var w = img.width;
         getImageFirstY(img);
-        for (var i=0; i<1536*magF; i+=segW) {
-          var x = off + i;
-          var y = Math.floor(yFunc(offset+off+i, gap, true)-yoff);
-          var sh = Math.max(0, h - Math.max(0, y+h-442) - img.firstY);
-          var sw = Math.max(0, Math.min(w-(i%w),segW));
-          var imw = i % w;
-          if (!img.segCache[imw]) {
-            var c = document.createElement('canvas');
-            img.segCache[imw] = c;
-            c.width = segW;
-            c.height = img.height;
-            var cx = c.getContext('2d');
-            cx.globalCompositeOperation = 'copy';
-            cx.drawImage(img, -(imw), 0);
+        for (var i=0; i<1536*magF;) {
+          var delta = segW;
+          var y = yFunc(offset+off+i,gap,true);
+          var dy = Math.abs(yFunc(offset+off+i+40, gap, true)-y);
+          var dy2 = Math.abs(yFunc(offset+off+i-40, gap, true)-y);
+          if (gap && Math.max(dy,dy2) > 40) {
+            delta = 4;
           }
-          if (y > 442 || x > 1024*magF || x+sw <= 0 || sw <= 0 || sh <= 0) continue;
-          ctx.drawImage(img.segCache[imw], 0, img.firstY, sw, sh, x, y+img.firstY, sw, sh);
-          if (y+ih < 442) {
-            for (var j=0; j<442-y+ih; j+=40) {
-              ctx.drawImage(img.segCache[imw], 0, ih-40, sw, 40, x, y+ih+j, sw, 40);
+          var e = i+segW;
+          for (; i<e; i+=delta) {
+            var x = off + i;
+            var y = Math.floor(yFunc(offset+off+i, gap, true)-yoff);
+            var sh = Math.max(0, h - Math.max(0, y+h-442) - img.firstY);
+            var sw = Math.max(0, Math.min(w-(i%w),delta));
+            var imw = i % w;
+            if (y > 442 || x > 1024*magF || x+sw <= 0 || sw <= 0 || sh <= 0) continue;
+            ctx.drawImage(img,
+              imw, img.firstY, sw, sh,
+              x, y+img.firstY, sw, sh);
+            if (y+ih < 442) {
+              for (var j=0; j<442-y+ih; j+=40) {
+                ctx.drawImage(img, imw, ih-40, sw, 40, x, y+ih+j, sw, 40);
+              }
             }
           }
         }

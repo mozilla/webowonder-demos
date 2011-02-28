@@ -177,3 +177,6 @@ article > .demo > * {
 
 @media all and (max-width: 900px) { #wall { width: 600px; } #overview {display: none;}}
 @media all and (max-width: 600px) { #wall { width: 300px; } #wall > section > h1 { font-size: 70px; } }
+
+/* Mozilla Badge position override */
+a#gobackbutton, a#gobackbutton:hover { top: 100px; }

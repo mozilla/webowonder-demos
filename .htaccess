@@ -18,6 +18,11 @@
     RewriteCond %{HTTP_REFERER} !^https?://developer-stage9.mozilla.org [NC]
     RewriteCond %{HTTP_REFERER} !^https?://mozillademos.allizom.org [NC]
 
+    # Dev
+    RewriteCond %{HTTP_REFERER} !^https?://localhost [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://haskwhal [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://demoland [NC]
+
     # Direct Access
     RewriteCond %{HTTP_REFERER} !^$ [NC] 
 

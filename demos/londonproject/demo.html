@@ -6,8 +6,6 @@ LICENSE:
     DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
     Version 2, December 2004
 
-    Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
-
     Everyone is permitted to copy and distribute verbatim or modified
     copies of this license document, and changing it is allowed as long
     as the name is changed.
@@ -95,6 +93,7 @@ BLABLA:
                 bigvideo.addEventListener("play", updateButton, true);
                 updateButton();
 
+                document.body.classList.add("loaded");
             }
 
             function toggleminivideo() {
@@ -183,6 +182,13 @@ BLABLA:
                 -webkit-transition-duration: 1s;
             }
 
+            #intro { pointer-events: none; }
+            .loaded #intro { pointer-events: auto;}
+            #intro .ready {display: none;}
+            #intro .loading {display: block;}
+            .loaded #intro .ready {display: block;}
+            .loaded #intro .loading {display: none;}
+
             /* Wellcome screen */
             body.intro #intro {
                 opacity: 1;
@@ -269,8 +275,8 @@ BLABLA:
             /**** POSITION *****/
             #intro {
                 opacity: 0;
-                top: 100px;
-                left: 250px;
+                top: 200px;
+                left: 350px;
                 font-size: 30px;
                 -moz-transition-duration: 0.2s;
                 -webkit-transition-duration: 0.2s;
@@ -422,9 +428,9 @@ BLABLA:
 
             <div id="intro" class="frame" onclick="document.body.classList.remove('intro')">
                 <a href="#">
-                    A very small demo from the future.<br/><br/>
-                    <img src="firefox.png" width="150"/><br/><br/>
                     <img src="logo.png"/><br/>
+                    <p class="loading">loading...</p>
+                    <p class="ready">click!</p>
                 </a>
             </div>
             <div id="license" xmlns:cc="http://creativecommons.org/ns#" about="http://projectlondonmovie.com/">

@@ -62,6 +62,7 @@ window.addEventListener("load", function() {
     canvas.height = size.h;
     var ratio = canvas.width/canvas.height;
 
+    try {
     var viewer = new osgViewer.Viewer(document.getElementById("3DView"));
     Viewer = viewer;
     viewer.init();
@@ -93,6 +94,9 @@ window.addEventListener("load", function() {
     window.parent.postMessage('loaded', targetOrigin);
     if (AutoStart === true) {
         window.postMessage('start_demo', targetOrigin);
+    }
+    } catch (er) {
+        osg.log("exception in osgViewer " + er);
     }
 }
                         ,true);

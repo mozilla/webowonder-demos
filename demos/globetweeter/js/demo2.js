@@ -800,10 +800,8 @@ function createScene()
 
     country.addChild(coast);
 
-
     if (!DisableWave) {
         var height = osg.ParseSceneGraph(getHeight());
-
         var heightStateSet = getHeightShader();
         height.setStateSet(heightStateSet);
         var heightTexture = new osg.Texture();
@@ -814,7 +812,6 @@ function createScene()
         height.setUpdateCallback(heightUpdateCallback);
         heightStateSet.setAttributeAndMode(new osg.BlendFunc('ONE', 'ONE_MINUS_SRC_ALPHA'));
         heightStateSet.setAttributeAndMode(new osg.Depth('DISABLE'));
-
         scene.addChild(height);
     }
 
@@ -1024,7 +1021,6 @@ function createScene()
                     }
                     tweetsPerCountry[key].hits += 1;
 
-                    updateCountryStats(tweetsPerCountry);
                 }
             }
 
@@ -1032,11 +1028,12 @@ function createScene()
             if (lastUpdateStatistics === undefined) {
                 lastUpdateStatistics = currentTime;
             }
-            if (currentTime - lastUpdateStatistics > 1.0) {
+            if (currentTime - lastUpdateStatistics > 2.0) {
+                updateCountryStats(tweetsPerCountry);
                 updateNumberOfCountry(tweetsPerCountry);
                 updateTweetsStats(numberOfTweets);
                 updateCurrentTweetsStats(twitterItems);
-                updateTweetsHashTags(tweetsHashTags);
+                //updateTweetsHashTags(tweetsHashTags);
 
                 var t = currentTime-globalDuration;
                 updateDuration(t);

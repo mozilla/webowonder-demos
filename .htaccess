@@ -4,3 +4,5 @@
   RewriteEngine On
   RewriteRule "(^|/)\." - [F]
 </IfModule>
+
+KeepAlive off

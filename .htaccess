@@ -5,4 +5,3 @@
   RewriteRule "(^|/)\." - [F]
 </IfModule>
 
-KeepAlive off

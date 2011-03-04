@@ -343,7 +343,7 @@ function tick() {
     drawScene();
     teapotAngle += 1.5;
     if (teapotRotating)
-        window.mozRequestAnimationFrame(tick);
+        setTimeout(60, tick);
 }
 
 

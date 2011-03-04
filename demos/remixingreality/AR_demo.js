@@ -174,7 +174,7 @@
   video.autoplay = true;
   video.style.display = 'none';
   video.controls = false;
-  video.src = "desk_480.ogv";
+  video.src = "desk_480.webm";
   var offset = 180;
   video.style.marginTop = offset+'px';
 

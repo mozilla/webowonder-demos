@@ -97,7 +97,7 @@ window.addEventListener("load", function() {
     var p = document.querySelector("#textshadowdemo > div > p");
     var pos = findPos(div);
     pos.left += Math.round(div.clientWidth / 2) - 72;
-    pos.top += Math.round(div.clientHeight / 2) - 300;
+    pos.top += Math.round(div.clientHeight / 2) + 500;
     div.parentNode.addEventListener("mousemove", function(e) {
         var x = (e.clientX - (pos.left - window.scrollX));
         var y = (e.clientY - (pos.top - window.scrollY));

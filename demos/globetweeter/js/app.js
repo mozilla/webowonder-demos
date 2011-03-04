@@ -24,20 +24,31 @@
 
 var FakeTweets;
 var Socket;
-var LastTweetReceived;
-var ConnectionTimeoutCheck = 10;
-
+var LastTweetReceived = new Date();
+var ConnectionTimeoutCheck = 6;
+var CheckNetworkTimeout;
+var StreamConnected = 0;
 function startNetwork() {
     try {
+        jQuery('#connection').show();
+        jQuery('#connection').removeClass('hidden');
+
         var checkNetwork = function() {
+            if (CheckNetworkTimeout !== undefined) {
+                window.clearTimeout(CheckNetworkTimeout);
+                CheckNetworkTimeout = undefined;
+            }
+            var now = new Date();
+            osg.log("checkNetwork " + now.getTime()/1000);
             if (FakeTweets === undefined) {
-                var now = new Date();
                 var elapsed = (now.getTime()-LastTweetReceived.getTime())/1000.0;
                 if (elapsed > ConnectionTimeoutCheck) {
-                    osg.log("no tweet received from " + ConnectionTimeoutCheck +" seconds, restart connection");
+                    //showConnection();
+                    osg.log("no tweets received for " + ConnectionTimeoutCheck +" seconds, restart connection");
                     startNetwork();
-                    setTimeout(checkNetwork, ConnectionTimeoutCheck*1000);
+                    return;
                 }
+                CheckNetworkTimeout = setTimeout(checkNetwork, ConnectionTimeoutCheck*1000);
             }
         };
 
@@ -51,19 +62,30 @@ function startNetwork() {
             processTweet(message);
         });
         socket.on('connect', function(message){
+            StreamConnected += 1;
+            if (StreamConnected === 1) {
+                showInstructions();
+            }
+            hideConnection();
             LastTweetReceived = new Date();
-            osg.log("connected to server, run the checker every 5.0 seconds");
-            checkNetwork();
+            osg.log("connected to server");
+            //checkNetwork();
         });
         socket.on('disconnect', function(message){
             Socket = undefined;
             if (DemoState.running === true) {
-                osg.log(message);
+                showConnection();
                 osg.log("disconnect, try to reconnect");
                 startNetwork();
             }
         });
+
+        osg.log("run the checker every " + ConnectionTimeoutCheck + " seconds");
+        setTimeout(checkNetwork, ConnectionTimeoutCheck*1000);
+
     } catch (er) {
+        hideConnection();
+        showInstructions();
         osg.log(er);
         osg.log("offline mode, emitting fake tweets");
         jQuery.getJSON("js/samples.json", function(data) {

@@ -295,6 +295,24 @@ h1 span:nth-child(2) {
 }
 
 /* Instructions boxes */
+/* Instructions boxes */
+#connection {
+        font-size: 20px;
+	position:absolute;
+	z-index:5;
+	width:400px;
+	left:50%;
+	top:40%;
+	margin-left:-230px;
+	-moz-transition:0.5s all ease;
+	-webkit-transition:0.5s all ease;	
+	-o-transition:0.5s all ease;	
+	transition:0.5s all ease;	
+}
+#connection.hidden {
+	opacity:0;
+	pointer-events:none;	
+}
 
 #demo-instructions {
 	position:absolute;

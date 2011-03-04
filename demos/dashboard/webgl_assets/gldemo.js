@@ -342,8 +342,7 @@ var teapotRotating = false;
 function tick() {
     drawScene();
     teapotAngle += 1.5;
-    if (teapotRotating)
-        setTimeout(tick, 60);
+    if (teapotRotating) setTimeout(tick, 60);
 }
 
 

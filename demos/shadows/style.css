@@ -3,6 +3,8 @@
 
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:bold);
 
+
+
 html {
 	background-color: #000;
 	line-height: 1;
@@ -156,11 +158,11 @@ a {
 			transition: 		 transform .25s cubic-bezier(.3, 0, 0, 1);
 }
 #mr:hover .hint, #ms:hover .hint {
-	   -moz-transform:  translateY(-1px) scale(1.05);
-	-webkit-transform: 	translateY(-1px) scale(1.05);
-		-ms-transform:  translateY(-1px) scale(1.05);
-		 -o-transform:  translateY(-1px) scale(1.05);
-			transform:  translateY(-1px) scale(1.05);
+	   -moz-transform:  translateY(-4px);
+	-webkit-transform: 	translateY(-4px);
+		-ms-transform:  translateY(-4px);
+		 -o-transform:  translateY(-4px);
+			transform:  translateY(-4px);
 }
 
 
@@ -471,8 +473,4 @@ a {
 	position: absolute;
 	pointer-events: none;
 }
-
-
-
-
 

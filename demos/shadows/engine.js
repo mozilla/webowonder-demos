@@ -250,9 +250,14 @@ $(document).ready(function() {
 				
 		
 		
-		// start
-		window.parent.postMessage('loaded', targetOrigin);
+		// start	
 		
+		var startLight = function() {
+			window.parent.postMessage('loaded', targetOrigin);		
+			$('body').fadeIn(400);		
+		}
+		
+		setTimeout(startLight, 100);
 				
 		
 		

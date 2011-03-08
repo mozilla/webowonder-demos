@@ -21,7 +21,7 @@ function start() {
                 {name:"textured_fs", path: "texture.frag"}
             ]
         },
-        textures: [{name:"video", type:"Video", path: "http://videos.mozilla.org/serv/mozhacks/demos/resources/immersivevideo/cannes.r.webm"}]
+        textures: [{name:"video", type:"Video", path: "http://videos-cdn.mozilla.net/serv/mozhacks/demos/resources/immersivevideo/cannes.r.webm"}]
     };
 
 

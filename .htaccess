@@ -2,11 +2,14 @@
 # includes directories used by version control systems such as Subversion or Git.
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteRule "(^|/)\." - [F]
-
+  RewriteRule "(^|/)\." - [F]  
 
   <FilesMatch "(?!\.html?)$" >
     # Mitigate file hosting Bug#635398
+    <IfModule mod_headers.c>
+      Header set Vary Referer
+    </IfModule>
+
     RewriteEngine on
     # Prod
     RewriteCond %{HTTP_REFERER} !^https?://demos.mozilla.org [NC]
@@ -25,9 +28,6 @@
     # Direct Access
     RewriteCond %{HTTP_REFERER} !^$ [NC] 
 
-    RewriteRule . - [F]
-    <IfModule mod_headers.c>
-      Header set Vary Referer
-    </IfModule>
+    RewriteRule . - [F]    
   </FilesMatch>
 </IfModule>

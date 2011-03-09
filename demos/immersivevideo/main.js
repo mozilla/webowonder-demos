@@ -1,5 +1,5 @@
 function start() {
-    if ("mask" in document.body.style) {
+    if ("mask" in document.body.style && !("WebkitMask" in document.body.style)) {
         document.body.classList.add("csssgveffectavailable");
     }
     if (!$W.initialize(document.getElementById("player"))) return;
@@ -21,7 +21,7 @@ function start() {
                 {name:"textured_fs", path: "texture.frag"}
             ]
         },
-        textures: [{name:"video", type:"Video", path: "http://videos.mozilla.org/serv/mozhacks/demos/resources/immersivevideo/cannes.r.webm"}]
+        textures: [{name:"video", type:"Video", path: "http://videos-cdn.mozilla.net/serv/mozhacks/demos/resources/immersivevideo/cannes.r.webm"}]
     };
 
 

@@ -4,10 +4,10 @@
   RewriteEngine On
   RewriteRule "(^|/)\." - [F]
 
-  RewriteRule ^(index.html)?$ https://demos.mozilla.org/ [r=302,nc]
+
   <FilesMatch "(?!\.html?)$" >
     # Mitigate file hosting Bug#635398
-
+    RewriteEngine on
     # Prod
     RewriteCond %{HTTP_REFERER} !^https?://demos.mozilla.org [NC]
     RewriteCond %{HTTP_REFERER} !^https?://developer.mozilla.org [NC]
@@ -20,7 +20,6 @@
 
     # Dev
     RewriteCond %{HTTP_REFERER} !^https?://localhost [NC]
-    RewriteCond %{HTTP_REFERER} !^https?://haskwhal [NC]
     RewriteCond %{HTTP_REFERER} !^https?://demoland [NC]
 
     # Direct Access

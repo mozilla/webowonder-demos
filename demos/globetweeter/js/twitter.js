@@ -55,6 +55,7 @@ function getLatLongFromLocation(itemData, callback)
 
 
 var TweetProcessor;
+var TweetFilter;
 function installProcessTweet(callback)
 {
     TweetProcessor = callback;
@@ -62,6 +63,24 @@ function installProcessTweet(callback)
 
 var processTweet = function (tweet) {
     try {
+        if (TweetFilter === undefined) {
+            TweetFilter = [];
+            for (var d = 0; d < 20; d++) {
+                TweetFilter.push(0);
+            }
+        }
+
+        var currentTweetId = tweet.id;
+        for (var i = 0, l = TweetFilter.length ; i < l; i++) {
+            var id = TweetFilter[i];
+            if (id === currentTweetId) {
+                //osg.log("found a duplicate of id " + currentTweetId + " discard it");
+                return;
+            }
+        }
+        TweetFilter.shift();
+        TweetFilter.push(currentTweetId);
+
         if (tweet.user.location !== null && tweet.user.length !== 0) {
             var cb = TweetProcessor;
             if (cb === undefined) {

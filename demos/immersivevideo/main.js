@@ -1,5 +1,5 @@
 function start() {
-    if ("mask" in document.body.style) {
+    if ("mask" in document.body.style && !("WebkitMask" in document.body.style)) {
         document.body.classList.add("csssgveffectavailable");
     }
     if (!$W.initialize(document.getElementById("player"))) return;

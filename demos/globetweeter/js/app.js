@@ -58,6 +58,7 @@ function startNetwork() {
         Socket = socket;
         socket.connect();
         socket.on('message', function(message){
+            hideConnection();
             LastTweetReceived = new Date();
             processTweet(message);
         });

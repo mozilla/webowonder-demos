@@ -213,12 +213,21 @@
   window.onload = loaded;
 
   startDemo = function() {
+    if (window.LoadingSpin) {
+      LoadingSpin.quit();
+      var l = byId('loading')
+      l.parentNode.removeChild(l);
+      LoadingSpin = null;
+    }
     audioTag = byId('audio1');
     contentElems = byClass('content');
 
-    byId('display').appendChild(video);
     new Draw(byId('draw'));
     new AudioPlayer(byId('audio1'));
+
+    if (!display2 || !display2.gl) return;
+
+    byId('display').appendChild(video);
 
     var canvas = document.createElement('canvas');
     canvas.width = toInt(ratio*video.width);
@@ -262,9 +271,6 @@
     });
     currentElem.onmousedown();
 
-    var gcanvas = E.canvas(video.width, video.height + offset);
-    byId('display').appendChild(gcanvas);
-    var display2 = new Magi.Scene(gcanvas);
     display2.bg = [0,0,0,0];
     param.copyCameraMatrix(display2.camera.perspectiveMatrix, 100, 10000);
     display2.camera.useProjectionMatrix = true;

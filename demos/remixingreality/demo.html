@@ -191,6 +191,41 @@
             margin-top: -1px;
             margin-left: 8px;
         }
+        #loading {
+          position: absolute;
+          width: 640px;
+          height: 480px;
+          background-color: #025172;
+          font-size: 24px;
+          text-align: center;
+          color: white;
+          display: block;
+        }
+        #loading h3 {
+          display: block;
+          text-transform: uppercase;
+          padding-left: 0.4em;
+          letter-spacing: 0.5em;
+          font-size: 14px;
+          margin-top: 100px;
+          margin-bottom: 40px;
+          font-weight: normal;
+        }
+        #loading canvas {
+          position: absolute;
+          top: 124px;
+          left: 220px;
+        }
+        canvas {
+          display: block;
+        }
+        #getWebGL {
+          text-align: center;
+          padding-top: 220px;
+        }
+        #getWebGL a {
+          color: #890c08;
+        }
     </style>
 </head>
 <body>
@@ -203,11 +238,10 @@
                 <div><img class="thumb content" src="i/thumb_bird.png" alt="" onclick="window.currentModel=blahmodels[0];hideBall()" /><div class="itemdesc">Bird</div></div>
                 <div><img class="thumb content" src="i/thumb_lotus.png" alt="" onclick="window.currentModel=blahmodels[2];hideBall()" /><div class="itemdesc">Lotus</div></div>
             </div>
-
             <div id="content">
+                <div id="loading"><h3>Loading</h3></div>
                 <div id="display"></div>
             </div>
-
             <div id="col-right">
                 <div id="yours">
                     <canvas id="draw" width="140" height="140" class="content" title="Press delete to clear"></canvas>
@@ -230,5 +264,22 @@
         </div>
     </div>
     <script src="../../shared/mozilla-badge.js" defer></script>
+    <script>
+      gcanvas = E.canvas(video.width, video.height + offset);
+      display2 = null;
+      try {
+        display2 = new Magi.Scene(gcanvas);
+      } catch(e) {}
+      if (!display2 || !display2.gl) {
+        byId('content').insertBefore(
+          DIV({id: 'getWebGL'},
+            A('No WebGL context found. Click here for more details.',
+              {href:"http://www.khronos.org/webgl/wiki/Getting_a_WebGL_Implementation"}))
+        , byId('display'));
+      } else {
+        byId('display').appendChild(gcanvas);
+      }
+      LoadingSpin = new Spinner(byId('loading'));
+    </script>
 </body>
 </html>

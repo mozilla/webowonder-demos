@@ -88,6 +88,46 @@ TextEdit = Klass({
   }
 });
 
+Spinner = Klass({
+  initialize : function(container) {
+    var c = E.canvas(200,200);
+    this.canvas = c;
+    this.ctx = c.getContext('2d');
+    this.ctx.strokeStyle = 'white';
+    this.ctx.lineCap = "round";
+    this.container = container;
+    this.container.appendChild(c);
+    var self = this;
+    this.interval = setInterval(function(){ self.animate(); }, 33);
+  },
+
+  quit : function() {
+    if (this.interval != null) {
+      clearInterval(this.interval);
+      delete this.interval;
+    }
+  },
+
+  animate : function() {
+    var c = this.ctx;
+    c.clearRect(0,0,200,200);
+    var t = new Date().getTime();
+    for (var i=0; i<11; i++) {
+      var s = Math.sin(t/1000+i*0.8);
+      var cs = Math.cos(t/1000+i*0.8);
+      var y = -i*10 + 150 - 20*s;
+      c.beginPath();
+      var lw = (5-Math.abs(i-5)+1);
+      c.lineWidth = lw;
+      x = 100+cs*20-0.75*(5-Math.abs(i-5)+1);
+      c.moveTo(x+lw*0.5, y-4*(5-Math.abs(i-5)+1));
+      c.lineTo(x+lw*0.5, y+4*(5-Math.abs(i-5)+1));
+      c.stroke();
+    }
+  }
+});
+
+
 AudioPlayer = Klass({
   sc : 1,
 
@@ -96,10 +136,16 @@ AudioPlayer = Klass({
     this.point = {x:0, y:0};
     this.lastTime = null;
     this.audio = audio;
-    this.canvas = document.createElement('canvas');
-    this.canvas.width = 140;
-    this.canvas.height = 140;
+    this.canvas = E.canvas(140,140);
     audio.parentNode.insertBefore(this.canvas, audio);
+    var vol = audio.volume;
+    audio.volume = 0;
+    setTimeout(function(){
+      audio.play();
+      audio.pause();
+      audio.currentTime = 0;
+      audio.volume = vol;
+    }, 0);
     audio.style.display = 'none';
     audio.addEventListener('progress', function() {
       self.noProgress = false;
@@ -172,16 +218,18 @@ AudioPlayer = Klass({
     var bufs = this.audio.buffered;
     ctx.strokeStyle = 'rgba(0,192,255,0.1)';
     ctx.lineWidth = 12;
-    for (var i=0; i<bufs.length; i++) {
-      var start = bufs.start(i) / this.audio.duration;
-      var end = bufs.end(i) / this.audio.duration;
-      ctx.beginPath();
-      ctx.arc(0,0, h/2 - 20, -Math.PI/2 + start*Math.PI*2, -Math.PI/2 + end*Math.PI*2);
-      ctx.stroke();
+    if (bufs) {
+      for (var i=0; i<bufs.length; i++) {
+        var start = bufs.start(i) / this.audio.duration;
+        var end = bufs.end(i) / this.audio.duration;
+        ctx.beginPath();
+        ctx.arc(0,0, h/2 - 20, -Math.PI/2 + start*Math.PI*2, -Math.PI/2 + end*Math.PI*2, false);
+        ctx.stroke();
+      }
     }
     ctx.beginPath();
     ctx.strokeStyle = 'rgba(0,192,255,1)';
-    ctx.arc(0,0, h/2 - 20, -Math.PI/2, -Math.PI/2+Math.PI*2 * (this.audio.currentTime / this.audio.duration));
+    ctx.arc(0,0, h/2 - 20, -Math.PI/2, -Math.PI/2+Math.PI*2 * (this.audio.currentTime / this.audio.duration), false);
     ctx.lineWidth = 8;
     ctx.stroke();
     ctx.beginPath();

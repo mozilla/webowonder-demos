@@ -3,6 +3,7 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteRule "(^|/)\." - [F]  
+  RewriteRule ^(index.html)?$ https://demos.mozilla.org/ [r=302,nc]
 
   <FilesMatch "(?!\.html?)$" >
     # Mitigate file hosting Bug#635398

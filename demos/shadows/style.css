@@ -2,6 +2,7 @@
 /* The Letter-Heads by simurai */
 
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:bold);
+@import url(http://fonts.googleapis.com/css?family=Candal);
 
 
 
@@ -24,7 +25,7 @@ a {
 
 .font1 { font-family: "Helvetica Neue", Helvetica, sans-serif; }
 .font2 { font-family: "Ubuntu", sans-serif; }
-.font3 { font-family: "Lucida Grande", Lucida, Verdana, sans-serif; } /* will be replaced by typekit  */	
+.font3 { font-family: "Candal", "Lucida Grande", Lucida, Verdana, sans-serif; }	
 
 
 

@@ -253,11 +253,11 @@ $(document).ready(function() {
 		// start	
 		
 		var startLight = function() {
+			$('body').fadeIn(400);
 			window.parent.postMessage('loaded', targetOrigin);		
-			$('body').fadeIn(400);		
 		}
 		
-		setTimeout(startLight, 100);
+		setTimeout(startLight, 500);
 				
 		
 		

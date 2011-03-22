@@ -154,22 +154,11 @@ function handleLoadedTexture(texture) {
 }
 
 
-var earthTexture;
 var galvanizedTexture;
 function initTextures() {
-    earthTexture = gl.createTexture();
-    earthTexture.image = new Image();
-    earthTexture.image.onload = function() {
-        handleLoadedTexture(earthTexture)
-    }
-    earthTexture.image.src = "earth.jpg";
-
     galvanizedTexture = gl.createTexture();
-    galvanizedTexture.image = new Image();
-    galvanizedTexture.image.onload = function() {
-        handleLoadedTexture(galvanizedTexture)
-    }
-    galvanizedTexture.image.src = "webgl_assets/texture.jpg";
+    galvanizedTexture.image = document.getElementById("texture");
+    handleLoadedTexture(galvanizedTexture);
 }
 
 
@@ -314,11 +303,7 @@ function drawScene() {
     mvRotate(teapotAngleA, [0, 1, 0]);
     mvRotate(teapotAngleB, [1, 1, 0]);
     gl.activeTexture(gl.TEXTURE0);
-    if (texture == "earth") {
-        gl.bindTexture(gl.TEXTURE_2D, earthTexture);
-    } else if (texture == "galvanized") {
-        gl.bindTexture(gl.TEXTURE_2D, galvanizedTexture);
-    }
+    gl.bindTexture(gl.TEXTURE_2D, galvanizedTexture);
     gl.uniform1i(shaderProgram.samplerUniform, 0);
 
     gl.uniform1f(shaderProgram.materialShininessUniform, 12);
@@ -353,6 +338,7 @@ function tick() {
 }
 
 
+var canvas2d;
 function webGLStart() {
     var canvas = document.querySelector("canvas");
     initGL(canvas);
@@ -360,10 +346,10 @@ function webGLStart() {
     initTextures();
     loadTeapot();
 
-window.addEventListener("MozOrientation", function(e) {
-	stepA = 0.3 + (1 - e.x) * 2;
-	stepB = 0.3 + (1 - e.y) * 15;
-}, true);
+    window.addEventListener("MozOrientation", function(e) {
+        stepA = 0.3 + (1 - e.x) * 2;
+        stepB = 0.3 + (1 - e.y) * 15;
+    }, true);
 
     gl.clearColor(0.0, 0.0, 0.0, 0.0);
 
@@ -371,6 +357,7 @@ window.addEventListener("MozOrientation", function(e) {
 
     gl.enable(gl.DEPTH_TEST);
     gl.depthFunc(gl.LEQUAL);
+    startTeaPot();
     tick();
 }
 
@@ -378,7 +365,7 @@ window.addEventListener("load", webGLStart, true);
 
 function startTeaPot() {
     if (nogl) return;
-    teapotRotating = true; tick();
+    teapotRotating = true;
 }
 function stopTeaPot()  {
     if (nogl) return;

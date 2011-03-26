@@ -25,7 +25,7 @@
 var FakeTweets;
 var Socket;
 var LastTweetReceived = new Date();
-var ConnectionTimeoutCheck = 6;
+var ConnectionTimeoutCheck = 20;
 var CheckNetworkTimeout;
 var StreamConnected = 0;
 function startNetwork() {

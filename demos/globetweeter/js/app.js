@@ -25,9 +25,11 @@
 var FakeTweets;
 var Socket;
 var LastTweetReceived = new Date();
-var ConnectionTimeoutCheck = 20;
+var ConnectionTimeoutCheck = 10;
 var CheckNetworkTimeout;
+var NbCheckNetworkTimeout = 0;
 var StreamConnected = 0;
+
 function startNetwork() {
     try {
         jQuery('#connection').show();
@@ -44,9 +46,24 @@ function startNetwork() {
                 var elapsed = (now.getTime()-LastTweetReceived.getTime())/1000.0;
                 if (elapsed > ConnectionTimeoutCheck) {
                     //showConnection();
-                    osg.log("no tweets received for " + ConnectionTimeoutCheck +" seconds, restart connection");
-                    startNetwork();
-                    return;
+                    osg.log("no tweets received for " + ConnectionTimeoutCheck +" seconds");
+                    if (NbCheckNetworkTimeout > 3) {
+                        osg.log("no tweets received for " + ConnectionTimeoutCheck*3 +" seconds, restart connection");
+                        if ( Socket !== undefined) {
+                            Socket.connect();
+                        } else {
+                            startNetwork();
+                        }
+                        NbCheckNetworkTimeout = 0;
+                        return;
+                    } else {
+                        showConnection();
+                    }
+                    NbCheckNetworkTimeout += 1;
+                    //startNetwork();
+                    //return;
+                } else {
+                    NbCheckNetworkTimeout = 0;
                 }
                 CheckNetworkTimeout = setTimeout(checkNetwork, ConnectionTimeoutCheck*1000);
             }
@@ -73,10 +90,23 @@ function startNetwork() {
             //checkNetwork();
         });
         socket.on('disconnect', function(message){
-            Socket = undefined;
             if (DemoState.running === true) {
                 showConnection();
                 osg.log("disconnect, try to reconnect");
+
+                if ( Socket !== undefined) {
+                    Socket.connect();
+                } else {
+                    startNetwork();
+                }
+            }
+        });
+        socket.on('error', function(message) {
+            osg.log("error, try to reconnect");
+            showConnection();
+            if ( Socket !== undefined) {
+                Socket.connect();
+            } else {
                 startNetwork();
             }
         });

@@ -1,0 +1,382 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+  <meta name="author" content="Eberhard Gräther"> 
+  <meta name="author" content="Matthias Hempt"> 
+  <meta name="author" content="Nicola Lieser"> 
+  <meta name="author" content="Mathias Paumgarten"> 
+  <meta name="author" content="David Strauß"> 
+  
+  <title>MARBLE RUN</title> 
+ 
+  <link href="./stylesheets/reset.css" media="screen" rel="stylesheet" type="text/css" /> 
+<link href="./stylesheets/master.css" media="screen" rel="stylesheet" type="text/css" /> 
+  <script src="./javascripts/prototype.js" type="text/javascript"></script> 
+<script src="./javascripts/effects.js" type="text/javascript"></script> 
+<script src="./javascripts/dragdrop.js" type="text/javascript"></script> 
+<script src="./javascripts/controls.js" type="text/javascript"></script> 
+<script src="./javascripts/rails.js" type="text/javascript"></script> 
+<meta name="csrf-param" content="authenticity_token"/> 
+<meta name="csrf-token" content="XXBVBSWzzVqBX6iffJdoYIoXqy9kJj220a7wI9DtcBc="/> 
+ 
+  <script type="text/javascript"> 
+ 
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-4308722-6']);
+    _gaq.push(['_trackPageview']);
+ 
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+ 
+  </script> 
+ 
+  <script src="./javascripts/jquery.js"></script> 
+  <script> 
+      jQuery.noConflict();
+  </script> 
+ 
+</head> 
+ 
+<body> 
+ 
+  <noscript>You're chillin' in the wrong turf, bro!</noscript> 
+ 
+  <table id="contentTable"> 
+    <tr> 
+      <td id="sidebar"> 
+ 
+        <header> 
+            <!--<a href="./tracks/new"><h1>Marble Run</h1></a>-->
+            <h1>Marble Run</h1>
+        </header> 
+ 
+        <div id="modeSwitch"> 
+          <a id="buildSwitch">Build Mode</a> 
+          <a id="viewSwitch">View Mode</a> 
+        </div> 
+ 
+        <div id="lengthMeterReflection" class="glasReflection"></div> 
+        <div id="lengthMeter"> 
+          0000000
+        </div> 
+ 
+        <div id="brickMeterHolder"> 
+          <canvas id="brickMeterCanvas"></canvas> 
+        </div> 
+ 
+        <div id="latestTrackReflection" class="glasReflection"></div> 
+        <div id="lastTrackHolder"> 
+        </div> 
+        
+      </td> 
+ 
+      <td id="content"> 
+ 
+        <div id="menu"> 
+ 
+          <a id="menuAbout">About</a> 
+          <a id="menuImprint">Imprint</a> 
+          <a id="menuContact">Contact</a> 
+ 
+        </div> 
+ 
+        <!--<a id="fontButton" href="../font/MARBLERUN.zip"> 
+          Download font
+        </a>-->
+ 
+        <div id="overviewControls" class="toggleElement"> 
+ 
+          <span>SORT GALLERY BY</span> 
+ 
+          <ul> 
+            <li id="dateSortButton" class="active">DATE</li> 
+            <li id="likesSortButton" class="inactive">LIKES</li> 
+            
+            <li> 
+              <form id="searchForm"> 
+                <input id="searchField" type="text" tabindex="1" /> 
+                <input id="searchSubmit" type="submit" /> 
+              </form> 
+            </li> 
+          </ul> 
+ 
+          <a id="overviewPreviousButton" class="editorButton">Previous Page</a> 
+          <a id="overviewNextButton" class="editorButton">Next Page</a> 
+ 
+          <div id="overviewPageDisplay"> PAGE 0 OF 4 </div> 
+ 
+        </div> 
+ 
+        <div id="overviewGrid" class="toggleElement"> 
+        </div> 
+ 
+        <div id="aboutPage" class="subPage toggleElement"> 
+          <h2>MARBLE RUN</h2> 
+ 
+          <h3>ABOUT THE GAME</h3> 
+          <p> 
+            MARBLE RUN is a collaborative attempt to build<br> the longest marble run on earth! There are different <br>types of bricks available to build tracks with.
+          </p> 
+          <p> 
+            Every user-built track that is added to the marble <br>run increases the total length of the over all track. <br>With increasing length more and more special bricks <br>get unlocked to allow you to build even more tracks!
+          </p> 
+ 
+          <h3>MOZILLA GAME ON 2010</h3> 
+          <p> 
+            This game was developed by students of the Salzburg University of Applied Science for the <a href="https://gaming.mozillalabs.com/">Game On 2010</a> challenge hosted by Mozilla.
+          </p> 
+ 
+          <h3>CREATED BY</h3> 
+          <a href="http://egraether.com">Eberhard Gräther (WEB / CONCEPT)</a><br> 
+          <a href="http://hempt.at">Matthias Hempt (DESIGN / CONCEPT)</a><br> 
+          <a href="http://nicolalieser.com">Nicola Lieser (DESIGN / CONCEPT)</a><br> 
+          <a href="http://mathias-paumgarten.com">Mathias Paumgarten (WEB / CONCEPT)</a><br> 
+          <a href="http://stravid.com">David Strauß (WEB / CONCEPT)</a><br> 
+        </div> 
+ 
+        <div id="imprintPage" class="subPage toggleElement"> 
+          <h2>MARBLE RUN</h2> 
+ 
+          &copy; 2011<br> 
+ 
+          <a href="http://egraether.com">Eberhard Gräther</a><br> 
+          <a href="http://hempt.at">Matthias Hempt</a><br> 
+          <a href="http://nicolalieser.com">Nicola Lieser</a><br> 
+          <a href="http://mathias-paumgarten.com">Mathias Paumgarten</a><br> 
+          <a href="http://stravid.com">David Strauß</a><br> 
+ 
+          <a class="links" href="http://www.fh-salzburg.ac.at/"> 
+            <img src="./images/logo-mediaCube.png" width="145" height="25"> 
+            <img src="./images/logo-fhs.png" width="60" height="45"> 
+          </a> 
+ 
+        </div> 
+ 
+        <div id="contactPage" class="subPage toggleElement"> 
+          <h2>CONTACT US</h2> 
+ 
+          <a href="mailto:mail@marblerun.at">mail@marblerun.at</a><br> 
+ 
+          <h2 class="notFirst">VISIT MARBLE RUN ON</h2> 
+ 
+          <a href="http://www.facebook.com/pages/MARBLERUNat/135884619804839" target="_blank">Facebook</a><br> 
+          <a href="http://www.twitter.com/themarblerun" target="_blank">@themarblerun</a><br> 
+ 
+        </div> 
+ 
+        <div id="errorPage" class="subPage toggleElement"> 
+          <h2>ERROR</h2> 
+          <div id="errorMessage"></div> 
+        </div> 
+ 
+        <div id="loadingPage" class="subPage toggleElement"> 
+        </div> 
+ 
+        <div id="firstVisitContainer"> 
+          <a id="firstVisitCloseButton"> 
+            <img src="./images/first-visit-close.png"> 
+          </a> 
+ 
+          <div id="firstVisitText"> 
+            <h2> 
+              HEY THERE,<br> 
+              WE NEED<br> 
+              YOUR HELP!
+            </h2> 
+ 
+            <p> 
+              We want to build the longest<br> 
+              MARBLE RUN on earth!<br> 
+            </p> 
+ 
+            <p> 
+              You can be a part of it by<br> 
+              building your own track and<br> 
+              adding it to the MARBLE RUN!<br> 
+            </p> 
+ 
+            <p> 
+              By increasing the length of the<br> 
+              track, different types of
+              special<br> bricks are going to be
+              available,<br> allowing you to
+              build even <br>more awesome tracks.<br> 
+            </p> 
+            <p style="color: #ffffff;"> 
+              Supported browsers:<br> Google Chrome, Mozilla Firefox 4 <br>Opera, Safari 5
+            </p> 
+          </div> 
+        </div> 
+ 
+        <div id="helpBox" class="toggleElement"> 
+          <h2>DRAG&amp;DROP</h2> 
+          <p> 
+            Every Brick can be moved by Drag&amp;Drop
+          </p> 
+ 
+          <h2>SELECT</h2> 
+          <p> 
+            By clicking on a brick in one of the two<br> 
+            toolboxes on the right you select it for<br> 
+            further use.
+          </p> 
+ 
+          <h2>PLACE</h2> 
+          <p> 
+            Click on an empty cell in the grid to place<br> 
+            the selected brick. You can also drag bricks<br> 
+            directly from the toolbox on the grid.
+          </p> 
+ 
+          <h2>ROTATE</h2> 
+          <p> 
+            By clicking on a brick you rotate it.<br> 
+            This works also on the currently selected<br> 
+            brick in the toolbox.
+          </p> 
+ 
+          <h2>REMOVE</h2> 
+            <p> 
+              To remove a brick you have to drag it off the<br> 
+              grid (and release it).
+            </p> 
+ 
+          <h2>MULTI PLACE</h2> 
+          <p> 
+            To place multiple bricks of the same kind<br> 
+            you can "paint" on the grid! Simply hold down<br> 
+            the left mouse button and move around.
+          </p> 
+ 
+          <h2>MULTI REMOVE</h2> 
+          <p> 
+            If you select the empty cell in the toolbox<br> 
+            you can use the above described "MULTI PLACE"<br> 
+            method to remove multiple bricks at once.
+          </p> 
+        </div> 
+        
+        <div id="editorControlsTop" class="editorsControls controlsTop toggleElement"> 
+ 
+          <a id="runButton" class="editorButton">Run</a> 
+          <a id="helpButton" class="editorButton">Help</a> 
+          <a id="clearButton" class="editorButton">Clear</a> 
+ 
+        </div> 
+ 
+        <div id="showroomControlsTop" class="editorsControls controlsTop toggleElement"> 
+          <a id="showButton" class="editorButton">Run</a> 
+          <a id="galleryButton" class="editorButton">Back To Gallery</a> 
+          <a id="newTrackButton" class="editorButton">Build New Track</a> 
+        </div> 
+        
+        <div id="editorControlsBottom" class="editorsControls controlsBottom toggleElement"> 
+          
+          <div id="lengthDisplay"> 
+            0000
+          </div> 
+          
+          <form> 
+            <input id="userName" type="text" tabindex="2" value="YOUR NAME" /> 
+            <input id="trackName" type="text" tabindex="1" value="TRACK NAME" /> 
+          </form> 
+          
+          <a id="publishButton" class="publishButton activePublish">Publish</a>  
+          <div id="publishButtonWarning"> 
+            You can't publish until the ball reaches the exit!
+          </div>  
+ 
+        </div> 
+ 
+        <div id="showroomDetail"> 
+          <h3 id="tableTrack">SUPERSTAR</h3> 
+ 
+          <table> 
+ 
+            <tr> 
+              <td class="leftColumn">BUILDER</td> 
+              <td id="tableBuilder" class="rightColumn"></td> 
+            </tr> 
+ 
+            <tr> 
+              <td class="leftColumn">LENGTH</td> 
+              <td id="tableLength" class="rightColumn"></td> 
+            </tr> 
+ 
+            <tr> 
+              <td class="leftColumn">DATE</td> 
+              <td id="tableDate" class="rightColumn"></td> 
+            </tr> 
+ 
+            <tr> 
+              <td class="leftColumn">TIME</td> 
+              <td id="tableTime" class="rightColumn"></td> 
+            </tr> 
+ 
+            <tr> 
+              <td class="leftColumn">LIKES</td> 
+              <td id="tableLikes" class="rightColumn"></td> 
+            </tr> 
+ 
+          </table> 
+ 
+          <a id="showroomLikeButton" class="editorButton">Like!</a>
+          <a href="http://www.facebook.com/pages/MARBLERUNat/135884619804839" id="showroomFacebookButton" class="editorButton" target="_blank">Facebook</a> 
+          <a id="showroomTwitterButton" class="editorButton" target="_blank">Twitter</a> 
+ 
+          <div id="showroomFlag" class="showroomFlag"> 
+            <a id="showroomFlagButton">FLAG</a> THIS TRACK IF YOU THINK IT IS<br> 
+            INAPPROPRIATE AND/OR OFFENDING.
+          </div>
+ 
+        </div> 
+ 
+        <div id="showroomControlsBottom" class="editorsControls controlsBottom toggleElement"> 
+ 
+          <a id="nextButton" class="editorButton">Next</a> 
+          <a id="previousButton" class="editorButton">Previous</a> 
+          <a id="autoButton" class="editorButton">Auto</a> 
+ 
+        </div> 
+        
+        <div id="editorToolboxTop" class="toggleElement"> 
+        
+          <div id="basicBricks">Basic Bricks</div> 
+          <div id="specialBricks">Special Bricks</div>  
+        
+        </div> 
+        
+        <div id="editorToolboxBottom" class="toggleElement"> 
+        
+          <a id="twitterButton" class="editorButton">Twitter</a> 
+          <a href="http://www.facebook.com/pages/MARBLERUNat/135884619804839" id="facebookButton" class="editorButton">Facebook</a> 
+        
+        </div> 
+ 
+        <div class="editor" id="editor"> 
+ 
+            <canvas id="staticCanvas"></canvas> 
+            <canvas id="dynamicCanvas"></canvas> 
+            <canvas id="imageCanvas"></canvas> 
+            <div id="editorRuler" class="toggleElement"></div> 
+ 
+        </div> 
+ 
+        <script src="./javascripts/marblerun/main.js"></script> 
+ 
+        
+ 
+      </td> 
+    </tr> 
+  </table> 
+ 
+ 
+ 
+  <script src="./javascripts/marblerun-compiled.js" type="text/javascript"></script> 
+ 
+</body> 
+ 
+</html>

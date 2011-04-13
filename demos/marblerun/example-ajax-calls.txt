@@ -1,0 +1,36 @@
+    new Ajax.Request('/tracks/1', {
+      method: 'get',
+      requestHeaders: {Accept: 'application/json'},
+      onSuccess: function(transport) {
+        console.log(transport);
+         var json = transport.responseText.evalJSON();
+         console.log(json);
+
+         //editor.field.setTrack(json);
+      }
+    });
+
+    var p = {};
+    p['track[json]'] = 'DASADs';
+    p['track[username]'] = 'dacve';
+    p['track[trackname]'] = 'weee';
+    p['track[length]'] = 1.7;
+    p['track[imagedata]'] = 'blup';
+
+    console.log(Object.toQueryString(p));
+
+    new Ajax.Request('/tracks', {
+      method: 'post',
+      parameters: p,
+      requestHeaders: {Accept: 'application/json'},
+      onSuccess: function(transport) {
+        console.log(transport);
+         var json = transport.responseText.evalJSON();
+         console.log(json);
+
+         editor.field.setTrack(json);
+      },
+      onFailure: function(transport) {
+        console.log("FAIL");
+      }
+    });

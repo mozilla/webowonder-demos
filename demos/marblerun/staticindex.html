@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="author" content="David Strauß">
+    <meta name="author" content="Mathias Paumgarten">
+    <meta name="author" content="Eberhard Gräther">
+    
+    <title>Marble Run</title>
+    
+    <link rel="stylesheet" href="stylesheets/screen.css">
+</head>
+
+<body>
+
+  <noscript>You're chillin' in the wrong turf, bro!</noscript>
+  
+  <table>
+    <tr>
+      <!-- <td id="sidebar">
+
+        <header><h1>Marble Run</h1></header>
+
+      </td> -->
+
+      <td id="content" style="background: none">
+
+        <div id="editorControlsTop" class="editorContols">
+
+          <a id="runButton" class="editorButton">Run</a>
+          <a id="clearButton" class="editorButton">Clear</a>
+          <a id="helpButton" class="editorButton">Help</a>
+
+        </div>
+        
+        <div id="editorControlsBottom" class="editorContols">
+          
+          <div id="lengthDisplay">
+            00.0
+          </div>
+          
+          <form>
+            <input id="userName" type="text" value="YOUR NAME" />
+            <input id="trackName" type="text" value="TRACK NAME" />
+          </form>
+          
+          <a id="publishButton" class="publishButton">Publish</a>     
+
+        </div>  
+        
+        <div id="editorToolboxTop">
+        
+          <div id="basicBricks">Basic Bricks</div>
+          <div id="specialBricks">Special Bricks</div>  
+        
+        </div>
+        
+        <div id="editorToolboxBottom">
+        
+          <a id="twitterButton" class="editorButton">Twitter</a>
+          <a id="facebookButton" class="editorButton">Facebook</a>
+          <a id="publishButtonWarning" class="editorButton">Facebook</a>
+        
+        </div>
+
+        <div class="editor" id="editor">
+
+            <canvas id="staticCanvas"></canvas>
+            <canvas id="dynamicCanvas"></canvas>
+            <canvas id="bufferCanvas"></canvas>
+            <canvas id="imageCanvas"></canvas>
+
+        </div>
+
+        <script src="javascripts/prototype.js"></script>
+        <script src="javascripts/box2d/box2d.js"></script>
+
+        <script src="javascripts/marblerun/utilities/utilities.js"></script>
+        <script src="javascripts/marblerun/utilities/pattern.js"></script>
+        <script src="javascripts/marblerun/utilities/event.js"></script>
+        <script src="javascripts/marblerun/utilities/eventengine.js"></script>
+        <script src="javascripts/marblerun/utilities/displayobject.js"></script>
+        <script src="javascripts/marblerun/utilities/rectangle.js"></script>
+
+        <script src="javascripts/marblerun/bricks/brick.js"></script>
+        <script src="javascripts/marblerun/bricks/kicker.js"></script>
+        <script src="javascripts/marblerun/bricks/ramp.js"></script>
+        <script src="javascripts/marblerun/bricks/curve.js"></script>
+        <script src="javascripts/marblerun/bricks/line.js"></script>
+        <script src="javascripts/marblerun/bricks/ball.js"></script>
+        <script src="javascripts/marblerun/bricks/exit.js"></script>
+        <script src="javascripts/marblerun/bricks/spring.js"></script>
+        <script src="javascripts/marblerun/bricks/boost.js"></script>
+        <script src="javascripts/marblerun/bricks/breaker.js"></script>
+        <script src="javascripts/marblerun/bricks/beamer.js"></script>
+        <script src="javascripts/marblerun/bricks/oneway.js"></script>
+        <script src="javascripts/marblerun/bricks/graviton.js"></script>
+
+        <script src="javascripts/marblerun/grid.js"></script>
+        <script src="javascripts/marblerun/toolbox.js"></script>
+        <script src="javascripts/marblerun/field.js"></script>
+
+        <script src="javascripts/marblerun/renderer.js"></script>
+        <script src="javascripts/marblerun/editor.js"></script>
+        <script src="javascripts/marblerun/showroom.js"></script>
+
+        <script>
+
+          var editor;
+          var showroom;
+          var mainCanvas, bufferCanvas, imageCanvas;
+          var shadowOffsetGetsTransformed = false;
+
+          window.onload = function() {
+
+            staticCanvas = document.getElementById("staticCanvas");
+            dynamicCanvas = document.getElementById("dynamicCanvas");
+            bufferCanvas = document.getElementById("bufferCanvas");
+            imageCanvas = document.getElementById("imageCanvas");
+
+            shadowOffsetGetsTransformed = testShadowOffsetTransform();
+
+            staticCanvas.onselectstart = function() {return false};
+            dynamicCanvas.onselectstart = function() {return false};
+
+            Pattern.context = staticCanvas.getContext("2d");
+            Pattern.loadPattern([
+              {name: "spring", path: "./images/spring.png"},
+              {name: "boost", path: "./images/boost.png"}
+            ]);
+
+            Pattern.onload = function() {
+              startEditor();
+            };
+
+            // showroom = new Showroom(mainCanvas, bufferCanvas);
+            // showroom.x = editorPosition.left;
+            // showroom.y = editorPosition.top;
+
+            // showroom.parseTrack(testJSON);
+
+            // showroom.startRender();
+          
+          };
+          
+          var startEditor = function () {
+            
+            var editorPosition = $('editor').cumulativeOffset($('editor'));
+            
+            editor = new Editor(staticCanvas, dynamicCanvas, bufferCanvas, imageCanvas);
+            editor.x = editorPosition.left;
+            editor.y = editorPosition.top;
+            
+            editor.init();
+            
+            editor.startRender();
+          };
+
+        </script>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>

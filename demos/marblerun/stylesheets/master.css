@@ -1,0 +1,777 @@
+/* CSS Document */
+
+body, html {
+	height: 100%;
+	width: 100%;
+	min-width: 1000px;
+	background: #F2E049;
+	font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+	color: #F6F254;
+}
+
+
+h1 {
+	background: url(../images/logo.png) no-repeat top left;
+	height: 141px;
+	width: 334px;
+	text-indent: -30000px;
+}
+
+table#contentTable {
+	height: 100%;
+	width: 100%;
+}
+
+td#sidebar {
+	width: 342px;
+	height: 100%;
+	background: url(../images/background-gray.png) repeat-y;
+}
+
+td#sidebar div#modeSwitch {
+	background: url(../images/sidebar-switch.png) no-repeat;
+	width: 224px;
+	height: 29px;
+	display: block;
+	margin: 9px auto 45px auto;
+	cursor: pointer;
+}
+
+td#sidebar div#modeSwitch.view {
+	background-position: 0 -29px;
+}
+
+td#sidebar div#modeSwitch.build {
+	background-position: 0 0;
+}
+
+td#sidebar div#modeSwitch.none {
+	background-position: 0 -58px;
+}
+
+a#buildSwitch {
+	display: inline-block;
+	width: 115px;
+	height: 29px;
+	text-indent: -1000px;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+a#viewSwitch {
+	display: inline-block;
+	width: 100px;
+	height: 29px;
+	text-indent: -1000px;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+td#sidebar div#brickMeterHolder {
+	width: 218px;
+	height: 185px;
+	margin: 40px auto;
+	overflow: hidden;
+}
+
+div.glasReflection {
+	background: url(../images/sidebar-glas-reflection.png) no-repeat;	
+	width: 214px;
+	height: 47px;
+	position: absolute;
+	z-index: 150;
+}
+
+div#lengthMeterReflection {
+	top: 228px;
+	left: 83px;
+}
+
+div#latestTrackReflection {
+	top: 564px;
+	left: 83px;
+	cursor: pointer;
+}
+
+td#sidebar div#lengthMeter {
+	width: 201px;
+	height: 35px;
+	margin: auto;
+	overflow: hidden;
+	background: url(../images/sidebar-length-background.png) no-repeat;
+	padding-top: 35px;
+	padding-left: 60px;
+	font-family: "Courier New", Courier, monospace;
+	font-weight: bolder;
+	color: #FFF;
+	letter-spacing: 14px;
+	font-size: 12px;
+}
+
+a#fontButton {
+	position: absolute;
+	top: 10px;
+	left: 1074px;
+	background: url(../images/font-button.png) no-repeat;
+	width: 88px;
+	height: 90px;
+	overflow: hidden;
+	text-indent: -500px;
+}
+
+div#menu {
+	background: url(../images/ruler.png) no-repeat;
+	width: 349px;
+	height: 138px;
+	position: absolute;
+	top: 0;
+	left: 870px;
+}
+
+div#menu a#menuAbout {
+	position: absolute;
+	top: 62px;
+	left: 59px;
+	width: 36px;
+	height: 21px;
+}
+
+div#menu a#menuImprint {
+	position: absolute;
+	top: 40px;
+	left: 104px;
+	width: 37px;
+	height: 24px;
+}
+
+div#menu a#menuContact {
+	position: absolute;
+	top: 15px;
+	left: 157px;
+	width: 42px;
+	height: 26px;
+}
+
+div#menu a#menuAbout, div#menu a#menuImprint, div#menu a#menuContact {
+	cursor: pointer;
+	text-indent: -100px;
+	overflow: hidden;
+}
+
+div.subPage {
+	position: absolute;
+	top: 219px;
+	left: 510px;
+	color: #363535;
+	z-index: 80;
+	font-size: 9px;
+	width:  290px;
+	line-height: 13px;
+}
+
+div.subPage a {
+	color: #363535;
+	text-decoration: none;
+}
+
+div.subPage h2 {
+	font-weight: bold;
+	font-size: 17px;
+}
+
+div#imprintPage {
+}
+
+div#imprintPage a.links {
+	width: 160px;
+	margin-top: 30px;
+	display: block;
+}
+
+div#imprintPage h2 {
+	margin-bottom: 20px;
+}
+
+div#aboutPage h3 {
+	font-weight: bolder;
+	margin: 44px 0 5px 0; 
+}
+
+div#contactPage h2 {
+	margin-bottom: 20px;
+}
+
+div#contactPage h2.notFirst {
+	margin-top: 30px;
+}
+
+div#contactPage a {
+	display: block;
+	line-height: 10px;
+}
+
+div#errorPage div#errorMessage {
+	margin-top: 20px;
+}
+
+div#loadingPage {
+	width: 106px;
+	height: 25px;
+	left: 724px;
+	top: 352px;
+	background: url(../images/editor-load.png);
+}
+
+div#loadingPage.blink {
+	background-position: 0px -25px;
+}
+
+td#sidebar div#lastTrackHolder {
+	width: 262px;
+	height: 218px;
+	margin: auto;
+	background: url(../images/sidebar-last-background.png) no-repeat;
+	margin-bottom: 20px;
+	overflow: hidden;
+	font-size: 9px;
+}
+
+td#sidebar div#lastTrackHolder div {
+	margin: 20px 20px 0px 17px;
+	float: left;
+	width: 263px;
+	cursor: pointer;
+}
+
+td#sidebar div#lastTrackHolder div div {
+	float: right;
+	width: 130px;
+	margin: 0;
+}
+
+td#sidebar div#lastTrackHolder div  img{
+	position: absolute;
+	z-index: 10;
+}
+
+td#sidebar div#lastTrackHolder div div.background {
+	width: 120px;
+	height: 180px;
+  background: url(../images/background-yellow.png);
+	background-position: center;
+	position: absolute;
+	z-index: 9;
+}
+
+td#sidebar div#lastTrackHolder div div div.header{
+	font-weight: bold;
+	margin: 10px 0 20px 0;
+}
+
+td#sidebar div#lastTrackHolder div div div#latestInfo {
+	line-height: 15px;
+	color: #FFFFFF;
+	white-space: nowrap;
+}
+
+#latestTrackHolder a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+td#content {
+	height: 100%;
+  background: url(../images/background-yellow.png) repeat;
+	vertical-align: top;
+	overflow: hidden;
+}
+
+.toggleElement {
+	visibility: hidden;
+}
+
+div.editor {
+  margin-top: 162px;
+	height: 600px;
+	overflow: hidden;
+}
+
+div#editorRuler {
+	position: absolute;
+	z-index: 0;
+	background: url(../images/editor-ruler.png) no-repeat;
+	width: 42px;
+	height: 436px;
+	top: 182px;
+	left: 687px;
+}
+
+div.editorsControls {
+	position: absolute;
+	z-index: 4;
+	left: 402px;
+	width: 286px;
+}
+
+div.controlsTop {
+	top: 153px;
+}
+
+div.controlsBottom {
+	top: 625px;
+}
+
+div#showroomControlsBottom {
+	width: 291px;
+}
+
+div#showroomDetail {
+	position: absolute;
+	top: 216px;
+	left: 780px;
+	color: #393937;
+	font-size: 9px;
+	font-family: Helvetica, Arial, sans-serif;
+	visibility: hidden;
+	z-index: 5;
+}
+
+div#showroomDetail h3 {
+	font-weight: bolder;
+	font-size: 13px;
+	margin-bottom: 20px;
+	margin-left: 2px;
+}
+
+div#showroomDetail table {
+	margin-left: 3px;
+}
+
+div#showroomDetail table tr {
+	height: 27px;
+}
+
+div#showroomDetail table tr td.leftColumn {
+	width: 70px;
+}
+
+div#showroomDetail table tr td.rightColumn {
+	width: 120px;
+	font-weight: bold;
+}
+
+div#editorControlsTop {
+	width: 290px;
+}
+
+div#editorControlsBottom form input {
+	width: 86px;
+	height: 19px;
+	float: right;
+	font-size: 9px;
+	margin-left: 4px;
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: bold;
+	color: #333;
+	background: url(../images/editor-text-background.png) no-repeat transparent;
+	border: none;
+	padding: 2px 5px 0 5px;
+	margin-top: 9px;
+}
+
+div#editorControlsBottom div#lengthDisplay {
+	background: url(../images/editor-meter-background.png) no-repeat;
+	width: 78px;
+	height: 18px;
+	float: left;
+	color: #EBE63F;
+	padding: 12px 0 0 5px;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 13px;
+	letter-spacing: 13px;
+	margin-left: 2px;
+}
+
+div#editorControlsBottom div#publishButtonWarning {
+	width: 143px;
+	height: 30px;
+	background: url(../images/editor-warning-publish.png) no-repeat;
+	position: absolute;
+	text-indent: -5000px;
+	overflow: hidden;
+	top: 42px;
+	left: 289px;
+	visibility: hidden;
+}
+
+div#editorToolboxTop {
+	width: 196px;
+	position: absolute;
+	left: 770px;
+	top: 173px;
+}
+
+div#editorToolboxTop div {
+	text-indent: -5000px;
+	width: 86px;
+}
+
+div#editorToolboxTop div#basicBricks {
+	float: left;
+	background: url(../images/editor-basicbricks.png) no-repeat;
+}
+
+div#editorToolboxTop div#specialBricks {
+	float: right;
+	background: url(../images/editor-specialbricks.png) no-repeat;
+}
+
+div#editorToolboxBottom {
+	position: absolute;
+	width: 86px;
+	left: 886px;
+	top: 618px;
+	z-index: 8;
+}
+
+a#runButton, a#showButton {
+	width: 54px;
+	background: url(../images/editor-button-run.png) no-repeat;
+}
+
+a#clearButton {
+	float: right;
+	width: 65px;
+	background: url(../images/editor-button-clear.png) no-repeat;
+}
+
+a#nextButton, a#overviewNextButton {
+	float:right;
+	width: 65px;
+	background: url(../images/editor-button-next.png) no-repeat;
+}
+
+a#previousButton, a#overviewPreviousButton {
+	float: right;
+	width: 65px;
+	background: url(../images/editor-button-previous.png) no-repeat;
+}
+
+a#helpButton {
+	float: right;
+	width: 31px;
+	background: url(../images/editor-button-help.png) no-repeat;
+}
+
+a#galleryButton {
+	float: right;
+	width: 89px;
+	background: url(../images/editor-button-back.png) no-repeat;
+}
+
+a#newTrackButton {
+	float: right;
+	width: 96px;
+	background: url(../images/editor-button-new.png) no-repeat;
+}
+
+a#showroomLikeButton {
+	width: 55px;
+	background: url(../images/editor-button-like.png) no-repeat;
+}
+
+a#autoButton {
+	width: 65px;
+	background: url(../images/editor-button-auto.png) no-repeat;
+}
+
+a#newTrackButton, a#galleryButton {
+	margin-top: 1px;
+}
+
+a#facebookButton, a#showroomFacebookButton {
+	width: 31px;
+	float: right;
+	background: url(../images/editor-button-facebook.png) no-repeat;
+}
+
+a#twitterButton, a#showroomTwitterButton {
+	width: 31px;
+	float: right;
+	background: url(../images/editor-button-twitter.png) no-repeat;
+}
+
+a#showroomFacebookButton, a#showroomTwitterButton, a#shorwoomLikeButton, 
+a#overviewNextButton, a#overviewPreviousButton {
+	float: left; 
+}
+
+a#runButton:active, a#clearButton:active, 
+a#facebookButton:active, a#twitterButton:active,
+a#nextButton:active, a#previousButton:active, a#showButton:active,
+a#showroomFacebookButton:active, a#showroomTwitterButton:active, a#showroomLikeButton:active,
+a#overviewNextButton:active, a#overviewPreviousButton:active {
+	background-position: 0 -30px;
+}
+
+a#overviewNextButton.inactive, a#overviewPreviousButton.inactive {
+	cursor: auto;
+	background-position: 0 -60px;
+}
+
+a#overviewNextButton.inactive:active, a#overviewPreviousButton.inactive:active {
+	background-position: 0 -60px;
+}
+
+a#publishButton {
+	width: 65px;
+	height: 30px;
+	float: right;
+	display: block;
+	text-indent: -1000px;
+	margin-top: 10px;
+}
+
+a#repeatButton.active, a#helpButton.active, a#autoButton.active {
+	background-position: 0 -30px;
+}
+
+a#showroomFlagButton {
+	color: #800000;
+	cursor: pointer;
+}
+
+div.showroomFlag {
+	clear: both;
+	margin: 20px 0 0 4px;
+	padding-top: 20px;
+	line-height: 14px;
+}
+
+a.publishButton {background: url(../images/editor-button-publish.png) no-repeat;}
+
+a.activePublish {
+	background-position: 0 -30px;
+	cursor: pointer;
+}
+
+a.activePublish:active, a.activeNextOverView {background-position: 0 -60px;}
+
+a.editorButton {
+	cursor: pointer;
+	text-indent: -1000px;
+	display: block;
+	height: 30px;
+	float: left;
+	margin-right: 5px;
+	overflow: hidden;
+  z-index: 4;
+}
+
+.testButton {
+	color: black;
+	cursor: pointer;
+}
+
+#staticCanvas {
+  position: absolute;
+  z-index: 1;
+}
+
+#dynamicCanvas {
+ position: absolute;
+ z-index: 2;
+}
+
+#overviewControls {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 9px;
+	position: absolute;
+	left: 338px;
+	top: 40px;
+	padding-left: 35px;
+}
+
+#overviewControls span {
+	font-weight: bold;
+}
+
+#overviewControls ul {
+	margin: 10px 10px 40px 10px;
+}
+
+#overviewControls li {
+	margin: 7px;
+	list-style: square;
+}
+
+#overviewControls li.active {
+	color: #800000;
+}
+
+#overviewControls li.inactive {
+	cursor: pointer;
+}
+
+#searchSubmit {
+	display: none;
+}
+
+#searchField {
+	width: 89px;
+	height: 19px;
+	font-size: 9px;
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: bold;
+	color: #333;
+	background: url(../images/editor-text-background.png) no-repeat transparent;
+	border: none;
+	padding: 0 3px;
+}
+
+p.no-track-warning {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 11px;
+}
+
+#overviewControls div {
+	float: left;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	margin: 8px 0 0 10px;
+	color: #363535;
+}
+
+#overviewGrid {
+	position: absolute;
+	left: 342px;
+	top: 190px;
+	width: 850px;
+	padding-left: 35px;
+}
+
+#overviewGrid, #overviewControls {
+	color: #1e1e1e;
+	text-transform: uppercase;
+}
+
+#overviewGrid ul {
+	list-style-type: none;
+}
+
+#overviewGrid .trackname {
+	font-size: 11px;
+	font-weight: bolder;
+	margin-bottom: 5px;
+}
+
+#overviewGrid .username, #overviewGrid .length {
+	font-size: 9px;
+	margin-bottom: 2px;
+	font-weight: bold;
+}
+
+#overviewGrid img {
+	margin-bottom: 5px;
+}
+
+#overviewGrid li {
+	float: left;
+	width: 140px;
+	white-space: nowrap;
+	margin-bottom: 15px;
+	overflow: hidden;
+}
+
+#overviewGrid li li {
+	clear: both;
+	width: auto;
+}
+
+#overviewGrid a, #overviewControls a {
+	cursor: pointer;
+}
+
+#helpBox {
+	width: 250px; /* 280 */
+	height: 380px; /* 420 */
+	background-color: rgba(0, 0, 0, 0.75);
+	top: 190px;
+	position: absolute;
+	left: 406px;
+	font-size: 9px;
+	padding: 20px 0px 20px 30px;
+	line-height: 13px;
+	z-index: 200;
+}
+
+#helpBox h2 {
+	color: #fdfdfd;
+	font-weight: bolder;
+}
+
+#helpBox p {
+	color: #f6f254;
+	margin-bottom: 10px;
+}
+
+#firstVisitContainer {
+	background-color: rgba(0, 0, 0, 0.75);
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	visibility: hidden;
+	z-index: 199;
+}
+
+#firstVisitText {
+	position: relative;
+	top: 190px;
+	left: 375px;
+	padding-left: 75px;
+	padding-top: 30px;
+	visibility: hidden;
+	z-index: 199;
+}
+
+#firstVisitCloseButton {
+	cursor: pointer;
+	left: 412px;
+	top: 197px;
+	position: absolute;
+	z-index: 201;
+	visibility: hidden;
+}
+
+#firstVisitText h2 {
+	font-size: 15px;
+	font-weight: bolder;
+	margin-bottom: 30px;
+	line-height: 20px;
+}
+
+#firstVisitText p {
+	margin-bottom: 20px;
+	font-size: 11px;
+	line-height: 20px;
+}
+
+div#aboutPage {
+	font-size: 10px;
+}
+
+#aboutPage p {
+	margin-bottom: 15px;
+}
+
+#aboutPage a, #imprintPage a, #contactPage a {
+	color: #800000;
+	font-size: 10px;
+}
+
+#aboutPage a:hover, #imprintPage a:hover, #contactPage a:hover {
+	color: #1e1e1e;
+}

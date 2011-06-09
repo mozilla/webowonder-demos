@@ -159,23 +159,24 @@
 
             @media all and (orientation: portrait) {
                 .portrait {
-                    visibility: visible;
+                    display: block;
                 }
                 .landscape {
-                    visibility: collapse;
-                    max-height: 0px;
-                    overflow: hidden;
+                    display: none;
                 }
             }
 
             @media all and (orientation: landscape) {
                 .portrait {
-                    visibility: collapse;
-                    max-height: 0px;
-                    overflow: hidden;
+                    display: none;
                 }
-                .landscape { visibility: visible; }
+                .landscape { display: block; }
                 h1 { display: none; }
+            }
+
+            .landscape {
+                max-width: 150%;
+                overflow: scroll;
             }
 
             .computing #twitter, .computing #flickr { display: none; }

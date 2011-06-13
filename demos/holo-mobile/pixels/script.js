@@ -62,16 +62,8 @@ function start3D() {
     initialized = true;
     document.body.classList.remove("no3D");
 
-    window.addEventListener("MozOrientation", function(e) {
-        if (!landscape) {
-            xshift = e.x * -2.5;
-            yshift = (e.y - 0.5) * -2.5;
-        } else {
-            xshift = e.y * -2.5;
-            yshift = (e.x + 0.7) * 2.5;
-        }
-    }, true);
-
+    window.addEventListener("MozOrientation", orientationhandler, true);
+		window.addEventListener("deviceorientation", orientationhandler, true);
 
     for (var i = 0; i < layers.length; i++) {
         var l = layers[i];
@@ -123,4 +115,19 @@ function projectLayers() {
         l.style.top = mt + "%";
         l.style.left = ml + "%";
     }
+}
+
+function orientationhandler( e ) {
+	if ( e.gamma ) {
+    e.x = -e.gamma / (180 / Math.PI) -1.5;
+    e.y = -e.beta / (180 / Math.PI);
+  }
+
+  if (!landscape) {
+      xshift = e.x * -2.5;
+      yshift = (e.y - 0.5) * -2.5;
+  } else {
+      xshift = e.y * -2.5;
+      yshift = (e.x + 0.7) * 2.5;
+  }
 }

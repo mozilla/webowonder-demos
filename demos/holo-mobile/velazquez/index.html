@@ -9,11 +9,17 @@
 
             window.onload = function() {
                 window.addEventListener("MozOrientation", move, true);
+                window.addEventListener("deviceorientation", move, true);
                 s = document.getElementById("world").style;
                 draw();
             }
-            function move(evt) {
-                e = evt;
+            function move( _e ) {
+            	if ( _e.gamma ) {
+						    e.x = -_e.gamma / (180 / Math.PI);
+						    e.y = -_e.beta / (180 / Math.PI);
+						  } else {
+						  	e = _e;
+						  }
             }
 
             function draw() {

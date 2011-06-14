@@ -1,0 +1,51 @@
+html {
+	background: #B3B27A;
+	background-image: url("paper_trans.png");
+	font-family: Arial, Helvetica, "Liberation Sans", sans-serif;
+	overflow-y: scroll;
+}
+
+#head {
+	background: #408D7B;
+	color: #eee;
+	font-size: 1.3em;
+	padding: .2em;
+	height: 24px;
+	box-shadow: 0 1px 2px #333;
+}
+
+#timeline {
+	width: 380px;
+	padding: 10px;
+	background: hsla(0, 100%, 100%, .2);
+	margin: 40px auto 10px;
+	min-height: 500px;
+	border-radius: 3px;
+	box-shadow: 0 1px 2px #333;
+}
+
+.msg {
+	padding: .2em .5em;
+	margin: .2em 0;
+	border-radius: 2px;
+	color: #333;
+	border: 1px solid #A68A03;
+	border-width: 1px 1px 1px 5px
+}
+.msg a {
+	color: #777;
+}
+.msg i {
+	display: block;
+	text-align: right;
+}
+
+.checkin {
+	border-color: #658603;
+}
+.forward {
+	border-color: #BDB208;
+}
+.direct {
+	border-color: #CA4606;
+}

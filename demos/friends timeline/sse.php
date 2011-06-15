@@ -9,9 +9,10 @@ $handle = fopen($filename, "r");
 $contents = fread($handle, filesize($filename));
 fclose($handle);
 
+// Split the messages into an array
 $messages = preg_split( "/\n\n/", $contents );
 
-// Send a new message very 2 to 7 seconds
+// Send one message every 2 to 7 seconds
 foreach ( $messages as $message ) {
 	sleep( rand(2, 7) );
 	echo $message;

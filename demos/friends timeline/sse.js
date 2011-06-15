@@ -2,7 +2,7 @@ function onload() {
 	var timeline = document.getElementById( "timeline" ), 
 		lastMsg = document.getElementById( "lastMsg" ),
 		// Create the EventSource
-		evtSrc = new EventSource( "http://www.oclast.com/sse.php" ),
+		evtSrc = new EventSource( "sse.php" ),
 		message = document.createElement( "div" );
 	message.classList.add( "msg" );
 

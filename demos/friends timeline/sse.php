@@ -3,7 +3,7 @@
 // Send appropriate mime type
 header("Content-Type: text/event-stream\n\n");
 
-// Parse messages
+// Read sample messages
 $filename = "timelineEvents.txt";
 $handle = fopen($filename, "r");
 $contents = fread($handle, filesize($filename));

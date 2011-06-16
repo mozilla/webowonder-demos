@@ -14,12 +14,13 @@ $messages = preg_split( "/\n\n/", $contents );
 
 // Send one message every 2 to 7 seconds
 foreach ( $messages as $message ) {
-	sleep( rand(2, 7) );
 	echo $message;
 	echo "\n\n";
 
 	ob_flush();
 	flush();
+
+	sleep( rand(2, 7) );
 }
 
 ?>
